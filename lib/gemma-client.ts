@@ -6,7 +6,15 @@ export interface GemmaGenerateRequest {
 }
 
 export const GEMMA_HOST = process.env.NEXT_PUBLIC_GEMMA_HOST ?? 'http://localhost:11434';
-export const GEMMA_MODEL = process.env.NEXT_PUBLIC_GEMMA_MODEL ?? 'gemma4:2b';
+const MODEL_ALIASES: Record<string, string> = {
+  mpeti: 'gemma:2b',
+  'mpeti:2b': 'gemma:2b',
+  gemma: 'gemma:2b',
+  gemma4: 'gemma:2b',
+  'gemma4:2b': 'gemma:2b',
+};
+const rawModel = (process.env.NEXT_PUBLIC_GEMMA_MODEL ?? 'mpeti').toLowerCase();
+export const GEMMA_MODEL = MODEL_ALIASES[rawModel] ?? rawModel;
 
 export async function generateGemma(prompt: string) {
   const payload: GemmaGenerateRequest = {

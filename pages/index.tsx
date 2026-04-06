@@ -4,11 +4,9 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Layout from '../components/layout/Layout';
 import { fadeInUp } from '../lib/animations';
-import { COMPANY_INFO, SYSTEMS } from '../lib/constants';
+import { COMPANY_INFO } from '../lib/constants';
 
 export default function Home() {
-  const previewSystems = SYSTEMS.slice(0, 6);
-
   return (
     <Layout>
       <Head>
@@ -26,15 +24,94 @@ export default function Home() {
       >
         <div className="absolute inset-0 grid-background opacity-25" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(0,229,255,0.14),transparent_22%),radial-gradient(circle_at_bottom_right,_rgba(172,255,88,0.12),transparent_18%)]" />
-        <div className="absolute inset-x-0 top-24 h-96 mx-auto w-[85%] rounded-full bg-[#00e5ff]/10 blur-3xl opacity-70" />
 
         <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
+          {/* Dual Core Circles */}
+          <div className="relative h-64 mb-12 flex items-center justify-center">
+            {/* Left Circle - AI (Cyan) */}
+            <motion.div
+              animate={{ scale: [1, 1.1, 1] }}
+              transition={{ duration: 3, repeat: Infinity, delay: 0 }}
+              className="absolute left-1/4 top-8 w-24 h-24 rounded-full border-2 border-[#00E5FF] bg-[#00E5FF]/10 flex items-center justify-center"
+            >
+              <svg className="absolute inset-0 w-full h-full opacity-20" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="35" fill="none" stroke="#00E5FF" strokeWidth="1"/>
+                <circle cx="30" cy="30" r="8" fill="#00E5FF" opacity="0.3"/>
+                <circle cx="70" cy="30" r="8" fill="#00E5FF" opacity="0.3"/>
+                <circle cx="50" cy="70" r="8" fill="#00E5FF" opacity="0.3"/>
+                <line x1="30" y1="30" x2="50" y2="70" stroke="#00E5FF" strokeWidth="0.5" opacity="0.3"/>
+                <line x1="70" y1="30" x2="50" y2="70" stroke="#00E5FF" strokeWidth="0.5" opacity="0.3"/>
+              </svg>
+              <motion.span
+                animate={{ opacity: [0.6, 1, 0.6] }}
+                transition={{ duration: 2, repeat: Infinity, delay: 0 }}
+                className="text-[#00E5FF] font-bold text-lg z-10"
+              >
+                AI
+              </motion.span>
+            </motion.div>
+
+            {/* Right Circle - AGI (Gold) */}
+            <motion.div
+              animate={{ scale: [1, 1.1, 1] }}
+              transition={{ duration: 3, repeat: Infinity, delay: 0.5 }}
+              className="absolute right-1/4 bottom-8 w-24 h-24 rounded-full border-2 border-[#D4AF37] bg-[#D4AF37]/10 flex items-center justify-center"
+            >
+              <svg className="absolute inset-0 w-full h-full opacity-20" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="35" fill="none" stroke="#D4AF37" strokeWidth="1"/>
+                <circle cx="30" cy="30" r="8" fill="#D4AF37" opacity="0.3"/>
+                <circle cx="70" cy="30" r="8" fill="#D4AF37" opacity="0.3"/>
+                <circle cx="50" cy="70" r="8" fill="#D4AF37" opacity="0.3"/>
+                <line x1="30" y1="30" x2="50" y2="70" stroke="#D4AF37" strokeWidth="0.5" opacity="0.3"/>
+                <line x1="70" y1="30" x2="50" y2="70" stroke="#D4AF37" strokeWidth="0.5" opacity="0.3"/>
+              </svg>
+              <motion.span
+                animate={{ opacity: [0.6, 1, 0.6] }}
+                transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+                className="text-[#D4AF37] font-bold text-lg z-10"
+              >
+                AGI
+              </motion.span>
+            </motion.div>
+
+            {/* Neural connection line between cores */}
+            <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ filter: 'drop-shadow(0 0 2px rgba(0, 229, 255, 0.1))' }}>
+              <motion.path
+                d="M 25% 40% Q 50% 50%, 75% 60%"
+                stroke="#00E5FF"
+                strokeWidth="1"
+                fill="none"
+                opacity="0.3"
+                strokeDasharray="100"
+                animate={{ strokeDashoffset: [100, 0] }}
+                transition={{ duration: 3, repeat: Infinity }}
+              />
+              <motion.path
+                d="M 75% 60% Q 50% 50%, 25% 40%"
+                stroke="#D4AF37"
+                strokeWidth="1"
+                fill="none"
+                opacity="0.3"
+                strokeDasharray="100"
+                animate={{ strokeDashoffset: [100, 0] }}
+                transition={{ duration: 3, repeat: Infinity, delay: 0.5 }}
+              />
+            </svg>
+          </div>
+
           <motion.h1
             variants={fadeInUp}
-            className="text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight uppercase text-white leading-tight"
+            className="text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight uppercase leading-tight"
           >
-            <span className="gradient-text">Sans Mercantile</span>
+            <span className="gradient-text-hero">Sans Mercantile</span>
           </motion.h1>
+
+          <motion.p
+            variants={fadeInUp}
+            className="mt-4 text-xl md:text-2xl font-light tracking-widest text-[#00E5FF] mb-8"
+          >
+            Reimagine • Rebuild • Transcend
+          </motion.p>
 
           <motion.p
             variants={fadeInUp}
@@ -64,47 +141,13 @@ export default function Home() {
         transition={{ duration: 0.8 }}
         className="max-w-7xl mx-auto px-6 py-20"
       >
-        <div className="text-center mb-16">
-          <p className="text-sm uppercase tracking-[0.35em] text-nexus-gold mb-4">The Constellation</p>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">21 autonomous systems working in perfect harmony</h2>
-          <p className="text-base md:text-lg text-white/70 max-w-3xl mx-auto">
-            Explore the core systems that power modern finance, healthcare, defense, energy, and next-generation sovereign AI infrastructure.
+        <div className="text-center">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 gradient-text-constellation">The Constellation</h2>
+          <p className="text-base md:text-lg text-white/70 max-w-3xl mx-auto mb-8">
+            21 autonomous systems working in perfect harmony — Explore the core systems that power modern finance, healthcare, defense, energy, and next-generation sovereign AI infrastructure.
           </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {previewSystems.map((system) => (
-            <div key={system.id} className="card overflow-hidden relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-white/0 to-white/5 pointer-events-none" />
-              <div className="relative rounded-3xl p-6 h-full flex flex-col justify-between">
-                <div>
-                  <div className="mb-4 flex items-center justify-between gap-3">
-                    <span className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-white/10 text-white text-xl font-bold shadow-lg shadow-cyan-500/10">
-                      {system.name.charAt(0)}
-                    </span>
-                    <span className={`status-badge ${system.status === 'restricted' ? 'status-restricted' : 'status-open'}`}>
-                      {system.status === 'restricted' ? 'RESTRICTED' : 'PUBLIC'}
-                    </span>
-                  </div>
-                  <div className="mb-6">
-                    <h3 className="text-2xl font-bold text-white mb-2">{system.name}</h3>
-                    <p className="text-sm uppercase tracking-[0.2em] text-nexus-gold mb-3">{system.subtitle}</p>
-                    <p className="text-nexus-gray-300 leading-relaxed">{system.description}</p>
-                  </div>
-                </div>
-                <div className="mt-6">
-                  <Link href="/systems" className="text-sm font-semibold text-nexus-gold hover:text-white">
-                    Explore system →
-                  </Link>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="text-center mt-12">
           <Link href="/systems">
-            <button className="btn btn-secondary">View All Systems</button>
+            <button className="btn btn-secondary">Explore All Systems</button>
           </Link>
         </div>
       </motion.section>

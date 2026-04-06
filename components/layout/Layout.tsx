@@ -12,7 +12,7 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <div className="min-h-screen bg-nexus-dark text-white">
+    <div className="min-h-screen bg-slate-950 text-white">
       <Navbar />
 
       <main className="relative z-10 pt-28">

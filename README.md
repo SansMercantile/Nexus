@@ -92,11 +92,11 @@ Copy `.env.local.example` to `.env.local`:
 cp .env.local.example .env.local
 ```
 
-Edit `.env.local` if needed to configure your local Gemma endpoint:
+Edit `.env.local` if needed to configure your local Mpeti endpoint:
 
 ```bash
 NEXT_PUBLIC_GEMMA_HOST=http://localhost:11434
-NEXT_PUBLIC_GEMMA_MODEL=gemma4:2b
+NEXT_PUBLIC_GEMMA_MODEL=mpeti
 LINKEDIN_ACCESS_TOKEN=your_token_here
 ```
 
@@ -123,8 +123,10 @@ winget install --id Ollama.Ollama -e --silent --accept-package-agreements --acce
 2. Run the local model:
 
 ```powershell
-ollama run gemma4:2b
+ollama run gemma:2b
 ```
+
+This repo uses `mpeti` as the local model alias; the direct Ollama model is `gemma:2b`.
 
 3. In VS Code, install the AI Toolkit / GitHub Copilot extensions and choose the custom local model option.
 

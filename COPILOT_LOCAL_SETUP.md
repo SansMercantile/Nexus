@@ -1,4 +1,4 @@
-# VS Code GitHub Copilot + Gemma 4 BYOM Setup
+# VS Code GitHub Copilot + Mpeti BYOM Setup
 
 ## ✅ Your Environment (ACTIVE)
 
@@ -7,7 +7,7 @@
 | **Web App** | ✅ Running | http://localhost:3002 |
 | **LLM Endpoint** | ⏳ Pending Ollama | http://localhost:11434 |
 | **Web API** | ✅ Ready | http://localhost:3002/api/llm-support |
-| **Direct Gemma** | ✅ Ready | http://localhost:3002/api/gemma |
+| **Direct Mpeti** | ✅ Ready | http://localhost:3002/api/gemma |
 
 ---
 
@@ -20,14 +20,16 @@ Ollama needs to be installed and started. You have two options:
 **Option A: Portable Version (Fastest)**
 ```powershell
 cd 'C:\Users\kpasc\source\repos\sansmercantile-nexus\ollama2'
-.\ollama.exe run gemma4:2b
+.\ollama.exe run gemma:2b
 ```
 
 **Option B: Full Installation**
-Download from https://ollama.ai/download and run the installer, then:
+If you already have Ollama installed, run:
 ```powershell
-ollama run gemma4:2b
+ollama run gemma:2b
 ```
+
+For repository settings and local tooling, use the `mpeti` alias where supported.
 
 Once running, you should see:
 ```
@@ -49,7 +51,7 @@ listening on 127.0.0.1:11434
    - Click **Settings/Model Selector**
    - Choose **Ollama** or **Custom Endpoint**
    - Set endpoint: `http://localhost:11434`
-   - Set model: `gemma4:2b`
+   - Set model alias: `mpeti` (maps to `gemma:2b` locally)
 
 ### Step 3: Start Using Copilot
 
@@ -92,7 +94,7 @@ POST http://localhost:11434/api/generate
 Content-Type: application/json
 
 {
-  "model": "gemma4:2b",
+  "model": "mpeti",
   "prompt": "Hello",
   "stream": false
 }
@@ -108,7 +110,7 @@ Content-Type: application/json
 | **Port 11434 in use** | Kill process: `Get-Process \| Where { $_.Port -eq 11434 } \| Stop-Process` |
 | **VS Code can't connect** | Confirm Ollama running: `curl http://localhost:11434/api/tags` |
 | **Model downloading slowly** | First run downloads ~2GB. Normal. Be patient. |
-| **Out of memory errors** | Use `gemma4:2b` (2B) not `gemma4:7b` (7B) |
+| **Out of memory errors** | Use the local Mpeti alias with the `gemma:2b` model (2B) rather than larger models |
 
 ---
 

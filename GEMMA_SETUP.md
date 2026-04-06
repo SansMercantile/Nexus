@@ -1,6 +1,6 @@
-# Gemma 4 Local Setup
+# Mpeti Local Setup
 
-This project now includes a local integration layer for Gemma 4 via Ollama.
+This project now includes a local integration layer for Mpeti via Ollama.
 
 ## Install Ollama
 
@@ -14,15 +14,15 @@ This project now includes a local integration layer for Gemma 4 via Ollama.
    ollama version
    ```
 
-## Run Gemma locally
+## Run Mpeti locally
 
-Start the local Gemma model server:
+Start the local Mpeti-compatible Gemma model server:
 
 ```powershell
-ollama run gemma4:2b
+ollama run gemma:2b
 ```
 
-For most local machines, `gemma4:2b` is the recommended Gemma 4 model.
+This repository treats `mpeti` as the local app alias, which resolves to the `gemma:2b` model name for Ollama.
 
 ## VS Code BYOM / GitHub Copilot Local Inference
 
@@ -32,7 +32,9 @@ If you install the VS Code AI Toolkit or GitHub Copilot extensions, point the cu
 http://localhost:11434
 ```
 
-This enables VS Code Copilot to use your local Gemma 4 engine without external token billing.
+Use `mpeti` as the workspace model alias when configuring local AI tools; it maps to the locally-running `gemma:2b` model.
+
+This enables VS Code Copilot to use your local Mpeti engine (mapped to local `gemma:2b`) without external token billing.
 
 ## Local repo integration
 

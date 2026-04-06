@@ -11,13 +11,13 @@ export function Footer() {
   }, []);
 
   return (
-    <footer className="bg-nexus-dark border-t border-nexus-accent/20 py-12 mt-20">
+    <footer className="relative z-20 bg-nexus-dark border-t border-nexus-accent/20 py-12 mt-20">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-6 gap-8 mb-12">
           {/* Brand */}
           <div>
             <SansMercantileLogo />
-            <p className="text-white/70 text-sm mt-2">We don't just trade the future—we architect it.™</p>
+            <p className="text-white/70 text-sm mt-2">Powered by dual AI+AGI cores. Designed for inclusion.</p>
           </div>
 
           {/* Services */}
@@ -73,18 +73,18 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-nexus-accent/20 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="border-t border-nexus-accent/20 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 relative z-20">
           <p className="text-sm text-white/50">
             © {currentYear} {COMPANY_INFO.name}. All rights reserved. | Regulatory Compliance: SARS, FATCA, GDPR, SADC
           </p>
-          <div className="flex gap-4 text-sm text-white/50">
-            <a href="https://linkedin.com/company/sans-mercantile" target="_blank" rel="noopener noreferrer" className="hover:text-nexus-gold">
+          <div className="flex gap-4 text-sm">
+            <a href="https://linkedin.com/company/sans-mercantile" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-nexus-gold transition-colors">
               LinkedIn
             </a>
-            <a href="https://twitter.com/sansmercantile" target="_blank" rel="noopener noreferrer" className="hover:text-nexus-gold">
+            <a href="https://twitter.com/sansmercantile" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-nexus-gold transition-colors">
               Twitter
             </a>
-            <a href="https://github.com/sansmercantile" target="_blank" rel="noopener noreferrer" className="hover:text-nexus-gold">
+            <a href="https://github.com/sansmercantile" target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-nexus-gold transition-colors">
               GitHub
             </a>
           </div>

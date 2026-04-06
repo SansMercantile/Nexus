@@ -148,6 +148,28 @@ body {
   background-clip: text;
 }
 
+/* Hero Gradient Text - Cyan to Lime to Gold */
+.gradient-text-hero {
+  background: linear-gradient(90deg, #00E5FF, #ACFF58, #D4AF37);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* Constellation Gradient Text */
+.gradient-text-constellation {
+  background: linear-gradient(90deg, #00E5FF, #ACFF58, #D4AF37);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.9; }
+}
+
 /* Smooth Scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
