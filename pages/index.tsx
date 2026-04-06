@@ -26,77 +26,59 @@ export default function Home() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(0,229,255,0.14),transparent_22%),radial-gradient(circle_at_bottom_right,_rgba(172,255,88,0.12),transparent_18%)]" />
 
         <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
-          {/* Dual Core Circles */}
-          <div className="relative h-64 mb-12 flex items-center justify-center">
-            {/* Left Circle - AI (Cyan) */}
+          {/* Big Overlapping Dual Core Circles */}
+          <div className="relative w-full h-96 flex items-center justify-center mb-8 overflow-hidden">
+            {/* Left Circle - AI (Cyan) - positioned higher */}
             <motion.div
-              animate={{ scale: [1, 1.1, 1] }}
-              transition={{ duration: 3, repeat: Infinity, delay: 0 }}
-              className="absolute left-1/4 top-8 w-24 h-24 rounded-full border-2 border-[#00E5FF] bg-[#00E5FF]/10 flex items-center justify-center"
+              animate={{ scale: [0.95, 1.05, 0.95] }}
+              transition={{ duration: 4, repeat: Infinity, delay: 0 }}
+              className="absolute w-96 h-96 rounded-full border-4 border-[#00E5FF] flex items-center justify-center"
+              style={{
+                left: '5%',
+                top: '-15%',
+                background: 'radial-gradient(circle at center, rgba(0, 229, 255, 0.4), rgba(0, 229, 255, 0.05))',
+                boxShadow: '0 0 100px rgba(0, 229, 255, 0.8), inset 0 0 100px rgba(0, 229, 255, 0.3)'
+              }}
             >
-              <svg className="absolute inset-0 w-full h-full opacity-20" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="50" cy="50" r="35" fill="none" stroke="#00E5FF" strokeWidth="1"/>
-                <circle cx="30" cy="30" r="8" fill="#00E5FF" opacity="0.3"/>
-                <circle cx="70" cy="30" r="8" fill="#00E5FF" opacity="0.3"/>
-                <circle cx="50" cy="70" r="8" fill="#00E5FF" opacity="0.3"/>
-                <line x1="30" y1="30" x2="50" y2="70" stroke="#00E5FF" strokeWidth="0.5" opacity="0.3"/>
-                <line x1="70" y1="30" x2="50" y2="70" stroke="#00E5FF" strokeWidth="0.5" opacity="0.3"/>
+              <svg className="absolute inset-0 w-full h-full opacity-30" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="45" fill="none" stroke="#00E5FF" strokeWidth="0.8"/>
+                <circle cx="50" cy="50" r="35" fill="none" stroke="#00E5FF" strokeWidth="0.5" opacity="0.6"/>
+                <circle cx="50" cy="50" r="25" fill="none" stroke="#00E5FF" strokeWidth="0.4" opacity="0.4"/>
               </svg>
               <motion.span
-                animate={{ opacity: [0.6, 1, 0.6] }}
-                transition={{ duration: 2, repeat: Infinity, delay: 0 }}
-                className="text-[#00E5FF] font-bold text-lg z-10"
+                animate={{ opacity: [0.4, 1, 0.4] }}
+                transition={{ duration: 2.5, repeat: Infinity, delay: 0 }}
+                className="text-[#00E5FF] font-bold text-6xl z-10 drop-shadow-lg"
               >
                 AI
               </motion.span>
             </motion.div>
 
-            {/* Right Circle - AGI (Gold) */}
+            {/* Right Circle - AGI (Gold) - positioned lower and overlapping */}
             <motion.div
-              animate={{ scale: [1, 1.1, 1] }}
-              transition={{ duration: 3, repeat: Infinity, delay: 0.5 }}
-              className="absolute right-1/4 bottom-8 w-24 h-24 rounded-full border-2 border-[#D4AF37] bg-[#D4AF37]/10 flex items-center justify-center"
+              animate={{ scale: [0.95, 1.05, 0.95] }}
+              transition={{ duration: 4, repeat: Infinity, delay: 0.8 }}
+              className="absolute w-96 h-96 rounded-full border-4 border-[#D4AF37] flex items-center justify-center"
+              style={{
+                right: '5%',
+                bottom: '-15%',
+                background: 'radial-gradient(circle at center, rgba(212, 175, 55, 0.4), rgba(212, 175, 55, 0.05))',
+                boxShadow: '0 0 100px rgba(212, 175, 55, 0.8), inset 0 0 100px rgba(212, 175, 55, 0.3)'
+              }}
             >
-              <svg className="absolute inset-0 w-full h-full opacity-20" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="50" cy="50" r="35" fill="none" stroke="#D4AF37" strokeWidth="1"/>
-                <circle cx="30" cy="30" r="8" fill="#D4AF37" opacity="0.3"/>
-                <circle cx="70" cy="30" r="8" fill="#D4AF37" opacity="0.3"/>
-                <circle cx="50" cy="70" r="8" fill="#D4AF37" opacity="0.3"/>
-                <line x1="30" y1="30" x2="50" y2="70" stroke="#D4AF37" strokeWidth="0.5" opacity="0.3"/>
-                <line x1="70" y1="30" x2="50" y2="70" stroke="#D4AF37" strokeWidth="0.5" opacity="0.3"/>
+              <svg className="absolute inset-0 w-full h-full opacity-30" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="45" fill="none" stroke="#D4AF37" strokeWidth="0.8"/>
+                <circle cx="50" cy="50" r="35" fill="none" stroke="#D4AF37" strokeWidth="0.5" opacity="0.6"/>
+                <circle cx="50" cy="50" r="25" fill="none" stroke="#D4AF37" strokeWidth="0.4" opacity="0.4"/>
               </svg>
               <motion.span
-                animate={{ opacity: [0.6, 1, 0.6] }}
-                transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
-                className="text-[#D4AF37] font-bold text-lg z-10"
+                animate={{ opacity: [0.4, 1, 0.4] }}
+                transition={{ duration: 2.5, repeat: Infinity, delay: 0.8 }}
+                className="text-[#D4AF37] font-bold text-6xl z-10 drop-shadow-lg"
               >
                 AGI
               </motion.span>
             </motion.div>
-
-            {/* Neural connection line between cores */}
-            <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ filter: 'drop-shadow(0 0 2px rgba(0, 229, 255, 0.1))' }}>
-              <motion.path
-                d="M 25% 40% Q 50% 50%, 75% 60%"
-                stroke="#00E5FF"
-                strokeWidth="1"
-                fill="none"
-                opacity="0.3"
-                strokeDasharray="100"
-                animate={{ strokeDashoffset: [100, 0] }}
-                transition={{ duration: 3, repeat: Infinity }}
-              />
-              <motion.path
-                d="M 75% 60% Q 50% 50%, 25% 40%"
-                stroke="#D4AF37"
-                strokeWidth="1"
-                fill="none"
-                opacity="0.3"
-                strokeDasharray="100"
-                animate={{ strokeDashoffset: [100, 0] }}
-                transition={{ duration: 3, repeat: Infinity, delay: 0.5 }}
-              />
-            </svg>
           </div>
 
           <motion.h1
