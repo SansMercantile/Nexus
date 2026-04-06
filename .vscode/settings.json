@@ -1,0 +1,21 @@
+{
+    "githubPullRequests.ignoredPullRequestBranches": [
+        "main"
+    ],
+    "github.copilot.enable": true,
+    "github.copilot.selectedCompletionModel": "gemma:2b",
+    "github.copilot.chat.askAgent.model": "gemma:2b",
+    "github.copilot.chat.executionSubagent.model": "gemma:2b",
+    "github.copilot.chat.exploreAgent.model": "gemma:2b",
+    "github.copilot.chat.githubMcpServer.enabled": true,
+    "github.copilot.chat.githubMcpServer.lockdown": false,
+    "github.copilot.chat.githubMcpServer.readonly": false,
+    "github.copilot.chat.cli.mcp.enabled": true,
+    "github.copilot.chat.agent.currentEditorContext.enabled": true,
+    "github.copilot.chat.localWorkspaceRecording.enabled": true,
+    "github.copilot.chat.workspace.enableCodeSearch": true,
+    "editor.inlineSuggest.enabled": true,
+    "editor.suggest.showWords": true,
+    "editor.suggestSelection": "first",
+    "editor.acceptSuggestionOnEnter": "on"
+}
