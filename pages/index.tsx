@@ -2,9 +2,9 @@ import React from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import Layout from '../components/layout/Layout';
-import { fadeInUp } from '../lib/animations';
-import { COMPANY_INFO } from '../lib/constants';
+import Layout from '@/components/layout/Layout';
+import { fadeInUp } from '@/lib/animations';
+import { COMPANY_INFO } from '@/lib/constants';
 
 export default function Home() {
   return (
@@ -16,65 +16,46 @@ export default function Home() {
         <meta property="og:description" content={COMPANY_INFO.tagline} />
       </Head>
 
+      {/* Hero Section */}
       <motion.section
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
-        className="relative min-h-screen flex items-center justify-center overflow-hidden pt-28"
+        className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
       >
-        <div className="absolute inset-0 grid-background opacity-25" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(0,229,255,0.14),transparent_22%),radial-gradient(circle_at_bottom_right,_rgba(172,255,88,0.12),transparent_18%)]" />
+        {/* Background Grid */}
+        <div className="absolute inset-0 grid-background opacity-20" />
 
-        <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
-          {/* Faded Dual Core Circles Behind Text */}
-          {/* Left Circle - AI (Cyan) */}
-          <motion.div
-            animate={{ scale: [0.98, 1.02, 0.98] }}
-            transition={{ duration: 5, repeat: Infinity, delay: 0 }}
-            className="absolute left-1/2 top-1/2 transform -translate-x-full -translate-y-1/2 w-80 h-80 rounded-full"
-            style={{
-              background: 'radial-gradient(circle at center, rgba(0, 229, 255, 0.08), rgba(0, 229, 255, 0.01))',
-              boxShadow: '0 0 60px rgba(0, 229, 255, 0.12)',
-              zIndex: -1
-            }}
-          />
-          
-          {/* Right Circle - AGI (Gold) */}
-          <motion.div
-            animate={{ scale: [0.98, 1.02, 0.98] }}
-            transition={{ duration: 5, repeat: Infinity, delay: 0.8 }}
-            className="absolute right-0 top-1/2 transform translate-x-1/4 -translate-y-1/2 w-80 h-80 rounded-full"
-            style={{
-              background: 'radial-gradient(circle at center, rgba(212, 175, 55, 0.08), rgba(212, 175, 55, 0.01))',
-              boxShadow: '0 0 60px rgba(212, 175, 55, 0.12)',
-              zIndex: -1
-            }}
-          />
+        {/* Glow Elements */}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full blur-3xl opacity-20 bg-nexus-accent pointer-events-none" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full blur-3xl opacity-20 bg-nexus-gold pointer-events-none" />
 
+        {/* Content */}
+        <div className="relative z-10 text-center max-w-5xl mx-auto px-6">
           <motion.h1
             variants={fadeInUp}
-            className="text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight uppercase leading-tight"
+            className="text-6xl md:text-8xl font-black mb-6 gradient-text"
           >
-            <span className="gradient-text-hero">Sans Mercantile</span>
+            Sans Mercantile
           </motion.h1>
 
           <motion.p
             variants={fadeInUp}
-            className="mt-4 text-xl md:text-2xl font-light tracking-widest text-[#00E5FF] mb-8"
+            className="text-2xl md:text-4xl text-white/80 mb-8 font-light"
           >
-            Reimagine • Rebuild • Transcend
+            {COMPANY_INFO.tagline}
           </motion.p>
 
           <motion.p
             variants={fadeInUp}
-            className="mt-6 text-lg md:text-xl text-white max-w-3xl mx-auto font-light"
+            className="text-lg text-white/60 mb-12 max-w-2xl mx-auto"
           >
-            A network of autonomous, intelligent systems built to architect economic futures, govern complexity, and unlock sovereign-scale innovation.
+            {COMPANY_INFO.description}
           </motion.p>
 
           <motion.div
             variants={fadeInUp}
-            className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
+            className="flex gap-4 justify-center flex-wrap"
           >
             <Link href="/systems">
               <button className="btn btn-primary">Explore Systems</button>
@@ -86,21 +67,49 @@ export default function Home() {
         </div>
       </motion.section>
 
+      {/* Systems Preview */}
       <motion.section
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
         className="max-w-7xl mx-auto px-6 py-20"
       >
+        <h2 className="text-4xl font-bold text-center mb-12 gradient-text">
+          The Constellation
+        </h2>
+
+        <p className="text-center text-white/70 mb-12 max-w-2xl mx-auto">
+          21 autonomous systems working in perfect harmony to drive innovation across all sectors
+        </p>
+
         <div className="text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 gradient-text-constellation">The Constellation</h2>
-          <p className="text-base md:text-lg text-white/70 max-w-3xl mx-auto mb-8">
-            21 autonomous systems working in perfect harmony — Explore the core systems that power modern finance, healthcare, defense, energy, and next-generation sovereign AI infrastructure.
-          </p>
           <Link href="/systems">
-            <button className="btn btn-secondary">Explore All Systems</button>
+            <button className="btn btn-primary">
+              View All Systems
+            </button>
           </Link>
+        </div>
+      </motion.section>
+
+      {/* CTA Section */}
+      <motion.section
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        className="max-w-7xl mx-auto px-6 py-20 text-center border-t border-nexus-accent/20"
+      >
+        <h2 className="text-4xl font-bold mb-6">Ready to Join the Constellation?</h2>
+        <p className="text-xl text-white/70 mb-8">
+          Access our web portal or explore individual systems
+        </p>
+
+        <div className="flex gap-4 justify-center flex-wrap">
+          <a href="https://portal.sansmercantile.com" target="_blank" rel="noopener noreferrer">
+            <button className="btn btn-primary">Web Portal</button>
+          </a>
+          <a href="https://docs.sansmercantile.com" target="_blank" rel="noopener noreferrer">
+            <button className="btn btn-secondary">Documentation</button>
+          </a>
         </div>
       </motion.section>
     </Layout>

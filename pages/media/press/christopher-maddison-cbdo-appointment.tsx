@@ -21,8 +21,8 @@ export default function PressReleasePage() {
               </div>
 
               <div className="overflow-hidden rounded-3xl border border-nexus-gold/20">
-                <img src="/Executives/Chris_Headshot9_resized.jpg" alt="Christopher Maddison, Executive Partner and CBDO" className="h-full w-full object-cover" />
-              </div>"}}]
+                <img src="/Executives/cbdo_executive_partner.jpg" alt="Christopher Maddison, Executive Partner and CBDO" className="h-full w-full object-cover" />
+              </div>
             </div>
           </motion.div>
 

@@ -6,7 +6,7 @@ import Layout from '@/components/layout/Layout';
 import { SystemHero } from '@/components/systems/SystemHero';
 import { AnimatedIcon, featureIcons } from '@/components/AnimatedIcons';
 import { getSystemBySlug } from '@/lib/system-data';
-import { fadeInUp, staggerContainer, staggerItem } from '@/lib/animations';
+import { fadeInUp, staggerContainer, itemVariants } from '@/lib/animations';
 import { useRouter } from 'next/router';
 
 export default function SystemPage() {
@@ -83,7 +83,7 @@ export default function SystemPage() {
               {systemData.values.map((value, i) => (
                 <motion.div
                   key={i}
-                  variants={staggerItem}
+                  variants={itemVariants}
                   className="p-4 rounded-lg border-l-4 bg-white/5"
                   style={{ borderColor: systemData.color }}
                 >
@@ -121,7 +121,7 @@ export default function SystemPage() {
           ].map((feature, i) => (
             <motion.div
               key={i}
-              variants={staggerItem}
+              variants={itemVariants}
               className="p-6 rounded-lg card hover:card-hover group transition-all duration-300"
             >
               <div className="text-5xl mb-4 transition-transform group-hover:scale-110 inline-block">

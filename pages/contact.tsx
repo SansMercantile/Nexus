@@ -1,4 +1,4 @@
-import Layout from '../components/layout/Layout';
+import Layout from '@/components/layout/Layout';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';

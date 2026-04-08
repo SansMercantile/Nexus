@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Layout from '../components/layout/Layout';
-import { AnimatedIcon, type IconType } from '../components/AnimatedIcons';
-import { fadeInUp, staggerContainer } from '../lib/animations';
+import Layout from '@/components/layout/Layout';
+import { AnimatedIcon, type IconType } from '@/components/AnimatedIcons';
+import { fadeInUp, staggerContainer } from '@/lib/animations';
 
 const iconMap: Record<string, IconType> = {
   '🚀': 'rocket',

@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import Layout from '../components/layout/Layout';
-import { AnimatedIcon, IconType } from '../components/AnimatedIcons';
-import { fadeInUp, staggerContainer } from '../lib/animations';
+import Layout from '@/components/layout/Layout';
+import { AnimatedIcon, IconType } from '@/components/AnimatedIcons';
+import { fadeInUp, staggerContainer } from '@/lib/animations';
 
 export default function AboutPage() {
   return (
@@ -10,17 +10,16 @@ export default function AboutPage() {
       <div className="min-h-screen bg-gradient-to-b from-nexus-dark via-[#0f1425] to-nexus-dark pt-32 pb-20">
         <div className="max-w-7xl mx-auto px-6 mb-20">
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6 }}
             className="text-center"
           >
-            <p className="text-sm uppercase tracking-[0.35em] text-nexus-gold mb-4">About Sans Mercantile</p>
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-6 leading-tight">
-              Sovereign intelligence, designed for the next era of global commerce.
+             <h1 className="text-6xl md:text-7xl font-bold text-white mb-6">
+              Built for a <span className="bg-gradient-to-r from-nexus-gold to-nexus-accent bg-clip-text text-transparent">Smarter Tomorrow</span>
             </h1>
-            <p className="text-lg md:text-xl text-white max-w-3xl mx-auto leading-relaxed">
-              Sans Mercantile is a premium constellation of autonomous systems that fuse finance, healthcare, defense, energy, and cultural intelligence into a unified enterprise ecosystem.
+            <p className="text-xl text-nexus-gray-300 max-w-3xl mx-auto">
+              Sans Mercantile represents a new era of business—where 21 specialized autonomous systems work in concert to create value across every human endeavor.
             </p>
           </motion.div>
         </div>

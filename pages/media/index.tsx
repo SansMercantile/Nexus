@@ -4,8 +4,40 @@ import Layout from '../../components/layout/Layout';
 import { fadeInUp, staggerContainer } from '../../lib/animations';
 import { useState, useEffect } from 'react';
 
-// Social media integrations coming soon - real feeds to be configured
-const networkPlaceholders = [];
+const networkPlaceholders = [
+  {
+    id: 'youtube-1',
+    platform: 'YouTube',
+    title: 'Constellation Launch Webinar: AI in Infrastructure',
+    content: 'Watch our newest product launch webinar where we unveil the next-gen, regulated autonomous market infrastructure.',
+    postedDate: new Date().toLocaleDateString(),
+    url: 'https://www.youtube.com/watch?v=placeholder',
+  },
+  {
+    id: 'facebook-1',
+    platform: 'Facebook',
+    title: 'Sant Mercantile wins Best AI Trust Award',
+    content: 'We are excited to share our latest recognition in autonomous systems governance and transparency.',
+    postedDate: new Date().toLocaleDateString(),
+    url: 'https://www.facebook.com/sansmercantile/posts/placeholder',
+  },
+  {
+    id: 'twitter-1',
+    platform: 'Twitter',
+    title: 'New integration: Constellation SDK now supports event streaming',
+    content: 'Check out how to connect to real-time telemetry with 5 lines of code.',
+    postedDate: new Date().toLocaleDateString(),
+    url: 'https://twitter.com/sansmercantile/status/placeholder',
+  },
+  {
+    id: 'instagram-1',
+    platform: 'Instagram',
+    title: 'Behind the scenes of the media hub redesign',
+    content: 'Visual story from the design team on the new platform aesthetics.',
+    postedDate: new Date().toLocaleDateString(),
+    url: 'https://www.instagram.com/p/placeholder',
+  },
+];
 
 function mergeFeeds(linkedInPosts: any[], otherPosts: any[]) {
   const merged: any[] = [];

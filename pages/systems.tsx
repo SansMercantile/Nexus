@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Layout from '../components/layout/Layout';
 import { fadeInUp } from '../lib/animations';
-import { systemsData } from '../lib/system-data';
+import { SYSTEMS } from '../lib/constants';
 
 export default function Systems() {
   return (
@@ -31,7 +31,7 @@ export default function Systems() {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {systemsData.map((system, index) => (
+            {SYSTEMS.map((system, index) => (
               <motion.div
                 key={system.id}
                 initial={{ opacity: 0, y: 20 }}

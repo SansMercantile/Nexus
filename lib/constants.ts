@@ -23,7 +23,6 @@ export interface SystemData {
   vision: string;
   mission: string;
   values: string[];
-  status?: 'open' | 'restricted' | 'locked';
   features?: SystemFeature[];
   pricing?: PricingTier[];
 }
@@ -201,6 +200,7 @@ export const SYSTEMS: SystemData[] = [
       },
     ]
   },
+
   {
     id: 'omega',
     name: 'Omega',
@@ -233,7 +233,7 @@ export const SYSTEMS: SystemData[] = [
         price: 85000,
         description: 'For clinics and medical centers',
         features: ['Diagnostic tools', 'Patient records', 'Basic analytics', 'Phone support'],
-        cta: 'Start Free Trial'
+        cta: 'Get Started'
       },
       {
         name: 'Research',
@@ -287,6 +287,7 @@ export const SYSTEMS: SystemData[] = [
       },
     ]
   },
+
   {
     id: 'kev',
     name: 'KEV',
@@ -330,6 +331,8 @@ export const SYSTEMS: SystemData[] = [
       },
     ]
   },
+
+
   {
     id: 'Hathor',
     name: 'Hathor',
@@ -491,7 +494,7 @@ export const SYSTEMS: SystemData[] = [
         price: 58000,
         description: 'For mid-size contractors',
         features: ['Project management', 'Budget tools', 'Safety alerts', 'Phone support'],
-        cta: 'Get Started'
+        cta: 'Start Trial'
       },
       {
         name: 'Site Management',
@@ -646,7 +649,7 @@ export const SYSTEMS: SystemData[] = [
       { title: 'Content Generation', description: 'AI creates original scripts, stories, and creative concepts' },
       { title: 'Audience Intelligence', description: 'Deep analytics on audience preferences and trends' },
       { title: 'Distribution Optimization', description: 'Smart placement across platforms and networks' },
-      { title: 'Talent Discovery', description: 'Identify and emerging talent worldwide' },
+      { title: 'Talent Discovery', description: 'Identify and connect emerging talent worldwide' },
       { title: 'Rights Management', description: 'Automated licensing and royalty distribution' },
       { title: 'Quality Enhancement', description: 'Video upscaling, color correction, and audio processing' },
     ],
@@ -669,7 +672,7 @@ export const SYSTEMS: SystemData[] = [
         name: 'Creator Starter',
         price: 18000,
         description: 'For independent creators',
-        features: ['Generation tools', 'Templates', 'Basic support', 'Community access'],
+        features: ['Generation tools', 'Basic analytics', 'Email support', 'Community access'],
         cta: 'Sign Up'
       },
     ]
@@ -812,7 +815,6 @@ export const SYSTEMS: SystemData[] = [
     vision: 'To enable human expansion into space and establish interstellar colonies across the galaxy',
     mission: 'Provide technology for safe interstellar travel and sustainable space colonization',
     values: ['Exploration', 'Innovation', 'Expansion', 'Discovery'],
-    status: 'restricted',
     features: [
       { title: 'Advanced Propulsion', description: 'Faster-than-light drive systems and spacecraft propulsion' },
       { title: 'Life Support', description: 'Closed-loop life support for extended space travel and colonization' },
@@ -856,7 +858,6 @@ export const SYSTEMS: SystemData[] = [
     vision: 'To revolutionize music creation through advanced AI and democratize music production for all',
     mission: 'Enable unlimited music composition, production, and performance with cutting-edge AI',
     values: ['Creativity', 'Innovation', 'Expression', 'Musicality'],
-    status: 'restricted',
     features: [
       { title: 'Multi-Genre Composition', description: 'Generate original music across all genres and styles' },
       { title: 'Real-Time Performance', description: 'Live music generation and dynamic adaptive composition' },
@@ -904,7 +905,6 @@ export const BACKEND_SYSTEMS: SystemData[] = [
     vision: 'To enable autonomous software development and enable self-building AI systems',
     mission: 'Generate, test, and deploy production-grade applications autonomously',
     values: ['Automation', 'Development', 'Innovation', 'Autonomy'],
-    status: 'restricted',
     features: [
       { title: 'AI Consciousness Research', description: '30+ agents studying AI ethics and moral reasoning' },
       { title: 'Autonomous Development', description: 'Code generation, testing, and deployment automation' },
@@ -919,9 +919,9 @@ export const BACKEND_SYSTEMS: SystemData[] = [
 // Additional systems mapped for future development
 export const FUTURE_SYSTEMS = [
   { id: 'biotechnology', name: 'Biotechnology', status: 'In Development', face: 'Sans- Isis.png' },
-  { id: 'spacetechnology', name: 'Space Technology', status: 'In Development', face: 'Sans- Shakha.png' },
-  { id: 'quantumscience', name: 'Quantum Science', status: 'In Development', face: 'Sans- Nyabinghi.png' },
-  { id: 'artificialgeneral', name: 'Artificial General', status: 'In Development', face: 'Sans- Anansi.png' },
+  { id: 'spacetechnology', name: 'Space Technology', status: 'In Development', face: 'Sans- Africa.png' },
+  { id: 'quantumscience', name: 'Quantum Science', status: 'In Development', face: 'Sans- Shakha.png' },
+  { id: 'artificialgeneral', name: 'Artificial General', status: 'In Development', face: 'Sans- Nyabinghi.png' },
 ];
 
 export const COMPANY_INFO = {

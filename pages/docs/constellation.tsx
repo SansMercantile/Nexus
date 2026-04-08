@@ -44,7 +44,7 @@ export default function ConstellationDocs() {
     <Layout>
       <Head>
         <title>Constellation System - Sans Mercantile</title>
-        <meta name="description" content="Comprehensive documentation for the Sans Mercantile Constellation - unified AI orchestration across 10 domain systems" />
+        <meta name="description" content="Comprehensive documentation for the Sans Mercantile Constellation - unified AI orchestration across 21 specialized domain systems" />
       </Head>
 
       <div className="min-h-screen bg-gradient-to-b from-nexus-dark via-[#0f1425] to-nexus-dark pt-32 pb-20">
@@ -60,8 +60,8 @@ export default function ConstellationDocs() {
               Constellation System
             </h1>
             <p className="text-xl text-nexus-gray-300 max-w-3xl mx-auto">
-              Unified AI orchestration platform integrating quantum computing, neuromorphic processing,
-              and traditional accelerators across 10 specialized domain systems.
+              Unified AI orchestration platform integrating advanced computing technologies
+              across 21 specialized domain systems for comprehensive enterprise solutions.
             </p>
           </motion.div>
         </div>
@@ -74,43 +74,89 @@ export default function ConstellationDocs() {
           className="max-w-6xl mx-auto px-6 mb-20"
         >
           <h2 className="text-3xl font-bold text-white mb-12">System Architecture</h2>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <SystemOverview
-              title="Energy & Infrastructure Systems"
-              description="Critical infrastructure management with AI-driven optimization"
+              title="Financial & Trading Systems"
+              description="Market intelligence and wealth management"
               color="green"
               systems={[
-                "RA - Solar Energy & Power Generation (300 agents)",
-                "MONTU - Nuclear Energy Systems (335 agents)",
-                "MAMI WATER - Hydraulics & Water Infrastructure (270 agents)",
-                "PTAH - Construction & Infrastructure (260 agents)"
+                "PRIV - Wealth Intelligence & Trading",
+                "MEZZO - Governance & Ethics"
+              ]}
+            />
+            <SystemOverview
+              title="Legal & Compliance"
+              description="Regulatory monitoring and legal intelligence"
+              color="blue"
+              systems={[
+                "BRIGIT - Legal & Regulatory Intelligence",
+                "SIA - Archetypal Intelligence"
+              ]}
+            />
+            <SystemOverview
+              title="Healthcare & Education"
+              description="Medical and educational AI systems"
+              color="emerald"
+              systems={[
+                "OMEGA - Medical AI & Consciousness",
+                "KEV - Knowledge & Educational Vectors"
+              ]}
+            />
+            <SystemOverview
+              title="Energy & Infrastructure"
+              description="Critical infrastructure management"
+              color="yellow"
+              systems={[
+                "RA - Solar Energy & Power Generation",
+                "MONTU - Nuclear Energy Systems",
+                "MAMI WATER - Hydraulics & Water Infrastructure",
+                "PTAH - Construction & Infrastructure",
+                "SHANGO - Weather & Climate Systems"
               ]}
             />
             <SystemOverview
               title="Agriculture & Logistics"
-              description="Supply chain and agricultural intelligence systems"
-              color="emerald"
+              description="Supply chain and agricultural intelligence"
+              color="orange"
               systems={[
-                "HATHOR - Agricultural Intelligence (180 agents)",
-                "HAPI - Supply Chain & Logistics (280 agents)"
+                "KEL - Agricultural Intelligence",
+                "HATHOR - Resource Extraction & Mining",
+                "HAPI - Supply Chain & Transportation"
               ]}
             />
             <SystemOverview
-              title="Security & Environment"
-              description="Protection and environmental monitoring systems"
+              title="Security & Defense"
+              description="Protection and defense systems"
               color="red"
               systems={[
-                "SEKHMET - Cybersecurity & Defense (300 agents)",
-                "SHANGO - Weather & Climate Systems (250 agents)"
+                "SEKHMET - Defense & Strategic Intelligence",
+                "SOBEK - Threat Detection & Cybersecurity"
               ]}
             />
             <SystemOverview
-              title="Aerospace & Maritime"
-              description="Advanced transportation and monitoring systems"
-              color="blue"
+              title="Aerospace & Space"
+              description="Advanced transportation and space systems"
+              color="purple"
               systems={[
-                "KIBUKA - Aerospace & Satellite Technology (320 agents)",
-                "SOBEK - Maritime & Water Systems (285 agents)"
+                "KIBUKA - Aerial Defense & Space Operations",
+                "ANUBIS - Space Colonization & Interstellar Travel",
+                "PRIMO - Temporal & Multidimensional Manipulation"
+              ]}
+            />
+            <SystemOverview
+              title="Creative & Entertainment"
+              description="AI-powered creative and entertainment systems"
+              color="pink"
+              systems={[
+                "MF - CrazyJAM AI Music System"
+              ]}
+            />
+            <SystemOverview
+              title="Backend & Development"
+              description="Internal development and automation systems"
+              color="gray"
+              systems={[
+                "MPETI - Autonomous Full Stack AI Developer"
               ]}
             />
           </div>
@@ -127,24 +173,24 @@ export default function ConstellationDocs() {
           <h2 className="text-3xl font-bold text-white mb-12">AI Infrastructure Layer</h2>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <TechSection
-              title="Quantum Computing"
-              description="6 quantum providers for complex optimization problems"
-              technologies={["IBM Quantum", "Google Quantum AI", "IonQ", "Quantinuum", "Rigetti", "D-Wave"]}
+              title="Advanced Computing"
+              description="Multiple computing paradigms for diverse workloads"
+              technologies={["Quantum Computing", "Neuromorphic Processing", "AI Accelerators", "Cloud Infrastructure"]}
             />
             <TechSection
-              title="Neuromorphic Processing"
-              description="Brain-inspired computing for pattern recognition"
-              technologies={["Intel Loihi 2", "BrainChip Akida", "IBM TrueNorth", "SpiNNaker"]}
+              title="Processing Technologies"
+              description="Specialized hardware for AI and computational tasks"
+              technologies={["High-Performance GPUs", "Neural Processing Units", "Quantum Processors", "Distributed Systems"]}
             />
             <TechSection
-              title="AI Accelerators"
-              description="High-performance computing for AI workloads"
-              technologies={["NVIDIA H100/A100", "Google TPU v4", "AWS Trainium", "AMD MI300"]}
+              title="Orchestration Layer"
+              description="Intelligent resource allocation and workload routing"
+              technologies={["Unified Orchestrator", "Load Balancing", "Resource Management", "Multi-Cloud Support"]}
             />
             <TechSection
-              title="Cloud Infrastructure"
-              description="Multi-cloud orchestration with failover"
-              technologies={["AWS", "Azure", "Google Cloud", "Oracle Cloud"]}
+              title="Integration Framework"
+              description="Seamless connectivity across all systems"
+              technologies={["API Gateways", "Event Streaming", "Service Mesh", "Microservices Architecture"]}
             />
           </div>
         </motion.div>
@@ -160,26 +206,26 @@ export default function ConstellationDocs() {
           <h2 className="text-3xl font-bold text-white mb-12">Unified Orchestrator</h2>
           <div className="border border-nexus-gold/20 rounded-xl p-8 bg-gradient-to-br from-[#1a1f3a] to-nexus-dark">
             <p className="text-nexus-gray-300 mb-6">
-              The Unified Orchestrator serves as the intelligent routing layer that automatically selects
-              the optimal compute paradigm for each problem type:
+              The Unified Orchestrator provides intelligent resource allocation and coordination
+              across all systems and computing platforms for optimal performance and efficiency.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <h4 className="text-nexus-gold font-semibold mb-3">Problem Classification</h4>
+                <h4 className="text-nexus-gold font-semibold mb-3">Workload Optimization</h4>
                 <ul className="space-y-2 text-nexus-gray-300">
-                  <li>• Quantum-primary: Complex optimization, cryptography</li>
-                  <li>• Neuromorphic-primary: Pattern recognition, anomaly detection</li>
-                  <li>• GPU-primary: Training, simulation, parallel processing</li>
-                  <li>• Cloud-primary: Data processing, storage, orchestration</li>
+                  <li>• Intelligent task distribution</li>
+                  <li>• Resource utilization monitoring</li>
+                  <li>• Performance optimization</li>
+                  <li>• Scalability management</li>
                 </ul>
               </div>
               <div>
-                <h4 className="text-nexus-gold font-semibold mb-3">Intelligent Routing</h4>
+                <h4 className="text-nexus-gold font-semibold mb-3">System Coordination</h4>
                 <ul className="space-y-2 text-nexus-gray-300">
-                  <li>• Cost-performance optimization</li>
-                  <li>• Multi-level fallback systems</li>
-                  <li>• Real-time resource allocation</li>
-                  <li>• Cross-system coordination</li>
+                  <li>• Cross-system communication</li>
+                  <li>• Service orchestration</li>
+                  <li>• Fault tolerance</li>
+                  <li>• Load balancing</li>
                 </ul>
               </div>
             </div>
@@ -198,36 +244,36 @@ export default function ConstellationDocs() {
           <div className="border border-nexus-gold/20 rounded-xl p-8 bg-gradient-to-br from-[#1a1f3a] to-nexus-dark">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <div>
-                <h3 className="text-xl font-bold text-nexus-gold mb-4">NVIDIA Kimodo Engine</h3>
+                <h3 className="text-xl font-bold text-nexus-gold mb-4">Real-Time Avatars</h3>
                 <ul className="space-y-3 text-nexus-gray-300">
                   <li className="flex items-start gap-3">
                     <span className="text-nexus-gold mt-1">•</span>
-                    <span>FACS Facial Action Synthesis for realistic expressions</span>
+                    <span>Dynamic visual representation of system states</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <span className="text-nexus-gold mt-1">•</span>
-                    <span>Real-time eye gaze and head movement tracking</span>
+                    <span>Interactive communication interfaces</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <span className="text-nexus-gold mt-1">•</span>
-                    <span>Emotional state rendering and domain-specific reactions</span>
+                    <span>Contextual response systems</span>
                   </li>
                 </ul>
               </div>
               <div>
-                <h3 className="text-xl font-bold text-nexus-gold mb-4">Event-Driven Reactions</h3>
+                <h3 className="text-xl font-bold text-nexus-gold mb-4">Event-Driven Interactions</h3>
                 <ul className="space-y-3 text-nexus-gray-300">
                   <li className="flex items-start gap-3">
                     <span className="text-nexus-gold mt-1">•</span>
-                    <span>Market events trigger avatar responses in PRIV system</span>
+                    <span>Automated response to system events</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <span className="text-nexus-gold mt-1">•</span>
-                    <span>Creative milestones activate reactions in MEZZO system</span>
+                    <span>Real-time status communication</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <span className="text-nexus-gold mt-1">•</span>
-                    <span>Domain-specific reaction mapping across all systems</span>
+                    <span>Multi-modal interaction support</span>
                   </li>
                 </ul>
               </div>
@@ -246,20 +292,20 @@ export default function ConstellationDocs() {
           <h2 className="text-3xl font-bold text-white mb-12">System Statistics</h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div className="text-center p-6 bg-gradient-to-br from-nexus-gold/10 to-nexus-gold/5 rounded-xl border border-nexus-gold/20">
-              <div className="text-3xl font-bold text-nexus-gold mb-2">2,850+</div>
+              <div className="text-3xl font-bold text-nexus-gold mb-2">21</div>
+              <div className="text-nexus-gray-300">Autonomous Systems</div>
+            </div>
+            <div className="text-center p-6 bg-gradient-to-br from-nexus-gold/10 to-nexus-gold/5 rounded-xl border border-nexus-gold/20">
+              <div className="text-3xl font-bold text-nexus-gold mb-2">1000+</div>
               <div className="text-nexus-gray-300">Specialized Agents</div>
             </div>
             <div className="text-center p-6 bg-gradient-to-br from-nexus-gold/10 to-nexus-gold/5 rounded-xl border border-nexus-gold/20">
-              <div className="text-3xl font-bold text-nexus-gold mb-2">50</div>
-              <div className="text-nexus-gray-300">Domain Routers</div>
+              <div className="text-3xl font-bold text-nexus-gold mb-2">Multiple</div>
+              <div className="text-nexus-gray-300">Compute Paradigms</div>
             </div>
             <div className="text-center p-6 bg-gradient-to-br from-nexus-gold/10 to-nexus-gold/5 rounded-xl border border-nexus-gold/20">
-              <div className="text-3xl font-bold text-nexus-gold mb-2">10</div>
-              <div className="text-nexus-gray-300">Domain Systems</div>
-            </div>
-            <div className="text-center p-6 bg-gradient-to-br from-nexus-gold/10 to-nexus-gold/5 rounded-xl border border-nexus-gold/20">
-              <div className="text-3xl font-bold text-nexus-gold mb-2">17</div>
-              <div className="text-nexus-gray-300">Compute Providers</div>
+              <div className="text-3xl font-bold text-nexus-gold mb-2">Global</div>
+              <div className="text-nexus-gray-300">Enterprise Scale</div>
             </div>
           </div>
         </motion.div>
@@ -274,44 +320,26 @@ export default function ConstellationDocs() {
         >
           <h2 className="text-3xl font-bold text-white mb-12">Integration Patterns</h2>
           <div className="border border-nexus-gold/20 rounded-xl p-8 bg-gradient-to-br from-[#1a1f3a] to-nexus-dark">
-            <h3 className="text-xl font-bold text-nexus-gold mb-6">Cross-System Communication Matrix</h3>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm text-nexus-gray-300">
-                <thead>
-                  <tr className="border-b border-nexus-gold/20">
-                    <th className="text-left p-3 text-nexus-gold">System</th>
-                    <th className="text-left p-3 text-nexus-gold">Dependencies</th>
-                    <th className="text-left p-3 text-nexus-gold">Provides To</th>
-                    <th className="text-left p-3 text-nexus-gold">Communication</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="border-b border-nexus-gold/10">
-                    <td className="p-3 font-semibold">HATHOR</td>
-                    <td className="p-3">SHANGO (weather), MAMI_WATER (water)</td>
-                    <td className="p-3">RA (grid load forecast)</td>
-                    <td className="p-3">REST APIs + WebSocket</td>
-                  </tr>
-                  <tr className="border-b border-nexus-gold/10">
-                    <td className="p-3 font-semibold">RA</td>
-                    <td className="p-3">SHANGO (irradiance), HATHOR (demand)</td>
-                    <td className="p-3">MONTU (grid coordination)</td>
-                    <td className="p-3">REST APIs + Queues</td>
-                  </tr>
-                  <tr className="border-b border-nexus-gold/10">
-                    <td className="p-3 font-semibold">SHANGO</td>
-                    <td className="p-3">KIBUKA (satellite data)</td>
-                    <td className="p-3">All systems (weather context)</td>
-                    <td className="p-3">WebSocket broadcast</td>
-                  </tr>
-                  <tr className="border-b border-nexus-gold/10">
-                    <td className="p-3 font-semibold">SEKHMET</td>
-                    <td className="p-3">KIBUKA (threat intel)</td>
-                    <td className="p-3">All systems (security alerts)</td>
-                    <td className="p-3">WebSocket + Event streams</td>
-                  </tr>
-                </tbody>
-              </table>
+            <h3 className="text-xl font-bold text-nexus-gold mb-6">System Interoperability</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h4 className="text-nexus-gold font-semibold mb-3">Communication Protocols</h4>
+                <ul className="space-y-2 text-nexus-gray-300">
+                  <li>• RESTful APIs for system integration</li>
+                  <li>• Real-time event streaming</li>
+                  <li>• Message queuing systems</li>
+                  <li>• WebSocket connections</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="text-nexus-gold font-semibold mb-3">Data Exchange</h4>
+                <ul className="space-y-2 text-nexus-gray-300">
+                  <li>• Standardized data formats</li>
+                  <li>• Cross-system data sharing</li>
+                  <li>• Service discovery</li>
+                  <li>• Load balancing</li>
+                </ul>
+              </div>
             </div>
           </div>
         </motion.div>

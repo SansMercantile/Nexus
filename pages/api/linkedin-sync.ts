@@ -15,6 +15,31 @@ export default async function handler(
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
+  // OFFLINE MODE: Disable LinkedIn sync when running offline with Mpeti
+  const offlineMode = process.env.OFFLINE_MODE === 'true' || !process.env.LINKEDIN_ACCESS_TOKEN;
+
+  if (offlineMode) {
+    return res.status(200).json({
+      status: 'offline',
+      message:
+        '🚀 Running in OFFLINE MODE - Mpeti is operating completely offline. LinkedIn integration disabled.',
+      posts: [
+        {
+          id: 'offline-mode-1',
+          title: 'Mpeti Offline Mode Active',
+          content:
+            'Constellation is running in complete offline mode. All Mpeti operations rely on local Ollama (gemma:2b) model.',
+          postedDate: new Date().toLocaleDateString(),
+          category: 'system',
+          slug: 'mpeti-offline-active',
+          featuredImage: '/images/mpeti-offline.jpg',
+          platform: 'System',
+          url: 'http://localhost:3000/docs/mpeti',
+        },
+      ],
+    });
+  }
+
   try {
     const linkedInToken = process.env.LINKEDIN_ACCESS_TOKEN;
     const orgIdEnv = process.env.LINKEDIN_ORG_ID;
