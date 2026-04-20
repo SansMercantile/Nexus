@@ -25,10 +25,10 @@ export function SansMercantileLogo() {
       </div>
 
       <div
-        className="absolute inset-0 flex items-center justify-center transition-all duration-500 ease-in-out transform scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100"
+        className="absolute inset-0 flex items-center justify-center transition-all duration-500 ease-in-out transform scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100 pointer-events-none"
       >
         <img 
-          src="img/logo.svg" 
+          src="/logo.svg" 
           alt="Sans Mercantile Logo" 
           className="w-10 h-10 object-contain"
           // Adding a subtle drop shadow to match the glowing effect from the index file
@@ -37,13 +37,13 @@ export function SansMercantileLogo() {
           }}
           onError={(e) => {
             // Fallback just in case the path differs in your dev environment
-            console.error("Logo not found at img/logo.svg");
+            console.error("Logo not found at public/logo.svg");
           }}
         />
       </div>
       
       {/* Invisible anchor for navigation */}
-      <a href="/" className="absolute inset-0 z-10" aria-label="Sans Mercantile Home"></a>
+      <a href="/" className="absolute inset-0 z-0" aria-label="Sans Mercantile Home"></a>
     </div>
   );
 }

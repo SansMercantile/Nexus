@@ -101,7 +101,7 @@ export default function Systems() {
 
                     {/* CTA Button */}
                     <Link
-                      href={`/systems/${system.id}`}
+                      href={`/${system.id}`}
                       className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold
                                bg-gradient-to-r from-nexus-gold/20 to-nexus-gold/10
                                border border-nexus-gold/30 text-nexus-gold
