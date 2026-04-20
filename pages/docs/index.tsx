@@ -1,18 +1,10 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import Layout from '../../components/Layout';
+import Layout from '@/components/layout/Layout';
+import { getAllSystems } from '@repo/constellation';
 
 export default function DocsPage() {
-  const systems = [
-    { name: 'Constellation', slug: 'constellation', description: 'Overview of all 21 autonomous AI systems' },
-    { name: 'Omega', slug: 'omega', description: 'Medical AI system' },
-    { name: 'SIA', slug: 'sia', description: 'Archetypal intelligence' },
-    { name: 'KEV', slug: 'kev', description: 'Educational vectors' },
-    { name: 'Primo', slug: 'primo', description: 'Temporal manipulation' },
-    { name: 'Anubis', slug: 'anubis', description: 'Space colonization' },
-    { name: 'MF', slug: 'mf', description: 'Music AI system' },
-    { name: 'MPeti', slug: 'mpeti', description: 'Autonomous developer' },
-  ];
+  const systems = getAllSystems();
 
   return (
     <Layout>

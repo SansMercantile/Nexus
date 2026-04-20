@@ -80,7 +80,9 @@ export default function SystemPricingPage() {
   const { system } = router.query;
 
   const systemData = SYSTEMS.find(s => s.id === system);
-  const pricingUrl = systemData ? `https://${systemData.id.toLowerCase()}.sansmercantile.com` : '/';
+  const pricingUrl = systemData?.id === 'priv' 
+    ? 'https://priv.sansmercantile.com/demo' 
+    : 'https://sales.sansmercantile.com';
 
   if (!systemData) {
     return (

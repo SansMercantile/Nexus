@@ -38,7 +38,9 @@ export default function SystemFeaturesPage() {
   const { system } = router.query;
   
   const systemData = SYSTEMS.find(s => s.id === system);
-  const systemUrl = systemData ? `https://${systemData.id.toLowerCase()}.sansmercantile.com` : '/';
+  const systemUrl = systemData?.id === 'priv' 
+    ? 'https://priv.sansmercantile.com/demo' 
+    : 'https://sales.sansmercantile.com';
 
   if (!systemData) {
     return (
