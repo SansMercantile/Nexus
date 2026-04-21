@@ -10,3 +10,9 @@ export default function BlogRedirectPage() {
 
   return null;
 }
+
+export async function getStaticProps() {
+  return {
+    props: {},
+  };
+}

@@ -52,7 +52,7 @@ export default function SMOAdmin() {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-gradient-to-b from-nexus-dark via-[#0f1425] to-nexus-dark pt-32 pb-20">
+      <div className=" pt-32 pb-20">
         <div className="max-w-6xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

@@ -20,7 +20,7 @@ export default function SystemDocPage({ system }: SystemPageProps) {
         />
       </Head>
 
-      <div className="min-h-screen bg-gradient-to-b from-nexus-dark via-[#0f1425] to-nexus-dark pt-32 pb-20">
+      <div className=" pt-32 pb-20">
         <div className="max-w-6xl mx-auto px-6">
           <div className="mb-12 text-center">
             <p className="text-sm uppercase tracking-[0.3em] text-nexus-gold mb-3">Constellation System</p>

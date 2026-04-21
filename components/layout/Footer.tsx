@@ -11,42 +11,42 @@ export function Footer() {
   }, []);
 
   return (
-    <footer className="relative bg-slate-950/80 backdrop-blur-md border-t border-nexus-accent/20 py-12 mt-20 z-40">
+    <footer className="relative bg-slate-950/80 backdrop-blur-md border-t border-nexus-accent/20 py-12 mt-20 z-40 dark:bg-slate-950/80 dark:border-nexus-accent/20 light:bg-gray-100/90 light:backdrop-blur-md light:border-gray-300 angelic:bg-amber-50/95 angelic:backdrop-blur-md angelic:border-amber-200">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-6 gap-8 mb-12 relative z-50">
           {/* Brand */}
           <div>
             <SansMercantileLogo />
-            <p className="text-white/80 text-sm mt-2">Reimagine • Rebuild • Transcend</p>
+            <p className="text-white/80 text-sm mt-2 dark:text-white/80 light:text-gray-600 angelic:text-amber-800">Reimagine • Rebuild • Transcend</p>
           </div>
 
           {/* Services */}
           <div>
-            <h4 className="font-semibold text-white mb-4">Services</h4>
-            <ul className="space-y-2 text-sm text-white/80">
-              <li><Link href="/systems" className="hover:text-nexus-gold transition-colors">Systems</Link></li>
-              <li><Link href="/services" className="hover:text-nexus-gold transition-colors">Services</Link></li>
-              <li><Link href="/platform" className="hover:text-nexus-gold transition-colors">Platform</Link></li>
+            <h4 className="font-semibold text-white mb-4 dark:text-white light:text-gray-900 angelic:text-amber-900">Services</h4>
+            <ul className="space-y-2 text-sm text-white/80 dark:text-white/80 light:text-gray-600 angelic:text-amber-700">
+              <li><Link href="/systems" className="hover:text-nexus-gold transition-colors dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">Systems</Link></li>
+              <li><Link href="/services" className="hover:text-nexus-gold transition-colors dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">Services</Link></li>
+              <li><Link href="/platform" className="hover:text-nexus-gold transition-colors dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">Platform</Link></li>
             </ul>
           </div>
 
           {/* Company */}
           <div>
-            <h4 className="font-semibold text-white mb-4">Company</h4>
-            <ul className="space-y-2 text-sm text-white/80">
-              <li><Link href="/about" className="hover:text-nexus-gold transition-colors">About Us</Link></li>
-              <li><Link href="/careers" className="hover:text-nexus-gold transition-colors">Careers</Link></li>
-              <li><Link href="/contact" className="hover:text-nexus-gold transition-colors">Contact</Link></li>
+            <h4 className="font-semibold text-white mb-4 dark:text-white light:text-gray-900 angelic:text-amber-900">Company</h4>
+            <ul className="space-y-2 text-sm text-white/80 dark:text-white/80 light:text-gray-600 angelic:text-amber-700">
+              <li><Link href="/about" className="hover:text-nexus-gold transition-colors dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">About Us</Link></li>
+              <li><Link href="/careers" className="hover:text-nexus-gold transition-colors dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">Careers</Link></li>
+              <li><Link href="/contact" className="hover:text-nexus-gold transition-colors dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">Contact</Link></li>
             </ul>
           </div>
 
           {/* Resources */}
           <div>
-            <h4 className="font-semibold text-white mb-4">Resources</h4>
-            <ul className="space-y-2 text-sm text-white/80">
-              <li><Link href="/legal/faq" className="hover:text-nexus-gold transition-colors">FAQ</Link></li>
-              <li><Link href="/media" className="hover:text-nexus-gold transition-colors">Media</Link></li>
-              <li><Link href="/knowledge-base" className="hover:text-nexus-gold transition-colors">Knowledge Base</Link></li>
+            <h4 className="font-semibold text-white mb-4 dark:text-white light:text-gray-900 angelic:text-amber-900">Resources</h4>
+            <ul className="space-y-2 text-sm text-white/80 dark:text-white/80 light:text-gray-600 angelic:text-amber-700">
+              <li><Link href="/legal/faq" className="hover:text-nexus-gold transition-colors dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">FAQ</Link></li>
+              <li><Link href="/media" className="hover:text-nexus-gold transition-colors dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">Media</Link></li>
+              <li><Link href="/knowledge-base" className="hover:text-nexus-gold transition-colors dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">Knowledge Base</Link></li>
             </ul>
           </div>
 

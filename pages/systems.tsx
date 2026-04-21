@@ -16,7 +16,7 @@ export default function Systems() {
         <meta name="description" content="Explore our constellation of autonomous intelligent systems" />
       </Head>
 
-      <div className="min-h-screen bg-gradient-to-b from-nexus-dark via-[#0f1425] to-nexus-dark pt-32 pb-20">
+      <div className=" pt-32 pb-20">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
             initial="hidden"

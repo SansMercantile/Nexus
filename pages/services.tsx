@@ -10,7 +10,7 @@ export default function Services() {
         <meta name="description" content="Professional services offered by Sans Mercantile" />
       </Head>
 
-      <div className="min-h-screen bg-gradient-to-b from-nexus-dark via-[#0f1425] to-nexus-dark pt-32 pb-20">
+      <div className=" pt-32 pb-20">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">

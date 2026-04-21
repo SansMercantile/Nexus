@@ -98,7 +98,7 @@ export default function SystemPricingPage() {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-gradient-to-b from-nexus-dark via-[#0f1425] to-nexus-dark pt-32 pb-20">
+      <div className=" pt-32 pb-20">
         {/* Hero */}
         <div className="max-w-7xl mx-auto px-6 mb-20">
           <motion.div

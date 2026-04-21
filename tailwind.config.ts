@@ -25,6 +25,20 @@ const config: Config = {
           700: '#1e293b',
         },
         
+        // Angelic theme colors (white and gold)
+        'angelic': {
+          50: '#fffbeb',   // Very light amber
+          100: '#fef3c7',  // Light amber
+          200: '#fde68a',  // Medium light amber
+          300: '#fcd34d',  // Medium amber
+          400: '#fbbf24',  // Darker amber
+          500: '#f59e0b',  // Orange amber
+          600: '#d97706',  // Dark orange
+          700: '#b45309',  // Dark brown
+          800: '#92400e',  // Darker brown
+          900: '#78350f',  // Very dark brown
+        },
+        
         // System colors (will be used for individual system pages)
         'priv-primary': '#d4af37',
         'kel-primary': '#8b6914',

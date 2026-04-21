@@ -13,3 +13,16 @@ export default function BlogPostRedirect() {
 
   return null;
 }
+
+export async function getStaticProps() {
+  return {
+    props: {},
+  };
+}
+
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
+}

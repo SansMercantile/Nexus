@@ -16,6 +16,7 @@ export interface JobPosting {
   description: string;
   responsibilities: string[];
   qualifications: string[];
+  benefits?: string[];
   assessments: AssessmentType[];
   posted_at: string;
   deadline?: string;

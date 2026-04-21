@@ -20,41 +20,51 @@ const JobCard = ({ job, onViewDetails }: { job: JobPosting; onViewDetails: () =>
   return (
     <motion.div
       variants={fadeInUp}
-      className="border border-nexus-gold/20 rounded-xl p-8 bg-gradient-to-br from-[#1a1f3a] to-nexus-dark hover:border-nexus-gold/40 transition-all duration-300 group"
+      className="border border-nexus-gold/30 rounded-lg p-6 bg-gradient-to-br from-slate-900/90 to-slate-800/90 backdrop-blur-sm hover:border-nexus-gold/60 hover:shadow-lg hover:shadow-nexus-gold/10 transition-all duration-300 group cursor-pointer"
+      onClick={onViewDetails}
     >
       <div className="flex justify-between items-start mb-4">
-        <div>
-          <h3 className="text-xl font-bold text-white group-hover:text-nexus-gold transition-colors">
+        <div className="flex-1">
+          <h3 className="text-lg font-bold text-white group-hover:text-nexus-gold transition-colors mb-1">
             {job.title}
           </h3>
-          <p className="text-nexus-gray-400">{job.department}</p>
+          <p className="text-nexus-gray-400 text-sm">{job.department}</p>
         </div>
-        <span className="text-xs px-3 py-1 rounded-full bg-nexus-gold/20 text-nexus-gold">
+        <span className="text-xs px-2 py-1 rounded-full bg-nexus-gold/20 text-nexus-gold font-medium ml-3 flex-shrink-0">
           {job.level.charAt(0).toUpperCase() + job.level.slice(1)}
         </span>
       </div>
 
-      <div className="flex flex-col gap-3 text-sm text-nexus-gray-400 mb-4">
-        <span>📍 {job.location}</span>
-        <span>💼 {job.type}</span>
+      <div className="grid grid-cols-2 gap-4 text-sm mb-4">
+        <div className="flex items-center gap-2">
+          <span className="text-nexus-gray-500">📍</span>
+          <span className="text-nexus-gray-300">{job.location}</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-nexus-gray-500">💼</span>
+          <span className="text-nexus-gray-300">{job.type}</span>
+        </div>
         {job.salary && (
-          <span className="text-nexus-gold font-medium">
-            {salaryDisplay}
-          </span>
+          <div className="col-span-2 flex items-center gap-2">
+            <span className="text-nexus-gray-500">💰</span>
+            <span className="text-nexus-gold font-medium">{salaryDisplay}</span>
+          </div>
         )}
       </div>
 
-      <div className="text-xs text-nexus-gray-500 mb-4 p-2 bg-nexus-dark rounded">
-        <div className="font-semibold text-nexus-gray-300 mb-1">Assessments:</div>
-        <div>{assessmentNames || 'Standard evaluation'}</div>
+      <div className="text-xs text-nexus-gray-500 mb-4 p-3 bg-slate-800/50 rounded-md border border-slate-700/50">
+        <div className="font-medium text-nexus-gray-300 mb-1">Assessments:</div>
+        <div className="text-nexus-gray-400">{assessmentNames || 'Standard evaluation'}</div>
       </div>
 
-      <button
-        onClick={onViewDetails}
-        className="mt-6 w-full text-nexus-gold font-semibold py-2 border border-nexus-gold/30 rounded-lg hover:bg-nexus-gold/10 transition-all group-hover:translate-x-1"
-      >
-        View Details & Apply →
-      </button>
+      <div className="flex items-center justify-between">
+        <span className="text-xs text-nexus-gray-500">
+          Posted {new Date(job.posted_at).toLocaleDateString()}
+        </span>
+        <div className="text-nexus-gold font-medium text-sm group-hover:translate-x-1 transition-transform">
+          View Details →
+        </div>
+      </div>
     </motion.div>
   );
 };
@@ -363,12 +373,18 @@ const JobDetailsModal = ({
         <div className="mb-8">
           <h3 className="text-2xl font-bold text-white mb-4">What We Offer</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {job.benefits.map((benefit, idx) => (
-              <div key={idx} className="flex gap-3">
-                <span className="text-nexus-gold flex-shrink-0">✓</span>
-                <span className="text-nexus-gray-300">{benefit}</span>
+            {job.benefits && job.benefits.length > 0 ? (
+              job.benefits.map((benefit, idx) => (
+                <div key={idx} className="flex gap-3">
+                  <span className="text-nexus-gold flex-shrink-0">✓</span>
+                  <span className="text-nexus-gray-300">{benefit}</span>
+                </div>
+              ))
+            ) : (
+              <div className="col-span-full text-center text-nexus-gray-400 py-8">
+                <p>Benefits information will be provided during the interview process.</p>
               </div>
-            ))}
+            )}
           </div>
         </div>
 
@@ -412,7 +428,7 @@ export default function CareersPage() {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-gradient-to-b from-nexus-dark via-[#0f1425] to-nexus-dark pt-32 pb-20">
+      <div className="pb-20">
         {/* Hero */}
         <div className="max-w-7xl mx-auto px-6 mb-20">
           <motion.div
@@ -467,7 +483,7 @@ export default function CareersPage() {
             </div>
           </div>
 
-          <motion.div className="grid grid-cols-1 gap-6">
+          <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {openJobs.length > 0 ? (
               openJobs.map(job => (
                 <JobCard
