@@ -30,7 +30,7 @@ export default function CompliancePage() {
             <div className="prose prose-invert max-w-none">
               <h2 className="text-2xl font-bold text-white mb-4">Regulatory Compliance</h2>
               <p className="text-nexus-gray-300 mb-6">
-                Sans Mercantile Nexus is designed to comply with applicable laws and regulations, including data protection and privacy requirements.
+                Sans Mercantile Constellation is designed to comply with applicable laws and regulations, including data protection and privacy requirements.
               </p>
 
               <h2 className="text-2xl font-bold text-white mb-4">Security Standards</h2>

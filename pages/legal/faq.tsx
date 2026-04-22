@@ -6,16 +6,16 @@ import { fadeInUp } from '@/lib/animations';
 export default function FAQPage() {
   const faqs = [
     {
-      question: 'What is Sans Mercantile Nexus?',
-      answer: 'Sans Mercantile Nexus is a comprehensive AI-powered platform that integrates multiple specialized systems to provide enterprise-grade solutions for wealth intelligence, governance, legal compliance, and more.'
+      question: 'What is Sans Mercantile Constellation?',
+      answer: 'Sans Mercantile Constellation is a comprehensive AI-powered platform that integrates multiple specialized systems to provide enterprise-grade solutions for wealth intelligence, governance, legal compliance, and more.'
     },
     {
       question: 'How do I get started?',
       answer: 'You can get started by visiting our documentation at /docs or contacting our sales team at sales@sansmercantile.com for a personalized demo.'
     },
     {
-      question: 'What systems are included in the Nexus?',
-      answer: 'The Nexus includes 21 specialized AI systems covering areas such as wealth intelligence, governance, legal solutions, medical AI, manufacturing, and more. Visit /systems to explore all available systems.'
+      question: 'What systems are included in the Constellation?',
+      answer: 'The Constellation includes 21 specialized AI systems covering areas such as wealth intelligence, governance, legal solutions, medical AI, manufacturing, and more. Visit /systems to explore all available systems.'
     },
     {
       question: 'Is my data secure?',
@@ -39,7 +39,7 @@ export default function FAQPage() {
           >
             <h1 className="text-5xl font-bold text-white mb-6">Frequently Asked Questions</h1>
             <p className="text-xl text-nexus-gray-300">
-              Find answers to common questions about Sans Mercantile Nexus
+              Find answers to common questions about Sans Mercantile Constellation
             </p>
           </motion.div>
 

@@ -16,7 +16,7 @@ export default function TermsPage() {
           >
             <h1 className="text-5xl font-bold text-white mb-6">Terms of Service</h1>
             <p className="text-xl text-nexus-gray-300">
-              Please read these terms carefully before using Sans Mercantile Nexus
+              Please read these terms carefully before using Sans Mercantile Constellation
             </p>
           </motion.div>
 
@@ -30,12 +30,12 @@ export default function TermsPage() {
             <div className="prose prose-invert max-w-none">
               <h2 className="text-2xl font-bold text-white mb-4">1. Acceptance of Terms</h2>
               <p className="text-nexus-gray-300 mb-6">
-                By accessing and using Sans Mercantile Nexus, you accept and agree to be bound by the terms and provision of this agreement.
+                By accessing and using Sans Mercantile Constellation, you accept and agree to be bound by the terms and provision of this agreement.
               </p>
 
               <h2 className="text-2xl font-bold text-white mb-4">2. Use License</h2>
               <p className="text-nexus-gray-300 mb-6">
-                Permission is granted to temporarily use Sans Mercantile Nexus for personal and business use, subject to restrictions set in these terms and conditions.
+                Permission is granted to temporarily use Sans Mercantile Constellation for personal and business use, subject to restrictions set in these terms and conditions.
               </p>
 
               <h2 className="text-2xl font-bold text-white mb-4">3. Service Availability</h2>
@@ -45,7 +45,7 @@ export default function TermsPage() {
 
               <h2 className="text-2xl font-bold text-white mb-4">4. Data Privacy</h2>
               <p className="text-nexus-gray-300 mb-6">
-                Your privacy is important to us. Please review our Privacy Policy, which also governs your use of Sans Mercantile Nexus, to understand our practices.
+                Your privacy is important to us. Please review our Privacy Policy, which also governs your use of Sans Mercantile Constellation, to understand our practices.
               </p>
 
               <h2 className="text-2xl font-bold text-white mb-4">5. Contact Information</h2>

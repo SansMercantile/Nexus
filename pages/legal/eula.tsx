@@ -16,7 +16,7 @@ export default function EULAPage() {
           >
             <h1 className="text-5xl font-bold text-white mb-6">End User License Agreement</h1>
             <p className="text-xl text-nexus-gray-300">
-              Terms and conditions for using Sans Mercantile Nexus
+              Terms and conditions for using Sans Mercantile Constellation
             </p>
           </motion.div>
 
@@ -30,7 +30,7 @@ export default function EULAPage() {
             <div className="prose prose-invert max-w-none">
               <h2 className="text-2xl font-bold text-white mb-4">License Grant</h2>
               <p className="text-nexus-gray-300 mb-6">
-                Sans Mercantile grants you a limited, non-exclusive, non-transferable license to use Sans Mercantile Nexus in accordance with this EULA.
+                Sans Mercantile grants you a limited, non-exclusive, non-transferable license to use Sans Mercantile Constellation in accordance with this EULA.
               </p>
 
               <h2 className="text-2xl font-bold text-white mb-4">Restrictions</h2>
@@ -40,7 +40,7 @@ export default function EULAPage() {
 
               <h2 className="text-2xl font-bold text-white mb-4">Intellectual Property</h2>
               <p className="text-nexus-gray-300 mb-6">
-                All intellectual property rights in Sans Mercantile Nexus remain with Sans Mercantile and its licensors.
+                All intellectual property rights in Sans Mercantile Constellation remain with Sans Mercantile and its licensors.
               </p>
 
               <h2 className="text-2xl font-bold text-white mb-4">Termination</h2>

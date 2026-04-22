@@ -6,7 +6,7 @@ import { fadeInUp } from '@/lib/animations';
 const legalPages = [
   {
     title: 'Terms of Service',
-    description: 'The terms and conditions for using Sans Mercantile Nexus',
+    description: 'The terms and conditions for using Sans Mercantile Constellation',
     href: '/legal/terms',
     icon: '📋'
   },
@@ -55,7 +55,7 @@ export default function LegalIndexPage() {
           >
             <h1 className="text-5xl font-bold text-white mb-6">Legal Information</h1>
             <p className="text-xl text-nexus-gray-300 max-w-3xl mx-auto">
-              Important legal documents and policies that govern the use of Sans Mercantile Nexus.
+              Important legal documents and policies that govern the use of Sans Mercantile Constellation.
               Please review these documents carefully.
             </p>
           </motion.div>
