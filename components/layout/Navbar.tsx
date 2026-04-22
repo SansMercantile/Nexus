@@ -79,25 +79,25 @@ export function Navbar() {
         <SansMercantileLogo />
 
         <div className="hidden md:flex items-center gap-8 text-sm">
-          <Link href="/systems" className="hover:text-nexus-gold transition dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">
+          <Link href="/systems" className="text-nexus-gold dark:text-nexus-gold light:text-amber-700 angelic:text-amber-700 hover:text-nexus-gold transition dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">
             Systems
           </Link>
-          <Link href="/services" className="hover:text-nexus-gold transition dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">
+          <Link href="/services" className="text-nexus-gold dark:text-nexus-gold light:text-amber-700 angelic:text-amber-700 hover:text-nexus-gold transition dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">
             Services
           </Link>
-          <Link href="/platform" className="hover:text-nexus-gold transition dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">
+          <Link href="/platform" className="text-nexus-gold dark:text-nexus-gold light:text-amber-700 angelic:text-amber-700 hover:text-nexus-gold transition dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">
             Platform
           </Link>
-          <Link href="/about" className="hover:text-nexus-gold transition dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">
+          <Link href="/about" className="text-nexus-gold dark:text-nexus-gold light:text-amber-700 angelic:text-amber-700 hover:text-nexus-gold transition dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">
             About
           </Link>
-          <Link href="/media" className="hover:text-nexus-gold transition dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">
+          <Link href="/media" className="text-nexus-gold dark:text-nexus-gold light:text-amber-700 angelic:text-amber-700 hover:text-nexus-gold transition dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">
             Media
           </Link>
-          <Link href="/contact" className="hover:text-nexus-gold transition dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">
+          <Link href="/contact" className="text-nexus-gold dark:text-nexus-gold light:text-amber-700 angelic:text-amber-700 hover:text-nexus-gold transition dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">
             Contact
           </Link>
-          <Link href="/careers" className="hover:text-nexus-gold transition dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">
+          <Link href="/careers" className="text-nexus-gold dark:text-nexus-gold light:text-amber-700 angelic:text-amber-700 hover:text-nexus-gold transition dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">
             Careers
           </Link>
         </div>

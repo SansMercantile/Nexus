@@ -685,6 +685,7 @@ export const SYSTEMS: SystemData[] = [
     darkColor: '#6b0f23',
     description: 'Enable safe, efficient, and autonomous aviation with predictive maintenance and advanced aerospace systems',
     face: 'Sans- Kibuka_Arial_Defence.png',
+    vision: 'To enable safe, efficient, and autonomous aviation across commercial and defense sectors',
     mission: 'Enable safe, efficient, and autonomous aviation with predictive maintenance',
     values: ['Safety', 'Efficiency', 'Innovation', 'Reliability'],
     features: [
@@ -727,6 +728,7 @@ export const SYSTEMS: SystemData[] = [
     darkColor: '#172554',
     description: 'Intelligent ocean monitoring, marine conservation, and sustainable water resource management systems',
     face: 'Sans- Mami_Wata_Hydraulics_and_Water_Infrastructure.png',
+    vision: 'To protect and preserve ocean ecosystems while enabling sustainable maritime commerce',
     mission: 'Provide intelligent ocean monitoring, marine conservation, and sustainable resource management',
     values: ['Conservation', 'Sustainability', 'Innovation', 'Exploration'],
     features: [

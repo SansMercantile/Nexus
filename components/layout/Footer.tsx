@@ -52,39 +52,39 @@ export function Footer() {
 
           {/* Support */}
           <div>
-            <h4 className="font-semibold text-white mb-4">Support</h4>
-            <ul className="space-y-2 text-sm text-white/80">
-              <li><a href="mailto:support@sansmercantile.com" className="hover:text-nexus-gold transition-colors">Support</a></li>
-              <li><a href="mailto:api@sansmercantile.com" className="hover:text-nexus-gold transition-colors">API Help</a></li>
-              <li><a href="https://status.sansmercantile.com" target="_blank" rel="noopener noreferrer" className="hover:text-nexus-gold transition-colors">Status</a></li>
+            <h4 className="font-semibold text-white mb-4 dark:text-white light:text-gray-900 angelic:text-amber-900">Support</h4>
+            <ul className="space-y-2 text-sm text-white/80 dark:text-white/80 light:text-gray-600 angelic:text-amber-700">
+              <li><a href="mailto:support@sansmercantile.com" className="hover:text-nexus-gold transition-colors dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">Support</a></li>
+              <li><a href="mailto:api@sansmercantile.com" className="hover:text-nexus-gold transition-colors dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">API Help</a></li>
+              <li><a href="https://status.sansmercantile.com" target="_blank" rel="noopener noreferrer" className="hover:text-nexus-gold transition-colors dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">Status</a></li>
             </ul>
           </div>
 
           {/* Legal */}
           <div>
-            <h4 className="font-semibold text-white mb-4">Legal</h4>
-            <ul className="space-y-2 text-sm text-white/80">
-              <li><Link href="/legal/terms" className="hover:text-nexus-gold transition-colors">Terms</Link></li>
-              <li><Link href="/legal/privacy" className="hover:text-nexus-gold transition-colors">Privacy</Link></li>
-              <li><Link href="/legal/cookie" className="hover:text-nexus-gold transition-colors">Cookies</Link></li>
-              <li><Link href="/legal/eula" className="hover:text-nexus-gold transition-colors">EULA</Link></li>
-              <li><Link href="/legal/compliance" className="hover:text-nexus-gold transition-colors">Compliance</Link></li>
+            <h4 className="font-semibold text-white mb-4 dark:text-white light:text-gray-900 angelic:text-amber-900">Legal</h4>
+            <ul className="space-y-2 text-sm text-white/80 dark:text-white/80 light:text-gray-600 angelic:text-amber-700">
+              <li><Link href="/legal/terms" className="hover:text-nexus-gold transition-colors dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">Terms</Link></li>
+              <li><Link href="/legal/privacy" className="hover:text-nexus-gold transition-colors dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">Privacy</Link></li>
+              <li><Link href="/legal/cookie" className="hover:text-nexus-gold transition-colors dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">Cookies</Link></li>
+              <li><Link href="/legal/eula" className="hover:text-nexus-gold transition-colors dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">EULA</Link></li>
+              <li><Link href="/legal/compliance" className="hover:text-nexus-gold transition-colors dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">Compliance</Link></li>
             </ul>
           </div>
         </div>
 
-        <div className="border-t border-nexus-accent/20 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-white/60">
+        <div className="border-t border-nexus-accent/20 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 dark:border-nexus-accent/20 light:border-gray-300 angelic:border-amber-200">
+          <p className="text-sm text-white/60 dark:text-white/60 light:text-gray-600 angelic:text-amber-700">
             © {currentYear} {COMPANY_INFO.name}. All rights reserved. | Regulatory Compliance: SARS, FATCA, GDPR, SADC
           </p>
-          <div className="flex gap-4 text-sm text-white/80">
-            <a href="https://linkedin.com/company/sans-mercantile" target="_blank" rel="noopener noreferrer" className="hover:text-nexus-gold transition-colors">
+          <div className="flex gap-4 text-sm text-white/80 dark:text-white/80 light:text-gray-600 angelic:text-amber-700">
+            <a href="https://linkedin.com/company/sans-mercantile" target="_blank" rel="noopener noreferrer" className="hover:text-nexus-gold transition-colors dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">
               LinkedIn
             </a>
-            <a href="https://twitter.com/sansmercantile" target="_blank" rel="noopener noreferrer" className="hover:text-nexus-gold transition-colors">
+            <a href="https://twitter.com/sansmercantile" target="_blank" rel="noopener noreferrer" className="hover:text-nexus-gold transition-colors dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">
               Twitter
             </a>
-            <a href="https://github.com/sansmercantile" target="_blank" rel="noopener noreferrer" className="hover:text-nexus-gold transition-colors">
+            <a href="https://github.com/sansmercantile" target="_blank" rel="noopener noreferrer" className="hover:text-nexus-gold transition-colors dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">
               GitHub
             </a>
           </div>

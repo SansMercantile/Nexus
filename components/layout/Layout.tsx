@@ -12,7 +12,7 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <div className="relative min-h-screen bg-nexus-dark text-white flex flex-col dark:bg-nexus-dark dark:text-white light:bg-nexus-light light:text-gray-900 angelic:bg-white angelic:text-gray-900">
+    <div className="relative min-h-screen bg-nexus-dark text-white flex flex-col dark:bg-nexus-dark dark:text-white light:bg-nexus-light light:text-slate-800 angelic:bg-white angelic:text-slate-800">
       {/* Fixed background - always visible */}
       <div className="fixed inset-0 z-0 pointer-events-none dark:block light:hidden angelic:hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-blue-950 to-slate-950 opacity-90"></div>
