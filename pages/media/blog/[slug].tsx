@@ -1,48 +1,18 @@
-import { useRouter } from 'next/router';
+import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import Head from 'next/head';
 import { motion } from 'framer-motion';
 import Layout from '@/components/layout/Layout';
 import { fadeInUp } from '@/lib/animations';
-import { getBlogPost } from '@/lib/blog-data';
+import { getBlogPost, BlogPost } from '@/lib/blog-data';
 
-/**
- * Interface for the Blog Post to resolve TypeScript "Property does not exist" errors.
- * Ensure this matches the structure in your @/lib/blog-data.
- */
-interface BlogPost {
-  title: string;
-  subtitle?: string;
-  excerpt?: string;
-  category: string;
-  postedDate: string;
-  readTime: string;
-  featuredImage?: string;
-  featuredImageAlt?: string;
-  content: string;
-  tags?: string[];
+interface Props {
+  post: BlogPost | null;
+  slug: string;
 }
 
-export default function MediaBlogPostPage() {
-  const router = useRouter();
-  const { slug } = router.query;
-
-  // 1. Handle Loading state
-  // router.isReady is essential in Pages Router to ensure query params are available
-  if (!router.isReady || !slug || typeof slug !== 'string') {
-    return (
-      <Layout>
-        <div className="min-h-screen flex items-center justify-center">
-          <p className="text-white">Loading...</p>
-        </div>
-      </Layout>
-    );
-  }
-
-  // 2. Fetch Post Data
-  const post = getBlogPost(slug) as BlogPost | undefined;
-
-  // 3. Handle 404 / Not Found state
+export default function MediaBlogPostPage({ post, slug }: Props) {
+  // 1. Handle 404 state if post is missing
   if (!post) {
     return (
       <Layout>
@@ -65,10 +35,22 @@ export default function MediaBlogPostPage() {
     );
   }
 
-  // 4. Helper for styles
+  // 2. SEO Calculations
+  const siteUrl = 'https://www.sansmercantile.com';
+  const pageTitle = `${post.title} | Sans Mercantile`;
+  const pageDescription = post.subtitle || post.excerpt;
+  const pageUrl = `${siteUrl}/media/blog/${slug}`;
+  
+  // Ensure absolute URL for social images
+  const ogImage = post.featuredImage?.startsWith('http') 
+    ? post.featuredImage 
+    : `${siteUrl}${post.featuredImage}`;
+
+  // Format date correctly for Google/LinkedIn using the server-side value
+  const isoDate = new Date(post.postedDate).toISOString();
+
   const getCategoryStyles = (category: string) => {
-    const lowerCat = category.toLowerCase();
-    switch (lowerCat) {
+    switch (category.toLowerCase()) {
       case 'technology':
       case 'markets':
         return 'bg-gradient-to-br from-[#1a2140]/30 to-nexus-dark/30 border-nexus-gold/20';
@@ -80,24 +62,12 @@ export default function MediaBlogPostPage() {
     }
   };
 
-  // 5. SEO Variables (Absolute URLs are mandatory for Social Media Scrapers)
-  const siteUrl = 'https://www.sansmercantile.com';
-  const pageTitle = `${post.title} | Sans Mercantile`;
-  const pageDescription = post.subtitle || post.excerpt || `Read about ${post.category} insights from Sans Mercantile`;
-  const pageUrl = `${siteUrl}/media/blog/${slug}`;
-  
-  // Ensure the image URL is absolute for LinkedIn/X
-  const ogImage = post.featuredImage?.startsWith('http') 
-    ? post.featuredImage 
-    : `${siteUrl}${post.featuredImage || '/og-default.jpg'}`;
-
   return (
     <Layout>
       <Head>
         {/* Basic SEO */}
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription} />
-        <meta name="author" content="Sans Mercantile" />
         <link rel="canonical" href={pageUrl} />
 
         {/* Open Graph / Facebook / LinkedIn */}
@@ -107,22 +77,22 @@ export default function MediaBlogPostPage() {
         <meta property="og:image" content={ogImage} />
         <meta property="og:url" content={pageUrl} />
         <meta property="og:site_name" content="Sans Mercantile" />
-        <meta property="article:published_time" content={new Date(post.postedDate).toISOString()} />
-        <meta property="article:section" content={post.category} />
         
-        {/* Dynamic Tags for Social Media */}
-        {post.tags?.map((tag) => (
-          <meta key={tag} property="article:tag" content={tag} />
+        {/* Article Specific Metadata - Now baked in during SSR */}
+        <meta property="article:published_time" content={isoDate} />
+        <meta property="article:author" content={post.author || "Sans Mercantile"} />
+        <meta property="article:section" content={post.category} />
+        {post.keywords?.map(keyword => (
+          <meta key={keyword} property="article:tag" content={keyword.replace('#', '')} />
         ))}
 
-        {/* Twitter Card */}
+        {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@sansmercantile" />
         <meta name="twitter:title" content={pageTitle} />
         <meta name="twitter:description" content={pageDescription} />
         <meta name="twitter:image" content={ogImage} />
 
-        {/* JSON-LD Structured Data for Google Rich Snippets */}
+        {/* Structured Data (Schema.org) */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -132,11 +102,10 @@ export default function MediaBlogPostPage() {
               "headline": post.title,
               "description": pageDescription,
               "image": ogImage,
-              "datePublished": new Date(post.postedDate).toISOString(),
+              "datePublished": isoDate,
               "author": {
-                "@type": "Organization",
-                "name": "Sans Mercantile",
-                "url": siteUrl
+                "@type": "Person",
+                "name": post.author || "Sans Mercantile"
               },
               "publisher": {
                 "@type": "Organization",
@@ -160,13 +129,13 @@ export default function MediaBlogPostPage() {
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
             className="text-center mb-12"
           >
             <Link href="/media/blog">
-              <span className="text-nexus-gold hover:text-white transition-colors cursor-pointer mb-6 inline-block">← Back to Blog</span>
+              <span className="text-nexus-gold hover:text-white transition-colors cursor-pointer mb-6 inline-block">
+                ← Back to Blog
+              </span>
             </Link>
-            
             <div className="flex flex-wrap items-center justify-center gap-4 mb-6">
               <span className="px-3 py-1 rounded-full bg-nexus-gold/10 text-nexus-gold text-xs uppercase tracking-[0.3em]">
                 {post.category}
@@ -174,25 +143,18 @@ export default function MediaBlogPostPage() {
               <span className="text-xs text-nexus-gray-500">{post.postedDate}</span>
               <span className="text-xs text-nexus-gray-500">• {post.readTime} min read</span>
             </div>
-
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">{post.title}</h1>
             <p className="text-xl text-nexus-gray-300 max-w-3xl mx-auto">{post.subtitle}</p>
           </motion.div>
 
           {post.featuredImage && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="relative mb-12 overflow-hidden rounded-3xl border border-nexus-gold/20 h-96"
-            >
+            <div className="relative mb-12 overflow-hidden rounded-3xl border border-nexus-gold/20 h-[500px]">
               <img 
                 src={post.featuredImage} 
                 alt={post.featuredImageAlt || post.title} 
                 className="h-full w-full object-cover" 
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-nexus-dark/80 via-transparent to-transparent" />
-            </motion.div>
+            </div>
           )}
 
           <motion.div 
@@ -203,30 +165,26 @@ export default function MediaBlogPostPage() {
           >
             <div dangerouslySetInnerHTML={{ __html: post.content }} />
           </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-20 rounded-3xl border border-nexus-gold/20 bg-[#0b1125] p-12"
-          >
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-              <div>
-                <h2 className="text-3xl font-bold text-white mb-3">Follow our editorial team</h2>
-                <p className="text-nexus-gray-300">Stay updated with the latest strategy announcements, leadership news, and product insights.</p>
-              </div>
-              <a 
-                href="https://linkedin.com/company/sans-mercantile" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="inline-flex items-center gap-2 px-8 py-3 rounded-xl bg-nexus-gold text-black font-semibold hover:opacity-90 transition-opacity"
-              >
-                Follow on LinkedIn
-              </a>
-            </div>
-          </motion.div>
         </div>
       </div>
     </Layout>
   );
 }
+
+// Fixed Server-Side Data Fetching
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { slug } = context.params as { slug: string };
+  const post = getBlogPost(slug);
+
+  if (!post) {
+    return { props: { post: null, slug } };
+  }
+
+  return {
+    props: {
+      // Stringify then parse to handle potential Date object serialization issues
+      post: JSON.parse(JSON.stringify(post)),
+      slug
+    }
+  };
+};
