@@ -5,3 +5,4 @@ ollama/
 *.exe
 *.msi
 *.zip
+dev-server.log
