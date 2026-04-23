@@ -38,10 +38,17 @@ export default function MediaBlogPostPage({ post, slug }: Props) {
   // 2. SEO Calculations
   const siteUrl = 'https://www.sansmercantile.com';
   const pageTitle = `${post.title} | Sans Mercantile`;
-  const pageDescription = post.subtitle || post.excerpt;
+  
+  // LinkedIn requires descriptions to be > 100 chars. We combine excerpt and subtitle to ensure length.
+  const rawDescription = post.excerpt || post.subtitle || "";
+  const pageDescription = rawDescription.length < 100 
+    ? `${rawDescription} Explore deep insights into ${post.category} and autonomous intelligent systems at Sans Mercantile. Reimagine, Rebuild, and Transcend with our latest strategic updates and regulatory intelligence.`
+    : rawDescription;
+
   const pageUrl = `${siteUrl}/media/blog/${slug}`;
   
-  // Ensure absolute URL for social images
+  // FORCE ABSOLUTE URLS: Pointing explicitly to the domain for LinkedIn
+  // Note: We use the siteUrl prefix to ensure the scraper can find the asset.
   const ogImage = post.featuredImage?.startsWith('http') 
     ? post.featuredImage 
     : `${siteUrl}${post.featuredImage}`;
@@ -77,8 +84,10 @@ export default function MediaBlogPostPage({ post, slug }: Props) {
         <meta property="og:image" content={ogImage} />
         <meta property="og:url" content={pageUrl} />
         <meta property="og:site_name" content="Sans Mercantile" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
         
-        {/* Article Specific Metadata - Now baked in during SSR */}
+        {/* Article Specific Metadata */}
         <meta property="article:published_time" content={isoDate} />
         <meta property="article:author" content={post.author || "Sans Mercantile"} />
         <meta property="article:section" content={post.category} />
@@ -171,7 +180,7 @@ export default function MediaBlogPostPage({ post, slug }: Props) {
   );
 }
 
-// Fixed Server-Side Data Fetching
+// Server-Side Data Fetching
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { slug } = context.params as { slug: string };
   const post = getBlogPost(slug);
