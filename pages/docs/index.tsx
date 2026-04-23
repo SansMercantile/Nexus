@@ -18,7 +18,7 @@ export default function DocsPage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {systems.map((system, index) => (
               <motion.div
-                key={system.slug}
+                key={system.id}
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
@@ -26,7 +26,7 @@ export default function DocsPage() {
               >
                 <h3 className="text-xl font-semibold text-white mb-2">{system.name}</h3>
                 <p className="text-gray-300 mb-4">{system.description}</p>
-                <Link href={`/docs/${system.slug}`} className="text-nexus-blue hover:text-white transition-colors">
+                <Link href={`/docs/systems/${system.id.toLowerCase()}`} className="text-nexus-gold hover:text-white transition-colors">
                   Learn more →
                 </Link>
               </motion.div>
