@@ -61,7 +61,7 @@ export function Navbar() {
           </div>
 
           <div className="flex items-center gap-4">
-            <Link href="/login" className="btn btn-secondary text-xs">
+            <Link href="/portal" className="btn btn-secondary text-xs">
               Portal
             </Link>
             <div className="p-2 rounded-lg opacity-50">
@@ -103,7 +103,7 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-4">
-          <Link href="/login" className="btn btn-secondary text-xs dark:btn-secondary light:bg-amber-100 light:text-amber-800 light:border-amber-300 light:hover:bg-amber-200 angelic:bg-amber-50 angelic:text-amber-900 angelic:border-amber-300 angelic:hover:bg-amber-100">
+          <Link href="/portal" className="btn btn-secondary text-xs dark:btn-secondary light:bg-amber-100 light:text-amber-800 light:border-amber-300 light:hover:bg-amber-200 angelic:bg-amber-50 angelic:text-amber-900 angelic:border-amber-300 angelic:hover:bg-amber-100">
             Portal
           </Link>
           <motion.button
