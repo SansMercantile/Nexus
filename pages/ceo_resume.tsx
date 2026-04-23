@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import {
-  User, Mail, Phone, Linkedin, MapPin, Briefcase,
-  Cpu, ShieldCheck, ChevronRight,
+  User, Mail, Phone, MapPin, Briefcase,
+  Cpu, ChevronRight,
   GraduationCap, Layers, Rocket, Medal, Quote,
   Lightbulb, Target, Compass, Activity, Zap,
-  Globe, Bot, Loader2, Search, ExternalLink, Terminal
+  Globe, Bot, Loader2, Search, ExternalLink, Terminal,
+  Shield
 } from 'lucide-react';
 
 /** * --- SOVEREIGN BRIDGE CONFIGURATION ---
@@ -12,7 +13,7 @@ import {
 const OLLAMA_ENDPOINT = "https://plain-bikes-follow.loca.lt/api/generate";
 const OLLAMA_MODEL = "hermes3:8b";
 
-const callOllama = async (prompt, systemInstruction) => {
+const callOllama = async (prompt: string, systemInstruction: string): Promise<string> => {
   const payload = {
     model: OLLAMA_MODEL,
     prompt: `System: ${systemInstruction}\n\nUser: ${prompt}`,
@@ -49,6 +50,8 @@ const callOllama = async (prompt, systemInstruction) => {
       await new Promise(resolve => setTimeout(resolve, backoffDelays[i]));
     }
   }
+  // Fallback to satisfy TypeScript's return type check
+  throw new Error("Max retries exceeded without connection.");
 };
 
 // --- LOGO COMPONENT ---
@@ -81,7 +84,7 @@ const SansMercantileLogo = () => {
           alt="Sans Mercantile Logo"
           className="w-10 h-10 object-contain"
           style={{ filter: 'drop-shadow(0 0 8px rgba(255, 122, 0, 0.4))' }}
-          onError={(e) => { e.target.style.display = 'none'; }}
+          onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
         />
         <span className="ml-2 font-black text-white tracking-widest text-xs uppercase">Sovereign_Node</span>
       </div>
@@ -94,7 +97,7 @@ const App = () => {
   const [pulse, setPulse] = useState(0);
   const [isConsulting, setIsConsulting] = useState(false);
   const [query, setQuery] = useState("");
-  const [aiResponse, setAiResponse] = useState(null);
+  const [aiResponse, setAiResponse] = useState<string | null>(null);
 
   useEffect(() => {
     const glitchInterval = setInterval(() => {
@@ -124,8 +127,8 @@ const App = () => {
     }
   };
 
-  const handleInquiry = async (customQuery = null) => {
-    const finalQuery = customQuery || query;
+  const handleInquiry = async (customQuery: string | null = null) => {
+    const finalQuery = customQuery ?? query;
     if (!finalQuery) return;
     setIsConsulting(true);
     setAiResponse(null);
@@ -151,16 +154,26 @@ const App = () => {
     }
   };
 
-  const formatAIResponse = (text) => {
+  const formatAIResponse = (text: string) => {
     if (!text) return null;
-    return text.split('\n').map((line, i) => {
+    return text.split('\n').map((line: string, i: number) => {
       if (line.startsWith('###')) return <h4 key={i} className="text-[#ff7a00] font-bold mt-4 mb-1 uppercase tracking-wider">{line.replace('###', '').trim()}</h4>;
       const formattedLine = line.replace(/\*\*(.*?)\*\*/g, '<span class="text-white font-bold">$1</span>');
       return <p key={i} className="mb-2" dangerouslySetInnerHTML={{ __html: formattedLine }} />;
     });
   };
 
-  const ExperienceBlock = ({ title, company, period, location, description, skills, isStealth = false }) => (
+  type ExperienceBlockProps = {
+    title: string;
+    company: string;
+    period: string;
+    location: string;
+    description: string;
+    skills: string[];
+    isStealth?: boolean;
+  };
+
+  const ExperienceBlock: React.FC<ExperienceBlockProps> = ({ title, company, period, location, description, skills, isStealth = false }) => (
     <div className={`relative pl-8 border-l ${isStealth ? 'border-dashed border-[#ff7a00]/30' : 'border-cyan-500/20'} mb-12 group transition-all`}>
       <div className={`absolute -left-[5px] top-0 w-[9px] h-[9px] rounded-full ${isStealth ? 'bg-[#ff7a00]/80 border border-white animate-pulse' : 'bg-cyan-500 shadow-[0_0_15px_#06b6d4]'}`} />
 
@@ -182,7 +195,7 @@ const App = () => {
       </div>
 
       <div className="flex flex-wrap gap-2 mt-4">
-        {skills && skills.map(skill => (
+        {skills && skills.map((skill: string) => (
           <span key={skill} className="px-2 py-0.5 bg-white/5 text-[9px] font-bold text-gray-400 rounded-sm border border-white/10 uppercase tracking-tighter hover:bg-[#ff7a00]/20 hover:text-white transition-all cursor-crosshair">
             {skill}
           </span>
@@ -206,7 +219,7 @@ const App = () => {
           <SansMercantileLogo />
           <div className="hidden md:flex gap-6 items-center text-[10px] font-mono tracking-widest text-gray-500 uppercase">
              <span className="flex items-center gap-2 hover:text-[#ff7a00] cursor-pointer transition-colors"><Terminal size={12}/> Console</span>
-             <span className="flex items-center gap-2 hover:text-[#ff7a00] cursor-pointer transition-colors"><ShieldCheck size={12}/> Security</span>
+             <span className="flex items-center gap-2 hover:text-[#ff7a00] cursor-pointer transition-colors"><Shield size={12}/> Security</span>
              <div className="w-[1px] h-4 bg-white/10" />
              <span className="text-cyan-500 animate-pulse flex items-center gap-2">
                <Activity size={12} /> SYSTEM_READY
@@ -242,8 +255,8 @@ const App = () => {
               <a href={`tel:${profile.contact.phone}`} className="flex items-center justify-end gap-3 hover:text-[#ff7a00] transition-all border-b border-white/5 pb-2 group text-white font-bold">
                  {profile.contact.phone} <Phone size={12} className="group-hover:rotate-12 transition-transform text-[#ff7a00]" />
               </a>
-              <a href={`https://${profile.contact.linkedin}`} target="_blank" className="flex items-center justify-end gap-3 hover:text-white transition-all border-b border-white/5 pb-2 group">
-                 MEZZOFORTE_P <Linkedin size={12} className="group-hover:text-[#ff7a00] transition-colors" />
+              <a href={`https://${profile.contact.linkedin}`} target="_blank" rel="noreferrer" className="flex items-center justify-end gap-3 hover:text-white transition-all border-b border-white/5 pb-2 group">
+                 MEZZOFORTE_P <ExternalLink size={12} className="group-hover:text-[#ff7a00] transition-colors" />
               </a>
               <span className="flex items-center justify-end gap-3 text-gray-500">
                  {profile.contact.location} <MapPin size={12} />
@@ -431,7 +444,7 @@ const App = () => {
       <footer className="mt-32 border-t border-white/5 py-20 bg-black">
         <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="text-[#ff7a00] font-mono text-[10px] tracking-[0.5em] uppercase flex items-center gap-3">
-            <ShieldCheck size={16}/> Sovereign_Certified. Sans Mercantile 2026.
+            <Shield size={16}/> Sovereign_Certified. Sans Mercantile 2026.
           </div>
           <div className="flex items-center gap-8 text-[10px] font-mono text-gray-600 tracking-[0.3em] uppercase">
             <a href="#" className="hover:text-white transition-colors">Infrastructure</a>
