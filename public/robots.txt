@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+
+# Block admin areas
+Disallow: /admin/
+Disallow: /api/
+
+# Block development files
+Disallow: /_next/
+Disallow: /static/
+
+# Allow crawling of important content
+Allow: /media/blog/
+Allow: /docs/
+Allow: /systems/
+
+# Sitemap
+Sitemap: https://sansmercantile.com/sitemap.xml
