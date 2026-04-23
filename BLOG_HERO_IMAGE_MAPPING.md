@@ -4,6 +4,20 @@ Place these files under `public/media/blog/` and reference them using `/media/bl
 
 | Post # | Slug | Title | Hero Image File |
 | --- | --- | --- | --- |
+| 1 | ai-revolution-predictive-analytics | The Power of Predictive Analytics in Emerging Economies | predictive-analytics-economies-hero.jpg |
+| 2 | compliance-framework-governance | Compliance Isn't a Checkbox. It's a Framework. | compliance-framework-governance-hero.jpg |
+| 3 | human-edge-ai-finance | Beyond Algorithms: The Human Edge in AI-Driven Finance | human-edge-finance-hero.jpg |
+| 4 | redefining-risk-township-markets | Redefining Risk: Why Township Markets Deserve Better Infrastructure | redefining-risk-township-markets-hero.jpg |
+| 5 | future-of-autonomous-systems | The Future of Autonomous Systems in Business | autonomous-systems-business-hero.jpg |
+| 6 | governance-in-the-age-of-ai | Governance in the Age of AI: A Framework | governance-age-ai-hero.jpg |
+| 7 | agricultural-innovation-with-kel | Agricultural Innovation: How KEL is Transforming Farming | agricultural-innovation-kel-hero.jpg |
+| 8 | democratizing-financial-intelligence | Democratizing Financial Intelligence: The Priv System | democratizing-financial-intelligence-hero.jpg |
+| 9 | blockchain-trust-infrastructure | Zero-Knowledge Proofs: Building Trustless Systems | zero-knowledge-proof-trust-hero.jpg |
+| 10 | healthcare-ai-transformation | How Omega is Revolutionizing Healthcare Delivery | omega-healthcare-transformation-hero.jpg |
+| 11 | powering-emerging-market-economies | Powering Emerging Market Economies with Platform Intelligence | powering-emerging-market-economies-hero.jpg |
+| 12 | scaling-sovereign-ai-infrastructure | Scaling Sovereign AI Infrastructure for Global Organizations | scaling-sovereign-ai-infrastructure-hero.jpg |
+| 13 | building-trust-with-regulatory-intelligence | Building Trust with Regulatory Intelligence | building-trust-regulatory-intelligence-hero.jpg |
+| 14 | intelligent-logistics-for-global-trade | Intelligent Logistics for Global Trade | intelligent-logistics-global-trade-hero.jpg |
 | 15 | insights-post-15 | Emerging Intelligence for Modern Systems | blog-015-hero.jpg |
 | 16 | technology-post-16 | Designing Autonomous Architecture for Growth | blog-016-hero.jpg |
 | 17 | governance-post-17 | Governance That Enables Innovation, Not Restricts It | blog-017-hero.jpg |
@@ -30,5 +44,7 @@ For each hero image, use a premium editorial style with subtle corporate color t
 - `blog-015-hero.jpg`: Insight-focused intelligence platform dashboard with polished enterprise overlays.
 - `blog-018-hero.jpg`: Agile market response visuals over a modern trading floor or analytics panel.
 - `blog-021-hero.jpg`: Governance automation interface with secure policy flows.
+
+For the manually authored articles, use the actual slug from `lib/blog-data.ts` and the descriptive featured image filename shown above. For generated posts, continue the sequence with `category-post-XX` slugs and `blog-XXX-hero.jpg` filenames so new entries stay consistent.
 
 Once saved, the application will display these images uniquely for the generated posts.
