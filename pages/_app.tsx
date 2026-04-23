@@ -1,6 +1,6 @@
-import '@/styles/globals.css';
+import '../styles/globals.css';
 import type { AppProps } from 'next/app';
-import { ThemeProvider } from '@/components/ThemeProvider';
+import { ThemeProvider } from '../components/ThemeProvider';
 import Head from 'next/head';
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -8,10 +8,10 @@ export default function App({ Component, pageProps }: AppProps) {
   
   /**
    * GLOBAL FALLBACKS
-   * These tags provide the "System Hero" image and description for the 
-   * landing page or any page that doesn't have its own custom meta tags.
+   * We use .png for the social-cover-hero to ensure maximum quality and 
+   * compatibility with LinkedIn's compression algorithms.
    */
-  const defaultOgImage = `${siteUrl}/media/social-cover-hero.jpg`; 
+  const defaultOgImage = `${siteUrl}/media/social-cover-hero.png`; 
   const defaultTitle = 'Sans Mercantile - Reimagine • Rebuild • Transcend';
   const defaultDescription = 'A network of autonomous, intelligent systems enabling global commerce, governance, and innovation. Explore the nexus of technology and strategy.';
 
@@ -32,6 +32,8 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta property="og:title" content={defaultTitle} />
         <meta property="og:description" content={defaultDescription} />
         <meta property="og:image" content={defaultOgImage} />
+        <meta property="og:image:secure_url" content={defaultOgImage} />
+        <meta property="og:image:type" content="image/png" />
         <meta property="og:url" content={siteUrl} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
