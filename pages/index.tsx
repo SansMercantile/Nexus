@@ -104,12 +104,12 @@ export default function Home() {
         </p>
 
         <div className="flex gap-4 justify-center flex-wrap">
-          <Link href="/portal">
+          <a href="https://portal.sansmercantile.com" target="_blank" rel="noopener noreferrer">
             <button className="btn btn-primary">Web Portal</button>
-          </Link>
-          <Link href="/docs">
+          </a>
+          <a href="https://docs.sansmercantile.com" target="_blank" rel="noopener noreferrer">
             <button className="btn btn-secondary">Documentation</button>
-          </Link>
+          </a>
         </div>
       </motion.section>
     </Layout>
