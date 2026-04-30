@@ -5,7 +5,7 @@ export interface GemmaGenerateRequest {
   temperature?: number;
 }
 
-export const GEMMA_HOST = process.env.NEXT_PUBLIC_GEMMA_HOST ?? 'http://localhost:11434';
+export const GEMMA_HOST = process.env.NEXT_PUBLIC_GEMMA_HOST ?? '[https://silo-rocky-extruding.ngrok-free.dev](https://silo-rocky-extruding.ngrok-free.dev)';
 const MODEL_ALIASES: Record<string, string> = {
   mpeti: 'gemma:2b',
   'mpeti:2b': 'gemma:2b',

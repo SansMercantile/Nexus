@@ -5,7 +5,7 @@
 | Component | Status | URL |
 |-----------|--------|-----|
 | **Web App** | ✅ Running | http://localhost:3002 |
-| **LLM Endpoint** | ⏳ Pending Ollama | http://localhost:11434 |
+| **LLM Endpoint** | ⏳ Pending Ollama | [https://silo-rocky-extruding.ngrok-free.dev](https://silo-rocky-extruding.ngrok-free.dev) |
 | **Web API** | ✅ Ready | http://localhost:3002/api/llm-support |
 | **Direct Mpeti** | ✅ Ready | http://localhost:3002/api/gemma |
 
@@ -50,7 +50,7 @@ listening on 127.0.0.1:11434
    - Click the **AI icon** in the VS Code sidebar
    - Click **Settings/Model Selector**
    - Choose **Ollama** or **Custom Endpoint**
-   - Set endpoint: `http://localhost:11434`
+   - Set endpoint: `[https://silo-rocky-extruding.ngrok-free.dev](https://silo-rocky-extruding.ngrok-free.dev)`
    - Set model alias: `mpeti` (maps to `gemma:2b` locally)
 
 ### Step 3: Start Using Copilot
@@ -90,7 +90,7 @@ Content-Type: application/json
 
 **Ollama Native Endpoint**
 ```bash
-POST http://localhost:11434/api/generate
+POST [https://silo-rocky-extruding.ngrok-free.dev](https://silo-rocky-extruding.ngrok-free.dev)/api/generate
 Content-Type: application/json
 
 {
@@ -108,7 +108,7 @@ Content-Type: application/json
 |-------|----------|
 | **Ollama not found** | Download from https://ollama.ai or use portable version in `ollama2/` folder |
 | **Port 11434 in use** | Kill process: `Get-Process \| Where { $_.Port -eq 11434 } \| Stop-Process` |
-| **VS Code can't connect** | Confirm Ollama running: `curl http://localhost:11434/api/tags` |
+| **VS Code can't connect** | Confirm Ollama running: `curl [https://silo-rocky-extruding.ngrok-free.dev](https://silo-rocky-extruding.ngrok-free.dev)/api/tags` |
 | **Model downloading slowly** | First run downloads ~2GB. Normal. Be patient. |
 | **Out of memory errors** | Use the local Mpeti alias with the `gemma:2b` model (2B) rather than larger models |
 
@@ -144,7 +144,7 @@ Content-Type: application/json
 - ✅ LLM API endpoints configured
 - ✅ VS Code AI Toolkit installed
 - ⏳ **Waiting for:** Ollama to be installed and running
-- ⏳ **Next:** Point VS Code to http://localhost:11434
+- ⏳ **Next:** Point VS Code to [https://silo-rocky-extruding.ngrok-free.dev](https://silo-rocky-extruding.ngrok-free.dev)
 
 ---
 
@@ -169,7 +169,7 @@ This repository includes a workspace `.vscode` configuration for GitHub Copilot/
 ### How to use it
 1. Open this repo in VS Code.
 2. Accept the recommended extensions if prompted.
-3. Make sure Ollama is running on `http://localhost:11434`.
+3. Make sure Ollama is running on `[https://silo-rocky-extruding.ngrok-free.dev](https://silo-rocky-extruding.ngrok-free.dev)`.
 4. Open GitHub Copilot Chat or use inline suggestions with `Ctrl+I`.
 
 ---

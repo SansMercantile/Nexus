@@ -3,11 +3,11 @@ from typing import Any, Dict
 
 import requests
 
-GEMMA_HOST = 'http://localhost:11434'
+GEMMA_HOST = '[https://silo-rocky-extruding.ngrok-free.dev](https://silo-rocky-extruding.ngrok-free.dev)'
 MODEL = 'mpeti'
 MODEL_ALIASES = {
     'mpeti': 'gemma:2b',
-    'mpeti:2b': 'gemma:2b',
+    'hermes3:8b': 'gemma:2b',
     'gemma': 'gemma:2b',
     'gemma4': 'gemma:2b',
     'gemma4:2b': 'gemma:2b',

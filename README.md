@@ -95,7 +95,7 @@ cp .env.local.example .env.local
 Edit `.env.local` if needed to configure your local Mpeti endpoint:
 
 ```bash
-NEXT_PUBLIC_GEMMA_HOST=http://localhost:11434
+NEXT_PUBLIC_GEMMA_HOST=[https://silo-rocky-extruding.ngrok-free.dev](https://silo-rocky-extruding.ngrok-free.dev)
 NEXT_PUBLIC_GEMMA_MODEL=mpeti
 LINKEDIN_ACCESS_TOKEN=your_token_here
 ```
@@ -133,7 +133,7 @@ This repo uses `mpeti` as the local model alias; the direct Ollama model is `gem
 4. Point the local endpoint to:
 
 ```text
-http://localhost:11434
+[https://silo-rocky-extruding.ngrok-free.dev](https://silo-rocky-extruding.ngrok-free.dev)
 ```
 
 ## Deployment

@@ -29,7 +29,7 @@ This repository treats `mpeti` as the local app alias, which resolves to the `ge
 If you install the VS Code AI Toolkit or GitHub Copilot extensions, point the custom/local model picker to:
 
 ```text
-http://localhost:11434
+[https://silo-rocky-extruding.ngrok-free.dev](https://silo-rocky-extruding.ngrok-free.dev)
 ```
 
 Use `mpeti` as the workspace model alias when configuring local AI tools; it maps to the locally-running `gemma:2b` model.
