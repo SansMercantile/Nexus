@@ -26,15 +26,15 @@ export default async function handler(
       posts: [
         {
           id: 'offline-mode-1',
-          title: 'Mpeti Offline Mode Active',
+          title: 'Critique to Creation: 10 Years of Stealth R&D',
           content:
-            'Constellation is running in complete offline mode. All Mpeti operations rely on local Ollama (gemma:2b) model.',
+            'For over a decade, the Constellation project existed in the intentional silence of the shadows. While the global tech community was swept up in the frenetic, noisy cycle of chasing Large Language Model (LLM) benchmarks and marveling at chatbots that could write passable poetry, we were focused on the bedrock: the mathematical stability and deterministic execution of autonomous logic.',
           postedDate: new Date().toLocaleDateString(),
           category: 'system',
-          slug: 'mpeti-offline-active',
-          featuredImage: '/images/mpeti-offline.jpg',
+          slug: '10 Years of Stealth R&D',
+          featuredImage: '/public/media/linkedin/Image_nk5lirnk5lirnk5l.png',
           platform: 'System',
-          url: 'http://localhost:3000/docs/mpeti',
+          url: 'https://www.linkedin.com/pulse/critique-creation-10-years-stealth-rd-sans-mercantile-qoesf/?trackingId=NPxfaNYVQgaKUlZXm4Mspw%3D%3D',
         },
       ],
     });
