@@ -892,6 +892,49 @@ export const SYSTEMS: SystemData[] = [
       },
     ]
   },
+  {
+    id: 'avatar',
+    name: 'Avatar',
+    subtitle: 'Render Sector - Blender 3D Rendering & Visualization',
+    color: '#8b5cf6',
+    darkColor: '#6d28d9',
+    description: 'Advanced 3D rendering and visualization system powered by Blender. Real-time rendering, visualization, and immersive graphics for the constellation.',
+    face: 'Sans- Avatar_Render_Sector.png',
+    vision: 'To provide photorealistic 3D rendering and visualization for all constellation systems',
+    mission: 'Enable real-time 3D rendering, visualization, and immersive graphics experiences',
+    values: ['Visual Excellence', 'Real-Time Performance', 'Innovation', 'Immersion'],
+    features: [
+      { title: 'Blender Integration', description: 'Full Blender API integration for 3D rendering' },
+      { title: 'Real-Time Rendering', description: 'GPU-accelerated real-time rendering engine' },
+      { title: 'Visualization Suite', description: 'Advanced data visualization and graphics' },
+      { title: 'Immersive Graphics', description: 'VR/AR-ready rendering capabilities' },
+      { title: 'Animation System', description: 'Shape-key and keyframe animation support' },
+      { title: 'Material Engine', description: 'Photorealistic material and lighting simulation' },
+    ],
+    pricing: [
+      {
+        name: 'Enterprise Render',
+        price: 75000,
+        description: 'For production studios and visualization teams',
+        features: ['Unlimited renders', 'GPU clusters', 'Priority support', 'Custom pipelines'],
+        cta: 'Contact Sales'
+      },
+      {
+        name: 'Professional',
+        price: 25000,
+        description: 'For designers and visualization artists',
+        features: ['4K renders', 'Standard support', 'Template library', 'API access'],
+        cta: 'Start Trial'
+      },
+      {
+        name: 'Creator',
+        price: 5000,
+        description: 'For independent creators',
+        features: ['HD renders', 'Community support', 'Basic templates', 'Export tools'],
+        cta: 'Get Started'
+      },
+    ]
+  },
 ];
 
 // Backend/SMO Suite systems (not shown on public website)

@@ -211,6 +211,12 @@ export default function SMOAdmin() {
                 >
                   Open Nexus Dashboard →
                 </a>
+                <Link
+                  href="/crm"
+                  className="inline-block mt-4 ml-4 px-6 py-3 rounded-lg border border-nexus-gold text-nexus-gold font-semibold hover:bg-nexus-gold/10 transition-colors"
+                >
+                  CRM & AI Dev Studio →
+                </Link>
               </div>
             )}
           </motion.div>
