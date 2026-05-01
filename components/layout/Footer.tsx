@@ -56,7 +56,7 @@ export function Footer() {
             <ul className="space-y-2 text-sm text-white/80 dark:text-white/80 light:text-gray-600 angelic:text-amber-700">
               <li><a href="mailto:support@sansmercantile.com" className="hover:text-nexus-gold transition-colors dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">Support</a></li>
               <li><a href="mailto:api@sansmercantile.com" className="hover:text-nexus-gold transition-colors dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">API Help</a></li>
-              <li><a href="https://status.sansmercantile.com" target="_blank" rel="noopener noreferrer" className="hover:text-nexus-gold transition-colors dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">Status</a></li>
+              <li><a href="https://sansmercantile.com/status" target="_blank" rel="noopener noreferrer" className="hover:text-nexus-gold transition-colors dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">Status</a></li>
             </ul>
           </div>
 
@@ -81,8 +81,8 @@ export function Footer() {
             <a href="https://linkedin.com/company/sans-mercantile" target="_blank" rel="noopener noreferrer" className="hover:text-nexus-gold transition-colors dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">
               LinkedIn
             </a>
-            <a href="https://twitter.com/sansmercantile" target="_blank" rel="noopener noreferrer" className="hover:text-nexus-gold transition-colors dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">
-              Twitter
+            <a href="https://whatsapp.com/channel/0029Vb5Xb0mKmCPTFqKMqL2l" target="_blank" rel="noopener noreferrer" className="hover:text-nexus-gold transition-colors dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">
+              Whatsapp
             </a>
             <a href="https://github.com/sansmercantile" target="_blank" rel="noopener noreferrer" className="hover:text-nexus-gold transition-colors dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">
               GitHub
