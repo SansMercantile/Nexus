@@ -8,18 +8,18 @@ const networkPlaceholders = [
   {
     id: 'youtube-1',
     platform: 'YouTube',
-    title: 'Constellation Launch Webinar: AI in Infrastructure',
-    content: 'Watch our newest product launch webinar where we unveil the next-gen, regulated autonomous market infrastructure.',
+    title: 'The Frictionless Future: Mini series',
+    content: 'In this mini series we explore the future of frictionless technology. Watch the first episode now.',
     postedDate: new Date().toLocaleDateString(),
-    url: 'https://www.youtube.com/watch?v=placeholder',
+    url: 'https://www.youtube.com/playlist?list=PLecIy_-i6Lm8lMwM5cxijiWZOzFsQd_Qa',
   },
   {
     id: 'facebook-1',
     platform: 'Facebook',
-    title: 'Sant Mercantile wins Best AI Trust Award',
-    content: 'We are excited to share our latest recognition in autonomous systems governance and transparency.',
+    title: 'The Myth of AI Tools',
+    content: 'The industry is obsessed with "Tools." We are building Infrastructure.',
     postedDate: new Date().toLocaleDateString(),
-    url: 'https://www.facebook.com/sansmercantile/posts/placeholder',
+    url: 'https://www.facebook.com/photo/?fbid=1516072643860913&set=a.493775209424000',
   },
   {
     id: 'twitter-1',
@@ -32,10 +32,10 @@ const networkPlaceholders = [
   {
     id: 'instagram-1',
     platform: 'Instagram',
-    title: 'Behind the scenes of the media hub redesign',
-    content: 'Visual story from the design team on the new platform aesthetics.',
+    title: 'The Frictionless Future | Episode 1 The Myth of "Smart" Everything',
+    content: 'Is your home actually "smart," or is it just fragile? In the first episode of our new mini-series, we explore the hidden complexities and risks of the "smart" everything trend. Watch now to learn how to build a truly frictionless future.',
     postedDate: new Date().toLocaleDateString(),
-    url: 'https://www.instagram.com/p/placeholder',
+    url: 'https://www.instagram.com/reel/DXjQU2JE8UU/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==',
   },
 ];
 

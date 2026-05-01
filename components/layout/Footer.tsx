@@ -17,7 +17,7 @@ export function Footer() {
           {/* Brand */}
           <div>
             <SansMercantileLogo />
-            <p className="text-white/80 text-sm mt-2 dark:text-white/80 light:text-gray-600 angelic:text-amber-800">Reimagine • Rebuild • Transcend</p>
+            <p className="text-white/80 text-sm mt-2 dark:text-white/80 light:text-gray-600 angelic:text-amber-800"></p>
           </div>
 
           {/* Services */}
