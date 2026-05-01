@@ -104,10 +104,10 @@ export default function Home() {
         </p>
 
         <div className="flex gap-4 justify-center flex-wrap">
-          <a href="https://portal.sansmercantile.com" target="_blank" rel="noopener noreferrer">
+          <a href="https://sansmercantile.com/portal" target="_blank" rel="noopener noreferrer">
             <button className="btn btn-primary">Web Portal</button>
           </a>
-          <a href="https://docs.sansmercantile.com" target="_blank" rel="noopener noreferrer">
+          <a href="https://sansmercantile.com/docs" target="_blank" rel="noopener noreferrer">
             <button className="btn btn-secondary">Documentation</button>
           </a>
         </div>
