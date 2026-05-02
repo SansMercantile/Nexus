@@ -88,7 +88,7 @@ export default function TrainingEducation() {
     },
     {
       title: 'Corporate Workshops',
-      description: 'Customized training programs designed for your organization's specific needs.',,
+      description: 'Customized training programs designed for your organization specific needs.',
       features: ['Tailored content', 'On-site delivery', 'Team collaboration', 'Follow-up support'],
       icon: 'team'
     },
