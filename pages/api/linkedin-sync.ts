@@ -35,7 +35,7 @@ export default async function handler(
           featuredImage: '/public/media/linkedin/Image_nk5lirnk5lirnk5l.png',
           platform: 'System',
           url: 'https://www.linkedin.com/pulse/critique-creation-10-years-stealth-rd-sans-mercantile-qoesf/?trackingId=NPxfaNYVQgaKUlZXm4Mspw%3D%3D',
-          embed: '<iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7452348908296658944?collapsed=1" height="594" width="504" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>',
+          embed: '<iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7452348908296658944?collapsed=1" height="200" width="100" frameborder="0" allowfullscreen="" title="Embedded post"></iframe>',
         },
       ],
     });
