@@ -32,14 +32,14 @@ const networkPlaceholders = [
       url: 'https://www.instagram.com/reel/DXjQU2JE8UU/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==',
       embed: '<iframe src="https://www.instagram.com/reel/DXjQU2JE8UU/embed" width="100%" height="594" frameBorder="0" scrolling="no" allowtransparency="true" allow="encrypted-media"></iframe>',
     },
-    {
+{
       id: 'twitter-1',
       platform: 'Twitter',
-      title: 'New integration: Constellation SDK now supports event streaming',
-      content: 'Check out how to connect to real-time telemetry with 5 lines of code.',
+      title: 'Agricultural Innovation: How KEL is Transforming Farming',
+      content: 'How intelligent agricultural systems are delivering higher yields, better resource use, and faster logistics.',
       postedDate: new Date().toLocaleDateString(),
-      url: 'https://twitter.com/sansmercantile/status/placeholder',
-      embed: '',
+      url: 'https://twitter.com/sansmercantile/status/2050593461372391841',
+      embed: '<iframe border="0" frameborder="0" height="594" width="100%" src="https://platform.twitter.com/widgets/tweet_button.html?id=2050593461372391841&dnt=true&type=tweet&theme=dark"></iframe>',
     },
   ];
 
