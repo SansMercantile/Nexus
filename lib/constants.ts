@@ -892,19 +892,42 @@ export const SYSTEMS: SystemData[] = [
       },
     ]
   },
+];
+
+// Backend/SMO Suite systems (not shown on public website)
+export const BACKEND_SYSTEMS: SystemData[] = [
+  {
+    id: 'mpeti',
+    name: 'Mpeti',
+    subtitle: 'Autonomous Full Stack AI Developer',
+    color: '#ec4899',
+    darkColor: '#db2777',
+    description: '⚠️ Not available to the public. Autonomous software development system generating, testing, and deploying full-stack applications',
+    face: 'Sans- Mpeti_Autonomous_Developer.png',
+    vision: 'To enable autonomous software development and enable self-building AI systems',
+    mission: 'Generate, test, and deploy production-grade applications autonomously',
+    values: ['Automation', 'Development', 'Innovation', 'Autonomy'],
+    features: [
+      { title: 'AI Consciousness Research', description: '30+ agents studying AI ethics and moral reasoning' },
+      { title: 'Autonomous Development', description: 'Code generation, testing, and deployment automation' },
+      { title: 'Trading Platform', description: 'Real-time market access and execution systems' },
+      { title: 'Infrastructure Management', description: 'Auto-scaling and cloud infrastructure optimization' },
+      { title: 'CI/CD Automation', description: 'GitHub issue automation and pipeline management' },
+      { title: 'Multi-Cloud Support', description: 'GCP primary with Azure and AWS fallback' },
+    ],
+  },
   {
     id: 'avatar',
     name: 'Avatar',
-    subtitle: 'Render Sector - Blender 3D Rendering & Visualization',
+    subtitle: '3D Rendering & Visualization',
     color: '#8b5cf6',
     darkColor: '#6d28d9',
-    description: 'Advanced 3D rendering and visualization system powered by Blender. Real-time rendering, visualization, and immersive graphics for the constellation.',
-    face: 'Sans- Avatar_Render_Sector.png',
+    description: 'Advanced 3D rendering and visualization system. Real-time rendering, visualization, and immersive graphics for the constellation.',
+    face: 'Sans- Avatar_Unut.png',
     vision: 'To provide photorealistic 3D rendering and visualization for all constellation systems',
     mission: 'Enable real-time 3D rendering, visualization, and immersive graphics experiences',
     values: ['Visual Excellence', 'Real-Time Performance', 'Innovation', 'Immersion'],
     features: [
-      { title: 'Blender Integration', description: 'Full Blender API integration for 3D rendering' },
       { title: 'Real-Time Rendering', description: 'GPU-accelerated real-time rendering engine' },
       { title: 'Visualization Suite', description: 'Advanced data visualization and graphics' },
       { title: 'Immersive Graphics', description: 'VR/AR-ready rendering capabilities' },
@@ -934,30 +957,6 @@ export const SYSTEMS: SystemData[] = [
         cta: 'Get Started'
       },
     ]
-  },
-];
-
-// Backend/SMO Suite systems (not shown on public website)
-export const BACKEND_SYSTEMS: SystemData[] = [
-  {
-    id: 'mpeti',
-    name: 'Mpeti',
-    subtitle: 'Autonomous Full Stack AI Developer',
-    color: '#ec4899',
-    darkColor: '#db2777',
-    description: '⚠️ Not available to the public. Autonomous software development system generating, testing, and deploying full-stack applications',
-    face: 'Sans- Mpeti_Autonomous_Developer.png',
-    vision: 'To enable autonomous software development and enable self-building AI systems',
-    mission: 'Generate, test, and deploy production-grade applications autonomously',
-    values: ['Automation', 'Development', 'Innovation', 'Autonomy'],
-    features: [
-      { title: 'AI Consciousness Research', description: '30+ agents studying AI ethics and moral reasoning' },
-      { title: 'Autonomous Development', description: 'Code generation, testing, and deployment automation' },
-      { title: 'Trading Platform', description: 'Real-time market access and execution systems' },
-      { title: 'Infrastructure Management', description: 'Auto-scaling and cloud infrastructure optimization' },
-      { title: 'CI/CD Automation', description: 'GitHub issue automation and pipeline management' },
-      { title: 'Multi-Cloud Support', description: 'GCP primary with Azure and AWS fallback' },
-    ],
   },
 ];
 

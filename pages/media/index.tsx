@@ -24,15 +24,6 @@ const networkPlaceholders = [
       embed: '<iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fsansmercantile%2Fposts%2Fpfbid0qeSPh1RVjmJs2sBQfP4EWc4oWMFiEGqMAbnKUwXQXwjri2MnmPPx1MEyMYVjWJBZl&show_text=true&width=500" width="100%" height="594" style="border:none;overflow:hidden" scrolling="no" frameBorder="0" allowFullScreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>',
     },
     {
-      id: 'twitter-1',
-      platform: 'Twitter',
-      title: 'New integration: Constellation SDK now supports event streaming',
-      content: 'Check out how to connect to real-time telemetry with 5 lines of code.',
-      postedDate: new Date().toLocaleDateString(),
-      url: 'https://twitter.com/sansmercantile/status/placeholder',
-      embed: '',
-    },
-    {
       id: 'instagram-1',
       platform: 'Instagram',
       title: 'The Frictionless Future | Episode 1 The Myth of "Smart" Everything',
@@ -40,6 +31,15 @@ const networkPlaceholders = [
       postedDate: new Date().toLocaleDateString(),
       url: 'https://www.instagram.com/reel/DXjQU2JE8UU/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==',
       embed: '<iframe src="https://www.instagram.com/reel/DXjQU2JE8UU/embed" width="100%" height="594" frameBorder="0" scrolling="no" allowtransparency="true" allow="encrypted-media"></iframe>',
+    },
+    {
+      id: 'twitter-1',
+      platform: 'Twitter',
+      title: 'New integration: Constellation SDK now supports event streaming',
+      content: 'Check out how to connect to real-time telemetry with 5 lines of code.',
+      postedDate: new Date().toLocaleDateString(),
+      url: 'https://twitter.com/sansmercantile/status/placeholder',
+      embed: '',
     },
   ];
 
@@ -205,7 +205,7 @@ const networkPlaceholders = [
                       <h3 className="text-lg font-semibold text-white group-hover:text-nexus-gold transition-colors">{network.name}</h3>
                     </div>
                     <p className="text-nexus-gray-400 text-sm">
-                      {network.isExternal ? 'Visit our professional Prtfolio' : `Official professional portfolios, executive announcements, and funding rounds for ${network.name}.`}
+                      {network.isExternal ? 'Visit our professional portfolio' : `Official professional portfolios, executive announcements, and funding rounds for ${network.name}.`}
                     </p>
                   </a>
                 ))}
