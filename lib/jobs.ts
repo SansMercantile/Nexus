@@ -151,7 +151,7 @@ export const jobPostings: JobPosting[] = [
     location: 'Cape Town + London + Tokyo',
     salary: {
       min: 0,
-      max: 0,
+      max: 6000,
       currency: 'USD'
     },
     description: 'Join our technical team as a Systems Architecture & Cloud Engineering Intern. This is a high-level infrastructure deployment role tasked with integrating cutting-edge computing paradigms into our complex constellation ecosystem. Direct pathway to specialist position upon successful completion.',
