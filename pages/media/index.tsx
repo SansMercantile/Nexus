@@ -33,14 +33,20 @@ const networkPlaceholders = [
       embed: '<iframe src="https://www.instagram.com/reel/DXjQU2JE8UU/embed" width="100%" height="594" frameBorder="0" scrolling="no" allowtransparency="true" allow="encrypted-media"></iframe>',
     },
 {
-      id: 'twitter-1',
-      platform: 'Twitter',
-      title: 'Agricultural Innovation: How KEL is Transforming Farming',
-      content: 'How intelligent agricultural systems are delivering higher yields, better resource use, and faster logistics.',
-      postedDate: new Date().toLocaleDateString(),
-      url: 'https://twitter.com/sansmercantile/status/2050593461372391841',
-      embed: '<iframe border="0" frameborder="0" height="594" width="100%" src="https://platform.twitter.com/widgets/tweet_button.html?id=2050593461372391841&dnt=true&type=tweet&theme=dark"></iframe>',
-    },
+  id: 'twitter-1',
+  platform: 'Twitter',
+  title: 'Agricultural Innovation: How KEL is Transforming Farming',
+  content: 'How intelligent agricultural systems are delivering higher yields, better resource use, and faster logistics.',
+  postedDate: 'May 2, 2026',
+  url: 'https://twitter.com/sansmercantile/status/2050593461372391841',
+  embed: `
+    <blockquote class="twitter-tweet" data-theme="dark">
+      <p lang="en" dir="ltr">Agricultural Innovation: How KEL is Transforming Farming</p>
+      &mdash; Sans Mercantile (@sansmercantile) 
+      <a href="https://twitter.com/sansmercantile/status/2050593461372391841?ref_src=twsrc%5Etfw">May 2, 2026</a>
+    </blockquote>
+  `,
+},
   ];
 
   function mergeFeeds(linkedInPosts: any[], otherPosts: any[]) {
@@ -53,28 +59,41 @@ const networkPlaceholders = [
     return merged;
   }
 
-  export default function MediaHubPage() {
-    const [linkedinPosts, setLinkedinPosts] = useState<any[]>([]);
-    const [socialPosts, setSocialPosts] = useState<any[]>([]);
-    const [loading, setLoading] = useState(true);
+export default function MediaHubPage() {
+  const [linkedinPosts, setLinkedinPosts] = useState<any[]>([]);
+  const [socialPosts, setSocialPosts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-      fetch('/api/linkedin-sync')
-        .then(res => res.json())
-        .then(data => {
-          const linkedData = Array.isArray(data.posts) ? data.posts.slice(0, 3) : [];
-          setLinkedinPosts(linkedData);
+useEffect(() => {
+  fetch('/api/linkedin-sync')
+    .then(res => res.json())
+    .then(data => {
+      const linkedData = Array.isArray(data.posts) ? data.posts.slice(0, 3) : [];
+      setLinkedinPosts(linkedData);
+      setSocialPosts(mergeFeeds(linkedData, networkPlaceholders));
+      setLoading(false);
+    })
+    .catch(() => {
+      setSocialPosts(mergeFeeds([], networkPlaceholders));
+      setLoading(false);
+    });
 
-          const merged = mergeFeeds(linkedData, networkPlaceholders);
-          setSocialPosts(merged);
-
-          setLoading(false);
-        })
-        .catch(() => {
-          setSocialPosts(mergeFeeds([], networkPlaceholders));
-          setLoading(false);
-        });
-    }, []);
+const win = window as any;
+  if (!win.twttr) {
+    const script = document.createElement("script");
+    script.id = "twitter-wjs";
+    script.setAttribute("src", "https://platform.twitter.com/widgets.js");
+    script.setAttribute("async", "true");
+    
+    script.onload = () => {
+      if (win.twttr?.widgets) win.twttr.widgets.load();
+    };
+    
+    document.head.appendChild(script);
+  } else if (win.twttr?.widgets) {
+    win.twttr.widgets.load();
+  }
+}, [socialPosts]);
 
     return (
       <Layout>
