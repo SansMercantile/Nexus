@@ -101,7 +101,7 @@ export default function AIConsulting() {
               <Link href="/contact">
                 <button className="btn btn-primary">Book Consultation</button>
               </Link>
-              <Link href="/docs/ai-strategy">
+              <Link href="/docs/sdk">
                 <button className="btn btn-secondary">AI Strategy Guide</button>
               </Link>
             </motion.div>

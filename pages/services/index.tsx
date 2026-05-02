@@ -248,7 +248,7 @@ export default function Services() {
               <Link href="/contact">
                 <button className="btn btn-primary">Start Your Project</button>
               </Link>
-              <Link href="/docs/services">
+              <Link href="/docs/sdk">
                 <button className="btn btn-secondary">Service Documentation</button>
               </Link>
             </div>

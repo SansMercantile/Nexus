@@ -156,7 +156,7 @@ export default function SupportMaintenance() {
               <Link href="/contact">
                 <button className="btn btn-primary">Get Support</button>
               </Link>
-              <Link href="/docs/support">
+              <Link href="/docs/troubleshooting/support">
                 <button className="btn btn-secondary">Support Portal</button>
               </Link>
             </motion.div>

@@ -88,7 +88,7 @@ export default function TrainingEducation() {
     },
     {
       title: 'Corporate Workshops',
-      description: 'Customized training programs designed for your organization specific needs.',
+      description: 'Customized training programs designed for your organization\'s specific needs.',
       features: ['Tailored content', 'On-site delivery', 'Team collaboration', 'Follow-up support'],
       icon: 'team'
     },
@@ -133,7 +133,7 @@ export default function TrainingEducation() {
               <Link href="/contact">
                 <button className="btn btn-primary">View Programs</button>
               </Link>
-              <Link href="/docs/training">
+              <Link href="/docs/sdk">
                 <button className="btn btn-secondary">Training Resources</button>
               </Link>
             </motion.div>
