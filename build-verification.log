@@ -1,0 +1,158 @@
+
+> sansmercantile-nexus@1.0.0 build
+> next build
+
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+  ▲ Next.js 14.2.35
+
+   Skipping validation of types
+   Skipping linting
+   Creating an optimized production build ...
+ ✓ Compiled successfully
+   Collecting page data ...
+   Generating static pages (0/118) ...
+   Generating static pages (29/118) 
+   Generating static pages (58/118) 
+   Generating static pages (88/118) 
+ ✓ Generating static pages (118/118)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (pages)                                           Size     First Load JS
+┌ ○ /                                                   1.31 kB         136 kB
+├   /_app                                               0 B            84.9 kB
+├ ○ /[system]                                           2.12 kB         136 kB
+├ ○ /[system]/about                                     1.23 kB         135 kB
+├ ○ /[system]/features                                  1.92 kB         136 kB
+├ ○ /[system]/pricing                                   2.23 kB         136 kB
+├ ○ /404                                                182 B          85.1 kB
+├ ○ /about                                              3.61 kB         138 kB
+├ ƒ /admin                                              1.18 kB         135 kB
+├ ○ /admin/compliance                                   2.82 kB         137 kB
+├ ○ /admin/smo                                          2.85 kB         137 kB
+├ ƒ /api/apply                                          0 B            84.9 kB
+├ ƒ /api/auth/linkedin/callback                         0 B            84.9 kB
+├ ƒ /api/gemma                                          0 B            84.9 kB
+├ ƒ /api/linkedin-sync                                  0 B            84.9 kB
+├ ƒ /api/llm-support                                    0 B            84.9 kB
+├ ƒ /api/portal/approve                                 0 B            84.9 kB
+├ ƒ /api/portal/deny                                    0 B            84.9 kB
+├ ƒ /api/portal/login                                   0 B            84.9 kB
+├ ƒ /api/portal/logout                                  0 B            84.9 kB
+├ ƒ /api/portal/me                                      0 B            84.9 kB
+├ ƒ /api/portal/register                                0 B            84.9 kB
+├ ○ /auth/linkedin                                      924 B          85.8 kB
+├ ● /blog                                               331 B          85.2 kB
+├ ● /blog/[slug]                                        373 B          85.3 kB
+├ ○ /careers                                            6.6 kB          141 kB
+├ ○ /ceo_resume                                         8.61 kB        93.5 kB
+├ ○ /contact                                            1.85 kB         136 kB
+├ ○ /crm                                                3.98 kB         138 kB
+├ ○ /docs                                               801 B           135 kB
+├ ● /docs/[system]                                      1.46 kB        88.8 kB
+├   ├ /docs/priv
+├   ├ /docs/kel
+├   ├ /docs/mezzo
+├   └ [+11 more paths]
+├ ○ /docs/anubis                                        1.88 kB         136 kB
+├ ○ /docs/compliance                                    1.17 kB         135 kB
+├ ○ /docs/constellation                                 3.28 kB         138 kB
+├ ○ /docs/constellation-new                             3.2 kB          137 kB
+├ ○ /docs/getting-started/account-setup                 835 B           118 kB
+├ ○ /docs/getting-started/dashboard                     820 B           118 kB
+├ ○ /docs/integration                                   1.28 kB         136 kB
+├ ○ /docs/integration/database                          556 B           118 kB
+├ ○ /docs/integration/payments                          560 B           118 kB
+├ ○ /docs/integration/third-party                       557 B           118 kB
+├ ○ /docs/integration/webhooks                          633 B           118 kB
+├ ○ /docs/integration/workflows                         569 B           118 kB
+├ ○ /docs/kev                                           1.95 kB         136 kB
+├ ○ /docs/mf                                            1.88 kB         136 kB
+├ ○ /docs/mpeti                                         3.07 kB         137 kB
+├ ○ /docs/omega                                         2 kB            136 kB
+├ ○ /docs/primo                                         1.83 kB         136 kB
+├ ○ /docs/sdk                                           1.58 kB         136 kB
+├ ○ /docs/security/encryption                           763 B           118 kB
+├ ○ /docs/security/hipaa                                713 B           118 kB
+├ ○ /docs/security/privacy                              692 B           118 kB
+├ ○ /docs/security/regulatory                           636 B           118 kB
+├ ○ /docs/security/soc2                                 650 B           118 kB
+├ ○ /docs/sia                                           979 B           118 kB
+├ ○ /docs/systems/analytics                             772 B           118 kB
+├ ○ /docs/systems/anubis                                729 B           118 kB
+├ ○ /docs/systems/bio                                   753 B           118 kB
+├ ○ /docs/systems/brigit                                1.32 kB         119 kB
+├ ○ /docs/systems/climate                               781 B           118 kB
+├ ○ /docs/systems/distributed                           765 B           118 kB
+├ ○ /docs/systems/ethical                               778 B           118 kB
+├ ○ /docs/systems/hapi                                  858 B           118 kB
+├ ○ /docs/systems/hathor                                904 B           118 kB
+├ ○ /docs/systems/kel                                   1.38 kB         119 kB
+├ ○ /docs/systems/kev                                   794 B           118 kB
+├ ○ /docs/systems/kibuka                                875 B           118 kB
+├ ○ /docs/systems/mami_water                            869 B           118 kB
+├ ○ /docs/systems/manufacturing                         759 B           118 kB
+├ ○ /docs/systems/mezzo                                 1.33 kB         119 kB
+├ ○ /docs/systems/mf                                    774 B           118 kB
+├ ○ /docs/systems/montu                                 865 B           118 kB
+├ ○ /docs/systems/mpeti                                 794 B           118 kB
+├ ○ /docs/systems/neural                                752 B           118 kB
+├ ○ /docs/systems/nexus                                 789 B           118 kB
+├ ○ /docs/systems/omega                                 1.34 kB         119 kB
+├ ○ /docs/systems/primo                                 797 B           118 kB
+├ ○ /docs/systems/priv                                  1.33 kB         119 kB
+├ ○ /docs/systems/ptah                                  888 B           118 kB
+├ ○ /docs/systems/quantum                               783 B           118 kB
+├ ○ /docs/systems/ra                                    885 B           118 kB
+├ ○ /docs/systems/sekhmet                               874 B           118 kB
+├ ○ /docs/systems/shango                                887 B           118 kB
+├ ○ /docs/systems/sia                                   809 B           118 kB
+├ ○ /docs/systems/sobek                                 904 B           118 kB
+├ ○ /docs/systems/space                                 750 B           118 kB
+├ ○ /docs/troubleshooting/common                        688 B           118 kB
+├ ○ /docs/troubleshooting/debugging                     562 B           118 kB
+├ ○ /docs/troubleshooting/faq                           738 B           118 kB
+├ ○ /docs/troubleshooting/performance                   570 B           118 kB
+├ ○ /docs/troubleshooting/support                       565 B           118 kB
+├ ○ /knowledge-base                                     4.2 kB          138 kB
+├ ○ /legal                                              1.42 kB         136 kB
+├ ○ /legal/compliance                                   1.14 kB         135 kB
+├ ○ /legal/cookie                                       1.12 kB         135 kB
+├ ○ /legal/eula                                         1.16 kB         135 kB
+├ ○ /legal/faq                                          1.44 kB         136 kB
+├ ○ /legal/privacy                                      1.17 kB         135 kB
+├ ○ /legal/terms                                        1.27 kB         136 kB
+├ ○ /login                                              1.49 kB         136 kB
+├ ○ /media                                              3.9 kB          138 kB
+├ ○ /media/blog                                         15.8 kB         150 kB
+├ ƒ /media/blog/[slug]                                  2.08 kB         136 kB
+├ ○ /media/press                                        867 B           135 kB
+├ ○ /media/press/christopher-maddison-cbdo-appointment  2.38 kB         137 kB
+├ ○ /onboarding                                         4.26 kB         139 kB
+├ ○ /onboarding-complete                                1.7 kB          136 kB
+├ ○ /platform                                           1.86 kB         136 kB
+├ ○ /portal                                             1.59 kB         136 kB
+├ ○ /portal/logout                                      1.25 kB         135 kB
+├ ○ /portal/register                                    1.68 kB         136 kB
+├ ○ /press                                              312 B          85.2 kB
+├ ○ /services                                           2.79 kB         137 kB
+├ ○ /services/ai-consulting                             2.84 kB         137 kB
+├ ○ /services/custom-development                        3.12 kB         137 kB
+├ ○ /services/support-maintenance                       3.36 kB         138 kB
+├ ○ /services/system-integration                        2.53 kB         137 kB
+├ ○ /services/training-education                        3.2 kB          137 kB
+├ ƒ /sitemap.xml                                        251 B          85.2 kB
+└ ○ /systems                                            1.77 kB         136 kB
++ First Load JS shared by all                           94.3 kB
+  ├ chunks/framework-840cff9d6bb95703.js                44.8 kB
+  ├ chunks/main-0f273ff5503396bc.js                     33.8 kB
+  └ other shared chunks (total)                         15.6 kB
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses getStaticProps)
+ƒ  (Dynamic)  server-rendered on demand
+
