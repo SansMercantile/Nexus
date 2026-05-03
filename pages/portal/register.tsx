@@ -46,7 +46,7 @@ export default function PortalRegister() {
         throw new Error(data?.message || 'Registration failed.');
       }
 
-      setSuccess('Account created successfully. You can now sign in.');
+      setSuccess(data?.message || 'Account application submitted. You will receive an email once approved.');
       setName('');
       setEmail('');
       setPassword('');
