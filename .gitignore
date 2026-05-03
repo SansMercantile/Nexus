@@ -7,3 +7,4 @@ ollama/
 *.zip
 dev-server.log
 dev-server.log
+.env.example

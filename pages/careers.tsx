@@ -3,7 +3,7 @@ import Layout from '../components/layout/Layout';
 import { AnimatedIcon, type IconType } from '../components/AnimatedIcons';
 import { fadeInUp, staggerContainer } from '../lib/animations';
 import { jobPostings, getOpenJobs, assessmentConfigs } from '../lib/jobs';
-import { useState } from 'react';
+import { useState, type FormEvent } from 'react';
 import Link from 'next/link';
 import type { JobPosting, AssessmentType } from '@/lib/jobs';
 
@@ -97,31 +97,46 @@ const ApplicationFormModal = ({
     coverLetter: '',
   });
   const [submitted, setSubmitted] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
 
   const job = jobPostings.find(j => j.id === jobId);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
-    // Store application data (in real app, would call API)
-    const applicationData = {
-      jobId,
-      applicantName: formData.name,
-      applicantEmail: formData.email,
-      appliedAt: new Date().toISOString(),
-      status: 'applied' as const,
-    };
-    
-    // Save to localStorage for now (mock)
-    const applications = JSON.parse(localStorage.getItem('job_applications') || '[]');
-    applications.push(applicationData);
-    localStorage.setItem('job_applications', JSON.stringify(applications));
-    
-    setSubmitted(true);
-    setTimeout(() => {
-      // Redirect to onboarding portal
-      window.location.href = `/onboarding?jobId=${jobId}&email=${encodeURIComponent(formData.email)}`;
-    }, 2000);
+    setFormError(null);
+
+    try {
+      const response = await fetch('/api/apply', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          jobId,
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          resume: formData.resume,
+          coverLetter: formData.coverLetter,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data?.message || 'Unable to submit application.');
+      }
+
+      setSubmitted(true);
+      setTimeout(() => {
+        window.location.href = `/onboarding?jobId=${jobId}&email=${encodeURIComponent(formData.email)}`;
+      }, 2000);
+    } catch (error) {
+      console.error('Application submission failed:', error);
+      setFormError(
+        error instanceof Error
+          ? error.message
+          : 'Unexpected error submitting application.'
+      );
+    }
   };
 
   if (submitted) {
@@ -173,6 +188,12 @@ const ApplicationFormModal = ({
             ✕
           </button>
         </div>
+
+        {formError ? (
+          <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-100 mb-4">
+            <span className="font-semibold">Submission error:</span> {formError}
+          </div>
+        ) : null}
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>

@@ -11,12 +11,18 @@ export default function SMOAdmin() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const user = localStorage.getItem('user_name');
-    if (!user) {
-      window.location.href = '/login';
-    } else {
-      setAuthenticated(true);
-    }
+    fetch('/api/portal/me')
+      .then(async (response) => {
+        if (!response.ok) {
+          window.location.href = '/portal';
+          return;
+        }
+        await response.json();
+        setAuthenticated(true);
+      })
+      .catch(() => {
+        window.location.href = '/portal';
+      });
   }, []);
 
   // Fetch health and telemetry data

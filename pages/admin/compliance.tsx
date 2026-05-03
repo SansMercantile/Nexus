@@ -80,12 +80,18 @@ export default function ComplianceDashboard() {
   const [dateFilter, setDateFilter] = useState<string>('all');
 
   useEffect(() => {
-    const user = localStorage.getItem('user_name');
-    if (user) {
-      setAuthenticated(true);
-    } else {
-      window.location.href = '/login';
-    }
+    fetch('/api/portal/me')
+      .then(async (response) => {
+        if (!response.ok) {
+          window.location.href = '/portal';
+          return;
+        }
+        await response.json();
+        setAuthenticated(true);
+      })
+      .catch(() => {
+        window.location.href = '/portal';
+      });
   }, []);
 
   const getStatusColor = (status: string) => {
