@@ -116,7 +116,7 @@ export default function SystemDocPage({ system }: SystemPageProps) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const excludedSlugs = ['anubis', 'kev', 'mf', 'mpeti', 'omega', 'primo', 'sia'];
+  const excludedSlugs = ['anubis', 'kev', 'CrazyJam', 'mpeti', 'omega', 'primo', 'sia'];
   const systems = getAllSystems().filter((system) => !excludedSlugs.includes(system.id));
 
   return {

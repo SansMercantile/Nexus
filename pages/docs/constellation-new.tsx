@@ -81,7 +81,7 @@ export default function ConstellationDocs() {
               color="green"
               systems={[
                 "PRIV - Wealth Intelligence & Market Dynamics",
-                "MF - Creative Financial Instruments"
+                "CrazyJam - Creative Financial Instruments"
               ]}
             />
             <SystemOverview

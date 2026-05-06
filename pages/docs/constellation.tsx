@@ -148,7 +148,7 @@ export default function ConstellationDocs() {
               description="AI-powered creative and entertainment systems"
               color="pink"
               systems={[
-                "MF - CrazyJAM AI Music System"
+                "CrazyJam - CrazyJAM AI Music System"
               ]}
             />
             <SystemOverview

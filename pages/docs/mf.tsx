@@ -14,12 +14,12 @@ const FeatureCard = ({ title, description }: any) => (
   </motion.div>
 );
 
-export default function MfDocs() {
+export default function CrazyJamDocs() {
   return (
     <Layout>
       <Head>
-        <title>MF CrazyJAM AI Music System - Sans Mercantile</title>
-        <meta name="description" content="MF CrazyJAM AI Music System documentation - Advanced AI-powered music composition and generation with real-time audio synthesis" />
+        <title>CrazyJam CrazyJAM AI Music System - Sans Mercantile</title>
+        <meta name="description" content="CrazyJam CrazyJAM AI Music System documentation - Advanced AI-powered music composition and generation with real-time audio synthesis" />
       </Head>
 
       <div className=" pt-32 pb-20">
@@ -32,7 +32,7 @@ export default function MfDocs() {
             className="text-center"
           >
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
-              MF CrazyJAM AI Music System
+              CrazyJam CrazyJAM AI Music System
             </h1>
             <p className="text-xl text-nexus-gray-300 max-w-3xl mx-auto">
               Advanced AI-powered music composition and generation system with real-time audio synthesis
