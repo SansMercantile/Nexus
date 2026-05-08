@@ -850,8 +850,8 @@ export const SYSTEMS: SystemData[] = [
     ]
   },
   {
-    id: 'mf',
-    name: 'MF',
+    id: 'crazyjam',
+    name: 'CRAZYJAM',
     subtitle: 'CrazyJAM AI Music System',
     color: '#d8456f',
     darkColor: '#a63558',
