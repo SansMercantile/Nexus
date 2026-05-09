@@ -852,11 +852,11 @@ export const SYSTEMS: SystemData[] = [
   {
     id: 'crazyjam',
     name: 'CRAZYJAM',
-    subtitle: 'CrazyJAM AI Music System',
+    subtitle: 'CrazyJam AI Music System',
     color: '#d8456f',
     darkColor: '#a63558',
     description: 'Advanced AI-powered music composition and generation system with real-time audio synthesis and unlimited creative possibilities.',
-    face: 'Sans- MF_music_system.png',
+    face: 'Sans- crazyjam_music_system.png',
     vision: 'To revolutionize music creation through advanced AI and democratize music production for all',
     mission: 'Enable unlimited music composition, production, and performance with cutting-edge AI',
     values: ['Creativity', 'Innovation', 'Expression', 'Musicality'],
