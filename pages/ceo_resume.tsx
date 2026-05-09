@@ -10,7 +10,7 @@ import {
 
 /** * --- SOVEREIGN BRIDGE CONFIGURATION ---
  */
-const OLLAMA_ENDPOINT = "https://plain-bikes-follow.loca.lt/api/generate";
+const OLLAMA_ENDPOINT = "ttps://silo-rocky-extruding.ngrok-free.dev/api/generate";
 const OLLAMA_MODEL = "hermes3:8b";
 
 const callOllama = async (prompt: string, systemInstruction: string): Promise<string> => {
@@ -26,12 +26,12 @@ const callOllama = async (prompt: string, systemInstruction: string): Promise<st
 
   for (let i = 0; i < maxRetries; i++) {
     try {
-      const response = await fetch(OLLAMA_ENDPOINT, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Bypass-Tunnel-Reminder': 'true'
-        },
+const response = await fetch(OLLAMA_ENDPOINT, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'ngrok-skip-browser-warning': 'true'
+  },
         body: JSON.stringify(payload)
       });
 

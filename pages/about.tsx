@@ -101,7 +101,7 @@ export default function AboutPage() {
                 'Nuclear Energy & Power Generation (Montu)',
                 'Aerial Defense & Space Operations (Kibuka)',
                 'Hydraulics & Water Infrastructure (Mami Water)',
-                'CrazyJAM AI Music System (MF)',
+                'CrazyJAM AI Music System',
               ].map((sys, idx) => (
                 <div key={idx} className="flex items-start gap-3">
                   <div className="w-6 h-6 rounded-full bg-nexus-gold/30 flex items-center justify-center flex-shrink-0 mt-0.5 text-nexus-gold text-xs font-bold">
