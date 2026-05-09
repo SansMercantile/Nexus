@@ -109,7 +109,7 @@ export default function ConstellationDocs() {
               systems={[
                 "RA - Solar Energy & Power Generation",
                 "MONTU - Nuclear Energy Systems",
-                "MAMI WATER - Hydraulics & Water Infrastructure",
+                "MAMI WATA - Hydraulics & Water Infrastructure",
                 "PTAH - Construction & Infrastructure",
                 "SHANGO - Weather & Climate Systems"
               ]}
