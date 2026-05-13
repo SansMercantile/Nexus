@@ -14,10 +14,16 @@ export default function FaqPage() {
           <div className="prose prose-invert max-w-none">
             <h2>General Questions</h2>
             <h3>What is Sans Mercantile Constellation?</h3>
-            <p>A comprehensive platform of AI systems for various industries.</p>
+            <p>Sans Mercantile Constellation is a suite of AI systems designed to solve industry-specific challenges, from finance and healthcare to legal and logistics.</p>
 
             <h3>How do I get started?</h3>
-            <p>Follow our Quick Start Guide to set up your account and first integration.</p>
+            <p>Follow the Quick Start Guide, create your account, generate an API key, and choose the first system to integrate.</p>
+
+            <h3>Where can I find API reference details?</h3>
+            <p>Visit the API Documentation section to review authentication, REST endpoints, WebSocket connections, rate limiting, and error handling.</p>
+
+            <h3>How do I get support?</h3>
+            <p>Use the dashboard support channel or contact your assigned customer success representative for urgent issues.</p>
           </div>
         </div>
       </div>

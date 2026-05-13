@@ -12,11 +12,20 @@ export default function PrivacyPage() {
           </motion.div>
 
           <div className="prose prose-invert max-w-none">
-            <h2>Data Collection</h2>
-            <p>We collect only the data necessary to provide our AI services.</p>
+            <h2>Data minimization</h2>
+            <p>We collect only the information necessary to deliver AI services and ensure compliance with your agreed use cases.</p>
 
-            <h2>Data Usage</h2>
-            <p>Data is used solely for processing AI requests and improving our systems.</p>
+            <h2>Purpose limitation</h2>
+            <p>Data is processed only for fulfilling requests, improving platform reliability, and delivering the features you enable.</p>
+
+            <h2>Data retention</h2>
+            <p>Retention periods are defined by your service agreement and regulatory obligations. Sensitive data is retained only as long as needed for operational or legal reasons.</p>
+
+            <h2>Access and control</h2>
+            <p>Your organization controls who can access data through role-based permissions and audit controls in the dashboard.</p>
+
+            <h2>Third-party sharing</h2>
+            <p>We do not share customer data with third parties except as required for contracted services, compliance, or explicit authorization from your organization.</p>
           </div>
         </div>
       </div>

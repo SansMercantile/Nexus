@@ -12,11 +12,17 @@ export default function CommonPage() {
           </motion.div>
 
           <div className="prose prose-invert max-w-none">
-            <h2>API Connection Issues</h2>
-            <p>Check your API key and network connectivity.</p>
+            <h2>Authentication failures</h2>
+            <p>Verify your API key, header format, and environment variable configuration. Check for expired or rotated credentials.</p>
 
-            <h2>Rate Limiting</h2>
-            <p>Monitor your request frequency and implement backoff strategies.</p>
+            <h2>Connectivity issues</h2>
+            <p>Confirm network access to <code>api.sansmercantile.com</code>, firewall rules, and TLS certificate trust for HTTPS traffic.</p>
+
+            <h2>Invalid payloads</h2>
+            <p>Validate JSON request bodies and required fields. Use the API reference pages to confirm endpoint parameters.</p>
+
+            <h2>Rate limiting</h2>
+            <p>Monitor request volume and implement exponential backoff when you receive limit responses. Cache repeated requests to reduce usage.</p>
           </div>
         </div>
       </div>

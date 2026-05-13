@@ -12,8 +12,17 @@ export default function WebhooksPage() {
           </motion.div>
 
           <div className="prose prose-invert max-w-none">
-            <h2>Webhook Setup</h2>
-            <p>Configure webhooks to receive real-time notifications from our AI systems.</p>
+            <h2>Webhook setup</h2>
+            <p>Configure webhooks to receive real-time notifications from our AI systems whenever a task completes, an event triggers, or data changes.</p>
+
+            <h2>Event model</h2>
+            <p>Webhooks deliver structured JSON payloads for events such as query completion, workflow status changes, and compliance alerts.</p>
+
+            <h2>Delivery reliability</h2>
+            <p>Our webhook service retries failed deliveries automatically and provides delivery status so you can monitor endpoint health.</p>
+
+            <h2>Security</h2>
+            <p>Validate signatures using the shared secret provided when you register the webhook endpoint, and use HTTPS to protect web traffic.</p>
           </div>
         </div>
       </div>

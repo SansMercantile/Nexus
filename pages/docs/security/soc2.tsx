@@ -12,8 +12,17 @@ export default function Soc2Page() {
           </motion.div>
 
           <div className="prose prose-invert max-w-none">
-            <h2>SOC 2 Type II Certified</h2>
-            <p>Regular third-party audits ensure compliance with SOC 2 standards.</p>
+            <h2>SOC 2 framework</h2>
+            <p>Our SOC 2 controls cover security, availability, processing integrity, confidentiality, and privacy to meet enterprise expectations.</p>
+
+            <h2>Audit cadence</h2>
+            <p>Third-party audits are performed regularly, and control evidence is collected continuously to demonstrate ongoing compliance.</p>
+
+            <h2>Operational controls</h2>
+            <p>We use automated monitoring, access controls, and incident response practices to ensure systems remain secure and operationally resilient.</p>
+
+            <h2>Customer assurance</h2>
+            <p>Customers can rely on our SOC 2 posture as a foundation for vendor risk management and trust in sensitive integrations.</p>
           </div>
         </div>
       </div>

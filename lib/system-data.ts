@@ -87,7 +87,7 @@ const SYSTEM_VALUE_DESCRIPTIONS: Record<string, Record<string, string>> = {
   RA: {
     Sustainability: 'Maximize clean energy output while minimizing ecological impact.',
     Efficiency: 'Balance generation, storage, and demand with smart energy orchestration.',
-    Clean Energy: 'Enable wider adoption of solar and renewable power at grid scale.',
+    'Clean Energy': 'Enable wider adoption of solar and renewable power at grid scale.',
     Innovation: 'Advance distributed energy systems with forecasting and automation.',
   },
   Shango: {

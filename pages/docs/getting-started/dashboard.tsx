@@ -12,16 +12,22 @@ export default function DashboardOverviewPage() {
           </motion.div>
 
           <div className="prose prose-invert max-w-none">
-            <h2>Main Dashboard Features</h2>
+            <h2>Key dashboard areas</h2>
             <ul>
-              <li><strong>System Status:</strong> Real-time status of all AI systems</li>
-              <li><strong>API Usage:</strong> Monitor your API consumption and limits</li>
-              <li><strong>Recent Activity:</strong> View recent API calls and results</li>
-              <li><strong>System Access:</strong> Quick links to individual AI systems</li>
+              <li><strong>System status:</strong> Track operational health for each deployed AI system.</li>
+              <li><strong>API usage:</strong> Review your current request volumes, quota usage, and billing estimates.</li>
+              <li><strong>Activity logs:</strong> See recent requests, responses, and audit events in one place.</li>
+              <li><strong>Access management:</strong> Manage API keys, team members, and permission scopes.</li>
             </ul>
 
-            <h2>Navigation</h2>
-            <p>Use the sidebar to access different sections of the platform.</p>
+            <h2>Getting started quickly</h2>
+            <p>Start with the onboarding checklist, generate a test API key, and launch a first query from the sample integration panel.</p>
+
+            <h2>Monitoring and alerts</h2>
+            <p>Set up notifications for quota thresholds, error spikes, or compliance events to stay proactive.</p>
+
+            <h2>Optimization insights</h2>
+            <p>Use the dashboard intelligence tools to identify high-cost requests, unused keys, and systems that need tuning.</p>
           </div>
         </div>
       </div>

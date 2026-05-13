@@ -12,15 +12,20 @@ export default function EncryptionPage() {
           </motion.div>
 
           <div className="prose prose-invert max-w-none">
-            <h2>Encryption Standards</h2>
-            <ul>
-              <li><strong>AES-256:</strong> Data at rest encryption</li>
-              <li><strong>TLS 1.3:</strong> Data in transit encryption</li>
-              <li><strong>End-to-end encryption:</strong> For sensitive communications</li>
-            </ul>
+            <h2>Encryption in transit</h2>
+            <p>All API traffic is delivered over TLS 1.3 to safeguard credentials, payloads, and system responses while moving between your environment and our platform.</p>
 
-            <h2>Key Management</h2>
-            <p>All encryption keys are managed through secure key management services with automatic rotation.</p>
+            <h2>Encryption at rest</h2>
+            <p>Stored data is encrypted with AES-256 across database storage, object storage, and backups. Sensitive fields are protected by application-layer encryption for an additional security boundary.</p>
+
+            <h2>Key lifecycle management</h2>
+            <p>Encryption keys are managed through a centralized key management system with periodic rotation and strict separation of duties between administrators and service operators.</p>
+
+            <h2>Data segmentation</h2>
+            <p>Tenant data is logically isolated, and cryptographic measures ensure that each customer’s sensitive information remains protected even in shared infrastructure environments.</p>
+
+            <h2>Compliance alignment</h2>
+            <p>Our encryption practices are designed to support SOC 2, HIPAA, and GDPR controls, making them appropriate for regulated industries and enterprise-grade deployments.</p>
           </div>
         </div>
       </div>

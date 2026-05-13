@@ -12,11 +12,20 @@ export default function HipaaPage() {
           </motion.div>
 
           <div className="prose prose-invert max-w-none">
-            <h2>Compliance Framework</h2>
-            <p>Omega Medical AI maintains full HIPAA compliance for all medical data processing.</p>
+            <h2>HIPAA controls</h2>
+            <p>Our platform supports HIPAA obligations by encrypting PHI, enforcing access controls, and maintaining detailed audit logs for every request.</p>
 
-            <h2>Protected Health Information</h2>
-            <p>All PHI is encrypted and access is strictly controlled with audit logging.</p>
+            <h2>Patient data handling</h2>
+            <p>Protected health information is isolated, tokenized when appropriate, and only processed by authorized systems and personnel.</p>
+
+            <h2>Audit readiness</h2>
+            <p>We provide access to compliance documentation and logging artifacts needed for audit reviews and vendor due diligence.</p>
+
+            <h2>Access management</h2>
+            <p>Role-based permissions, multi-factor authentication, and least-privilege administration help reduce the risk of unauthorized PHI access.</p>
+
+            <h2>Vendor accountability</h2>
+            <p>When using our medical AI services, your organization retains responsibility for PHI usage and data-sharing decisions; our controls are built to make that accountability manageable.</p>
           </div>
         </div>
       </div>
