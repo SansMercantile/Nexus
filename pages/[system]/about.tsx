@@ -2,7 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 import { motion } from 'framer-motion';
 import Layout from '@/components/layout/Layout';
-import { getSystemBySlug } from '@/lib/system-data';
+import { getSystemBySlug, getSystemSdgs, getSystemValueDescription } from '@/lib/system-data';
 import { fadeInUp } from '@/lib/animations';
 import { useRouter } from 'next/router';
 
@@ -17,6 +17,11 @@ export default function SystemAbout() {
   const systemData = getSystemBySlug(system);
   const features = systemData?.features || [];
   const values = systemData?.values || [];
+  const valueDetails = (systemData?.values || []).map((value) => ({
+    title: value,
+    description: systemData ? getSystemValueDescription(systemData.id, value) : undefined,
+  }));
+  const sdgs = systemData ? getSystemSdgs(systemData.id) : [];
 
   if (!systemData) {
     return null;
@@ -48,10 +53,10 @@ export default function SystemAbout() {
             <div className="bg-white/5 border border-nexus-accent/30 rounded-3xl p-8">
               <h2 className="text-2xl font-semibold text-white mb-4">Built for enterprise impact</h2>
               <ul className="space-y-3 text-nexus-gray-300">
-                {values.map((value, idx) => (
-                  <li key={idx} className="flex items-start gap-3">
-                    <span className="text-nexus-gold">•</span>
-                    <span>{value}</span>
+                {valueDetails.map((value, idx) => (
+                  <li key={idx} className="space-y-2 rounded-2xl bg-nexus-dark/80 p-4 border border-nexus-gold/10">
+                    <p className="font-semibold text-white">{value.title}</p>
+                    <p>{value.description ?? 'A foundational principle that guides system operations.'}</p>
                   </li>
                 ))}
               </ul>
@@ -69,6 +74,20 @@ export default function SystemAbout() {
               ))}
             </div>
           </div>
+
+          {sdgs.length > 0 && (
+            <div className="mt-12 rounded-3xl border border-nexus-gold/20 bg-[#0b1225] p-10">
+              <h2 className="text-3xl font-bold text-white mb-6">SDG Alignment</h2>
+              <div className="grid gap-4 sm:grid-cols-2">
+                {sdgs.map((sdg) => (
+                  <div key={sdg.goal} className="bg-white/5 border border-nexus-gold/10 rounded-2xl p-6">
+                    <p className="text-nexus-gold font-semibold mb-2">SDG {sdg.goal}: {sdg.title}</p>
+                    <p className="text-nexus-gray-300">{sdg.description}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </motion.div>
       </div>
     </Layout>

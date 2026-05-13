@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import Layout from '@/components/layout/Layout';
 import { SystemHero } from '@/components/systems/SystemHero';
 import { AnimatedIcon, featureIcons } from '@/components/AnimatedIcons';
-import { getSystemBySlug } from '@/lib/system-data';
+import { getSystemBySlug, getSystemValueDescription, getSystemSdgs } from '@/lib/system-data';
 import { fadeInUp, staggerContainer, itemVariants } from '@/lib/animations';
 import { useRouter } from 'next/router';
 
@@ -89,10 +89,28 @@ export default function SystemPage() {
                 >
                   <h3 className="font-semibold text-lg mb-1">{value}</h3>
                   <p className="text-white/60 text-sm">
-                    Core value driving {systemData.name} operations
+                    {getSystemValueDescription(systemData.id, value) || `Core value driving ${systemData.name} operations`}
                   </p>
                 </motion.div>
               ))}
+            </motion.div>
+
+            <motion.div variants={fadeInUp} className="mt-10">
+              <h3 className="text-2xl font-semibold mb-5" style={{ color: systemData.color }}>
+                Sustainable Development Goals
+              </h3>
+              <div className="grid gap-4 sm:grid-cols-2">
+                {getSystemSdgs(systemData.id).map((sdg) => (
+                  <div
+                    key={sdg.goal}
+                    className="p-4 rounded-lg border border-white/10 bg-white/5"
+                    style={{ borderColor: systemData.color }}
+                  >
+                    <p className="text-nexus-gold font-semibold mb-2">SDG {sdg.goal}: {sdg.title}</p>
+                    <p className="text-white/70 text-sm">{sdg.description}</p>
+                  </div>
+                ))}
+              </div>
             </motion.div>
           </motion.div>
         </div>

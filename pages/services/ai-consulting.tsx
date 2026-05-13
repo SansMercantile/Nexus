@@ -121,32 +121,30 @@ export default function AIConsulting() {
               </p>
             </motion.div>
 
-            <div className="space-y-8">
+            <div className="grid gap-6 lg:grid-cols-2">
               {consultingPhases.map((phase, index) => (
                 <motion.div
                   key={phase.phase}
                   variants={fadeInUp}
-                  transition={{ delay: index * 0.1 }}
-                  className="bg-gradient-to-r from-[#1a1f3a] to-nexus-dark border border-nexus-gold/20 rounded-xl p-8"
+                  transition={{ delay: index * 0.05 }}
+                  className="rounded-3xl border border-nexus-gold/20 bg-[#0b1225] p-8 shadow-[0_20px_60px_rgba(0,0,0,0.25)]"
                 >
-                  <div className="flex items-start gap-6">
-                    <div className="flex-shrink-0">
-                      <div className="w-12 h-12 rounded-full bg-nexus-gold/20 flex items-center justify-center">
-                        <span className="text-nexus-gold font-bold">{phase.phase}</span>
-                      </div>
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-nexus-gold text-black font-bold">
+                      {index + 1}
                     </div>
-                    <div className="flex-1">
-                      <h3 className="text-xl font-bold text-white mb-2">{phase.title}</h3>
-                      <p className="text-nexus-gray-300 mb-4">{phase.description}</p>
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                        {phase.deliverables.map((deliverable, idx) => (
-                          <div key={idx} className="text-sm text-nexus-gray-400 flex items-center gap-2">
-                            <div className="w-1.5 h-1.5 rounded-full bg-nexus-gold"></div>
-                            {deliverable}
-                          </div>
-                        ))}
-                      </div>
+                    <div>
+                      <p className="text-sm uppercase tracking-[0.3em] text-nexus-gold mb-1">{phase.phase}</p>
+                      <h3 className="text-2xl font-semibold text-white">{phase.title}</h3>
                     </div>
+                  </div>
+                  <p className="text-nexus-gray-300 mb-6">{phase.description}</p>
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    {phase.deliverables.map((deliverable, idx) => (
+                      <div key={idx} className="rounded-2xl border border-nexus-gold/10 bg-[#111827] p-4 text-sm text-nexus-gray-300">
+                        {deliverable}
+                      </div>
+                    ))}
                   </div>
                 </motion.div>
               ))}

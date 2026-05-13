@@ -3,13 +3,20 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Layout from '../../components/Layout';
-import { getAllSystems, getSystemBySlug, SystemData } from '@repo/constellation';
+import { getAllSystems, getSystemBySlug, getSystemValueDescription, getSystemSdgs, SystemData } from '@repo/constellation';
 
 interface SystemPageProps {
   system: SystemData;
 }
 
 export default function SystemDocPage({ system }: SystemPageProps) {
+  const valueDetails = system.values.map((value) => ({
+    title: value,
+    description: getSystemValueDescription(system.id, value),
+  }));
+
+  const sdgs = getSystemSdgs(system.id);
+
   return (
     <Layout>
       <Head>
@@ -47,13 +54,28 @@ export default function SystemDocPage({ system }: SystemPageProps) {
 
             <aside className="rounded-3xl border border-nexus-gold/20 bg-[#111827]/90 p-8">
               <h3 className="text-2xl font-semibold text-white mb-5">Core values</h3>
-              <ul className="space-y-3 text-nexus-gray-300">
-                {system.values.map((value) => (
-                  <li key={value} className="rounded-2xl bg-nexus-dark/80 p-4 border border-nexus-gold/10">
-                    {value}
+              <ul className="space-y-4 text-nexus-gray-300">
+                {valueDetails.map((item) => (
+                  <li key={item.title} className="rounded-2xl bg-nexus-dark/80 p-4 border border-nexus-gold/10">
+                    <p className="font-semibold text-white mb-2">{item.title}</p>
+                    <p>{item.description ?? 'A foundational principle guiding the system.'}</p>
                   </li>
                 ))}
               </ul>
+
+              {sdgs.length > 0 && (
+                <div className="mt-8">
+                  <h3 className="text-2xl font-semibold text-white mb-5">SDG alignment</h3>
+                  <div className="space-y-4">
+                    {sdgs.map((sdg) => (
+                      <div key={sdg.goal} className="rounded-2xl bg-nexus-dark/80 p-4 border border-nexus-gold/10">
+                        <p className="text-nexus-gold font-semibold mb-2">SDG {sdg.goal}: {sdg.title}</p>
+                        <p className="text-nexus-gray-300">{sdg.description}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </aside>
           </div>
 
