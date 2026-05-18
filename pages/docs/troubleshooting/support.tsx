@@ -13,13 +13,25 @@ export default function SupportPage() {
 
           <div className="prose prose-invert max-w-none">
             <h2>Self-service resources</h2>
-            <p>Use the documentation site to troubleshoot common scenarios, learn integration patterns, and verify platform behavior.</p>
+            <p>Use the documentation site to troubleshoot common scenarios, explore integration patterns, and verify expected platform behavior before contacting support.</p>
 
             <h2>Support channels</h2>
-            <p>Contact our team through the dashboard support link, email, or your assigned customer success representative.</p>
+            <p>Reach our operations team via the dashboard support portal, direct email, or your dedicated customer success manager for urgent system issues.</p>
 
             <h2>Incident reporting</h2>
-            <p>Report production issues with request details, system names, and timestamps to accelerate resolution.</p>
+            <p>Submit incidents with system names, request IDs, timestamps, and any error payloads so our response teams can prioritize and resolve issues quickly.</p>
+
+            <h2>Escalation flow</h2>
+            <p>Critical outages and security events are escalated immediately to our incident response specialists, with follow-up updates provided throughout incident resolution.</p>
+
+            <h2>Service level expectations</h2>
+            <p>Our support offering includes guaranteed response windows, regular status updates, and post-incident reviews to help your team stay aligned and productive.</p>
+
+            <h2>Knowledge and training</h2>
+            <p>Access support articles, integration guides, and onboarding checklists to reduce friction during deployment and ramp-up phases.</p>
+
+            <h2>Continuous improvement</h2>
+            <p>We capture feedback from every support interaction to improve system documentation, incident handling, and long-term platform reliability.</p>
           </div>
         </div>
       </div>
