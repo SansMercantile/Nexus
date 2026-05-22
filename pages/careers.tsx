@@ -5,6 +5,7 @@ import { fadeInUp, staggerContainer } from '../lib/animations';
 import { jobPostings, getOpenJobs, assessmentConfigs } from '../lib/jobs';
 import { useState, type FormEvent } from 'react';
 import Link from 'next/link';
+import Head from 'next/head';
 import type { JobPosting, AssessmentType } from '@/lib/jobs';
 
 const JobCard = ({ job, onViewDetails }: { job: JobPosting; onViewDetails: () => void }) => {
@@ -449,6 +450,10 @@ export default function CareersPage() {
 
   return (
     <Layout>
+      <Head>
+        <title>Careers | Sans Mercantile</title>
+        <meta name="description" content="Join the Sans Mercantile team and help build the future of intelligent commerce and autonomous systems." />
+      </Head>
       <div className="pb-20">
         {/* Hero */}
         <div className="max-w-7xl mx-auto px-6 mb-20">
