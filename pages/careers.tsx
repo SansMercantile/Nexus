@@ -382,7 +382,7 @@ const JobDetailsModal = ({
           <h3 className="text-2xl font-bold text-white mb-4">Evaluation Process</h3>
           <p className="text-nexus-gray-300 mb-4">Candidates for this role will complete the following assessments:</p>
           <div className="space-y-4">
-            {assessments.map(assessment => (
+            {assessments.map((assessment: any) => (
               <div key={assessment.id} className="rounded-2xl border border-white/10 bg-[#09101f] p-4">
                 <p className="font-semibold text-white">{assessment.title}</p>
                 <p className="text-sm text-nexus-gray-400 mt-2">{assessment.description}</p>

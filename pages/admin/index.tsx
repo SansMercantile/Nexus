@@ -85,7 +85,7 @@ export async function getServerSideProps({ req }: { req: any }) {
     };
   }
 
-  const payload = verifySessionToken(sessionToken);
+  const payload = verifySessionToken(sessionToken) as any;
   if (!payload || typeof payload.email !== 'string') {
     return {
       redirect: {
@@ -96,7 +96,7 @@ export async function getServerSideProps({ req }: { req: any }) {
   }
 
   const db = await getDb();
-  const user = await db.collection('portal_users').findOne({ email: payload.email.toLowerCase(), active: true });
+  const user = await db.collection('portal_users').findOne({ email: payload.email.toLowerCase(), active: true }) as any;
 
   if (!user) {
     return {
