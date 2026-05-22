@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import Layout from '../../components/layout/Layout';
 import { fadeInUp, staggerContainer } from '../../lib/animations';
 import { useState, useEffect } from 'react';
+import Head from 'next/head';
 
 const networkPlaceholders = [
     {
@@ -97,6 +98,9 @@ const win = window as any;
 
     return (
       <Layout>
+        <Head>
+          <title>Media | Sans Mercantile</title>
+        </Head>
         <div className=" pt-32 pb-24">
           <div className="max-w-6xl mx-auto px-6">
             <motion.div

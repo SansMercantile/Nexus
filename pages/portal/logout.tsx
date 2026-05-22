@@ -26,7 +26,7 @@ export default function PortalLogout() {
   return (
     <Layout>
       <Head>
-        <title>Logout - Sans Mercantile Portal</title>
+        <title>Logout | Sans Mercantile Portal</title>
       </Head>
 
       <div className="min-h-screen flex items-center justify-center py-20 px-6">

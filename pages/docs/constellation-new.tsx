@@ -43,7 +43,7 @@ export default function ConstellationDocs() {
   return (
     <Layout>
       <Head>
-        <title>Constellation System - Sans Mercantile</title>
+        <title>Constellation System | Sans Mercantile</title>
         <meta name="description" content="Comprehensive documentation for the Sans Mercantile Constellation - unified AI orchestration across 21 autonomous systems" />
       </Head>
 

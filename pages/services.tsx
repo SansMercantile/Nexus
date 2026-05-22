@@ -91,7 +91,7 @@ export default function Services() {
   return (
     <Layout>
       <Head>
-        <title>Sans Mercantile - Professional Services</title>
+        <title>Services | Sans Mercantile</title>
         <meta name="description" content="Comprehensive AI consulting, system integration, and custom development services from Sans Mercantile" />
       </Head>
 

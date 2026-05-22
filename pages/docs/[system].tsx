@@ -20,7 +20,7 @@ export default function SystemDocPage({ system }: SystemPageProps) {
   return (
     <Layout>
       <Head>
-        <title>{system.name} System Docs - Sans Mercantile</title>
+        <title>{system.name} Docs | Sans Mercantile</title>
         <meta
           name="description"
           content={`${system.name} — ${system.subtitle} for the Sans Mercantile Constellation`}

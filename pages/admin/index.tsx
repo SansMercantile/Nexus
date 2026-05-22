@@ -23,7 +23,7 @@ export default function AdminHome({ user, stats }: { user: { name: string; email
   return (
     <Layout>
       <Head>
-        <title>Admin Dashboard - Sans Mercantile</title>
+        <title>Admin Dashboard | Sans Mercantile</title>
       </Head>
 
       <div className="pt-32 pb-20">

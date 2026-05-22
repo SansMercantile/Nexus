@@ -31,7 +31,7 @@ export default function Onboarding() {
     return (
       <Layout>
         <Head>
-          <title>Onboarding - Sans Mercantile</title>
+          <title>Onboarding | Sans Mercantile</title>
         </Head>
         <div className="min-h-screen flex items-center justify-center">
           <div className="text-center">
@@ -144,7 +144,7 @@ export default function Onboarding() {
   return (
     <Layout>
       <Head>
-        <title>Onboarding - {job.title} - Sans Mercantile</title>
+        <title>Onboarding: {job.title} | Sans Mercantile</title>
       </Head>
 
       <div className="min-h-screen py-20 px-6">

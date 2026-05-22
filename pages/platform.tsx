@@ -6,7 +6,7 @@ export default function Platform() {
   return (
     <Layout>
       <Head>
-        <title>Sans Mercantile - Platform</title>
+        <title>Platform | Sans Mercantile</title>
         <meta
           name="description"
           content="A unified Constellation platform of autonomous systems, secure infrastructure, and adaptive business services."

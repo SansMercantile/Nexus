@@ -12,7 +12,7 @@ export default function Systems() {
   return (
     <Layout>
       <Head>
-        <title>Sans Mercantile - Systems</title>
+        <title>Systems | Sans Mercantile</title>
         <meta name="description" content="Explore our constellation of autonomous intelligent systems" />
       </Head>
 

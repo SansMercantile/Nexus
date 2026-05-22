@@ -9,7 +9,7 @@ export default function AboutPage() {
   return (
     <Layout>
       <Head>
-        <title>About Us | Sans Mercantile - Architecting Economic Futures</title>
+        <title>About | Sans Mercantile</title>
         <meta name="description" content="Learn about Sans Mercantile, our mission to transform humanity's work through a constellation of 21 specialized AI systems, and our visionary leadership." />
         <meta name="keywords" content="About Sans Mercantile, AI Mission, Autonomous Systems, Mezzoforte Privilege Khoza, Christopher Maddison, AI Governance" />
         <meta property="og:title" content="About Sans Mercantile | Built for a Smarter Tomorrow" />

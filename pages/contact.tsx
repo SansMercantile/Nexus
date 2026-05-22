@@ -2,6 +2,7 @@ import Layout from '@/components/layout/Layout';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import Head from 'next/head';
 
 export default function ContactPage() {
   const router = useRouter();
@@ -37,6 +38,9 @@ export default function ContactPage() {
 
   return (
     <Layout>
+      <Head>
+        <title>Contact | Sans Mercantile</title>
+      </Head>
       <div className="pb-20">
         <div className="max-w-6xl mx-auto px-6">
           <motion.div
