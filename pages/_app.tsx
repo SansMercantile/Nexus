@@ -2,6 +2,7 @@ import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import { ThemeProvider } from '../components/ThemeProvider';
 import Head from 'next/head';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export default function App({ Component, pageProps }: AppProps) {
   // Use the exact production domain LinkedIn is hitting
@@ -74,6 +75,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <link rel="apple-touch-icon" href={`${siteUrl}/logo.png`} />
       </Head>
       <Component {...pageProps} />
+      <SpeedInsights />
     </ThemeProvider>
   );
 }
