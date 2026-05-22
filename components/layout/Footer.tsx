@@ -75,7 +75,7 @@ export function Footer() {
 
         <div className="border-t border-nexus-accent/20 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 dark:border-nexus-accent/20 light:border-gray-300 angelic:border-amber-200">
           <p className="text-sm text-white/60 dark:text-white/60 light:text-gray-600 angelic:text-amber-700">
-            © {currentYear} {COMPANY_INFO.name}. All rights reserved. | Regulatory Compliance: SARS, FATCA, GDPR, SADC
+            © {currentYear} {COMPANY_INFO.name}. All rights reserved. | Reg No: K2025537335 (CIPC South Africa) | B-BBEE Level-1 (Cert: 9453188800) | Regulatory Compliance: SARS, FATCA, GDPR, SADC
           </p>
           <div className="flex gap-4 text-sm text-white/80 dark:text-white/80 light:text-gray-600 angelic:text-amber-700">
             <a href="https://linkedin.com/company/sans-mercantile" target="_blank" rel="noopener noreferrer" className="hover:text-nexus-gold transition-colors dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">

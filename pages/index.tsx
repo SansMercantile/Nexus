@@ -10,10 +10,17 @@ export default function Home() {
   return (
     <Layout>
       <Head>
-        <title>Sans Mercantile - {COMPANY_INFO.tagline}</title>
-        <meta name="description" content={COMPANY_INFO.description} />
-        <meta property="og:title" content="Sans Mercantile Constellation" />
-        <meta property="og:description" content={COMPANY_INFO.tagline} />
+        <title>Sans Mercantile | AI-Driven Global Trade & Predictive Analytics</title>
+        <meta name="description" content="Sans Mercantile is a constellation of 21 autonomous AI systems redefining global commerce, governance, and institutional architecture through predictive analytics and intelligent automation." />
+        <meta name="keywords" content="AI Constellation, Predictive Analytics, Global Trade, Autonomous Systems, Fintech, Healthtech, Institutional Architecture, Sans Mercantile" />
+        <meta property="og:title" content="Sans Mercantile | Reimagine • Rebuild • Transcend" />
+        <meta property="og:description" content="A network of autonomous, intelligent systems enabling global commerce, governance, and innovation." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://sansmercantile.com" />
+        <meta property="og:image" content="https://sansmercantile.com/og-default.jpg" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Sans Mercantile | AI-Driven Global Trade" />
+        <meta name="twitter:description" content="Redefining global commerce through a constellation of 21 autonomous AI systems." />
       </Head>
 
       {/* Hero Section */}

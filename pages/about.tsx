@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import Head from 'next/head';
 import Layout from '@/components/layout/Layout';
 import { AnimatedIcon, IconType } from '@/components/AnimatedIcons';
 import { fadeInUp, staggerContainer } from '@/lib/animations';
@@ -7,6 +8,14 @@ import { fadeInUp, staggerContainer } from '@/lib/animations';
 export default function AboutPage() {
   return (
     <Layout>
+      <Head>
+        <title>About Us | Sans Mercantile - Architecting Economic Futures</title>
+        <meta name="description" content="Learn about Sans Mercantile, our mission to transform humanity's work through a constellation of 21 specialized AI systems, and our visionary leadership." />
+        <meta name="keywords" content="About Sans Mercantile, AI Mission, Autonomous Systems, Mezzoforte Privilege Khoza, Christopher Maddison, AI Governance" />
+        <meta property="og:title" content="About Sans Mercantile | Built for a Smarter Tomorrow" />
+        <meta property="og:description" content="Discover the vision and leadership behind the 21 System Constellation." />
+        <meta property="og:type" content="website" />
+      </Head>
       <div className="pb-20">
         <div className="max-w-7xl mx-auto px-6 mb-20">
           <motion.div
@@ -215,6 +224,20 @@ export default function AboutPage() {
                 </div>
               ))}
             </div>
+          </div>
+        </motion.div>
+
+        {/* Corporate Registration */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="max-w-6xl mx-auto px-6 mt-12 mb-20"
+        >
+          <div className="text-center p-6 border border-nexus-gold/10 rounded-xl bg-nexus-dark/50 text-nexus-gray-400 text-sm">
+            <p>Registered in South Africa under CIPC | Reg No: K2025537335</p>
+            <p>B-BBEE Level-1 | Certificate Number: 9453188800</p>
           </div>
         </motion.div>
 
