@@ -16,7 +16,7 @@ export default function App({ Component, pageProps }: AppProps) {
    */
   const defaultOgImage = `${siteUrl}/media/social-cover-hero.png`; 
   const defaultTitle = 'Sans Mercantile - Reimagine • Rebuild • Transcend';
-  const defaultDescription = 'A network of autonomous, intelligent systems enabling global commerce, governance, and innovation. Explore the nexus of technology and strategy.';
+  const defaultDescription = 'A network of autonomous, intelligent systems enabling global commerce, governance, and innovation. Registered in South Africa (CIPC Reg No: K2025537335). Explore the nexus of technology and strategy.';
 
   return (
     <ThemeProvider>
@@ -61,6 +61,11 @@ export default function App({ Component, pageProps }: AppProps) {
               "url": siteUrl,
               "logo": `${siteUrl}/logo.png`,
               "description": defaultDescription,
+              "taxId": "K2025537335",
+              "address": {
+                "@type": "PostalAddress",
+                "addressCountry": "ZA"
+              },
               "foundingDate": "2026",
               "sameAs": [
                 "https://linkedin.com/company/sans-mercantile"

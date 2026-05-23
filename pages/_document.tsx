@@ -15,7 +15,7 @@ export default class MyDocument extends Document {
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <meta name="robots" content="index, follow" />
           <meta name="author" content="Sans Mercantile" />
-          <meta name="keywords" content="AI, autonomous systems, global trade, predictive analytics, constellation, technology" />
+          <meta name="keywords" content="AI, autonomous systems, global trade, predictive analytics, constellation, technology, CIPC K2025537335, South Africa Registered" />
 
           {/* Open Graph / Facebook */}
           <meta property="og:type" content="website" />

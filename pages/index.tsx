@@ -11,8 +11,8 @@ export default function Home() {
     <Layout>
       <Head>
         <title>Sans Mercantile | AI-Driven Global Trade & Predictive Analytics</title>
-        <meta name="description" content="Sans Mercantile is a constellation of 21 autonomous AI systems redefining global commerce, governance, and institutional architecture through predictive analytics and intelligent automation." />
-        <meta name="keywords" content="AI Constellation, Predictive Analytics, Global Trade, Autonomous Systems, Fintech, Healthtech, Institutional Architecture, Sans Mercantile" />
+        <meta name="description" content="Sans Mercantile is a constellation of 21 autonomous AI systems redefining global commerce, governance, and institutional architecture. Registered in South Africa (CIPC Reg No: K2025537335)." />
+        <meta name="keywords" content="AI Constellation, Predictive Analytics, Global Trade, Autonomous Systems, Fintech, Healthtech, Institutional Architecture, Sans Mercantile, CIPC K2025537335" />
         <meta property="og:title" content="Sans Mercantile | Reimagine • Rebuild • Transcend" />
         <meta property="og:description" content="A network of autonomous, intelligent systems enabling global commerce, governance, and innovation." />
         <meta property="og:type" content="website" />
