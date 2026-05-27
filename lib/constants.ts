@@ -605,6 +605,7 @@ export const SYSTEMS: SystemData[] = [
     features: [
       { title: 'Wind Turbine Optimization', description: 'AI optimizes wind farm output and placement' },
       { title: 'Geothermal Management', description: 'Maximize geothermal extraction efficiency' },
+      { title: 'Hydrogen Fuel Production', description: 'Photocatalytic systems turning sunlight and water into zero-carbon hydrogen' },
       { title: 'Wave & Tidal Energy', description: 'Ocean energy harvesting optimization' },
       { title: 'Hybrid Systems', description: 'Multi-source renewable integration' },
       { title: 'Emergent Tech Research', description: 'Novel energy sources and methods' },
