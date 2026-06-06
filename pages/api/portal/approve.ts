@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getDb } from '@/lib/mongodb';
 import { sendUserApprovedEmail } from '@/lib/mailer';
-import { getSupabaseAdmin, isSupabaseConfigured } from '@/lib/supabase';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'GET') {
@@ -23,24 +22,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(404).json({ success: false, message: 'Invalid or expired approval token.' });
     }
 
-    // ── Primary: MongoDB Atlas ──────────────────────────────────────────────
+    // ── MongoDB Atlas ───────────────────────────────────────────────────────
     await db.collection('portal_users').updateOne(
       { _id: user._id },
       { $set: { active: true, pending: false, approvedAt: new Date().toISOString() }, $unset: { approvalToken: 1 } }
     );
-
-    // ── Redundancy: Supabase ────────────────────────────────────────────────
-    if (isSupabaseConfigured()) {
-      try {
-        const supabase = getSupabaseAdmin();
-        await supabase
-          .from('portal_users')
-          .update({ active: true, pending: false, approved_at: new Date().toISOString(), approval_token: null })
-          .eq('email', user.email);
-      } catch (supaErr) {
-        console.error('Supabase sync failed on approve (non-fatal):', supaErr);
-      }
-    }
 
     // ── Email the user ──────────────────────────────────────────────────────
     try {

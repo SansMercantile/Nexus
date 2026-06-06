@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getDb } from '@/lib/mongodb';
 import { sendApplicationConfirmation, sendAdminNewApplicationAlert } from '@/lib/mailer';
-import { getSupabaseAdmin, isSupabaseConfigured } from '@/lib/supabase';
 
 type ApplicationRequestBody = {
   jobId: string;
@@ -44,30 +43,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   };
 
   try {
-    // ── Primary: MongoDB Atlas ──────────────────────────────────────────────
+    // ── MongoDB Atlas ───────────────────────────────────────────────────────
     const db = await getDb();
     const result = await db.collection('job_applications').insertOne(application);
-
-    // ── Redundancy: Supabase ────────────────────────────────────────────────
-    if (isSupabaseConfigured()) {
-      try {
-        const supabase = getSupabaseAdmin();
-        await supabase.from('job_applications').insert({
-          job_id: application.jobId,
-          job_title: application.jobTitle,
-          applicant_name: application.applicantName,
-          applicant_email: application.applicantEmail,
-          phone: application.phone,
-          resume: application.resume,
-          cover_letter: application.coverLetter,
-          applied_at: application.appliedAt,
-          status: application.status,
-          source: application.source,
-        });
-      } catch (supaErr) {
-        console.error('Supabase redundancy write failed on apply (non-fatal):', supaErr);
-      }
-    }
 
     // ── Emails ──────────────────────────────────────────────────────────────
     try {

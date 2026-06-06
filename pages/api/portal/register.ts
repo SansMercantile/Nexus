@@ -2,7 +2,6 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { getDb } from '@/lib/mongodb';
 import { hashPassword } from '@/lib/auth';
 import { sendAdminApprovalRequest } from '@/lib/mailer';
-import { getSupabaseAdmin, isSupabaseConfigured } from '@/lib/supabase';
 
 type RegisterBody = {
   email: string;
@@ -60,25 +59,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // ── Primary: MongoDB Atlas ──────────────────────────────────────────────
     await db.collection('portal_users').insertOne(userDoc);
-
-    // ── Redundancy: Supabase ────────────────────────────────────────────────
-    if (isSupabaseConfigured()) {
-      try {
-        const supabase = getSupabaseAdmin();
-        await supabase.from('portal_users').insert({
-          email: userDoc.email,
-          name: userDoc.name,
-          role: userDoc.role,
-          active: userDoc.active,
-          pending: userDoc.pending,
-          approval_token: userDoc.approvalToken,
-          created_at: userDoc.createdAt,
-        });
-      } catch (supaErr) {
-        // Supabase failure is non-fatal — MongoDB is the source of truth
-        console.error('Supabase redundancy write failed (non-fatal):', supaErr);
-      }
-    }
 
     // ── Email notification ──────────────────────────────────────────────────
     if (!isAutoApproved) {
