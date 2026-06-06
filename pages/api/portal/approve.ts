@@ -1,25 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getDb } from '@/lib/mongodb';
-import nodemailer from 'nodemailer';
-
-const sendApprovalEmailToUser = async (email: string) => {
-  const transporter = nodemailer.createTransporter({
-    host: process.env.EMAIL_SMTP_HOST,
-    port: parseInt(process.env.EMAIL_SMTP_PORT || '587'),
-    secure: false,
-    auth: {
-      user: process.env.EMAIL_SMTP_USER,
-      pass: process.env.EMAIL_SMTP_PASS,
-    },
-  });
-
-  await transporter.sendMail({
-    from: process.env.EMAIL_FROM,
-    to: email,
-    subject: 'Portal Access Approved',
-    html: '<p>Your Sans Mercantile portal account has been approved. You can now log in at <a href="https://sansmercantile.com/portal">sansmercantile.com/portal</a>.</p>',
-  });
-};
+import { sendUserApprovedEmail } from '@/lib/mailer';
+import { getSupabaseAdmin, isSupabaseConfigured } from '@/lib/supabase';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'GET') {
@@ -30,7 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const { token } = req.query;
 
   if (!token || typeof token !== 'string') {
-    return res.status(400).json({ success: false, message: 'Invalid token.' });
+    return res.status(400).json({ success: false, message: 'Invalid or missing token.' });
   }
 
   try {
@@ -38,19 +20,40 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const user = await db.collection('portal_users').findOne({ approvalToken: token, pending: true });
 
     if (!user) {
-      return res.status(404).json({ success: false, message: 'Invalid or expired token.' });
+      return res.status(404).json({ success: false, message: 'Invalid or expired approval token.' });
     }
 
+    // ── Primary: MongoDB Atlas ──────────────────────────────────────────────
     await db.collection('portal_users').updateOne(
       { _id: user._id },
-      { $set: { active: true, pending: false }, $unset: { approvalToken: 1 } }
+      { $set: { active: true, pending: false, approvedAt: new Date().toISOString() }, $unset: { approvalToken: 1 } }
     );
 
-    await sendApprovalEmailToUser(user.email);
+    // ── Redundancy: Supabase ────────────────────────────────────────────────
+    if (isSupabaseConfigured()) {
+      try {
+        const supabase = getSupabaseAdmin();
+        await supabase
+          .from('portal_users')
+          .update({ active: true, pending: false, approved_at: new Date().toISOString(), approval_token: null })
+          .eq('email', user.email);
+      } catch (supaErr) {
+        console.error('Supabase sync failed on approve (non-fatal):', supaErr);
+      }
+    }
 
-    return res.status(200).json({ success: true, message: 'Account approved.' });
-  } catch (error) {
+    // ── Email the user ──────────────────────────────────────────────────────
+    try {
+      await sendUserApprovedEmail(user.email, user.name);
+    } catch (emailErr) {
+      console.error('Approval confirmation email failed (non-fatal):', emailErr);
+    }
+
+    // Redirect to portal with success message
+    const base = process.env.NEXT_PUBLIC_API_URL?.replace('http://localhost:3002', 'https://www.sansmercantile.com') || 'https://www.sansmercantile.com';
+    return res.redirect(302, `${base}/portal?approved=1`);
+  } catch (error: any) {
     console.error('Approval error:', error);
-    return res.status(500).json({ success: false, message: 'Approval failed.' });
+    return res.status(500).json({ success: false, message: 'Approval failed. Please try again.' });
   }
 }

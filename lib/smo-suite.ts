@@ -7,18 +7,25 @@
  * Attribution: SansMercantile™ AI Development Team
  */
 
+// SMO Suite backend URL — defaults to localhost in dev, set SMO_BACKEND_URL on Vercel for production
+const SMO_BASE = (typeof window === 'undefined'
+  ? process.env.SMO_BACKEND_URL
+  : undefined) || 'http://localhost:8000';
+
+const SMO_WS_BASE = SMO_BASE.replace(/^http/, 'ws');
+
 export const SMO_SUITE_CONFIG = {
-  // Backend endpoints
+  // Backend endpoints — driven by SMO_BACKEND_URL env var
   endpoints: {
-    health: 'http://localhost:8000/api/v1/system/health',
-    telemetry: 'http://localhost:8000/api/v1/telemetry',
-    synthesize: 'http://localhost:8000/api/v1/synthesize',
-    signaling: 'http://localhost:8000/api/v1/synthesis/signal',
-    stressTest: 'http://localhost:8000/api/v1/system/stress-test',
+    health:     `${SMO_BASE}/api/v1/system/health`,
+    telemetry:  `${SMO_BASE}/api/v1/telemetry`,
+    synthesize: `${SMO_BASE}/api/v1/synthesize`,
+    signaling:  `${SMO_BASE}/api/v1/synthesis/signal`,
+    stressTest: `${SMO_BASE}/api/v1/system/stress-test`,
   },
-  
+
   // WebSocket for real-time updates
-  websocket: 'ws://localhost:8000/ws/telemetry',
+  websocket: `${SMO_WS_BASE}/ws/telemetry`,
   
   // Polling interval (ms)
   pollingInterval: 2000,

@@ -1,25 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getDb } from '@/lib/mongodb';
-import nodemailer from 'nodemailer';
-
-const sendDenialEmailToUser = async (email: string) => {
-  const transporter = nodemailer.createTransporter({
-    host: process.env.EMAIL_SMTP_HOST,
-    port: parseInt(process.env.EMAIL_SMTP_PORT || '587'),
-    secure: false,
-    auth: {
-      user: process.env.EMAIL_SMTP_USER,
-      pass: process.env.EMAIL_SMTP_PASS,
-    },
-  });
-
-  await transporter.sendMail({
-    from: process.env.EMAIL_FROM,
-    to: email,
-    subject: 'Portal Access Denied',
-    html: '<p>Your application for Sans Mercantile portal access has been denied. For more information, please contact hello@sansmercantile.com.</p>',
-  });
-};
+import { sendUserDeniedEmail } from '@/lib/mailer';
+import { getSupabaseAdmin, isSupabaseConfigured } from '@/lib/supabase';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'GET') {
@@ -30,7 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const { token } = req.query;
 
   if (!token || typeof token !== 'string') {
-    return res.status(400).json({ success: false, message: 'Invalid token.' });
+    return res.status(400).json({ success: false, message: 'Invalid or missing token.' });
   }
 
   try {
@@ -38,16 +20,33 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const user = await db.collection('portal_users').findOne({ approvalToken: token, pending: true });
 
     if (!user) {
-      return res.status(404).json({ success: false, message: 'Invalid or expired token.' });
+      return res.status(404).json({ success: false, message: 'Invalid or expired denial token.' });
     }
 
+    // ── Primary: MongoDB Atlas ──────────────────────────────────────────────
     await db.collection('portal_users').deleteOne({ _id: user._id });
 
-    await sendDenialEmailToUser(user.email);
+    // ── Redundancy: Supabase ────────────────────────────────────────────────
+    if (isSupabaseConfigured()) {
+      try {
+        const supabase = getSupabaseAdmin();
+        await supabase.from('portal_users').delete().eq('email', user.email);
+      } catch (supaErr) {
+        console.error('Supabase sync failed on deny (non-fatal):', supaErr);
+      }
+    }
 
-    return res.status(200).json({ success: true, message: 'Account denied and removed.' });
-  } catch (error) {
+    // ── Email the user ──────────────────────────────────────────────────────
+    try {
+      await sendUserDeniedEmail(user.email);
+    } catch (emailErr) {
+      console.error('Denial email failed (non-fatal):', emailErr);
+    }
+
+    const base = process.env.NEXT_PUBLIC_API_URL?.replace('http://localhost:3002', 'https://www.sansmercantile.com') || 'https://www.sansmercantile.com';
+    return res.redirect(302, `${base}/portal?denied=1`);
+  } catch (error: any) {
     console.error('Denial error:', error);
-    return res.status(500).json({ success: false, message: 'Denial failed.' });
+    return res.status(500).json({ success: false, message: 'Denial failed. Please try again.' });
   }
 }

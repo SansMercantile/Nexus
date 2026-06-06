@@ -1,40 +1,15 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getDb } from '@/lib/mongodb';
 import { hashPassword } from '@/lib/auth';
-import nodemailer from 'nodemailer';
+import { sendAdminApprovalRequest } from '@/lib/mailer';
+import { getSupabaseAdmin, isSupabaseConfigured } from '@/lib/supabase';
 
 type RegisterBody = {
   email: string;
   password: string;
   name: string;
   role?: string;
-};
-
-const sendApprovalEmail = async (user: any) => {
-  const transporter = nodemailer.createTransporter({
-    host: process.env.EMAIL_SMTP_HOST,
-    port: parseInt(process.env.EMAIL_SMTP_PORT || '587'),
-    secure: false,
-    auth: {
-      user: process.env.EMAIL_SMTP_USER,
-      pass: process.env.EMAIL_SMTP_PASS,
-    },
-  });
-
-  const approvalUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/portal/approve?token=${encodeURIComponent(user.approvalToken)}`;
-  const denyUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/portal/deny?token=${encodeURIComponent(user.approvalToken)}`;
-
-  await transporter.sendMail({
-    from: process.env.EMAIL_FROM,
-    to: 'hello@sansmercantile.com',
-    subject: 'New Portal Account Application',
-    html: `
-      <p>New account application:</p>
-      <p>Name: ${user.name}</p>
-      <p>Email: ${user.email}</p>
-      <p><a href="${approvalUrl}">Approve</a> | <a href="${denyUrl}">Deny</a></p>
-    `,
-  });
+  approved?: boolean;
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -43,7 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).json({ success: false, message: 'Method not allowed.' });
   }
 
-  const { email, password, name, role } = req.body as RegisterBody;
+  const { email, password, name, role, approved } = req.body as RegisterBody;
 
   if (!email || !password || !name) {
     return res.status(400).json({
@@ -64,32 +39,70 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const existing = await db.collection('portal_users').findOne({ email: email.toLowerCase() });
 
     if (existing) {
-      return res.status(409).json({ success: false, message: 'Account already exists.' });
+      return res.status(409).json({ success: false, message: 'An account with this email already exists.' });
     }
 
     const passwordHash = hashPassword(password);
     const createdAt = new Date().toISOString();
-    const approvalToken = Math.random().toString(36).substring(2);
+    const approvalToken = Math.random().toString(36).substring(2) + Math.random().toString(36).substring(2);
+    const isAutoApproved = approved === true;
 
-    const result = await db.collection('portal_users').insertOne({
+    const userDoc = {
       email: email.toLowerCase(),
       name,
       role: role || 'user',
       passwordHash,
-      active: false,
-      pending: true,
-      approvalToken,
+      active: isAutoApproved,
+      pending: !isAutoApproved,
+      approvalToken: isAutoApproved ? null : approvalToken,
       createdAt,
+    };
+
+    // ── Primary: MongoDB Atlas ──────────────────────────────────────────────
+    await db.collection('portal_users').insertOne(userDoc);
+
+    // ── Redundancy: Supabase ────────────────────────────────────────────────
+    if (isSupabaseConfigured()) {
+      try {
+        const supabase = getSupabaseAdmin();
+        await supabase.from('portal_users').insert({
+          email: userDoc.email,
+          name: userDoc.name,
+          role: userDoc.role,
+          active: userDoc.active,
+          pending: userDoc.pending,
+          approval_token: userDoc.approvalToken,
+          created_at: userDoc.createdAt,
+        });
+      } catch (supaErr) {
+        // Supabase failure is non-fatal — MongoDB is the source of truth
+        console.error('Supabase redundancy write failed (non-fatal):', supaErr);
+      }
+    }
+
+    // ── Email notification ──────────────────────────────────────────────────
+    if (!isAutoApproved) {
+      try {
+        await sendAdminApprovalRequest({ name, email: email.toLowerCase(), approvalToken });
+      } catch (emailErr) {
+        // Email failure is non-fatal — account is already created
+        console.error('Approval email failed (account still created):', emailErr);
+      }
+    }
+
+    return res.status(201).json({
+      success: true,
+      message: isAutoApproved
+        ? 'Account created and approved. You can now sign in.'
+        : 'Account application submitted. You will receive an email once approved.',
     });
-
-    await sendApprovalEmail({ email: email.toLowerCase(), name, approvalToken });
-
-    return res.status(201).json({ success: true, message: 'Account application submitted. You will receive an email once approved.' });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Portal registration error:', error);
     return res.status(500).json({
       success: false,
-      message: 'Unable to submit application. Please try again later.',
+      message: error?.message?.includes('MONGODB_URI')
+        ? 'Database not configured. Contact the administrator.'
+        : 'Unable to submit application. Please try again later.',
     });
   }
 }
