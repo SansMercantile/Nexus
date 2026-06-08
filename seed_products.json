@@ -1,0 +1,44 @@
+[
+  {
+    "id": "sys-int-001",
+    "name": "System Integration",
+    "description": "Seamlessly integrate our autonomous systems into your existing infrastructure with expert guidance and support.",
+    "priceInCents": 500000,
+    "category": "Professional Services"
+  },
+  {
+    "id": "ai-con-001",
+    "name": "AI Consulting",
+    "description": "Expert guidance on implementing AI-driven solutions tailored to your industry and business objectives.",
+    "priceInCents": 250000,
+    "category": "Professional Services"
+  },
+  {
+    "id": "cust-dev-001",
+    "name": "Custom Development",
+    "description": "Tailored solutions built specifically for your unique business needs and operational requirements.",
+    "priceInCents": 750000,
+    "category": "Professional Services"
+  },
+  {
+    "id": "train-edu-001",
+    "name": "Training & Education",
+    "description": "Comprehensive training programs to empower your team with AI expertise and operational knowledge.",
+    "priceInCents": 150000,
+    "category": "Professional Services"
+  },
+  {
+    "id": "mng-serv-001",
+    "name": "Managed Services",
+    "description": "Full-service management of your AI systems with proactive monitoring, maintenance, and optimization.",
+    "priceInCents": 120000,
+    "category": "Professional Services"
+  },
+  {
+    "id": "comp-sec-001",
+    "name": "Compliance & Security",
+    "description": "Ensure regulatory compliance and enterprise-grade security across all your AI implementations.",
+    "priceInCents": 300000,
+    "category": "Professional Services"
+  }
+]

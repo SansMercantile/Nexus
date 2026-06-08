@@ -1,12 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Head from 'next/head';
 import Layout from '../components/layout/Layout';
 import { motion } from 'framer-motion';
 import { fadeInUp, staggerContainer } from '../lib/animations';
 import { AnimatedIcon } from '../components/AnimatedIcons';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function Services() {
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+  const startCheckout = async (productId: string) => {
+    setLoading(true);
+    try {
+      router.push(`/checkout?productId=${productId}`);
+    } catch (error) {
+      console.error('Navigation error:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const services = [
     {
       title: 'System Integration',
@@ -162,7 +177,10 @@ export default function Services() {
                   ))}
                 </ul>
 
-                <button className="w-full px-4 py-3 rounded-lg bg-nexus-gold/10 border border-nexus-gold/30 text-nexus-gold hover:bg-nexus-gold/20 transition-all duration-300 font-semibold">
+                <button 
+                  onClick={() => startCheckout(service.id)}
+                  className="w-full px-4 py-3 rounded-lg bg-nexus-gold/10 border border-nexus-gold/30 text-nexus-gold hover:bg-nexus-gold/20 transition-all duration-300 font-semibold"
+                >
                   {service.cta}
                 </button>
               </motion.div>

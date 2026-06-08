@@ -2,11 +2,18 @@
 
 import { headers } from 'next/headers'
 import { stripe } from '@/lib/stripe'
+import { getDb } from '@/lib/mongodb'
+
+async function getProduct(productId: string) {
+  const db = await getDb()
+  const product = await db.collection('products').findOne({ id: productId })
+  if (!product) {
+    throw new Error(`Product with ID ${productId} not found`)
+  }
+  return product
+}
 
 export async function startCheckoutSession(productId: string) {
-  // Implement your product catalog lookup.
-  const product = await getProduct(productId)
-
   // Create Checkout Sessions from body params.
   const session = await stripe.checkout.sessions.create({
     ui_mode: 'embedded',
