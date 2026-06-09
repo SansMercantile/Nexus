@@ -76,3 +76,12 @@ export function verifySessionToken(token: string) {
     return null;
   }
 }
+
+/**
+ * Auth0 Integration Placeholder
+ * This will be replaced by the @auth0/nextjs-auth0 SDK logic.
+ */
+export async function verifyAuth0Session(req: any) {
+  // To be implemented with Auth0 SDK
+  return null;
+}
