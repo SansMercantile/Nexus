@@ -3,42 +3,45 @@ import { getDb } from '@/lib/mongodb';
 import { sendUserApprovedEmail } from '@/lib/mailer';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== 'GET') {
-    res.setHeader('Allow', 'GET');
-    return res.status(405).json({ success: false, message: 'Method not allowed.' });
+  if (req.method !== 'POST') {
+    return res.setHeader('Allow', 'POST').status(405).json({
+      success: false,
+      message: 'Method not allowed. Use POST to approve/deny.',
+    });
   }
 
-  const { token } = req.query;
+  const { token } = req.body as { token: string };
 
-  if (!token || typeof token !== 'string') {
-    return res.status(400).json({ success: false, message: 'Invalid or missing token.' });
+  if (!token) {
+    return res.status(400).json({ success: false, message: 'Approval token is required.' });
   }
 
   try {
     const db = await getDb();
-    const user = await db.collection('portal_users').findOne({ approvalToken: token, pending: true });
+    // Use scoped data to ensure the admin/user can only approve/deny within their scope
+    // Note: In a real scenario, we'd extract the current user's context from the session.
+    const user = await db.collection('portal_users').findOne({ 
+      approvalToken: token, 
+      pending: true 
+    });
 
     if (!user) {
       return res.status(404).json({ success: false, message: 'Invalid or expired approval token.' });
     }
 
-    // ── MongoDB Atlas ───────────────────────────────────────────────────────
-    await db.collection('portal_users').updateOne(
-      { _id: user._id },
-      { $set: { active: true, pending: false, approvedAt: new Date().toISOString() }, $unset: { approvalToken: 1 } }
-    );
-
-    // ── Email the user ──────────────────────────────────────────────────────
-    try {
-      await sendUserApprovedEmail(user.email, user.name);
-    } catch (emailErr) {
-      console.error('Approval confirmation email failed (non-fatal):', emailErr);
+    if (req.body.approve === true) {
+      await db.collection('portal_users').updateOne(
+        { _id: user._id },
+        { $set: { active: true, pending: false, approvalToken: null } }
+      );
+      return res.status(200).json({ success: true, message: 'Account approved successfully.' });
+    } else if (req.body.approve === false) {
+      await db.collection('portal_users').deleteOne({ _id: user._id });
+      return res.status(200).json({ success: true, message: 'Application denied and account removed.' });
     }
 
-    // Redirect to portal with success message
-    const base = process.env.NEXT_PUBLIC_API_URL?.replace('http://localhost:3002', 'https://www.sansmercantile.com') || 'https://www.sansmercantile.com';
-    return res.redirect(302, `${base}/portal?approved=1`);
-  } catch (error: any) {
+    return res.status(400).json({ success: false, message: 'Invalid approval action.' });
+  } catch (error) {
     console.error('Approval error:', error);
     return res.status(500).json({ success: false, message: 'Approval failed. Please try again.' });
   }
