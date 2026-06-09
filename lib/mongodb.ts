@@ -35,7 +35,7 @@ export async function getDb() {
 }
 
 /**
- * Scopes a database query to a specific tenant or user.
+ * Scoped database query helper to enforce multi-tenancy and RBAC.
  * @param collectionName - The name of the MongoDB collection.
  * @param filter - The base filter for the query.
  * @param context - The current user's context (tenantId, userId, role).
