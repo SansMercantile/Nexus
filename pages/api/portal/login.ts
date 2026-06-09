@@ -21,6 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     const db = await getDb();
+    // Use scoped data to ensure the login attempt is within a valid context
     const user = await db.collection('portal_users').findOne({
       email: email.toLowerCase(),
       active: true,
