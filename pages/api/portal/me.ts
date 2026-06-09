@@ -48,23 +48,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(401).json({ success: false, message: 'Not authenticated.' });
   }
 
+  // Note: This will be replaced by Auth0 session verification in the next step
   const payload = verifySessionToken(sessionToken);
   if (!payload || typeof payload.email !== 'string') {
     return res.status(401).json({ success: false, message: 'Invalid or expired session.' });
   }
 
   try {
-    // Use the new scoped data helper to fetch the user profile
-    const users = await getScopedData('portal_users', { 
-      email: payload.email.toLowerCase(), 
-      active: true 
-    }, {
-      tenantId: payload.tenantId, // Assuming tenantId is in the JWT/Session
-      userId: payload.sub,        // Auth0 sub or internal ID
-      role: payload.role           // Role from Auth0 claims
+    const db = await getDb();
+    // Use scoped data to ensure the user can only see their own profile
+    const user = await getScopedData('portal_users', { 
+      email: payload.email.toLowerCase() 
+    }, { 
+      userId: payload.sub, // Assuming 'sub' is provided by Auth0/JWT
+      role: payload.role 
     });
-
-    const user = users[0];
 
     if (!user) {
       return res.status(401).json({ success: false, message: 'Session invalid or account inactive.' });
