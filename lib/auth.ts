@@ -38,8 +38,9 @@ export function verifyPassword(password: string, storedHash: string) {
  * Auth0 Session Verification
  * Replaces the manual JWT verification with Auth0's secure session handling.
  */
-export async function verifyAuth0Session(req: any) {
-  const session = await require('@auth0/nextjs-auth0').getSession(req, res);
+export async function verifyAuth0Session(req: any, res: any) {
+  const { getSession } = await import('@auth0/nextjs-auth0');
+  const session = await getSession(req, res);
   if (!session || !session.user) {
     return null;
   }
