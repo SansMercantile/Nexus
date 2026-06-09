@@ -24,6 +24,7 @@ export default function Services() {
 
   const services = [
     {
+      id: 'sys-int-001',
       title: 'System Integration',
       description: 'Seamlessly integrate our autonomous systems into your existing infrastructure with expert guidance and support.',
       icon: 'network',
@@ -37,6 +38,7 @@ export default function Services() {
       cta: 'Start Integration'
     },
     {
+      id: 'ai-con-001',
       title: 'AI Consulting',
       description: 'Expert guidance on implementing AI-driven solutions tailored to your industry and business objectives.',
       icon: 'brain',
@@ -50,6 +52,7 @@ export default function Services() {
       cta: 'Book Consultation'
     },
     {
+      id: 'cust-dev-001',
       title: 'Custom Development',
       description: 'Tailored solutions built specifically for your unique business needs and operational requirements.',
       icon: 'code',
@@ -63,6 +66,7 @@ export default function Services() {
       cta: 'Discuss Project'
     },
     {
+      id: 'train-edu-001',
       title: 'Training & Education',
       description: 'Comprehensive training programs to empower your team with AI expertise and operational knowledge.',
       icon: 'graduation',
@@ -76,6 +80,7 @@ export default function Services() {
       cta: 'View Programs'
     },
     {
+      id: 'mng-serv-001',
       title: 'Managed Services',
       description: 'Full-service management of your AI systems with proactive monitoring, maintenance, and optimization.',
       icon: 'shield',
@@ -89,6 +94,7 @@ export default function Services() {
       cta: 'Learn More'
     },
     {
+      id: 'comp-sec-001',
       title: 'Compliance & Security',
       description: 'Ensure regulatory compliance and enterprise-grade security across all your AI implementations.',
       icon: 'lock',
