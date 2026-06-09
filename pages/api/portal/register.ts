@@ -5,15 +5,38 @@ import { sendAdminApprovalRequest } from '@/lib/mailer';
 
 /**
  * Scoped database query helper to enforce multi-tenancy and RBAC.
+ * @param collectionName - The name of the MongoDB collection.
+ * @param filter - The base filter for the query.
+ * @param context - The current user's context (tenantId, userId, role).
  */
-async function getScopedUser(email: string, role?: string) {
+export async function getScopedData(collectionName: string, filter: Record<string, any>, context: { tenantId?: string; userId?: string; role?: string }) {
   const db = await getDb();
-  let filter: any = { email: email.toLowerCase() };
+  const collection = db.collection(collectionName);
 
-  // If we have a session/context with tenantId (to be added in next step), 
-  // it would be injected here. For now, we ensure basic role-based checks.
-  const user = await db.collection('portal_users').findOne(filter);
-  return user;
+  let scopedFilter = { ...filter };
+
+  // Admin bypass
+  if (context.role === 'admin') {
+    return await collection.find(scopedFilter).toArray();
+  }
+
+  // Tenant isolation: Users/Partners only see data for their organization
+  if (context.tenantId) {
+    scopedFilter.tenantId = context.tenantId;
+  }
+
+  // Candidate isolation: Candidates only see their own profile/applications
+  if (context.userId && context.role === 'candidate') {
+    // If the query is for a specific document by ID, ensure it belongs to them
+    if (filter._id || filter.id) {
+      scopedFilter.userId = context.userId;
+    } else {
+      // Otherwise, append userId to the general filter
+      scopedFilter.userId = context.userId;
+    }
+  }
+
+  return await collection.find(scopedFilter).toArray();
 }
 
 type RegisterBody = {
@@ -48,7 +71,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     const db = await getDb();
-    const existing = await getScopedUser(email, role);
+    const existing = await getScopedData('portal_users', { email: email.toLowerCase() }, { role: role || 'user' });
 
     if (existing) {
       return res.status(409).json({ success: false, message: 'An account with this email already exists.' });
