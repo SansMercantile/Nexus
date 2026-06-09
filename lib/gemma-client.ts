@@ -12,6 +12,10 @@ const MODEL_ALIASES: Record<string, string> = {
   gemma: 'gemma:2b',
   gemma4: 'gemma:2b',
   'gemma4:2b': 'gemma:2b',
+  // Redundancy models
+  backup_1: 'llama3:8b',
+  backup_2: 'mistral:7b',
+  redundant: 'phi3:mini',
 };
 const rawModel = (process.env.NEXT_PUBLIC_GEMMA_MODEL ?? 'mpeti').toLowerCase();
 export const GEMMA_MODEL = MODEL_ALIASES[rawModel] ?? rawModel;
