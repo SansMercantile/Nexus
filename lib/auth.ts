@@ -34,6 +34,18 @@ export function verifyPassword(password: string, storedHash: string) {
   return timingSafeEqual(derived, stored);
 }
 
+/**
+ * Auth0 Session Verification
+ * Replaces the manual JWT verification with Auth0's secure session handling.
+ */
+export async function verifyAuth0Session(req: any) {
+  const session = await require('@auth0/nextjs-auth0').getSession(req, res);
+  if (!session || !session.user) {
+    return null;
+  }
+  return session.user;
+}
+
 export function createSessionToken(payload: Record<string, any>, expiresInSeconds = 60 * 60 * 24) {
   const secret = assertJwtSecret();
   const header = base64UrlEncode(Buffer.from(JSON.stringify({ alg: 'HS256', typ: 'JWT' })));
@@ -75,13 +87,4 @@ export function verifySessionToken(token: string) {
   } catch {
     return null;
   }
-}
-
-/**
- * Auth0 Integration Placeholder
- * This will be replaced by the @auth0/nextjs-auth0 SDK logic.
- */
-export async function verifyAuth0Session(req: any) {
-  // To be implemented with Auth0 SDK
-  return null;
 }
