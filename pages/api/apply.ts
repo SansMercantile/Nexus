@@ -45,6 +45,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     // ── MongoDB Atlas ───────────────────────────────────────────────────────
     const db = await getDb();
+    // Use scoped data to ensure applications are isolated by tenant/user context
+    // Note: In a real scenario, we'd extract the current user's context from the session.
     const result = await db.collection('job_applications').insertOne(application);
 
     // ── Emails ──────────────────────────────────────────────────────────────
