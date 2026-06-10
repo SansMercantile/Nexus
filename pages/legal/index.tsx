@@ -35,6 +35,12 @@ const legalPages = [
     icon: '⚖️'
   },
   {
+    title: 'Refund & Dispute Policy',
+    description: 'Our refund eligibility, cancellation terms, and dispute resolution process',
+    href: '/legal/refund-policy',
+    icon: '💸'
+  },
+  {
     title: 'Frequently Asked Questions',
     description: 'Answers to common questions about our services',
     href: '/legal/faq',
