@@ -25,7 +25,8 @@ export default function LiveChat() {
     setInput('');
 
     try {
-      const response = await fetch('/api/ai/chat', {
+      // Connect to the new real-time streaming endpoint
+      const response = await fetch('/api/chat/stream', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt: input }),
@@ -33,6 +34,7 @@ export default function LiveChat() {
       const data = await response.json();
       setMessages(prev => [...prev, { role: 'assistant', content: data.response }]);
     } catch (error) {
+      console.error('Live Chat Error:', error);
       setMessages(prev => [...prev, { role: 'assistant', content: 'I am experiencing a connection issue. Please try again shortly.' }]);
     }
   };

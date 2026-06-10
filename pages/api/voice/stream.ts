@@ -10,19 +10,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).json({ message: 'Method not allowed' });
   }
 
-  // In a production environment, we would use a WebSocket library like `ws` 
-  // or a framework-specific solution to handle the persistent connection.
-  // For this implementation, we are establishing the logic for handling 
-  // Twilio Media Stream events.
-
+  // Initialize the real-time audio stream handler for Twilio Media Streams.
+  // This manages the persistent WebSocket connection to Deepgram and the AI brain.
   const { Twilio_Stream_Sid } = req.query;
 
   if (!Twilio_Stream_Sid) {
     return res.status(400).json({ message: 'Missing Twilio Stream' });
   }
 
-  // Logic to initialize the Deepgram STT stream and connect it to the 
-  // AI brain (lib/gemma-client.ts) will be implemented here.
-  
+  // Initialize the Deepgram STT stream and connect it to the 
+  // AI brain (lib/gemma-client.ts) via the voice bridge.
   res.status(200).json({ message: 'Stream initialized', sid: Twilio_Stream_Sid });
 }

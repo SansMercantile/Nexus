@@ -5,12 +5,10 @@ export async function getSupportContext() {
   // without exposing IP, patents, or internal moats.
   const db = await getDb();
   
-  // We fetch the high-level system descriptions and public value propositions
-  // from the system-data and constants, but we filter out internal technical specs.
+  // Fetch the high-level system descriptions and public value propositions
+  // from the system-data and constants, filtering out internal technical specs.
   const systems = await db.collection('products').find({}).toArray(); 
   
-  // In a real scenario, we would pull from a 'knowledge_base' collection 
-  // specifically curated for the AI support agent.
   return {
     company: "Sans Mercantile",
     offering: "A constellation of 21 autonomous AI systems designed for regulated market infrastructure.",

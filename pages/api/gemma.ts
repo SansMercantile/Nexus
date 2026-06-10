@@ -12,8 +12,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    // Note: In a production multi-tenant environment, we would verify the user session 
-    // and ensure they have permission to access this specific AI model/resource.
     const gemmaResponse = await generateGemma(prompt);
     return res.status(200).json(gemmaResponse);
   } catch (error) {

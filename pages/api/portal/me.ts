@@ -48,7 +48,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(401).json({ success: false, message: 'Not authenticated.' });
   }
 
-  // Note: This will be replaced by Auth0 session verification in the next step
   const payload = verifySessionToken(sessionToken);
   if (!payload || typeof payload.email !== 'string') {
     return res.status(401).json({ success: false, message: 'Invalid or expired session.' });
