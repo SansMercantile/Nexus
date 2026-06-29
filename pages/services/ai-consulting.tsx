@@ -3,76 +3,74 @@ import Head from 'next/head';
 import Layout from '../../components/layout/Layout';
 import { motion } from 'framer-motion';
 import { fadeInUp, staggerContainer } from '../../lib/animations';
-import { AnimatedIcon } from '../../components/AnimatedIcons';
-import Link from 'next/link';
 
-export default function AIConsulting() {
-  const consultingPhases = [
+export default function StrategicAssessment() {
+  const assessmentPhases = [
     {
-      phase: 'Assessment',
-      title: 'Current State Analysis',
-      description: 'Comprehensive evaluation of your AI readiness, infrastructure, and strategic objectives.',
-      deliverables: ['AI maturity assessment', 'Technology audit', 'Gap analysis report', 'ROI projections']
+      phase: '01',
+      title: 'Topology Mapping',
+      description: 'Comprehensive audit of existing enterprise infrastructure to identify integration points with the Constellation architecture.',
+      deliverables: ['Infrastructure Audit', 'Data Flow Analysis', 'Gap Identification', 'Constraint Mapping']
     },
     {
-      phase: 'Strategy',
-      title: 'AI Strategy Development',
-      description: 'Custom AI roadmap aligned with your business goals and industry requirements.',
-      deliverables: ['Strategic roadmap', 'Implementation timeline', 'Resource requirements', 'Risk assessment']
+      phase: '02',
+      title: 'Architecture Alignment',
+      description: 'Defining the structural requirements for modular AI utility deployment within your specific operational constraints.',
+      deliverables: ['Alignment Blueprint', 'Sector Requirements', 'Resource Allocation Plan', 'Risk Mitigation Strategy']
     },
     {
-      phase: 'Implementation',
-      title: 'Solution Design & Planning',
-      description: 'Detailed technical architecture and implementation planning for AI solutions.',
-      deliverables: ['Technical architecture', 'Integration plan', 'Change management', 'Training roadmap']
+      phase: '03',
+      title: 'Deployment Roadmap',
+      description: 'A phased execution plan for transitioning from legacy systems to the 18-Sector Stack.',
+      deliverables: ['Phased Rollout Schedule', 'Milestone Definition', 'KPI Framework', 'Change Management Protocol']
     },
     {
-      phase: 'Execution',
-      title: 'Guided Implementation',
-      description: 'Hands-on support during implementation with expert guidance and best practices.',
-      deliverables: ['Implementation support', 'Quality assurance', 'Performance optimization', 'Knowledge transfer']
+      phase: '04',
+      title: 'Operational Readiness',
+      description: 'Final validation of infrastructure readiness before the activation of autonomous utility nodes.',
+      deliverables: ['Readiness Certification', 'User Acceptance Testing', 'Performance Benchmarking', 'Knowledge Transfer']
     }
   ];
 
-  const serviceOfferings = [
+  const assessmentCapabilities = [
     {
-      title: 'Executive AI Leadership',
-      description: 'Strategic guidance for C-suite executives on AI adoption and digital transformation.',
-      features: ['AI strategy workshops', 'Executive briefings', 'Board presentations', 'Industry benchmarking']
+      title: 'Enterprise Topology Audit',
+      description: 'Deep-dive analysis into existing IT stacks to ensure seamless integration with modular AI utilities.',
+      features: ['Legacy System Mapping', 'Data Silo Identification', 'Security Perimeter Analysis', 'Infrastructure Scalability']
     },
     {
-      title: 'Technical AI Consulting',
-      description: 'Deep technical expertise for AI implementation and system architecture.',
-      features: ['Architecture design', 'Technology selection', 'Performance optimization', 'Security integration']
+      title: 'Constellation Alignment',
+      description: 'Aligning organizational objectives with the 18-Sector Stack capabilities for maximum systemic impact.',
+      features: ['Strategic Roadmap Design', 'ROI Modeling', 'Capability Mapping', 'Governance Frameworks']
     },
     {
-      title: 'Industry-Specific Solutions',
-      description: 'Tailored AI solutions for healthcare, finance, manufacturing, and other sectors.',
-      features: ['Regulatory compliance', 'Industry best practices', 'Custom model development', 'Domain expertise']
+      title: 'Risk & Compliance Assessment',
+      description: 'Ensuring that infrastructure deployment meets institutional security and regulatory standards.',
+      features: ['Data Privacy Audits', 'Compliance Mapping', 'Security Hardening Plans', 'Regulatory Alignment']
     },
     {
-      title: 'Change Management',
-      description: 'Comprehensive support for organizational change and AI adoption.',
-      features: ['Stakeholder engagement', 'Training programs', 'Communication planning', 'Cultural transformation']
+      title: 'Deployment Readiness Planning',
+      description: 'Preparing the organizational fabric for the transition to autonomous AI utility orchestration.',
+      features: ['Change Management Strategy', 'Training Roadmaps', 'Stakeholder Engagement', 'Operational Transitioning']
     }
   ];
 
-  const expertiseAreas = [
-    { title: 'Machine Learning', desc: 'Advanced ML model development and deployment' },
-    { title: 'Natural Language Processing', desc: 'NLP solutions for text analysis and generation' },
-    { title: 'Computer Vision', desc: 'Image recognition and visual AI applications' },
-    { title: 'Predictive Analytics', desc: 'Data-driven forecasting and decision support' },
-    { title: 'Robotic Process Automation', desc: 'Intelligent automation and workflow optimization' },
-    { title: 'Edge AI', desc: 'AI deployment on edge devices and IoT systems' },
-    { title: 'MLOps', desc: 'Machine learning operations and model lifecycle management' },
-    { title: 'AI Ethics & Governance', desc: 'Responsible AI implementation and compliance' }
+  const infrastructureFocus = [
+    { title: 'Topology Mapping', desc: 'Identifying integration points in complex enterprise environments' },
+    { title: 'Sector Alignment', desc: 'Mapping business needs to specific 18-Sector Stack utilities' },
+    { title: 'Data Flow Orchestration', desc: 'Designing systemic data movement across modular nodes' },
+    { title: 'Security Hardening', desc: 'Ensuring infrastructure integrity during AI utility deployment' },
+    { title: 'Scalability Modeling', desc: 'Predicting and planning for autonomous system growth' },
+    { title: 'Compliance Frameworks', desc: 'Integrating regulatory requirements into the core architecture' },
+    { title: 'Legacy Modernization', desc: 'Systematic replacement of obsolete systems with modular utilities' },
+    { title: 'Operational Continuity', desc: 'Ensuring zero-downtime transitions during infrastructure deployment' }
   ];
 
   return (
     <Layout>
       <Head>
-        <title>Sans Mercantile - AI Consulting Services</title>
-        <meta name="description" content="Expert AI consulting services for strategic implementation and digital transformation" />
+        <title>Sans Mercantile - Strategic Infrastructure Assessment</title>
+        <meta name="description" content="Mapping enterprise topology to the Constellation architecture for modular AI utility deployment." />
       </Head>
 
       <div className="pt-32 pb-20">
@@ -88,189 +86,66 @@ export default function AIConsulting() {
               variants={fadeInUp}
               className="text-5xl md:text-7xl font-bold text-white mb-6"
             >
-              AI <span className="text-nexus-gold">Consulting</span>
+              Strategic <span className="text-nexus-gold">Infrastructure Assessment</span>
             </motion.h1>
             <motion.p
               variants={fadeInUp}
               className="text-xl text-nexus-gray-300 max-w-3xl mx-auto mb-8"
             >
-              Strategic guidance and expert implementation support to help your organization successfully adopt AI technologies
-              and drive meaningful business transformation.
+              Before deployment, we map your existing enterprise topology to the Constellation architecture. We identify integration points, analyze data flows, and define the structural requirements for modular AI utility nodes.
             </motion.p>
             <motion.div variants={fadeInUp} className="flex gap-4 justify-center flex-wrap">
-              <Link href="/contact">
-                <button className="btn btn-primary">Book Consultation</button>
-              </Link>
-              <Link href="/docs/sdk">
-                <button className="btn btn-secondary">AI Strategy Guide</button>
-              </Link>
+              <button className="btn btn-primary">Request Assessment Blueprint</button>
             </motion.div>
           </motion.div>
 
-          {/* Consulting Process */}
-          <motion.div
-            variants={staggerContainer}
-            initial="initial"
-            animate="animate"
-            className="mb-20"
-          >
-            <motion.div variants={fadeInUp} className="text-center mb-12">
-              <h2 className="text-4xl font-bold text-white mb-4">Our Consulting Process</h2>
-              <p className="text-nexus-gray-300 max-w-2xl mx-auto">
-                A structured methodology ensuring successful AI adoption with measurable business impact.
-              </p>
-            </motion.div>
+          {/* Assessment Phases */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+            {assessmentPhases.map((phase, i) => (
+              <div key={i} className="p-6 bg-nexus-gray-900 border border-white/10 rounded-xl hover:border-nexus-gold transition-colors">
+                <span className="text-nexus-gold font-bold text-lg">{phase.phase}</span>
+                <h3 className="text-xl font-bold text-white mb-4">{phase.title}</h3>
+                <p className="text-nexus-gray-400 mb-6 text-sm">{phase.description}</p>
+                <ul className="space-y-2">
+                  {phase.deliverables.map((item, j) => (
+                    <li key={j} className="flex items-center text-xs text-nexus-gray-300">
+                      <span className="mr-2">▹</span> {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
 
-            <div className="grid gap-6 lg:grid-cols-2">
-              {consultingPhases.map((phase, index) => (
-                <motion.div
-                  key={phase.phase}
-                  variants={fadeInUp}
-                  transition={{ delay: index * 0.05 }}
-                  className="rounded-3xl border border-nexus-gold/20 bg-[#0b1225] p-8 shadow-[0_20px_60px_rgba(0,0,0,0.25)]"
-                >
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-nexus-gold text-black font-bold">
-                      {index + 1}
-                    </div>
-                    <div>
-                      <p className="text-sm uppercase tracking-[0.3em] text-nexus-gold mb-1">{phase.phase}</p>
-                      <h3 className="text-2xl font-semibold text-white">{phase.title}</h3>
-                    </div>
-                  </div>
-                  <p className="text-nexus-gray-300 mb-6">{phase.description}</p>
-                  <div className="grid gap-3 sm:grid-cols-2">
-                    {phase.deliverables.map((deliverable, idx) => (
-                      <div key={idx} className="rounded-2xl border border-nexus-gold/10 bg-[#111827] p-4 text-sm text-nexus-gray-300">
-                        {deliverable}
-                      </div>
-                    ))}
-                  </div>
-                </motion.div>
+          {/* Assessment Capabilities */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
+            {assessmentCapabilities.map((cap, i) => (
+              <div key={i} className="p-8 bg-nexus-gray-900/50 border border-white/5 rounded-xl">
+                <h3 className="text-xl font-bold text-white mb-4">{cap.title}</h3>
+                <p className="text-nexus-gray-400 mb-6">{cap.description}</p>
+                <div className="flex flex-wrap gap-2">
+                  {cap.features.map((f, j) => (
+                    <span key={j} className="px-3 py-1 bg-white/5 rounded-full text-xs text-nexus-gold border border-white/10">
+                      {f}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Infrastructure Focus Areas */}
+          <div className="bg-nexus-gray-900/50 p-10 rounded-2xl border border-white/5">
+            <h2 className="text-3xl font-bold text-white mb-6 text-center">Infrastructure Focus Areas</h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {infrastructureFocus.map((focus, i) => (
+                <div key={i} className="p-4 bg-white/5 rounded border border-white/10 text-center">
+                  <h4 className="text-sm font-bold text-nexus-gold mb-2">{focus.title}</h4>
+                  <p className="text-xs text-nexus-gray-400">{focus.desc}</p>
+                </div>
               ))}
             </div>
-          </motion.div>
-
-          {/* Service Offerings */}
-          <motion.div
-            variants={staggerContainer}
-            initial="initial"
-            animate="animate"
-            className="mb-20"
-          >
-            <motion.div variants={fadeInUp} className="text-center mb-12">
-              <h2 className="text-4xl font-bold text-white mb-4">Service Offerings</h2>
-              <p className="text-nexus-gray-300 max-w-2xl mx-auto">
-                Comprehensive consulting services covering all aspects of AI adoption and implementation.
-              </p>
-            </motion.div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {serviceOfferings.map((offering, index) => (
-                <motion.div
-                  key={offering.title}
-                  variants={fadeInUp}
-                  transition={{ delay: index * 0.1 }}
-                  className="bg-gradient-to-br from-[#1a1f3a] to-nexus-dark border border-nexus-gold/20 rounded-xl p-8 hover:border-nexus-gold/40 transition-all duration-300"
-                >
-                  <h3 className="text-xl font-bold text-white mb-4">{offering.title}</h3>
-                  <p className="text-nexus-gray-300 mb-6">{offering.description}</p>
-                  <ul className="space-y-2">
-                    {offering.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-center gap-2 text-sm text-nexus-gray-400">
-                        <div className="w-1.5 h-1.5 rounded-full bg-nexus-gold flex-shrink-0"></div>
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Expertise Areas */}
-          <motion.div
-            variants={staggerContainer}
-            initial="initial"
-            animate="animate"
-            className="bg-gradient-to-br from-[#1a1f3a] to-nexus-dark border border-nexus-gold/20 rounded-2xl p-12 mb-20"
-          >
-            <motion.div variants={fadeInUp} className="text-center mb-12">
-              <h2 className="text-4xl font-bold text-white mb-4">Technical Expertise</h2>
-              <p className="text-nexus-gray-300 max-w-2xl mx-auto">
-                Deep technical knowledge across the full spectrum of AI technologies and applications.
-              </p>
-            </motion.div>
-
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {expertiseAreas.map((area, index) => (
-                <motion.div
-                  key={area.title}
-                  variants={fadeInUp}
-                  transition={{ delay: index * 0.05 }}
-                  className="text-center p-4 rounded-lg bg-nexus-dark/50 hover:bg-nexus-dark/70 transition-colors"
-                >
-                  <h4 className="text-lg font-semibold text-white mb-2">{area.title}</h4>
-                  <p className="text-nexus-gray-400 text-sm">{area.desc}</p>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Success Metrics */}
-          <motion.div
-            variants={staggerContainer}
-            initial="initial"
-            animate="animate"
-            className="mb-20"
-          >
-            <motion.div variants={fadeInUp} className="text-center mb-12">
-              <h2 className="text-4xl font-bold text-white mb-4">Proven Results</h2>
-              <p className="text-nexus-gray-300 max-w-2xl mx-auto">
-                Measurable impact from our AI consulting engagements.
-              </p>
-            </motion.div>
-
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              {[
-                { metric: '300%', label: 'Average ROI Increase' },
-                { metric: '85%', label: 'Project Success Rate' },
-                { metric: '60%', label: 'Time to Value Reduction' },
-                { metric: '50+', label: 'Enterprise Clients' }
-              ].map((stat, index) => (
-                <motion.div
-                  key={stat.metric}
-                  variants={fadeInUp}
-                  transition={{ delay: index * 0.1 }}
-                  className="text-center"
-                >
-                  <div className="text-4xl font-bold text-nexus-gold mb-2">{stat.metric}</div>
-                  <p className="text-nexus-gray-400 text-sm">{stat.label}</p>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* CTA Section */}
-          <motion.div
-            variants={fadeInUp}
-            initial="initial"
-            animate="animate"
-            className="text-center bg-gradient-to-r from-nexus-gold/10 to-nexus-accent/10 border border-nexus-gold/20 rounded-2xl p-12"
-          >
-            <h2 className="text-3xl font-bold text-white mb-4">Transform Your Business with AI</h2>
-            <p className="text-nexus-gray-300 mb-8 max-w-2xl mx-auto">
-              Let's discuss your AI goals and develop a strategic roadmap for successful implementation.
-            </p>
-            <div className="flex gap-4 justify-center flex-wrap">
-              <Link href="/contact">
-                <button className="btn btn-primary">Schedule Strategy Session</button>
-              </Link>
-              <Link href="/case-studies">
-                <button className="btn btn-secondary">View Case Studies</button>
-              </Link>
-            </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </Layout>
