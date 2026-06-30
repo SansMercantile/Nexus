@@ -3,42 +3,6 @@ import { getDb } from '@/lib/mongodb';
 import { hashPassword } from '@/lib/auth';
 import { sendAdminApprovalRequest } from '@/lib/mailer';
 
-/**
- * Scoped database query helper to enforce multi-tenancy and RBAC.
- * @param collectionName - The name of the MongoDB collection.
- * @param filter - The base filter for the query.
- * @param context - The current user's context (tenantId, userId, role).
- */
-export async function getScopedData(collectionName: string, filter: Record<string, any>, context: { tenantId?: string; userId?: string; role?: string }) {
-  const db = await getDb();
-  const collection = db.collection(collectionName);
-
-  let scopedFilter = { ...filter };
-
-  // Admin bypass
-  if (context.role === 'admin') {
-    return await collection.find(scopedFilter).toArray();
-  }
-
-  // Tenant isolation: Users/Partners only see data for their organization
-  if (context.tenantId) {
-    scopedFilter.tenantId = context.tenantId;
-  }
-
-  // Candidate isolation: Candidates only see their own profile/applications
-  if (context.userId && context.role === 'candidate') {
-    // If the query is for a specific document by ID, ensure it belongs to them
-    if (filter._id || filter.id) {
-      scopedFilter.userId = context.userId;
-    } else {
-      // Otherwise, append userId to the general filter
-      scopedFilter.userId = context.userId;
-    }
-  }
-
-  return await collection.find(scopedFilter).toArray();
-}
-
 type RegisterBody = {
   email: string;
   password: string;
@@ -71,7 +35,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     const db = await getDb();
-    const existing = await getScopedData('portal_users', { email: email.toLowerCase() }, { role: role || 'user' });
+    const existing = await db.collection('portal_users').findOne({ email: email.toLowerCase() });
 
     if (existing) {
       return res.status(409).json({ success: false, message: 'An account with this email already exists.' });
@@ -119,6 +83,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       message: error?.message?.includes('MONGODB_URI')
         ? 'Database not configured. Contact the administrator.'
         : 'Unable to submit application. Please try again later.',
+      debug: process.env.DEBUG_API_ERRORS === '1' ? error.message : undefined,
     });
   }
 }

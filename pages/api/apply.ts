@@ -74,6 +74,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       message: error?.message?.includes('MONGODB_URI')
         ? 'Database not configured. Contact the administrator.'
         : 'Unable to save application. Please try again later.',
+      debug: process.env.DEBUG_API_ERRORS === '1' ? error.message : undefined,
     });
   }
 }
