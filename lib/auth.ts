@@ -11,5 +11,3 @@ export async function verifyAuth0Session(req: any, res: any) {
   }
   return session.user;
 }
-
-}
