@@ -40,9 +40,11 @@ export function Navbar() {
             <Link href="/systems" className="hover:text-nexus-gold transition">
               Systems
             </Link>
+            {/* 
             <Link href="/services" className="hover:text-nexus-gold transition">
               Services
-            </Link>
+            </Link> 
+            */}
             <Link href="/platform" className="hover:text-nexus-gold transition">
               Platform
             </Link>
@@ -82,9 +84,11 @@ export function Navbar() {
           <Link href="/systems" className="text-nexus-gold dark:text-nexus-gold light:text-amber-700 angelic:text-amber-700 hover:text-nexus-gold transition dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">
             Systems
           </Link>
+          {/* 
           <Link href="/services" className="text-nexus-gold dark:text-nexus-gold light:text-amber-700 angelic:text-amber-700 hover:text-nexus-gold transition dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">
             Services
-          </Link>
+          </Link> 
+          */}
           <Link href="/platform" className="text-nexus-gold dark:text-nexus-gold light:text-amber-700 angelic:text-amber-700 hover:text-nexus-gold transition dark:hover:text-nexus-gold light:hover:text-amber-600 angelic:hover:text-amber-600">
             Platform
           </Link>
