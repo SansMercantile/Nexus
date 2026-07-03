@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Head from 'next/head';
 import Layout from '@/components/layout/Layout';
 import { motion } from 'framer-motion';
@@ -52,12 +52,139 @@ export default function Onboarding() {
   const [assessmentResponses, setAssessmentResponses] = useState<Record<string, string>>({});
   const [completedAssessments, setCompletedAssessments] = useState<string[]>([]);
   const [submitting, setSubmitting] = useState(false);
+  const [cameraReady, setCameraReady] = useState(false);
+  const [micReady, setMicReady] = useState(false);
+  const [screenShared, setScreenShared] = useState(false);
+  const [proctoringReady, setProctoringReady] = useState(false);
+  const [proctoringError, setProctoringError] = useState<string | null>(null);
+  const [cheatAlerts, setCheatAlerts] = useState<string[]>([]);
+  const mediaStreamRef = useRef<MediaStream | null>(null);
+  const screenStreamRef = useRef<MediaStream | null>(null);
+
+  const jobId = router.isReady ? (router.query.jobId as string) : undefined;
+  const email = router.isReady ? (router.query.email as string) : undefined;
+
+  const isProctoringComplete = cameraReady && micReady && screenShared && proctoringReady;
+
+  const captureExamEvent = (event: string, props: Record<string, any> = {}) => {
+    if (!job || !email) return;
+    posthog.capture(event, {
+      jobId: job.id,
+      jobTitle: job.title,
+      email,
+      ...props,
+    });
+  };
+
+  const addCheatAlert = (message: string) => {
+    setCheatAlerts((prev) => [...prev, message]);
+  };
+
+  const requestProctoringVerification = async () => {
+    if (typeof window === 'undefined' || !navigator.mediaDevices) {
+      setProctoringError('Proctoring is only available in a supported browser over HTTPS.');
+      return;
+    }
+
+    setProctoringError(null);
+    setCheatAlerts([]);
+
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+      mediaStreamRef.current?.getTracks().forEach((track) => track.stop());
+      mediaStreamRef.current = stream;
+      setCameraReady(true);
+      setMicReady(true);
+      captureExamEvent('exam_media_permissions_granted', { camera: true, microphone: true });
+    } catch (error) {
+      setProctoringError('Camera and microphone access are required. Please allow access to continue.');
+      captureExamEvent('exam_media_permissions_failed', { error: String(error) });
+      return;
+    }
+
+    try {
+      const displayStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+      screenStreamRef.current?.getTracks().forEach((track) => track.stop());
+      screenStreamRef.current = displayStream;
+      setScreenShared(true);
+      captureExamEvent('exam_screen_share_started', { screenShare: true });
+    } catch (error) {
+      setProctoringError('Screen sharing is required. Please select your full screen and allow sharing.');
+      captureExamEvent('exam_screen_share_failed', { error: String(error) });
+      return;
+    }
+
+    setProctoringReady(true);
+    captureExamEvent('exam_proctoring_ready');
+  };
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (!proctoringReady) return;
+      if (document.visibilityState !== 'visible') {
+        addCheatAlert('Exam paused because the browser tab lost focus.');
+        setProctoringReady(false);
+        setProctoringError('Tab switching is not allowed during the exam. Please return to this tab and restart proctoring.');
+        captureExamEvent('exam_visibility_lost', { visibilityState: document.visibilityState });
+      }
+    };
+
+    const handleWindowBlur = () => {
+      if (!proctoringReady) return;
+      addCheatAlert('Exam paused because the browser window lost focus.');
+      setProctoringReady(false);
+      setProctoringError('Switching windows or applications is not allowed during the exam. Please return and restart proctoring.');
+      captureExamEvent('exam_window_blur');
+    };
+
+    const handleCopyPaste = (event: ClipboardEvent) => {
+      if (!proctoringReady) return;
+      event.preventDefault();
+      addCheatAlert('Copy/paste actions are blocked during the exam.');
+      captureExamEvent('exam_copy_paste_blocked', { type: event.type });
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (!proctoringReady) return;
+      const isCopyPaste = (event.ctrlKey || event.metaKey) && ['c', 'v', 'x', 'a'].includes(event.key.toLowerCase());
+      if (isCopyPaste) {
+        event.preventDefault();
+        addCheatAlert('Keyboard copy/paste shortcuts are blocked during the exam.');
+        captureExamEvent('exam_keyboard_copy_paste_blocked', { key: event.key });
+      }
+    };
+
+    const handleContextMenu = (event: MouseEvent) => {
+      if (!proctoringReady) return;
+      event.preventDefault();
+      addCheatAlert('Right-click is blocked during the exam.');
+      captureExamEvent('exam_context_menu_blocked');
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('blur', handleWindowBlur);
+    document.addEventListener('copy', handleCopyPaste);
+    document.addEventListener('paste', handleCopyPaste);
+    document.addEventListener('cut', handleCopyPaste);
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('contextmenu', handleContextMenu);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('blur', handleWindowBlur);
+      document.removeEventListener('copy', handleCopyPaste);
+      document.removeEventListener('paste', handleCopyPaste);
+      document.removeEventListener('cut', handleCopyPaste);
+      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('contextmenu', handleContextMenu);
+      mediaStreamRef.current?.getTracks().forEach((track) => track.stop());
+      screenStreamRef.current?.getTracks().forEach((track) => track.stop());
+    };
+  }, [proctoringReady]);
 
   // CRITICAL FIX: router.query is always {} on the first render of a static
   // Next.js page. Reading jobId/email before router.isReady is true caused
   // job to always resolve to undefined, which produced the blank/stuck page.
-  const jobId = router.isReady ? (router.query.jobId as string) : undefined;
-  const email = router.isReady ? (router.query.email as string) : undefined;
 
   const job = jobId ? (jobPostings.find(j => j.id === jobId) as JobPosting | undefined) : undefined;
   const assessmentIds = job?.assessments || [];
@@ -103,12 +230,26 @@ export default function Onboarding() {
     );
   }
 
+  const examRules = [
+    'You must keep your camera and microphone on at all times during the assessment.',
+    'Screen sharing is mandatory. Select your full screen and keep it visible until the assessment is complete.',
+    'Copy/paste, text injection, and external cheating tools are strictly prohibited.',
+    'Do not switch tabs, windows, or applications during the assessment.',
+    'Any attempt to use browser extensions, screen capture tools, or secondary devices will be flagged.',
+    'If you disable your camera, microphone, or screen share, the assessment will be terminated.',
+    'Install the Proctorio extension before beginning and keep it active for the entire exam.',
+  ];
+
   const handleAnswerChange = (questionIndex: number, answer: string) => {
     setAssessmentResponses(prev => ({ ...prev, [currentAssessmentId + '-q' + questionIndex]: answer }));
   };
 
   const handleCompleteAssessment = async () => {
     if (!currentAssessmentId || submitting) return;
+    if (!isProctoringComplete) {
+      alert('You must complete the proctoring steps before starting the assessment.');
+      return;
+    }
     const unanswered = currentQuestions.filter((_, i) => {
       const val = assessmentResponses[currentAssessmentId + '-q' + i];
       return !val || !val.trim();
@@ -118,8 +259,7 @@ export default function Onboarding() {
       return;
     }
     setSubmitting(true);
-    posthog.capture('assessment_completed', {
-      jobId: job.id,
+    captureExamEvent('assessment_completed', {
       assessmentType: currentAssessmentId,
       step: currentAssessmentIndex + 1,
       totalSteps: assessmentIds.length,
@@ -146,7 +286,7 @@ export default function Onboarding() {
       setAssessmentResponses({});
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-      posthog.capture('onboarding_completed', { jobId: job.id, jobTitle: job.title, email });
+      captureExamEvent('onboarding_completed');
       router.push('/onboarding-complete?email=' + encodeURIComponent(email || '') + '&jobId=' + jobId);
     }
   };
@@ -178,6 +318,73 @@ export default function Onboarding() {
                 animate={{ width: progressPercentage + '%' }}
                 transition={{ duration: 0.6, ease: 'easeOut' }}
               />
+            </div>
+          </motion.div>
+
+          <motion.div variants={fadeInUp} className="mb-10 rounded-3xl border border-red-500/30 bg-[#2b1116]/90 p-8">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-3 h-3 rounded-full bg-red-500" />
+              <h2 className="text-2xl font-bold text-white">Exam integrity rules</h2>
+            </div>
+            <p className="text-nexus-gray-300 mb-4">
+              Before starting your assessment, please review the rules carefully. Any violation may lead to disqualification.
+            </p>
+            <ul className="space-y-3 text-nexus-gray-300 list-disc list-inside">
+              {examRules.map((rule) => (
+                <li key={rule}>{rule}</li>
+              ))}
+            </ul>
+            <div className="mt-6 rounded-2xl border border-nexus-gold/20 bg-[#111827]/80 p-5">
+              <p className="font-semibold text-white mb-2">Required proctoring checks</p>
+              <div className="grid gap-3 md:grid-cols-2">
+                <div className="rounded-xl bg-[#161b2f] p-4">
+                  <p className="text-sm text-nexus-gray-400">Camera</p>
+                  <p className={`font-semibold ${cameraReady ? 'text-emerald-400' : 'text-amber-400'}`}>
+                    {cameraReady ? 'Enabled' : 'Pending'}
+                  </p>
+                </div>
+                <div className="rounded-xl bg-[#161b2f] p-4">
+                  <p className="text-sm text-nexus-gray-400">Microphone</p>
+                  <p className={`font-semibold ${micReady ? 'text-emerald-400' : 'text-amber-400'}`}>
+                    {micReady ? 'Enabled' : 'Pending'}
+                  </p>
+                </div>
+                <div className="rounded-xl bg-[#161b2f] p-4">
+                  <p className="text-sm text-nexus-gray-400">Screen share</p>
+                  <p className={`font-semibold ${screenShared ? 'text-emerald-400' : 'text-amber-400'}`}>
+                    {screenShared ? 'Active' : 'Pending'}
+                  </p>
+                </div>
+                <div className="rounded-xl bg-[#161b2f] p-4">
+                  <p className="text-sm text-nexus-gray-400">Proctoring status</p>
+                  <p className={`font-semibold ${proctoringReady ? 'text-emerald-400' : 'text-amber-400'}`}>
+                    {proctoringReady ? 'Ready' : 'Pending'}
+                  </p>
+                </div>
+              </div>
+              {proctoringError && (
+                <p className="mt-4 text-sm text-red-400">{proctoringError}</p>
+              )}
+              {cheatAlerts.length > 0 && (
+                <div className="mt-4 rounded-xl border border-red-500/30 bg-[#3f1c28]/80 p-4">
+                  <p className="font-semibold text-red-300 mb-2">Integrity alerts</p>
+                  <ul className="list-disc list-inside text-red-200 text-sm">
+                    {cheatAlerts.map((alert, index) => (
+                      <li key={index}>{alert}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              <button
+                type="button"
+                onClick={requestProctoringVerification}
+                className="mt-6 w-full rounded-full bg-nexus-gold px-5 py-3 text-black font-semibold hover:opacity-90 transition"
+              >
+                Start Proctoring Verification
+              </button>
+              <p className="mt-4 text-sm text-nexus-gray-500">
+                If you do not already have Proctorio installed, please install the extension now. This assessment requires proctoring tools and shared screen access.
+              </p>
             </div>
           </motion.div>
 

@@ -8,6 +8,7 @@ import {
   getSystemSdgs,
   getSystemValueDetails,
 } from '../../lib/system-data';
+import { SobekKernel } from './sobek';
 
 export type { SystemData };
 export {
@@ -19,4 +20,5 @@ export {
   getSystemValueDescription,
   getSystemSdgs,
   getSystemValueDetails,
+  SobekKernel,
 };
