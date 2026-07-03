@@ -31,8 +31,16 @@ function getTransporter(): Transporter {
 }
 
 const FROM = () => process.env.EMAIL_FROM || 'hello@sansmercantile.com';
-const BASE_URL = () =>
-  process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '') || 'https://sansmercantile.com';
+
+function getBaseUrl(): string {
+  const configured = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '');
+  if (configured && !configured.includes('localhost')) {
+    return configured;
+  }
+  return 'https://sansmercantile.com';
+}
+
+const BASE_URL = getBaseUrl;
 
 // ─── Portal account emails ────────────────────────────────────────────────────
 
