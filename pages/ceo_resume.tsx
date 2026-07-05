@@ -10,7 +10,7 @@ import {
 
 /** * --- SOVEREIGN BRIDGE CONFIGURATION ---
  */
-const callOllama = async (prompt: string, systemInstruction: string): Promise<string> => {
+const callAI = async (prompt: string, systemInstruction: string): Promise<string> => {
   const requestPrompt = `System: ${systemInstruction}\n\nUser: ${prompt}`;
   const payload = {
     prompt: requestPrompt,
@@ -138,7 +138,7 @@ const App = () => {
     Respond with industrial authority and evaluate if the inquiry warrants Mezzoforte's personal focus.`;
 
     try {
-      const res = await callOllama(finalQuery, systemPrompt);
+      const res = await callAI(finalQuery, systemPrompt);
       setAiResponse(res);
     } catch (err) {
       setAiResponse("UPLINK_FAILURE: Connection refused. Check LocalTunnel status and browser verification.");
