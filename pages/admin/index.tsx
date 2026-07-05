@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Layout from '@/components/layout/Layout';
 import { getDb } from '@/lib/mongodb';
-import { verifySessionToken } from '@/lib/auth';
+import { verifySessionToken, isAllowedAdminEmail } from '@/lib/auth';
 
 function getCookieValue(cookieHeader: string | undefined, name: string) {
   if (!cookieHeader) return null;
@@ -98,7 +98,7 @@ export async function getServerSideProps({ req }: { req: any }) {
   const db = await getDb();
   const user = await db.collection('portal_users').findOne({ email: payload.email.toLowerCase(), active: true }) as any;
 
-  if (!user) {
+  if (!user || !isAllowedAdminEmail(user.email)) {
     return {
       redirect: {
         destination: '/portal',

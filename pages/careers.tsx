@@ -95,6 +95,8 @@ const ApplicationFormModal = ({
     email: '',
     phone: '',
     resume: '',
+    linkedin: '',
+    socialLinks: ['', ''],
     coverLetter: '',
   });
   const [submitted, setSubmitted] = useState(false);
@@ -107,6 +109,7 @@ const ApplicationFormModal = ({
     setFormError(null);
 
     try {
+      const sanitizedSocialLinks = formData.socialLinks.map((link) => link.trim()).filter(Boolean);
       const response = await fetch('/api/apply', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -116,6 +119,8 @@ const ApplicationFormModal = ({
           email: formData.email,
           phone: formData.phone,
           resume: formData.resume,
+          linkedin: formData.linkedin,
+          socialLinks: sanitizedSocialLinks,
           coverLetter: formData.coverLetter,
         }),
       });
@@ -126,9 +131,10 @@ const ApplicationFormModal = ({
         throw new Error(data?.message || 'Unable to submit application.');
       }
 
+      const tokenParam = data.viewToken ? `&token=${encodeURIComponent(data.viewToken)}` : '';
       setSubmitted(true);
       setTimeout(() => {
-        window.location.href = `/onboarding?jobId=${jobId}&email=${encodeURIComponent(formData.email)}`;
+        window.location.href = `/onboarding?jobId=${jobId}&email=${encodeURIComponent(formData.email)}${tokenParam}`;
       }, 2000);
     } catch (error) {
       console.error('Application submission failed:', error);
@@ -233,15 +239,47 @@ const ApplicationFormModal = ({
           </div>
 
           <div>
-            <label className="block text-white font-semibold mb-2">Resume/CV Link *</label>
+            <label className="block text-white font-semibold mb-2">Resume/CV Link or Paste Resume Text *</label>
             <input
-              type="url"
+              type="text"
               required
               value={formData.resume}
               onChange={e => setFormData({ ...formData, resume: e.target.value })}
               className="w-full px-4 py-3 rounded-lg bg-[#1a1f3a] border border-nexus-gold/20 text-white placeholder-nexus-gray-500 focus:border-nexus-gold focus:outline-none"
-              placeholder="https://linkedin.com/in/johndoe or https://example.com/resume.pdf"
+              placeholder="https://linkedin.com/in/johndoe or paste your resume text here"
             />
+          </div>
+
+          <div>
+            <label className="block text-white font-semibold mb-2">LinkedIn Profile *</label>
+            <input
+              type="url"
+              required
+              value={formData.linkedin}
+              onChange={e => setFormData({ ...formData, linkedin: e.target.value })}
+              className="w-full px-4 py-3 rounded-lg bg-[#1a1f3a] border border-nexus-gold/20 text-white placeholder-nexus-gray-500 focus:border-nexus-gold focus:outline-none"
+              placeholder="https://www.linkedin.com/in/johndoe"
+            />
+          </div>
+
+          <div>
+            <label className="block text-white font-semibold mb-2">Social Media Links *</label>
+            {formData.socialLinks.map((link, index) => (
+              <input
+                key={index}
+                type="url"
+                required={index < 2}
+                value={link}
+                onChange={e => {
+                  const nextLinks = [...formData.socialLinks];
+                  nextLinks[index] = e.target.value;
+                  setFormData({ ...formData, socialLinks: nextLinks });
+                }}
+                className="w-full px-4 py-3 rounded-lg bg-[#1a1f3a] border border-nexus-gold/20 text-white placeholder-nexus-gray-500 focus:border-nexus-gold focus:outline-none mb-3"
+                placeholder={index < 2 ? `Required social link ${index + 1}` : `Optional social link ${index + 1}`}
+              />
+            ))}
+            <p className="text-xs text-nexus-gray-500">Provide at least two social profiles, such as Twitter, Instagram, Facebook, or TikTok.</p>
           </div>
 
           <div>

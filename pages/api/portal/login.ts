@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getDb } from '@/lib/mongodb';
-import { verifyPassword, createSessionToken } from '@/lib/auth';
+import { verifyPassword, createSessionToken, isAllowedAdminEmail } from '@/lib/auth';
 
 type LoginBody = {
   email: string;
@@ -27,7 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       active: true,
     });
 
-    if (!user || !user.passwordHash || !verifyPassword(password, user.passwordHash)) {
+    if (!user || !user.passwordHash || !verifyPassword(password, user.passwordHash) || !isAllowedAdminEmail(user.email)) {
       return res.status(401).json({ success: false, message: 'Invalid credentials.' });
     }
 

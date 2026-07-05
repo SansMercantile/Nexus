@@ -77,7 +77,7 @@ export default function MpetiDocs() {
       const errorMessage: Message = {
         id: (Date.now() + 2).toString(),
         role: 'assistant',
-        content: `Error communicating with Mpeti: ${error instanceof Error ? error.message : 'Unknown error'}. Make sure Ollama is running on localhost:11434.`,
+        content: `Error communicating with Mpeti: ${error instanceof Error ? error.message : 'Unknown error'}. Make sure Bedrock is configured in the server environment and that the AI API route is available.`,
         timestamp: new Date(),
       };
       setMessages(prev => [...prev, errorMessage]);
@@ -359,7 +359,7 @@ export default function MpetiDocs() {
                 </button>
               </div>
               <p className="text-xs text-nexus-gray-500 mt-2">
-                💡 Running Mpeti offline via Ollama (gemma:2b). Make sure Ollama is running on localhost:11434
+                💡 AI requests are now routed through the server-side Bedrock integration when AWS credentials are configured.
               </p>
             </form>
           </div>

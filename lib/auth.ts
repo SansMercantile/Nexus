@@ -18,6 +18,15 @@ export function hashPassword(plain: string): string {
   return salt + ':' + hash;
 }
 
+const ADMIN_EMAIL_ALLOWLIST = new Set([
+  'mezzoforte@sansmercantile.com',
+  'hello@sansmercantile.com',
+]);
+
+export function isAllowedAdminEmail(email?: string): boolean {
+  return typeof email === 'string' && ADMIN_EMAIL_ALLOWLIST.has(email.toLowerCase());
+}
+
 export function verifyPassword(plain: string, storedHash: string): boolean {
   if (!storedHash || storedHash.indexOf(':') === -1) return false;
   const parts = storedHash.split(':');

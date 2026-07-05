@@ -10,15 +10,10 @@ import {
 
 /** * --- SOVEREIGN BRIDGE CONFIGURATION ---
  */
-const OLLAMA_ENDPOINT = "ttps://silo-rocky-extruding.ngrok-free.dev/api/generate";
-const OLLAMA_MODEL = "hermes3:8b";
-
 const callOllama = async (prompt: string, systemInstruction: string): Promise<string> => {
+  const requestPrompt = `System: ${systemInstruction}\n\nUser: ${prompt}`;
   const payload = {
-    model: OLLAMA_MODEL,
-    prompt: `System: ${systemInstruction}\n\nUser: ${prompt}`,
-    stream: false,
-    options: { temperature: 0.7 }
+    prompt: requestPrompt,
   };
 
   const maxRetries = 5;
@@ -26,13 +21,12 @@ const callOllama = async (prompt: string, systemInstruction: string): Promise<st
 
   for (let i = 0; i < maxRetries; i++) {
     try {
-const response = await fetch(OLLAMA_ENDPOINT, {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    'ngrok-skip-browser-warning': 'true'
-  },
-        body: JSON.stringify(payload)
+      const response = await fetch('/api/gemma', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {
@@ -44,14 +38,14 @@ const response = await fetch(OLLAMA_ENDPOINT, {
       }
 
       const result = await response.json();
-      return result.response;
+      return typeof result === 'string' ? result : result.response || JSON.stringify(result);
     } catch (err) {
       if (i === maxRetries - 1) throw err;
       await new Promise(resolve => setTimeout(resolve, backoffDelays[i]));
     }
   }
-  // Fallback to satisfy TypeScript's return type check
-  throw new Error("Max retries exceeded without connection.");
+
+  throw new Error('Max retries exceeded without connection.');
 };
 
 // --- LOGO COMPONENT ---

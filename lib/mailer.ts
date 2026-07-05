@@ -117,6 +117,7 @@ export async function sendApplicationConfirmation(applicant: {
   email: string;
   jobTitle: string;
   jobId: string;
+  viewToken: string;
 }) {
   await getTransporter().sendMail({
     from: FROM(),
@@ -128,7 +129,7 @@ export async function sendApplicationConfirmation(applicant: {
         <p>We have received your application for <strong>${applicant.jobTitle}</strong>.</p>
         <p>Please complete your assessments to move forward:</p>
         <p>
-          <a href="${BASE_URL()}/onboarding?jobId=${applicant.jobId}&email=${encodeURIComponent(applicant.email)}"
+          <a href="${BASE_URL()}/onboarding?jobId=${applicant.jobId}&email=${encodeURIComponent(applicant.email)}&token=${encodeURIComponent(applicant.viewToken)}"
              style="background:#c9a84c;color:#000;padding:12px 24px;border-radius:6px;text-decoration:none;font-weight:bold">
             Start Assessments →
           </a>
@@ -156,6 +157,40 @@ export async function sendAdminNewApplicationAlert(applicant: {
         <p><strong>Role:</strong> ${applicant.jobTitle} (${applicant.jobId})</p>
         <p><strong>Applicant:</strong> ${applicant.name}</p>
         <p><strong>Email:</strong> ${applicant.email}</p>
+      </div>`,
+  });
+}
+
+export async function sendApplicationAssessmentResult(application: {
+  name: string;
+  email: string;
+  jobTitle: string;
+  decision: 'pass' | 'reject' | 'review';
+  feedback: string;
+}) {
+  const subject = application.decision === 'pass'
+    ? `Application Update – ${application.jobTitle}`
+    : `Application Status – ${application.jobTitle}`;
+  const message = application.decision === 'pass'
+    ? `Congratulations, ${application.name}! Your responses have advanced you to the next stage of the hiring process.`
+    : `Thank you for applying, ${application.name}. After reviewing your responses, we will not be moving forward with your application at this time.`;
+
+  await getTransporter().sendMail({
+    from: FROM(),
+    to: application.email,
+    subject,
+    html: `
+      <div style="font-family:sans-serif;max-width:560px;margin:auto">
+        <h2 style="color:#c9a84c">${application.decision === 'pass' ? 'Next Steps' : 'Application Update'}</h2>
+        <p>${message}</p>
+        <p><strong>Role:</strong> ${application.jobTitle}</p>
+        <p><strong>Feedback:</strong></p>
+        <div style="background:#f8f8f8;border-radius:8px;padding:16px;margin:16px 0;color:#111;font-size:14px;line-height:1.6">
+          ${application.feedback.replace(/\n/g, '<br/>')}
+        </div>
+        <p style="color:#888;font-size:13px;margin-top:24px">
+          Questions? Contact <a href="mailto:hello@sansmercantile.com">hello@sansmercantile.com</a>
+        </p>
       </div>`,
   });
 }

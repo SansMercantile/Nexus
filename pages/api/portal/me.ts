@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getDb } from '@/lib/mongodb';
-import { verifySessionToken } from '@/lib/auth';
+import { verifySessionToken, isAllowedAdminEmail } from '@/lib/auth';
 
 function getCookieValue(cookieHeader: string | undefined, name: string) {
   if (!cookieHeader) return null;
@@ -24,7 +24,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const db = await getDb();
     const user = await db.collection('portal_users').findOne({ email: payload.email.toLowerCase(), active: true });
 
-    if (!user) {
+    if (!user || !isAllowedAdminEmail(user.email)) {
       return res.status(401).json({ success: false, message: 'Session invalid or account inactive.' });
     }
 

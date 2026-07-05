@@ -50,6 +50,7 @@ export default function Onboarding() {
   const router = useRouter();
   const [currentAssessmentIndex, setCurrentAssessmentIndex] = useState(0);
   const [assessmentResponses, setAssessmentResponses] = useState<Record<string, string>>({});
+  const [allAssessmentResponses, setAllAssessmentResponses] = useState<Record<string, string>>({});
   const [completedAssessments, setCompletedAssessments] = useState<string[]>([]);
   const [submitting, setSubmitting] = useState(false);
   const [cameraReady, setCameraReady] = useState(false);
@@ -63,6 +64,9 @@ export default function Onboarding() {
 
   const jobId = router.isReady ? (router.query.jobId as string) : undefined;
   const email = router.isReady ? (router.query.email as string) : undefined;
+  const viewToken = router.isReady ? (router.query.token as string) : undefined;
+  const [tokenValid, setTokenValid] = useState(false);
+  const [tokenError, setTokenError] = useState<string | null>(null);
 
   const isProctoringComplete = cameraReady && micReady && screenShared && proctoringReady;
 
@@ -198,6 +202,37 @@ export default function Onboarding() {
     }
   }, [job?.id]);
 
+  useEffect(() => {
+    if (!router.isReady) return;
+    if (!viewToken) {
+      setTokenError('A secure application token is required to access this assessment.');
+      return;
+    }
+
+    const validateToken = async () => {
+      try {
+        const response = await fetch(`/api/applications/status?token=${encodeURIComponent(viewToken)}`);
+        const data = await response.json();
+        if (!response.ok || !data?.success) {
+          setTokenError(data?.message || 'Unable to validate application token.');
+          setTokenValid(false);
+          return;
+        }
+        if (data.application?.jobId !== jobId || data.application?.applicantEmail !== email) {
+          setTokenError('Application token does not match this assessment session.');
+          setTokenValid(false);
+          return;
+        }
+        setTokenValid(true);
+      } catch (error) {
+        setTokenError('Unable to validate application token. Please try again or contact support.');
+        setTokenValid(false);
+      }
+    };
+
+    validateToken();
+  }, [router.isReady, viewToken, jobId, email]);
+
   if (!router.isReady) {
     return (
       <Layout>
@@ -207,6 +242,24 @@ export default function Onboarding() {
             <div className="inline-block animate-spin w-10 h-10 border-4 border-nexus-gold border-t-transparent rounded-full mb-4"></div>
             <p className="text-nexus-gray-400">Preparing your assessment...</p>
           </div>
+        </div>
+      </Layout>
+    );
+  }
+
+  if (tokenError) {
+    return (
+      <Layout>
+        <Head><title>Assessment Access Error | Sans Mercantile</title></Head>
+        <div className="min-h-screen flex items-center justify-center py-20 px-6">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-md w-full text-center">
+            <div className="text-6xl mb-4">🚫</div>
+            <h1 className="text-2xl font-bold text-white mb-4">Access Denied</h1>
+            <p className="text-nexus-gray-400 mb-6">{tokenError}</p>
+            <button onClick={() => router.push('/careers')} className="px-6 py-3 rounded-lg bg-nexus-gold text-black font-semibold hover:opacity-90 transition-opacity">
+              Return to Careers
+            </button>
+          </motion.div>
         </div>
       </Layout>
     );
@@ -246,6 +299,10 @@ export default function Onboarding() {
 
   const handleCompleteAssessment = async () => {
     if (!currentAssessmentId || submitting) return;
+    if (!tokenValid) {
+      alert('Your application token is not valid. Please re-open the assessment link from your confirmation email.');
+      return;
+    }
     if (!isProctoringComplete) {
       alert('You must complete the proctoring steps before starting the assessment.');
       return;
@@ -264,6 +321,13 @@ export default function Onboarding() {
       step: currentAssessmentIndex + 1,
       totalSteps: assessmentIds.length,
     });
+
+    const nextAllResponses = {
+      ...allAssessmentResponses,
+      ...assessmentResponses,
+    };
+    setAllAssessmentResponses(nextAllResponses);
+
     const assessmentData = {
       jobId,
       email,
@@ -272,6 +336,7 @@ export default function Onboarding() {
       completedAt: new Date().toISOString(),
       status: 'completed',
     };
+
     try {
       const stored = JSON.parse(localStorage.getItem('job_assessments') || '[]');
       stored.push(assessmentData);
@@ -279,14 +344,30 @@ export default function Onboarding() {
     } catch (e) {
       // localStorage unavailable — non-fatal, assessment still progresses
     }
+
     setCompletedAssessments(prev => [...prev, currentAssessmentId]);
     setSubmitting(false);
+
     if (currentAssessmentIndex < assessmentIds.length - 1) {
       setCurrentAssessmentIndex(prev => prev + 1);
       setAssessmentResponses({});
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       captureExamEvent('onboarding_completed');
+      try {
+        await fetch('/api/applications/assess', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            token: viewToken,
+            jobId,
+            email,
+            assessmentResponses: nextAllResponses,
+          }),
+        });
+      } catch (err) {
+        console.error('Assessment review submission failed:', err);
+      }
       router.push('/onboarding-complete?email=' + encodeURIComponent(email || '') + '&jobId=' + jobId);
     }
   };

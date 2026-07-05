@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getDb } from '@/lib/mongodb';
 import { sendApplicationConfirmation, sendAdminNewApplicationAlert } from '@/lib/mailer';
@@ -9,6 +10,8 @@ type ApplicationRequestBody = {
   email: string;
   phone?: string;
   resume: string;
+  linkedin: string;
+  socialLinks: string[];
   coverLetter?: string;
 };
 
@@ -20,12 +23,28 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
   }
 
-  const { jobId, jobTitle, name, email, phone, resume, coverLetter } = req.body as ApplicationRequestBody;
+  const { jobId, jobTitle, name, email, phone, resume, linkedin, socialLinks, coverLetter } = req.body as ApplicationRequestBody;
+  const normalizedEmail = String(email || '').toLowerCase();
+  const normalizedLinkedIn = String(linkedin || '').trim();
+  const normalizedSocialLinks = Array.isArray(socialLinks) ? socialLinks.map((link) => String(link || '').trim()).filter(Boolean) : [];
 
-  if (!jobId || !name || !email || !resume) {
+  if (!jobId || !name || !normalizedEmail || !resume || !normalizedLinkedIn || normalizedSocialLinks.length < 2) {
     return res.status(400).json({
       success: false,
-      message: 'Required fields missing: jobId, name, email, and resume are required.',
+      message: 'Required fields missing: jobId, name, email, resume, LinkedIn, and at least two social links are required.',
+    });
+  }
+
+  const urlPattern = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/;
+  const isValidUrl = (value: string) => urlPattern.test(value);
+  const resumeIsValid = resume.trim().length > 20 || isValidUrl(resume.trim());
+  const linkedInIsValid = isValidUrl(normalizedLinkedIn) || normalizedLinkedIn.toLowerCase().includes('linkedin.com');
+  const socialLinksValid = normalizedSocialLinks.every((link) => isValidUrl(link) || link.includes('linkedin.com') || link.includes('twitter.com') || link.includes('instagram.com') || link.includes('facebook.com') || link.includes('tiktok.com'));
+
+  if (!resumeIsValid || !linkedInIsValid || !socialLinksValid) {
+    return res.status(400).json({
+      success: false,
+      message: 'Please provide a valid resume/CV link or text, a valid LinkedIn URL, and at least two social media links.',
     });
   }
 
@@ -33,13 +52,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     jobId,
     jobTitle: jobTitle || jobId,
     applicantName: name,
-    applicantEmail: email,
+    applicantEmail: normalizedEmail,
     phone: phone || null,
     resume,
+    linkedin: normalizedLinkedIn,
+    socialLinks: normalizedSocialLinks,
     coverLetter: coverLetter || null,
     appliedAt: new Date().toISOString(),
     status: 'applied',
     source: 'careers-page',
+    viewToken: crypto.randomBytes(28).toString('hex'),
   };
 
   try {
@@ -51,7 +73,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // ── Emails ──────────────────────────────────────────────────────────────
     try {
-      await sendApplicationConfirmation({ name, email, jobTitle: application.jobTitle, jobId });
+      await sendApplicationConfirmation({ name, email: normalizedEmail, jobTitle: application.jobTitle, jobId, viewToken: application.viewToken });
     } catch (emailErr) {
       console.error('Applicant confirmation email failed (non-fatal):', emailErr);
     }
@@ -65,6 +87,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(201).json({
       success: true,
       insertedId: result.insertedId.toString(),
+      viewToken: application.viewToken,
       message: 'Application submitted successfully. Check your email for next steps.',
     });
   } catch (error: any) {

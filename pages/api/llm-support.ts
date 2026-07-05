@@ -24,10 +24,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     const gemmaResponse = await generateGemma(normalizedPrompt);
-    return res.status(200).json(gemmaResponse);
+    return res.status(200).json({ response: gemmaResponse });
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
     console.error('LLM support API error:', message);
-    return res.status(500).json({ message: 'Local Gemma request failed', error: message });
+    return res.status(500).json({ message: 'AI request failed', error: message });
   }
 }

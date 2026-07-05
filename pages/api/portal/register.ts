@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getDb } from '@/lib/mongodb';
-import { hashPassword } from '@/lib/auth';
+import { hashPassword, isAllowedAdminEmail } from '@/lib/auth';
 import { sendAdminApprovalRequest } from '@/lib/mailer';
 
 type RegisterBody = {
@@ -18,11 +18,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   const { email, password, name, role, approved } = req.body as RegisterBody;
+  const normalizedEmail = String(email || '').toLowerCase();
 
-  if (!email || !password || !name) {
+  if (!normalizedEmail || !password || !name) {
     return res.status(400).json({
       success: false,
       message: 'Missing required fields: email, password, and name.',
+    });
+  }
+
+  if (!isAllowedAdminEmail(normalizedEmail)) {
+    return res.status(403).json({
+      success: false,
+      message: 'Portal registration is restricted. Contact hello@sansmercantile.com for access.',
     });
   }
 
@@ -47,9 +55,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const isAutoApproved = approved === true;
 
     const userDoc = {
-      email: email.toLowerCase(),
+      email: normalizedEmail,
       name,
-      role: role || 'user',
+      role: 'admin',
       passwordHash,
       active: isAutoApproved,
       pending: !isAutoApproved,
