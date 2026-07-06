@@ -95,19 +95,18 @@ const SansMercantileLogo = () => {
 };
 
 const normalizeText = (value: unknown): string => {
-  if (typeof value === 'string') return value;
-  if (value == null) return '';
-  if (typeof value === 'number' || typeof value === 'boolean' || typeof value === 'bigint') {
-    return String(value);
-  }
+    if (typeof value === 'string') return value;
+    if (value == null) return '';
+    if (typeof value === 'number' || typeof value === 'boolean' || typeof value === 'bigint') {
+      return String(value);
+    }
 
-  try {
-    return JSON.stringify(value);
-  } catch {
-    return String(value);
-  }
-};
-
+    try {
+      return JSON.stringify(value);
+    } catch {
+      return String(value);
+    }
+  };
 const App = () => {
   const [glitch, setGlitch] = useState(false);
   const [pulse, setPulse] = useState(0);
@@ -161,7 +160,7 @@ const App = () => {
 
     try {
       const res = await callAI(finalQuery, systemPrompt);
-      setAiResponse(res);
+      setAiResponse(normalizeText(res));
     } catch (err) {
       setAiResponse("UPLINK_FAILURE: Connection refused. Check LocalTunnel status and browser verification.");
     } finally {
@@ -171,7 +170,7 @@ const App = () => {
   };
 
   const formatAIResponse = (text: unknown) => {
-    const normalizedText = normalizeText(text);
+    const normalizedText = String(normalizeText(text) || '');
     if (!normalizedText) return null;
     return normalizedText.split('\n').map((line: string, i: number) => {
       if (line.startsWith('###')) return <h4 key={i} className="text-[#ff7a00] font-bold mt-4 mb-1 uppercase tracking-wider">{line.replace('###', '').trim()}</h4>;
@@ -221,7 +220,7 @@ const App = () => {
     </div>
   );
 
-  const displayName = normalizeText(profile.name);
+  const displayName = String(normalizeText(profile.name) || 'Mezzoforte Privilege');
 
   return (
     <div className={`min-h-screen bg-[#020203] text-gray-300 font-sans selection:bg-[#ff7a00]/30 overflow-x-hidden ${glitch ? 'opacity-95' : ''}`}>
@@ -255,7 +254,7 @@ const App = () => {
             <div className="flex-1 relative group">
               <div className="absolute -left-4 top-0 bottom-0 w-1 bg-[#ff7a00] scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-top" />
               <h1 className="text-7xl md:text-8xl font-black tracking-tighter text-white mb-4 italic leading-none">
-                {displayName.split(' ').filter(Boolean).map((word, i) => (
+                {String(displayName).split(' ').filter(Boolean).map((word, i) => (
                   <span key={i} className="block last:text-[#ff7a00] transition-all hover:translate-x-2 cursor-default">{word}</span>
                 ))}
               </h1>
