@@ -32,16 +32,37 @@ function parseBedrockRegion(endpoint: string | undefined) {
   if (!endpoint) return undefined;
   try {
     const host = new URL(endpoint).hostname;
-    const match = host.match(/bedrock\.([^.]+)\.amazonaws\.com$/);
+    const match = host.match(/bedrock(?:-runtime)?\.([^.]+)\.amazonaws\.com$/);
     return match?.[1];
   } catch {
     return undefined;
   }
 }
 
+function normalizeBedrockEndpoint(endpoint: string | undefined) {
+  if (!endpoint) return undefined;
+
+  try {
+    const url = new URL(endpoint);
+    const host = url.hostname;
+    const match = host.match(/^bedrock\.([^.]+)\.amazonaws\.com$/);
+    if (match) {
+      url.hostname = `bedrock-runtime.${match[1]}.amazonaws.com`;
+    }
+    return url.toString().replace(/\/$/, '');
+  } catch {
+    return endpoint;
+  }
+}
+
 const awsRegion = explicitRegion || parseBedrockRegion(process.env.BEDROCK_ENDPOINT);
-const bedrockEndpoint = process.env.BEDROCK_ENDPOINT || (awsRegion ? `https://bedrock.${awsRegion}.amazonaws.com` : undefined);
-const bedrockConfigured = Boolean(bedrockEndpoint && bedrockModel && awsAccessKeyId && awsSecretAccessKey && awsRegion);
+const bedrockEndpoint = normalizeBedrockEndpoint(
+  process.env.BEDROCK_ENDPOINT || (awsRegion ? `https://bedrock-runtime.${awsRegion}.amazonaws.com` : undefined)
+);
+const bedrockExplicitlyConfigured = Boolean(
+  process.env.NEXT_PUBLIC_AI_PROVIDER === 'bedrock' || process.env.BEDROCK_ENDPOINT || process.env.BEDROCK_MODEL
+);
+const bedrockConfigured = bedrockExplicitlyConfigured && Boolean(bedrockEndpoint && bedrockModel && awsAccessKeyId && awsSecretAccessKey && awsRegion);
 
 function hashSha256(value: string) {
   return crypto.createHash('sha256').update(value, 'utf8').digest('hex');
