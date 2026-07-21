@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import posthog from 'posthog-js';
 import { PostHogProvider } from 'posthog-js/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Analytics } from '@vercel/analytics/next';
 
 // Initialize PostHog once on the client, guarded against missing env vars
 if (typeof window !== 'undefined') {
@@ -68,6 +69,7 @@ export default function App({ Component, pageProps }: AppProps) {
         </Head>
         <Component {...pageProps} />
         <SpeedInsights />
+        <Analytics />
       </ThemeProvider>
     </PostHogProvider>
   );
