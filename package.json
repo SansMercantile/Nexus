@@ -8,7 +8,13 @@
     "build": "next build",
     "build-vercel": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "verify:ai": "ts-node scripts/verify-ai-backend.ts verify",
+    "verify:ai:connect": "ts-node scripts/verify-ai-backend.ts connect",
+    "test:ai-backend": "ts-node examples/ai-backend-usage.ts",
+    "test:ai-signal": "curl -X POST http://localhost:3000/api/ai/signal -H 'Content-Type: application/json' -d '{\"symbol\":\"AAPL\",\"timeframe\":\"1h\"}'",
+    "test:ai-analysis": "curl -X POST http://localhost:3000/api/ai/analysis -H 'Content-Type: application/json' -d '{\"symbol\":\"TSLA\",\"analysisType\":\"comprehensive\"}'",
+    "ai:docs": "cat docs/ai-backend.md"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^4.22.0",

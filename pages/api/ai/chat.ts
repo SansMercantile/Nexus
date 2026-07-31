@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { generateGemma } from '@/lib/gemma-client';
 import { getSupportContext } from '@/lib/support-context';
+import { aiConnection } from '@/src/ai/backend/connection';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
@@ -32,9 +33,32 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const gemmaResponse = await generateGemma(enrichedPrompt);
     
+    // Store chat history in Vercel Blob if AI backend is configured
+    let chatStored = false;
+    try {
+      if (aiConnection.isConfigured()) {
+        const sessionId = `chat-${Date.now()}-${Math.random().toString(36).substring(7)}`;
+        await aiConnection.storeChatHistory(
+          userId || 'anonymous',
+          sessionId,
+          [
+            { role: 'user' as const, content: prompt },
+            { role: 'assistant' as const, content: gemmaResponse }
+          ]
+        );
+        chatStored = true;
+      } else {
+        console.log('AI Chat: Vercel Blob not configured, skipping storage');
+      }
+    } catch (storageError) {
+      console.error('AI Chat: Failed to store conversation:', storageError);
+      // Non-critical error, continue with response
+    }
+    
     return res.status(200).json({
       response: gemmaResponse,
-      context_used: "Public Support Knowledge Base"
+      context_used: "Public Support Knowledge Base",
+      chat_stored: chatStored
     });
   } catch (error) {
     console.error('AI Chat Error:', error);
