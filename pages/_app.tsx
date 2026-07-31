@@ -6,6 +6,8 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import posthog from 'posthog-js';
 import { PostHogProvider } from 'posthog-js/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Analytics } from '@vercel/analytics/next';
 
 // Initialize PostHog once on the client, guarded against missing env vars
 if (typeof window !== 'undefined') {
@@ -66,6 +68,8 @@ export default function App({ Component, pageProps }: AppProps) {
           <link rel='apple-touch-icon' href={siteUrl + '/logo.png'} />
         </Head>
         <Component {...pageProps} />
+        <SpeedInsights />
+        <Analytics />
       </ThemeProvider>
     </PostHogProvider>
   );
