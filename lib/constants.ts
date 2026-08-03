@@ -12,15 +12,30 @@ export interface PricingTier {
   cta: string;
 }
 
+export type AppPlatform = 'ios' | 'android' | 'macos' | 'windows' | 'linux';
+
 export interface SystemApplication {
   name: string;
   description: string;
   icon?: string;
-  appStoreUrl?: string;
-  playStoreUrl?: string;
-  // Fallback used whenever a store URL above isn't set yet (e.g. pre-launch) — routes to
-  // a contact/early-access form instead of a dead or placeholder store link.
+  // If the app itself is live and directly accessible (e.g. a web app), link straight to it.
+  liveUrl?: string;
+  // Which platforms this app targets/will target.
+  platforms: AppPlatform[];
+  // Real download/store URL per platform, once available. Deliberately a Partial<Record>
+  // rather than individual optional fields set to `undefined` — Next's getStaticProps
+  // serializer rejects an explicit `undefined` value, so unreleased platforms simply omit
+  // their key here rather than setting it to undefined.
+  platformUrls?: Partial<Record<AppPlatform, string>>;
+  // Fallback route for any platform in `platforms` that doesn't have a URL in
+  // `platformUrls` yet — routes to a contact/notify form instead of a dead link.
   waitlistUrl?: string;
+}
+
+export interface SystemBadge {
+  text: string;
+  // Controls the badge's glass-overlay color treatment.
+  tone: 'danger' | 'success';
 }
 
 export interface SystemData {
@@ -37,6 +52,7 @@ export interface SystemData {
   features?: SystemFeature[];
   pricing?: PricingTier[];
   applications?: SystemApplication[];
+  badge?: SystemBadge;
 }
 
 export const SYSTEMS: SystemData[] = [
@@ -84,13 +100,20 @@ export const SYSTEMS: SystemData[] = [
     ],
     applications: [
       {
+        name: 'Priv Core',
+        description: 'The core Priv platform — live now at priv.sansmercantile.com. Native desktop and mobile clients are on the way; join the notification list to hear the moment each one ships.',
+        icon: 'Sans- Zajuma_Priv_Fintech.png',
+        liveUrl: 'https://priv.sansmercantile.com',
+        platforms: ['macos', 'windows', 'linux', 'ios', 'android'],
+        waitlistUrl: '/contact?subject=Priv Core Desktop and Mobile Early Access',
+      },
+      {
         name: 'Priv Pay',
         description: 'Split a single purchase across multiple linked cards in real time, with an automatic backup reserve if any card declines mid-transaction.',
         icon: 'Sans- Zajuma_Priv_Fintech.png',
-        // TODO: add appStoreUrl / playStoreUrl here once Priv Pay is live on each store.
-        // Deliberately omitted (not set to undefined) — Next's getStaticProps serializer
-        // rejects an explicit `undefined` value even though it'd otherwise JSON-serialize
-        // away harmlessly. Until then the download buttons route to the waitlist below.
+        platforms: ['ios', 'android'],
+        // TODO: add real store URLs to platformUrls (e.g. { ios: '...', android: '...' })
+        // once Priv Pay is live on each store — until then buttons route to the waitlist.
         waitlistUrl: '/contact?subject=Priv Pay Early Access',
       },
     ],
@@ -454,6 +477,7 @@ export const SYSTEMS: SystemData[] = [
     vision: 'To provide impenetrable cybersecurity and proactive threat defense',
     mission: 'Detect, prevent, and neutralize cyber threats with AI-powered defense systems',
     values: ['Security', 'Vigilance', 'Protection', 'Intelligence'],
+    badge: { text: '⚠️ Write Restricted', tone: 'danger' },
     features: [
       { title: 'Threat Detection', description: 'AI detects advanced persistent threats in real-time' },
       { title: 'Vulnerability Management', description: 'Automated vulnerability scanning and remediation' },
@@ -799,6 +823,7 @@ export const SYSTEMS: SystemData[] = [
     vision: 'To harness temporal forces and enable multidimensional space operations',
     mission: 'Provide temporal manipulation and multidimensional access for advanced operations',
     values: ['Innovation', 'Temporal', 'Multidimensional', 'Breakthrough'],
+    badge: { text: 'Now Open Source', tone: 'success' },
     features: [
       { title: 'Temporal Mechanics', description: 'Time-based manipulation and temporal access' },
       { title: 'Multidimensional Access', description: 'Cross-dimensional navigation and operations' },
@@ -842,6 +867,7 @@ export const SYSTEMS: SystemData[] = [
     vision: 'To enable human expansion into space and establish interstellar colonies across the galaxy',
     mission: 'Provide technology for safe interstellar travel and sustainable space colonization',
     values: ['Exploration', 'Innovation', 'Expansion', 'Discovery'],
+    badge: { text: '⚠️ Write Restricted', tone: 'danger' },
     features: [
       { title: 'Advanced Propulsion', description: 'Faster-than-light drive systems and spacecraft propulsion' },
       { title: 'Life Support', description: 'Closed-loop life support for extended space travel and colonization' },

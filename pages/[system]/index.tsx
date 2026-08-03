@@ -8,6 +8,17 @@ import { AnimatedIcon, featureIcons } from '@/components/AnimatedIcons';
 import { getSystemBySlug, getSystemValueDescription, getSystemSdgs } from '@/lib/system-data';
 import { fadeInUp, staggerContainer, itemVariants } from '@/lib/animations';
 import { useRouter } from 'next/router';
+import type { AppPlatform } from '@/lib/constants';
+
+// Display label for each platform's download button. "notifyLabel" is what shows before
+// a real platformUrl exists (routes to the app's waitlistUrl instead).
+const PLATFORM_META: Record<AppPlatform, { label: string; notifyLabel: string }> = {
+  ios: { label: 'Download on the App Store', notifyLabel: 'Notify Me — iOS' },
+  android: { label: 'Get it on Google Play', notifyLabel: 'Notify Me — Android' },
+  macos: { label: 'Download for macOS', notifyLabel: 'Notify Me — macOS' },
+  windows: { label: 'Download for Windows', notifyLabel: 'Notify Me — Windows' },
+  linux: { label: 'Download for Linux', notifyLabel: 'Notify Me — Linux' },
+};
 
 export default function SystemPage() {
   const router = useRouter();
@@ -181,25 +192,37 @@ export default function SystemPage() {
                 </h3>
                 <p className="text-white/70 mb-6">{app.description}</p>
 
-                <div className="flex gap-4 flex-wrap">
+                {app.liveUrl && (
                   <a
-                    href={app.appStoreUrl ?? app.waitlistUrl ?? '#'}
-                    target={app.appStoreUrl ? '_blank' : undefined}
-                    rel={app.appStoreUrl ? 'noopener noreferrer' : undefined}
-                    className="btn btn-secondary flex items-center gap-2"
+                    href={app.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-primary inline-flex items-center gap-2 mb-4"
+                    style={{ backgroundColor: systemData.color, color: '#0a0e27' }}
                   >
-                    <AnimatedIcon type="rocket" size={18} />
-                    {app.appStoreUrl ? 'Download on the App Store' : 'Notify Me — App Store'}
+                    <AnimatedIcon type="globe" size={18} />
+                    Open {app.name}
                   </a>
-                  <a
-                    href={app.playStoreUrl ?? app.waitlistUrl ?? '#'}
-                    target={app.playStoreUrl ? '_blank' : undefined}
-                    rel={app.playStoreUrl ? 'noopener noreferrer' : undefined}
-                    className="btn btn-secondary flex items-center gap-2"
-                  >
-                    <AnimatedIcon type="rocket" size={18} />
-                    {app.playStoreUrl ? 'Get it on Google Play' : 'Notify Me — Google Play'}
-                  </a>
+                )}
+
+                <div className="flex gap-3 flex-wrap">
+                  {app.platforms.map((platform) => {
+                    const url = app.platformUrls?.[platform] ?? app.waitlistUrl ?? '#';
+                    const isLive = Boolean(app.platformUrls?.[platform]);
+                    const meta = PLATFORM_META[platform];
+                    return (
+                      <a
+                        key={platform}
+                        href={url}
+                        target={isLive ? '_blank' : undefined}
+                        rel={isLive ? 'noopener noreferrer' : undefined}
+                        className="btn btn-secondary flex items-center gap-2 text-sm"
+                      >
+                        <AnimatedIcon type="rocket" size={16} />
+                        {isLive ? meta.label : meta.notifyLabel}
+                      </a>
+                    );
+                  })}
                 </div>
               </motion.div>
             ))}

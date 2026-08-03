@@ -46,6 +46,21 @@ export default function Systems() {
                                shadow-2xl hover:shadow-nexus-gold/20 transition-all duration-500 hover:scale-105
                                before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/5 before:to-transparent
                                before:rounded-2xl before:pointer-events-none flex flex-col h-full">
+                  {/* Status badge — glass overlay for systems with a restricted/notable status
+                      (e.g. Sobek/Anubis write-restricted, Primo now open source). Sits above
+                      the face image, z-40 so it clears the image's own gradient overlays (z-10/20/30). */}
+                  {system.badge && (
+                    <div
+                      className={`absolute top-3 right-3 z-40 backdrop-blur-md rounded-full px-3 py-1
+                                 border text-[11px] font-semibold flex items-center gap-1 shadow-lg
+                                 ${system.badge.tone === 'danger'
+                                   ? 'bg-red-950/60 border-red-400/40 text-red-200'
+                                   : 'bg-emerald-950/60 border-emerald-400/40 text-emerald-200'}`}
+                    >
+                      {system.badge.text}
+                    </div>
+                  )}
+
                   {/* System Face Banner - Image Only */}
                   <div className="relative w-full overflow-hidden flex-shrink-0">
                     <div className="aspect-[4/3] relative overflow-hidden rounded-t-2xl">
