@@ -12,6 +12,17 @@ export interface PricingTier {
   cta: string;
 }
 
+export interface SystemApplication {
+  name: string;
+  description: string;
+  icon?: string;
+  appStoreUrl?: string;
+  playStoreUrl?: string;
+  // Fallback used whenever a store URL above isn't set yet (e.g. pre-launch) — routes to
+  // a contact/early-access form instead of a dead or placeholder store link.
+  waitlistUrl?: string;
+}
+
 export interface SystemData {
   id: string;
   name: string;
@@ -25,6 +36,7 @@ export interface SystemData {
   values: string[];
   features?: SystemFeature[];
   pricing?: PricingTier[];
+  applications?: SystemApplication[];
 }
 
 export const SYSTEMS: SystemData[] = [
@@ -69,7 +81,19 @@ export const SYSTEMS: SystemData[] = [
         features: ['Personal portfolio', 'Market alerts', 'Research tools', 'Community access'],
         cta: 'Sign Up Now'
       },
-    ]
+    ],
+    applications: [
+      {
+        name: 'Priv Pay',
+        description: 'Split a single purchase across multiple linked cards in real time, with an automatic backup reserve if any card declines mid-transaction.',
+        icon: 'Sans- Zajuma_Priv_Fintech.png',
+        // TODO: add appStoreUrl / playStoreUrl here once Priv Pay is live on each store.
+        // Deliberately omitted (not set to undefined) — Next's getStaticProps serializer
+        // rejects an explicit `undefined` value even though it'd otherwise JSON-serialize
+        // away harmlessly. Until then the download buttons route to the waitlist below.
+        waitlistUrl: '/contact?subject=Priv Pay Early Access',
+      },
+    ],
   },
   {
     id: 'kel',

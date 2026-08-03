@@ -152,6 +152,61 @@ export default function SystemPage() {
         </motion.div>
       </motion.section>
 
+      {/* Applications Section — only renders for systems that have consumer apps
+          (e.g. Priv has Priv Pay). Absent for systems with no `applications` entry. */}
+      {systemData.applications && systemData.applications.length > 0 && (
+        <motion.section
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="max-w-7xl mx-auto px-6 py-20 border-t border-nexus-accent/20"
+        >
+          <h2 className="text-4xl font-bold mb-4 gradient-text">{systemData.name} Fintech Applications</h2>
+          <p className="text-white/70 text-lg mb-12 max-w-3xl">
+            Consumer apps built on {systemData.name}&apos;s intelligence, available directly to you.
+          </p>
+
+          <motion.div
+            variants={staggerContainer}
+            className="grid grid-cols-1 md:grid-cols-2 gap-8"
+          >
+            {systemData.applications.map((app, i) => (
+              <motion.div
+                key={i}
+                variants={itemVariants}
+                className="p-8 rounded-lg card hover:card-hover transition-all duration-300"
+              >
+                <h3 className="text-2xl font-semibold mb-3" style={{ color: systemData.color }}>
+                  {app.name}
+                </h3>
+                <p className="text-white/70 mb-6">{app.description}</p>
+
+                <div className="flex gap-4 flex-wrap">
+                  <a
+                    href={app.appStoreUrl ?? app.waitlistUrl ?? '#'}
+                    target={app.appStoreUrl ? '_blank' : undefined}
+                    rel={app.appStoreUrl ? 'noopener noreferrer' : undefined}
+                    className="btn btn-secondary flex items-center gap-2"
+                  >
+                    <AnimatedIcon type="rocket" size={18} />
+                    {app.appStoreUrl ? 'Download on the App Store' : 'Notify Me — App Store'}
+                  </a>
+                  <a
+                    href={app.playStoreUrl ?? app.waitlistUrl ?? '#'}
+                    target={app.playStoreUrl ? '_blank' : undefined}
+                    rel={app.playStoreUrl ? 'noopener noreferrer' : undefined}
+                    className="btn btn-secondary flex items-center gap-2"
+                  >
+                    <AnimatedIcon type="rocket" size={18} />
+                    {app.playStoreUrl ? 'Get it on Google Play' : 'Notify Me — Google Play'}
+                  </a>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </motion.section>
+      )}
+
       {/* CTA Section */}
       <motion.section
         initial={{ opacity: 0 }}
