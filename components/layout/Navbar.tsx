@@ -15,18 +15,24 @@ export function Navbar() {
     setMounted(true);
   }, []);
 
-  // During SSR, use default theme
-  const themeHook = mounted ? useTheme() : { theme: 'dark' as const, toggleTheme: () => {} };
-  const { theme, toggleTheme } = themeHook;
+  // ThemeProvider itself already returns a safe 'dark' default before mount, so this
+  // must be called unconditionally — it used to be `mounted ? useTheme() : {...}`,
+  // which calls the hook conditionally and violates React's Rules of Hooks (the number
+  // of hooks this component calls would differ between the pre-mount and post-mount
+  // render, which is exactly what React's hook-call-order tracking forbids and can
+  // corrupt state or break hydration).
+  const { theme, toggleTheme } = useTheme();
 
   const getThemeIcon = () => {
     if (!mounted) return 'sun';
     switch (theme) {
       case 'dark':
-        return 'sun'; // Sun icon for switching to light/angelic
+        return 'sun'; // Sun icon for switching to light
       case 'light':
-        return 'moon'; // Moon icon for switching to dark
+        return 'moon'; // Moon icon for switching to angelic
       case 'angelic':
+        return 'monitor'; // Monitor icon for switching to system
+      case 'system':
         return 'moon'; // Moon icon for switching to dark
       default:
         return 'sun';
@@ -122,7 +128,8 @@ export function Navbar() {
             className="p-2 hover:bg-white/10 rounded-lg transition text-nexus-gold dark:text-nexus-gold dark:hover:bg-white/10 light:text-amber-600 light:hover:bg-amber-100 angelic:text-amber-700 angelic:hover:bg-amber-100"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
-            aria-label="Toggle theme"
+            aria-label={`Current theme: ${theme}. Click to switch theme.`}
+            title={`Theme: ${theme}`}
           >
             <AnimatedIcon type={getThemeIcon()} size={24} />
           </motion.button>

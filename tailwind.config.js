@@ -73,5 +73,17 @@ module.exports = {
     },
   },
   darkMode: 'class',
-  plugins: [],
+  plugins: [
+    // `dark:` works out of the box under darkMode: 'class' (matches when an ancestor,
+    // normally <html>, has class="dark"). `light:` and `angelic:` were being used
+    // throughout the codebase (e.g. `light:bg-amber-100`) as if Tailwind provided the
+    // same thing for those themes — it doesn't; unregistered variants are silently
+    // dropped at build time, so every `light:`/`angelic:` utility in the app was a
+    // no-op. These two lines make them real variants, symmetric with the built-in
+    // `dark:` behavior, so all that existing styling actually takes effect.
+    function ({ addVariant }) {
+      addVariant('light', ':is(.light &)');
+      addVariant('angelic', ':is(.angelic &)');
+    },
+  ],
 }
