@@ -71,7 +71,11 @@ export default function Systems() {
                       <img
                         src={getSystemFace(system.face)}
                         alt={`${system.name} face`}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                        className={`w-full h-full object-cover transition-transform duration-700 ease-out ${
+                          system.badge?.tone === 'danger'
+                            ? 'grayscale-[40%] brightness-75'
+                            : 'group-hover:scale-110'
+                        }`}
                         onError={(e) => {
                           // Fallback to colored gradient background if image fails to load
                           const target = e.target as HTMLImageElement;
@@ -114,21 +118,38 @@ export default function Systems() {
                       {system.description}
                     </p>
 
-                    {/* CTA Button */}
-                    <Link
-                      href={`/${system.id}`}
-                      className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold
+                    {/* CTA Button — restricted systems (Sobek/Anubis/Mpeti) get a disabled,
+                        non-navigating "Restricted" state instead of a working link. Users
+                        can see the face card and description but can't go any further. */}
+                    {system.badge?.tone === 'danger' ? (
+                      <div
+                        aria-disabled="true"
+                        title="This system is write restricted"
+                        className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold
+                               bg-red-950/30 border border-red-400/20 text-red-300/70
+                               cursor-not-allowed select-none backdrop-blur-sm"
+                      >
+                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                        Restricted
+                      </div>
+                    ) : (
+                      <Link
+                        href={`/${system.id}`}
+                        className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold
                                bg-gradient-to-r from-nexus-gold/20 to-nexus-gold/10
                                border border-nexus-gold/30 text-nexus-gold
                                hover:from-nexus-gold/30 hover:to-nexus-gold/20
                                hover:border-nexus-gold/50 hover:shadow-lg hover:shadow-nexus-gold/20
                                transition-all duration-300 backdrop-blur-sm"
-                    >
-                      Learn More
-                      <svg className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </Link>
+                      >
+                        Learn More
+                        <svg className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </Link>
+                    )}
                   </div>
 
                   {/* Subtle animated border */}

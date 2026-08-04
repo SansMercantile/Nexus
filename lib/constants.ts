@@ -467,12 +467,12 @@ export const SYSTEMS: SystemData[] = [
     ]
   },
   {
-    id: 'Sobek',
+    id: 'sobek',
     name: 'Sobek',
     subtitle: 'Threat Detection & Digital Defense',
     color: '#164e63',
     darkColor: '#083344',
-    description: '1000+ threat detection agents protecting against advanced cyber threats',
+    description: '1000+ threat detection agents protecting against advanced cyber threats. Write Restricted.',
     face: 'Sans- Sobek_Cybersecurity.png',
     vision: 'To provide impenetrable cybersecurity and proactive threat defense',
     mission: 'Detect, prevent, and neutralize cyber threats with AI-powered defense systems',
@@ -862,7 +862,7 @@ export const SYSTEMS: SystemData[] = [
     subtitle: 'Space Colonization & Interstellar Travel',
     color: '#000000',
     darkColor: '#1a1a1a',
-    description: 'Interstellar travel system enabling space colonization with advanced propulsion and life support for deep space exploration.',
+    description: 'Interstellar travel system enabling space colonization with advanced propulsion and life support for deep space exploration. Write Restricted.',
     face: 'Sans- Inpu_Anubis_Stellar_technology.png',
     vision: 'To enable human expansion into space and establish interstellar colonies across the galaxy',
     mission: 'Provide technology for safe interstellar travel and sustainable space colonization',
@@ -943,21 +943,18 @@ export const SYSTEMS: SystemData[] = [
       },
     ]
   },
-];
-
-// Backend/SMO Suite systems (not shown on public website)
-export const BACKEND_SYSTEMS: SystemData[] = [
   {
     id: 'mpeti',
     name: 'Mpeti',
     subtitle: 'Autonomous Full Stack AI Developer',
     color: '#ec4899',
     darkColor: '#db2777',
-    description: '⚠️ Not available to the public. Autonomous software development system generating, testing, and deploying full-stack applications',
+    description: 'Autonomous software development system generating, testing, and deploying full-stack applications.',
     face: 'Sans- Mpeti_Autonomous_Developer.png',
     vision: 'To enable autonomous software development and enable self-building AI systems',
     mission: 'Generate, test, and deploy production-grade applications autonomously',
     values: ['Automation', 'Development', 'Innovation', 'Autonomy'],
+    badge: { text: '⚠️ Write Restricted', tone: 'danger' },
     features: [
       { title: 'AI Consciousness Research', description: '30+ agents studying AI ethics and moral reasoning' },
       { title: 'Autonomous Development', description: 'Code generation, testing, and deployment automation' },
@@ -967,6 +964,10 @@ export const BACKEND_SYSTEMS: SystemData[] = [
       { title: 'Multi-Cloud Support', description: 'GCP primary with Azure and AWS fallback' },
     ],
   },
+];
+
+// Backend/SMO Suite systems (not shown on public website)
+export const BACKEND_SYSTEMS: SystemData[] = [
   {
     id: 'avatar',
     name: 'Avatar',

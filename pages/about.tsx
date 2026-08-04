@@ -62,7 +62,7 @@ export default function AboutPage() {
               <motion.div
                 key={idx}
                 variants={fadeInUp}
-                className="bg-gradient-to-br from-[#1a1f3a] to-nexus-dark border border-nexus-gold/20 rounded-xl p-8 hover:border-nexus-gold/40 transition-all duration-300"
+                className="gold-panel rounded-xl p-8 hover:border-nexus-gold/40"
               >
                 <div className="flex justify-center mb-4">
                   <AnimatedIcon type={v.icon} size={48} className="text-nexus-gold" />
@@ -82,7 +82,7 @@ export default function AboutPage() {
           viewport={{ once: true }}
           className="max-w-6xl mx-auto px-6 mb-20"
         >
-          <div className="border border-nexus-gold/20 rounded-2xl p-12 bg-gradient-to-br from-[#1a1f3a] to-nexus-dark">
+          <div className="gold-panel rounded-2xl p-12">
             <h2 className="text-4xl font-bold text-white mb-6">The 21 System Constellation</h2>
             <p className="text-nexus-gray-300 mb-8 leading-relaxed">
               Rather than a monolithic platform, Sans Mercantile is a constellation of 21 specialized, autonomous systems designed to excel in their respective domains. Each system can operate independently while seamlessly integrating with others, creating unmatched flexibility and power.
@@ -146,7 +146,7 @@ export default function AboutPage() {
             transition={{ duration: 0.6 }}
             className="max-w-3xl mx-auto mb-12"
           >
-            <div className="bg-gradient-to-br from-[#1a1f3a] to-nexus-dark border border-nexus-gold/20 rounded-2xl p-12 hover:border-nexus-gold/40 transition-all duration-300">
+            <div className="gold-panel rounded-2xl p-12 hover:border-nexus-gold/40">
               <div className="text-center">
                 <img 
                   src="/Executives/founder_ceo.png" 
@@ -177,7 +177,7 @@ export default function AboutPage() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="max-w-3xl mx-auto"
           >
-            <div className="bg-gradient-to-br from-[#1a1f3a] to-nexus-dark border border-nexus-accent/20 rounded-2xl p-12 hover:border-nexus-accent/40 transition-all duration-300">
+            <div className="gold-panel rounded-2xl p-12 border-nexus-accent/20 hover:border-nexus-accent/40">
               <div className="text-center">
                 <img 
                   src="/Executives/cbdo_executive_partner.jpg" 
@@ -235,7 +235,7 @@ export default function AboutPage() {
           viewport={{ once: true }}
           className="max-w-6xl mx-auto px-6 mt-12 mb-20"
         >
-          <div className="text-center p-6 border border-nexus-gold/10 rounded-xl bg-nexus-dark/50 text-nexus-gray-400 text-sm">
+          <div className="text-center p-6 border border-nexus-gold/10 rounded-xl bg-nexus-dark/50 text-nexus-gray-400 text-sm light:bg-gradient-to-br light:from-amber-50 light:to-amber-100 light:border-amber-300/50 light:text-slate-700">
             <p>Registered in South Africa under CIPC | Reg No: K2025537335</p>
             <p>B-BBEE Level-1 | Certificate Number: 9453188800</p>
           </div>

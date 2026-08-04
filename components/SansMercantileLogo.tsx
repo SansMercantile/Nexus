@@ -10,17 +10,19 @@ export function SansMercantileLogo() {
         <span className="text-xl font-bold" style={{ color: brandOrange }}>
           Sans
         </span>
-        <span 
-          className="text-xl font-bold"
-          style={{
-            background: 'linear-gradient(135deg, #ffffff, #e0e0e0)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text',
-            textShadow: '0 0 20px rgba(255, 255, 255, 0.3)',
-          }}
-        >
-          Mercantile™
+        <span className="light:bg-black/85 light:backdrop-blur-sm light:rounded-md light:px-2 light:py-0.5 light:shadow-lg light:shadow-black/30 transition-colors duration-300">
+          <span 
+            className="text-xl font-bold"
+            style={{
+              background: 'linear-gradient(135deg, #ffffff, #e0e0e0)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+              textShadow: '0 0 20px rgba(255, 255, 255, 0.3)',
+            }}
+          >
+            Mercantile™
+          </span>
         </span>
       </div>
 

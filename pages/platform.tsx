@@ -31,7 +31,7 @@ export default function Platform() {
 
           <div className="grid grid-cols-1 xl:grid-cols-[1.4fr_1fr] gap-12 mb-16">
             {}
-            <div className="bg-gradient-to-br from-[#1a1f3a] to-nexus-dark border border-nexus-gold/20 rounded-3xl p-10">
+            <div className="gold-panel p-10">
               <h2 className="text-3xl font-bold text-white mb-6">Sovereign Infrastructure Fabric</h2>
               <p className="text-nexus-gray-300 mb-6">
                 Sans Mercantile is not a software suite; it is a proprietary compute fabric. The Constellation functions 
@@ -60,7 +60,7 @@ export default function Platform() {
 
             {}
             <div className="grid gap-6">
-              <div className="bg-gradient-to-br from-[#1a1f3a] to-nexus-dark border border-nexus-gold/20 rounded-3xl p-8">
+              <div className="gold-panel p-8">
                 <h3 className="text-2xl font-bold text-white mb-4">Infrastructure Foundations</h3>
                 <ul className="space-y-4 text-nexus-gray-300">
                   <li className="flex gap-3">
@@ -79,7 +79,7 @@ export default function Platform() {
               </div>
 
               {}
-              <div className="bg-gradient-to-br from-[#1a1f3a] to-nexus-dark border border-nexus-gold/20 rounded-3xl p-8">
+              <div className="gold-panel p-8">
                 <h3 className="text-2xl font-bold text-white mb-4">Compute & Transactional Capacity</h3>
                 <ul className="space-y-4 text-nexus-gray-300">
                   <li className="flex gap-3">
@@ -101,21 +101,21 @@ export default function Platform() {
 
           {}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-gradient-to-br from-[#1a1f3a] to-nexus-dark border border-nexus-gold/20 rounded-3xl p-8">
+            <div className="gold-panel p-8">
               <h3 className="text-2xl font-bold text-white mb-4">Enterprise Intelligence</h3>
               <p className="text-nexus-gray-300">
                 Deep AI, predictive modeling, and hardware-accelerated automation drive smarter, 
                 localized operations across finance, risk, and regulatory infrastructure.
               </p>
             </div>
-            <div className="bg-gradient-to-br from-[#1a1f3a] to-nexus-dark border border-nexus-gold/20 rounded-3xl p-8">
+            <div className="gold-panel p-8">
               <h3 className="text-2xl font-bold text-white mb-4">Hardened Security</h3>
               <p className="text-nexus-gray-300">
                 Security-first architecture: HSM-backed identity controls, physical enclave isolation, 
                 and cryptographic hardening for mission-critical infrastructure.
               </p>
             </div>
-            <div className="bg-gradient-to-br from-[#1a1f3a] to-nexus-dark border border-nexus-gold/20 rounded-3xl p-8">
+            <div className="gold-panel p-8">
               <h3 className="text-2xl font-bold text-white mb-4">Adaptive Operations</h3>
               <p className="text-nexus-gray-300">
                 Automated system behavior and failover protocols ensure systemic stability, resilience, 

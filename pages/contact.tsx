@@ -62,7 +62,7 @@ export default function ContactPage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="bg-gradient-to-br from-[#1a1f3a] to-nexus-dark border border-nexus-gold/20 rounded-2xl p-10"
+              className="gold-panel rounded-2xl p-10"
             >
               <h2 className="text-2xl font-bold text-white mb-8">Send us a Message</h2>
               {submitted ? (
@@ -103,7 +103,7 @@ export default function ContactPage() {
                       value={formData.subject}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 rounded-lg bg-nexus-dark border border-nexus-gold/20 text-white focus:border-nexus-gold focus:outline-none transition-colors"
+                      className="w-full px-4 py-3 rounded-lg bg-nexus-dark border border-nexus-gold/20 text-white focus:border-nexus-gold focus:outline-none transition-colors light:bg-amber-50/80 light:backdrop-blur-md light:text-slate-800 light:border-amber-300/60"
                     >
                       <option value="">Select a subject</option>
                         <option value="Sales">Sales Inquiry</option>
@@ -122,7 +122,7 @@ export default function ContactPage() {
                       onChange={handleChange}
                       required
                       rows={5}
-                      className="w-full px-4 py-3 rounded-lg bg-nexus-dark border border-nexus-gold/20 text-white placeholder-nexus-gray-500 focus:border-nexus-gold focus:outline-none transition-colors resize-none"
+                      className="w-full px-4 py-3 rounded-lg bg-nexus-dark border border-nexus-gold/20 text-white placeholder-nexus-gray-500 focus:border-nexus-gold focus:outline-none transition-colors resize-none light:bg-amber-50/80 light:backdrop-blur-md light:text-slate-800 light:placeholder-slate-500 light:border-amber-300/60"
                       placeholder="Tell us more..."
                     ></textarea>
                   </div>
@@ -144,7 +144,7 @@ export default function ContactPage() {
               transition={{ duration: 0.6 }}
               className="space-y-8"
             >
-              <div className="bg-gradient-to-br from-[#1a1f3a] to-nexus-dark border border-nexus-gold/20 rounded-2xl p-8">
+              <div className="gold-panel rounded-2xl p-8">
                 <h3 className="text-xl font-bold text-white mb-4">Support</h3>
                 <p className="text-nexus-gray-300 mb-3">For technical help and customer support:</p>
                 <a href="mailto:support@sansmercantile.com" className="text-nexus-gold font-semibold hover:text-nexus-gold/80 transition-colors">
@@ -152,7 +152,7 @@ export default function ContactPage() {
                 </a>
               </div>
 
-              <div className="bg-gradient-to-br from-[#1a1f3a] to-nexus-dark border border-nexus-gold/20 rounded-2xl p-8">
+              <div className="gold-panel rounded-2xl p-8">
                 <h3 className="text-xl font-bold text-white mb-4">Sales & Partnerships</h3>
                 <p className="text-nexus-gray-300 mb-3">Interested in our services or partnerships?</p>
                 <a href="mailto:sales@sansmercantile.com" className="text-nexus-gold font-semibold hover:text-nexus-gold/80 transition-colors">
@@ -160,7 +160,7 @@ export default function ContactPage() {
                 </a>
               </div>
 
-              <div className="bg-gradient-to-br from-[#1a1f3a] to-nexus-dark border border-nexus-gold/20 rounded-2xl p-8">
+              <div className="gold-panel rounded-2xl p-8">
                 <h3 className="text-xl font-bold text-white mb-4">Compliance & Legal</h3>
                 <p className="text-nexus-gray-300 mb-3">For compliance and regulatory matters:</p>
                 <a href="mailto:compliance@sansmercantile.com" className="text-nexus-gold font-semibold hover:text-nexus-gold/80 transition-colors">
@@ -168,7 +168,7 @@ export default function ContactPage() {
                 </a>
               </div>
 
-              <div className="bg-gradient-to-br from-[#1a1f3a] to-nexus-dark border border-nexus-gold/20 rounded-2xl p-8">
+              <div className="gold-panel rounded-2xl p-8">
                 <h3 className="text-xl font-bold text-white mb-4">Developer API</h3>
                 <p className="text-nexus-gray-300 mb-3">Technical integration support:</p>
                 <a href="mailto:api@sansmercantile.com" className="text-nexus-gold font-semibold hover:text-nexus-gold/80 transition-colors">

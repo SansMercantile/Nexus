@@ -187,6 +187,35 @@ p {
   @apply p-6 rounded-lg border border-nexus-accent/20 bg-nexus-dark backdrop-blur-sm hover:border-nexus-accent/50 transition-all duration-300;
 }
 
+/* "Gold panel" — the large midnight-blue-to-navy gradient content blocks repeated
+   throughout Platform/About/Media/Contact/Careers (bg-gradient-to-br from-[#1a1f3a]
+   to-nexus-dark border-nexus-gold/20). Pulled into a shared class since the exact same
+   utility string was duplicated across many blocks in several files. */
+.gold-panel {
+  @apply bg-gradient-to-br from-[#1a1f3a] to-nexus-dark border border-nexus-gold/20 rounded-3xl transition-all duration-300;
+}
+
+/* Light mode: both .card and .gold-panel previously had no light-mode styling at all,
+   so they stayed midnight blue with the same white/grey text underneath — unreadable
+   against nothing (the surrounding page goes light, but these blocks didn't). They
+   become metallic-gold glassmorphic instead, and every descendant's text color is
+   forced to a legible dark slate regardless of whatever color utility it was
+   originally given (excluding .gradient-text, which relies on a transparent color to
+   show its own gradient fill). */
+.light .card,
+.light .gold-panel {
+  @apply bg-gradient-to-br from-amber-50 via-yellow-50/90 to-amber-100
+         border-amber-400/50 backdrop-blur-xl shadow-lg shadow-amber-200/40;
+}
+.light .card *:not(.gradient-text),
+.light .gold-panel *:not(.gradient-text) {
+  color: theme('colors.slate.700') !important;
+}
+.light .card h1, .light .card h2, .light .card h3, .light .card h4,
+.light .gold-panel h1, .light .gold-panel h2, .light .gold-panel h3, .light .gold-panel h4 {
+  color: theme('colors.slate.900') !important;
+}
+
 /* Links */
 a {
   @apply text-nexus-accent hover:text-nexus-gold transition-colors;
