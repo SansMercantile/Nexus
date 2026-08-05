@@ -6,7 +6,6 @@ type Theme = 'dark' | 'light' | 'angelic' | 'system';
 // The theme actually painted on <html> — 'system' still resolves to 'dark' or 'light'
 // for the UI palette, but we also preserve the `.system` class so system-mode-specific
 // styling can be applied independently of the OS preference.
-type ResolvedTheme = 'dark' | 'light' | 'angelic';
 
 interface ThemeContextType {
   theme: Theme;
@@ -19,8 +18,6 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 const THEME_CLASSES = ['dark', 'light', 'angelic'] as const;
 const HTML_THEME_CLASSES = [...THEME_CLASSES, 'system'] as const;
-
-type ResolvedTheme = (typeof THEME_CLASSES)[number];
 
 type HtmlThemeClass = (typeof HTML_THEME_CLASSES)[number];
 

@@ -314,13 +314,20 @@ p {
 .system [class*="from-[#0b1225]"] *:not(.gradient-text) {
   color: theme('colors.slate.700') !important;
 }
-.light .bg-nexus-dark h1, .system .bg-nexus-dark h1, .nlight .bg-nexus-dark h2, .system .bg-nexus-dark h2, .light .bg-nexus-dark h3, .system .bg-nexus-dark h3, .light .bg-nexus-dark h4, .system .bg-nexus-dark h4,
-.light [class*="to-nexus-dark"] h1, .system [class*="to-nexus-dark"] h1, .light [class*="to-nexus-dark"] h2, .system [class*="to-nexus-dark"] h2, .light [class*="to-nexus-dark"] h3, .system [class*="to-nexus-dark"] h3, .light [class*="to-nexus-dark"] h4, .system [class*="to-nexus-dark"] h4,
-.light [class*="from-nexus-dark"] h1, .system [class*="from-nexus-dark"] h1, .light [class*="from-nexus-dark"] h2, .system [class*="from-nexus-dark"] h2, .light [class*="from-nexus-dark"] h3, .system [class*="from-nexus-dark"] h3, .light [class*="from-nexus-dark"] h4, .system [class*="from-nexus-dark"] h4,
-.light [class*="#1a1f3a"] h1, .system [class*="#1a1f3a"] h1, .light [class*="#1a1f3a"] h2, .system [class*="#1a1f3a"] h2, .light [class*="#1a1f3a"] h3, .system [class*="#1a1f3a"] h3, .light [class*="#1a1f3a"] h4, .system [class*="#1a1f3a"] h4,
-.light [class*="#0f1425"] h1, .system [class*="#0f1425"] h1, .light [class*="#0f1425"] h2, .system [class*="#0f1425"] h2, .light [class*="#0f1425"] h3, .system [class*="#0f1425"] h3, .light [class*="#0f1425"] h4, .system [class*="#0f1425"] h4,
-.light [class*="#0a0e27"] h1, .system [class*="#0a0e27"] h1, .light [class*="#0a0e27"] h2, .system [class*="#0a0e27"] h2, .light [class*="#0a0e27"] h3, .system [class*="#0a0e27"] h3, .light [class*="#0a0e27"] h4, .system [class*="#0a0e27"] h4,
-.light [class*="#0b1225"] h1, .system [class*="#0b1225"] h1, .light [class*="#0b1225"] h2, .system [class*="#0b1225"] h2, .light [class*="#0b1225"] h3, .system [class*="#0b1225"] h3, .light [class*="#0b1225"] h4, .system [class*="#0b1225"] h4 {
+.light .bg-nexus-dark h1, .light .bg-nexus-dark h2, .light .bg-nexus-dark h3, .light .bg-nexus-dark h4,
+.system .bg-nexus-dark h1, .system .bg-nexus-dark h2, .system .bg-nexus-dark h3, .system .bg-nexus-dark h4,
+.light [class*="to-nexus-dark"] h1, .light [class*="to-nexus-dark"] h2, .light [class*="to-nexus-dark"] h3, .light [class*="to-nexus-dark"] h4,
+.system [class*="to-nexus-dark"] h1, .system [class*="to-nexus-dark"] h2, .system [class*="to-nexus-dark"] h3, .system [class*="to-nexus-dark"] h4,
+.light [class*="from-nexus-dark"] h1, .light [class*="from-nexus-dark"] h2, .light [class*="from-nexus-dark"] h3, .light [class*="from-nexus-dark"] h4,
+.system [class*="from-nexus-dark"] h1, .system [class*="from-nexus-dark"] h2, .system [class*="from-nexus-dark"] h3, .system [class*="from-nexus-dark"] h4,
+.light [class*="#1a1f3a"] h1, .light [class*="#1a1f3a"] h2, .light [class*="#1a1f3a"] h3, .light [class*="#1a1f3a"] h4,
+.system [class*="#1a1f3a"] h1, .system [class*="#1a1f3a"] h2, .system [class*="#1a1f3a"] h3, .system [class*="#1a1f3a"] h4,
+.light [class*="#0f1425"] h1, .light [class*="#0f1425"] h2, .light [class*="#0f1425"] h3, .light [class*="#0f1425"] h4,
+.system [class*="#0f1425"] h1, .system [class*="#0f1425"] h2, .system [class*="#0f1425"] h3, .system [class*="#0f1425"] h4,
+.light [class*="#0a0e27"] h1, .light [class*="#0a0e27"] h2, .light [class*="#0a0e27"] h3, .light [class*="#0a0e27"] h4,
+.system [class*="#0a0e27"] h1, .system [class*="#0a0e27"] h2, .system [class*="#0a0e27"] h3, .system [class*="#0a0e27"] h4,
+.light [class*="#0b1225"] h1, .light [class*="#0b1225"] h2, .light [class*="#0b1225"] h3, .light [class*="#0b1225"] h4,
+.system [class*="#0b1225"] h1, .system [class*="#0b1225"] h2, .system [class*="#0b1225"] h3, .system [class*="#0b1225"] h4 {
   color: theme('colors.slate.900') !important;
 }
 /* Form inputs (input/textarea/select) styled with these same dark-navy utilities
@@ -336,6 +343,12 @@ p {
 .light textarea.bg-nexus-dark::placeholder,
 .system textarea.bg-nexus-dark::placeholder {
   color: theme('colors.slate.500') !important;
+}
+
+/* Logo backdrop for light/system themes */
+.light .logo-brand-backdrop,
+.system .logo-brand-backdrop {
+  @apply bg-black/85 rounded-md px-2 py-0.5 shadow-lg shadow-black/30;
 }
 
 /* Links */

@@ -10,7 +10,7 @@ export function SansMercantileLogo() {
         <span className="text-xl font-bold" style={{ color: brandOrange }}>
           Sans
         </span>
-        <span className="light:bg-black/85 light:backdrop-blur-sm light:rounded-md light:px-2 light:py-0.5 light:shadow-lg light:shadow-black/30 transition-colors duration-300">
+        <span className="logo-brand-backdrop transition-colors duration-300">
           <span 
             className="text-xl font-bold"
             style={{

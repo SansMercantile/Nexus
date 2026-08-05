@@ -124,7 +124,7 @@ export default function Systems() {
                     {system.badge?.tone === 'danger' ? (
                       <div
                         aria-disabled="true"
-                        title="This system isrestricted"
+                        title="This system is restricted"
                         className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold
                                bg-red-950/30 border border-red-400/20 text-red-300/70
                                cursor-not-allowed select-none backdrop-blur-sm"
