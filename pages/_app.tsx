@@ -1,6 +1,7 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import { ThemeProvider } from '../components/ThemeProvider';
+import { LiveSkyBackground } from '../components/LiveSkyBackground';
 import Head from 'next/head';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
@@ -68,6 +69,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <link rel='apple-touch-icon' href={siteUrl + '/logo.png'} />
         </Head>
         <Component {...pageProps} />
+        <LiveSkyBackground />
         <SpeedInsights />
         <Analytics />
       </ThemeProvider>
