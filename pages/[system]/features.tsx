@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
 import Layout from '@/components/layout/Layout';
+import { RestrictedSystemNotice } from '@/components/systems/RestrictedSystemNotice';
 import { SYSTEMS } from '@/lib/constants';
 import { fadeInUp, staggerContainer } from '@/lib/animations';
 
@@ -13,7 +14,7 @@ interface Feature {
 const FeatureCard = ({ feature, color }: { feature: Feature; color: string }) => (
   <motion.div
     variants={fadeInUp}
-    className="group relative p-8 rounded-xl border border-nexus-gold/20 bg-gradient-to-br from-nexus-dark to-[#0f1425] hover:border-nexus-gold/50 transition-all duration-300"
+    className="group relative gold-panel p-8 rounded-xl hover:border-nexus-gold/50"
   >
     <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-transparent via-transparent to-transparent opacity-0 group-hover:opacity-20 transition-opacity duration-300" />
     
@@ -50,6 +51,10 @@ export default function SystemFeaturesPage() {
         </div>
       </Layout>
     );
+  }
+
+  if (systemData.badge?.tone === 'danger') {
+    return <RestrictedSystemNotice systemData={systemData} />;
   }
 
   const features = (systemData.features || []).map((f, i) => ({

@@ -1,16 +1,17 @@
 import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
 import Layout from '@/components/layout/Layout';
+import { RestrictedSystemNotice } from '@/components/systems/RestrictedSystemNotice';
 import { SYSTEMS } from '@/lib/constants';
 import { fadeInUp, staggerContainer } from '@/lib/animations';
 
 const PricingTierCard = ({ tier, color, isPopular }: any) => (
   <motion.div
     variants={fadeInUp}
-    className={`relative rounded-2xl border transition-all duration-300 overflow-hidden group ${
+    className={`relative rounded-2xl border transition-all duration-300 overflow-hidden group pricing-panel ${
       isPopular
-        ? 'bg-gradient-to-br from-[#1a1f3a] to-[#0f1425] border-nexus-gold/40 md:scale-105'
-        : 'bg-gradient-to-br from-nexus-dark to-[#0f1425] border-nexus-gold/20 hover:border-nexus-gold/30'
+        ? 'bg-gradient-to-br from-[#1a1f3a] to-[#0f1425] border-nexus-gold/40 md:scale-105 light:bg-gradient-to-br light:from-amber-50 light:via-yellow-50/90 light:to-amber-100 light:border-amber-400/60 light:backdrop-blur-xl light:shadow-lg light:shadow-amber-200/40'
+        : 'bg-gradient-to-br from-nexus-dark to-[#0f1425] border-nexus-gold/20 hover:border-nexus-gold/30 light:bg-gradient-to-br light:from-amber-50 light:via-yellow-50/90 light:to-amber-100 light:border-amber-300/50 light:backdrop-blur-xl light:shadow-lg light:shadow-amber-200/30'
     }`}
   >
     {isPopular && (
@@ -92,6 +93,10 @@ export default function SystemPricingPage() {
         </div>
       </Layout>
     );
+  }
+
+  if (systemData.badge?.tone === 'danger') {
+    return <RestrictedSystemNotice systemData={systemData} />;
   }
 
   const pricing = systemData.pricing || [];

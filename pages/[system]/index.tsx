@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Layout from '@/components/layout/Layout';
 import { SystemHero } from '@/components/systems/SystemHero';
+import { RestrictedSystemNotice } from '@/components/systems/RestrictedSystemNotice';
 import { AnimatedIcon, featureIcons } from '@/components/AnimatedIcons';
 import { getSystemBySlug, getSystemValueDescription, getSystemSdgs } from '@/lib/system-data';
 import { fadeInUp, staggerContainer, itemVariants } from '@/lib/animations';
@@ -38,6 +39,10 @@ export default function SystemPage() {
         </div>
       </Layout>
     );
+  }
+
+  if (systemData.badge?.tone === 'danger') {
+    return <RestrictedSystemNotice systemData={systemData} />;
   }
 
   return (

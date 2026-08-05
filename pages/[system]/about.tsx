@@ -2,6 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 import { motion } from 'framer-motion';
 import Layout from '@/components/layout/Layout';
+import { RestrictedSystemNotice } from '@/components/systems/RestrictedSystemNotice';
 import { getSystemBySlug, getSystemSdgs, getSystemValueDescription } from '@/lib/system-data';
 import { fadeInUp } from '@/lib/animations';
 import { useRouter } from 'next/router';
@@ -25,6 +26,10 @@ export default function SystemAbout() {
 
   if (!systemData) {
     return null;
+  }
+
+  if (systemData.badge?.tone === 'danger') {
+    return <RestrictedSystemNotice systemData={systemData} />;
   }
 
   return (

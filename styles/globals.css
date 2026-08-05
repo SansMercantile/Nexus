@@ -216,6 +216,91 @@ p {
   color: theme('colors.slate.900') !important;
 }
 
+/* Pricing tier cards ([system]/pricing.tsx) — same treatment as .gold-panel, applied
+   via a marker class since their background is chosen conditionally at runtime
+   (isPopular vs not) rather than through a single shared class. */
+.light .pricing-panel *:not(.gradient-text) {
+  color: theme('colors.slate.700') !important;
+}
+.light .pricing-panel h1, .light .pricing-panel h2, .light .pricing-panel h3, .light .pricing-panel h4 {
+  color: theme('colors.slate.900') !important;
+}
+
+/* ============================================================================
+   GLOBAL light-mode fix for hardcoded dark-navy surfaces used site-wide.
+   ----------------------------------------------------------------------------
+   The .card/.gold-panel/.pricing-panel rules above only cover blocks that use
+   those specific shared classes. Auditing the wider site turned up the exact
+   same underlying problem repeated in ~150 files across Media, Blog, Press,
+   About, Careers, Services, SDK docs, form inputs, and more — all built with
+   the same small, consistent palette of dark-navy utilities (bg-nexus-dark,
+   and the arbitrary hex shades #1a1f3a / #0f1425 / #0a0e27 / #0b1225, used
+   directly or as gradient stops) but with zero light-mode styling, so they
+   stayed midnight blue with light-gray/white text no matter the theme.
+   Editing each of those ~150 files individually isn't practical or
+   maintainable — so instead of a shared class, this retargets the *utility
+   classes themselves* directly wherever they appear, using attribute
+   selectors that match Tailwind's generated class names as substrings. This
+   catches every element using these utilities across the entire site,
+   including ones with no shared wrapper class at all (raw inline utility
+   strings), with no per-file edits required, current or future.
+   ============================================================================ */
+.light .bg-nexus-dark,
+.light [class*="to-nexus-dark"],
+.light [class*="from-nexus-dark"],
+.light [class*="bg-[#1a1f3a]"],
+.light [class*="to-[#1a1f3a]"],
+.light [class*="from-[#1a1f3a]"],
+.light [class*="bg-[#0f1425]"],
+.light [class*="to-[#0f1425]"],
+.light [class*="from-[#0f1425]"],
+.light [class*="bg-[#0a0e27]"],
+.light [class*="to-[#0a0e27]"],
+.light [class*="from-[#0a0e27]"],
+.light [class*="bg-[#0b1225]"],
+.light [class*="to-[#0b1225]"],
+.light [class*="from-[#0b1225]"] {
+  background-image: linear-gradient(to bottom right, #fffbeb, rgba(254, 252, 232, 0.9), #fef3c7) !important;
+  border-color: rgba(217, 119, 6, 0.4) !important;
+  backdrop-filter: blur(16px) !important;
+  box-shadow: 0 10px 30px -10px rgba(217, 119, 6, 0.3) !important;
+}
+.light .bg-nexus-dark *:not(.gradient-text),
+.light [class*="to-nexus-dark"] *:not(.gradient-text),
+.light [class*="from-nexus-dark"] *:not(.gradient-text),
+.light [class*="bg-[#1a1f3a]"] *:not(.gradient-text),
+.light [class*="to-[#1a1f3a]"] *:not(.gradient-text),
+.light [class*="from-[#1a1f3a]"] *:not(.gradient-text),
+.light [class*="bg-[#0f1425]"] *:not(.gradient-text),
+.light [class*="to-[#0f1425]"] *:not(.gradient-text),
+.light [class*="from-[#0f1425]"] *:not(.gradient-text),
+.light [class*="bg-[#0a0e27]"] *:not(.gradient-text),
+.light [class*="to-[#0a0e27]"] *:not(.gradient-text),
+.light [class*="from-[#0a0e27]"] *:not(.gradient-text),
+.light [class*="bg-[#0b1225]"] *:not(.gradient-text),
+.light [class*="to-[#0b1225]"] *:not(.gradient-text),
+.light [class*="from-[#0b1225]"] *:not(.gradient-text) {
+  color: theme('colors.slate.700') !important;
+}
+.light .bg-nexus-dark h1, .light .bg-nexus-dark h2, .light .bg-nexus-dark h3, .light .bg-nexus-dark h4,
+.light [class*="to-nexus-dark"] h1, .light [class*="to-nexus-dark"] h2, .light [class*="to-nexus-dark"] h3, .light [class*="to-nexus-dark"] h4,
+.light [class*="from-nexus-dark"] h1, .light [class*="from-nexus-dark"] h2, .light [class*="from-nexus-dark"] h3, .light [class*="from-nexus-dark"] h4,
+.light [class*="#1a1f3a"] h1, .light [class*="#1a1f3a"] h2, .light [class*="#1a1f3a"] h3, .light [class*="#1a1f3a"] h4,
+.light [class*="#0f1425"] h1, .light [class*="#0f1425"] h2, .light [class*="#0f1425"] h3, .light [class*="#0f1425"] h4,
+.light [class*="#0a0e27"] h1, .light [class*="#0a0e27"] h2, .light [class*="#0a0e27"] h3, .light [class*="#0a0e27"] h4,
+.light [class*="#0b1225"] h1, .light [class*="#0b1225"] h2, .light [class*="#0b1225"] h3, .light [class*="#0b1225"] h4 {
+  color: theme('colors.slate.900') !important;
+}
+/* Form inputs (input/textarea/select) styled with these same dark-navy utilities
+   directly — placeholder text needs its own override since it doesn't inherit color. */
+.light input[class*="#1a1f3a"]::placeholder,
+.light textarea[class*="#1a1f3a"]::placeholder,
+.light select[class*="#1a1f3a"]::placeholder,
+.light input.bg-nexus-dark::placeholder,
+.light textarea.bg-nexus-dark::placeholder {
+  color: theme('colors.slate.500') !important;
+}
+
 /* Links */
 a {
   @apply text-nexus-accent hover:text-nexus-gold transition-colors;
