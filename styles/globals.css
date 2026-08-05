@@ -195,7 +195,7 @@ p {
   @apply bg-gradient-to-br from-[#1a1f3a] to-nexus-dark border border-nexus-gold/20 rounded-3xl transition-all duration-300;
 }
 
-/* Light mode: both .card and .gold-panel previously had no light-mode styling at all,
+/* Light/system mode: both .card and .gold-panel previously had no light-mode styling at all,
    so they stayed midnight blue with the same white/grey text underneath — unreadable
    against nothing (the surrounding page goes light, but these blocks didn't). They
    become metallic-gold glassmorphic instead, and every descendant's text color is
@@ -203,26 +203,40 @@ p {
    originally given (excluding .gradient-text, which relies on a transparent color to
    show its own gradient fill). */
 .light .card,
-.light .gold-panel {
+.system .card,
+.light .gold-panel,
+.system .gold-panel {
   @apply bg-gradient-to-br from-amber-50 via-yellow-50/90 to-amber-100
          border-amber-400/50 backdrop-blur-xl shadow-lg shadow-amber-200/40;
 }
 .light .card *:not(.gradient-text),
-.light .gold-panel *:not(.gradient-text) {
+.system .card *:not(.gradient-text),
+.light .gold-panel *:not(.gradient-text),
+.system .gold-panel *:not(.gradient-text) {
   color: theme('colors.slate.700') !important;
 }
-.light .card h1, .light .card h2, .light .card h3, .light .card h4,
-.light .gold-panel h1, .light .gold-panel h2, .light .gold-panel h3, .light .gold-panel h4 {
+.light .card h1, .system .card h1,
+.light .card h2, .system .card h2,
+.light .card h3, .system .card h3,
+.light .card h4, .system .card h4,
+.light .gold-panel h1, .system .gold-panel h1,
+.light .gold-panel h2, .system .gold-panel h2,
+.light .gold-panel h3, .system .gold-panel h3,
+.light .gold-panel h4, .system .gold-panel h4 {
   color: theme('colors.slate.900') !important;
 }
 
 /* Pricing tier cards ([system]/pricing.tsx) — same treatment as .gold-panel, applied
    via a marker class since their background is chosen conditionally at runtime
    (isPopular vs not) rather than through a single shared class. */
-.light .pricing-panel *:not(.gradient-text) {
+.light .pricing-panel *:not(.gradient-text),
+.system .pricing-panel *:not(.gradient-text) {
   color: theme('colors.slate.700') !important;
 }
-.light .pricing-panel h1, .light .pricing-panel h2, .light .pricing-panel h3, .light .pricing-panel h4 {
+.light .pricing-panel h1, .system .pricing-panel h1,
+.light .pricing-panel h2, .system .pricing-panel h2,
+.light .pricing-panel h3, .system .pricing-panel h3,
+.light .pricing-panel h4, .system .pricing-panel h4 {
   color: theme('colors.slate.900') !important;
 }
 
@@ -258,46 +272,69 @@ p {
 .light [class*="to-[#0a0e27]"],
 .light [class*="from-[#0a0e27]"],
 .light [class*="bg-[#0b1225]"],
+.system [class*="bg-[#0b1225]"],
 .light [class*="to-[#0b1225]"],
-.light [class*="from-[#0b1225]"] {
+.system [class*="to-[#0b1225]"],
+.light [class*="from-[#0b1225]"],
+.system [class*="from-[#0b1225]"] {
   background-image: linear-gradient(to bottom right, #fffbeb, rgba(254, 252, 232, 0.9), #fef3c7) !important;
   border-color: rgba(217, 119, 6, 0.4) !important;
   backdrop-filter: blur(16px) !important;
   box-shadow: 0 10px 30px -10px rgba(217, 119, 6, 0.3) !important;
 }
 .light .bg-nexus-dark *:not(.gradient-text),
+.system .bg-nexus-dark *:not(.gradient-text),
 .light [class*="to-nexus-dark"] *:not(.gradient-text),
+.system [class*="to-nexus-dark"] *:not(.gradient-text),
 .light [class*="from-nexus-dark"] *:not(.gradient-text),
+.system [class*="from-nexus-dark"] *:not(.gradient-text),
 .light [class*="bg-[#1a1f3a]"] *:not(.gradient-text),
+.system [class*="bg-[#1a1f3a]"] *:not(.gradient-text),
 .light [class*="to-[#1a1f3a]"] *:not(.gradient-text),
+.system [class*="to-[#1a1f3a]"] *:not(.gradient-text),
 .light [class*="from-[#1a1f3a]"] *:not(.gradient-text),
+.system [class*="from-[#1a1f3a]"] *:not(.gradient-text),
 .light [class*="bg-[#0f1425]"] *:not(.gradient-text),
+.system [class*="bg-[#0f1425]"] *:not(.gradient-text),
 .light [class*="to-[#0f1425]"] *:not(.gradient-text),
+.system [class*="to-[#0f1425]"] *:not(.gradient-text),
 .light [class*="from-[#0f1425]"] *:not(.gradient-text),
+.system [class*="from-[#0f1425]"] *:not(.gradient-text),
 .light [class*="bg-[#0a0e27]"] *:not(.gradient-text),
+.system [class*="bg-[#0a0e27]"] *:not(.gradient-text),
 .light [class*="to-[#0a0e27]"] *:not(.gradient-text),
+.system [class*="to-[#0a0e27]"] *:not(.gradient-text),
 .light [class*="from-[#0a0e27]"] *:not(.gradient-text),
+.system [class*="from-[#0a0e27]"] *:not(.gradient-text),
 .light [class*="bg-[#0b1225]"] *:not(.gradient-text),
+.system [class*="bg-[#0b1225]"] *:not(.gradient-text),
 .light [class*="to-[#0b1225]"] *:not(.gradient-text),
-.light [class*="from-[#0b1225]"] *:not(.gradient-text) {
+.system [class*="to-[#0b1225]"] *:not(.gradient-text),
+.light [class*="from-[#0b1225]"] *:not(.gradient-text),
+.system [class*="from-[#0b1225]"] *:not(.gradient-text) {
   color: theme('colors.slate.700') !important;
 }
-.light .bg-nexus-dark h1, .light .bg-nexus-dark h2, .light .bg-nexus-dark h3, .light .bg-nexus-dark h4,
-.light [class*="to-nexus-dark"] h1, .light [class*="to-nexus-dark"] h2, .light [class*="to-nexus-dark"] h3, .light [class*="to-nexus-dark"] h4,
-.light [class*="from-nexus-dark"] h1, .light [class*="from-nexus-dark"] h2, .light [class*="from-nexus-dark"] h3, .light [class*="from-nexus-dark"] h4,
-.light [class*="#1a1f3a"] h1, .light [class*="#1a1f3a"] h2, .light [class*="#1a1f3a"] h3, .light [class*="#1a1f3a"] h4,
-.light [class*="#0f1425"] h1, .light [class*="#0f1425"] h2, .light [class*="#0f1425"] h3, .light [class*="#0f1425"] h4,
-.light [class*="#0a0e27"] h1, .light [class*="#0a0e27"] h2, .light [class*="#0a0e27"] h3, .light [class*="#0a0e27"] h4,
-.light [class*="#0b1225"] h1, .light [class*="#0b1225"] h2, .light [class*="#0b1225"] h3, .light [class*="#0b1225"] h4 {
+.light .bg-nexus-dark h1, .system .bg-nexus-dark h1, .nlight .bg-nexus-dark h2, .system .bg-nexus-dark h2, .light .bg-nexus-dark h3, .system .bg-nexus-dark h3, .light .bg-nexus-dark h4, .system .bg-nexus-dark h4,
+.light [class*="to-nexus-dark"] h1, .system [class*="to-nexus-dark"] h1, .light [class*="to-nexus-dark"] h2, .system [class*="to-nexus-dark"] h2, .light [class*="to-nexus-dark"] h3, .system [class*="to-nexus-dark"] h3, .light [class*="to-nexus-dark"] h4, .system [class*="to-nexus-dark"] h4,
+.light [class*="from-nexus-dark"] h1, .system [class*="from-nexus-dark"] h1, .light [class*="from-nexus-dark"] h2, .system [class*="from-nexus-dark"] h2, .light [class*="from-nexus-dark"] h3, .system [class*="from-nexus-dark"] h3, .light [class*="from-nexus-dark"] h4, .system [class*="from-nexus-dark"] h4,
+.light [class*="#1a1f3a"] h1, .system [class*="#1a1f3a"] h1, .light [class*="#1a1f3a"] h2, .system [class*="#1a1f3a"] h2, .light [class*="#1a1f3a"] h3, .system [class*="#1a1f3a"] h3, .light [class*="#1a1f3a"] h4, .system [class*="#1a1f3a"] h4,
+.light [class*="#0f1425"] h1, .system [class*="#0f1425"] h1, .light [class*="#0f1425"] h2, .system [class*="#0f1425"] h2, .light [class*="#0f1425"] h3, .system [class*="#0f1425"] h3, .light [class*="#0f1425"] h4, .system [class*="#0f1425"] h4,
+.light [class*="#0a0e27"] h1, .system [class*="#0a0e27"] h1, .light [class*="#0a0e27"] h2, .system [class*="#0a0e27"] h2, .light [class*="#0a0e27"] h3, .system [class*="#0a0e27"] h3, .light [class*="#0a0e27"] h4, .system [class*="#0a0e27"] h4,
+.light [class*="#0b1225"] h1, .system [class*="#0b1225"] h1, .light [class*="#0b1225"] h2, .system [class*="#0b1225"] h2, .light [class*="#0b1225"] h3, .system [class*="#0b1225"] h3, .light [class*="#0b1225"] h4, .system [class*="#0b1225"] h4 {
   color: theme('colors.slate.900') !important;
 }
 /* Form inputs (input/textarea/select) styled with these same dark-navy utilities
    directly — placeholder text needs its own override since it doesn't inherit color. */
 .light input[class*="#1a1f3a"]::placeholder,
+.system input[class*="#1a1f3a"]::placeholder,
 .light textarea[class*="#1a1f3a"]::placeholder,
+.system textarea[class*="#1a1f3a"]::placeholder,
 .light select[class*="#1a1f3a"]::placeholder,
+.system select[class*="#1a1f3a"]::placeholder,
 .light input.bg-nexus-dark::placeholder,
-.light textarea.bg-nexus-dark::placeholder {
+.system input.bg-nexus-dark::placeholder,
+.light textarea.bg-nexus-dark::placeholder,
+.system textarea.bg-nexus-dark::placeholder {
   color: theme('colors.slate.500') !important;
 }
 
