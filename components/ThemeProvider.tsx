@@ -3,6 +3,7 @@ import React, { createContext, useContext, useState, useEffect, useCallback } fr
 // 'system' follows the OS's prefers-color-scheme and stays live-updated if it changes
 // while the tab is open. 'dark' | 'light' | 'angelic' are explicit user choices.
 type Theme = 'dark' | 'light' | 'angelic' | 'system';
+export type ResolvedTheme = 'dark' | 'light' | 'angelic';
 // The theme actually painted on <html> — 'system' still resolves to 'dark' or 'light'
 // for the UI palette, but we also preserve the `.system` class so system-mode-specific
 // styling can be applied independently of the OS preference.
