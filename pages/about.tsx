@@ -150,10 +150,10 @@ export default function AboutPage() {
               <div className="text-center">
                 <img 
                   src="/Executives/founder_ceo.png" 
-                  alt="Mezzoforte Privilege Khoza, Sr." 
+                  alt="Mezzoforte Privilège, Sr." 
                   className="w-24 h-24 rounded-full mx-auto mb-6 object-cover border-2 border-nexus-gold/30"
                 />
-                <h3 className="text-3xl font-bold text-white mb-2">Mezzoforte Privilege Khoza, Sr.</h3>
+                <h3 className="text-3xl font-bold text-white mb-2">Mezzoforte Privilège, Sr.</h3>
                 <p className="text-nexus-gold font-semibold mb-4 text-lg">Founder & Chief Executive Officer</p>
                 <p className="text-sm text-nexus-gold/80 mb-6">MBA, EMEL</p>
                 <p className="text-nexus-gray-300 leading-relaxed mb-8">
