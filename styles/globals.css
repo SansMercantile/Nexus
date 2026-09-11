@@ -135,8 +135,8 @@ body {
   @apply bg-nexus-dark;
 }
 
-.light ::-webkit-scrollbar-track,
-.angelic ::-webkit-scrollbar-track {
+html.light::-webkit-scrollbar-track,
+html.angelic::-webkit-scrollbar-track {
   @apply bg-gray-100;
 }
 
