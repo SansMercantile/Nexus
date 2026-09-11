@@ -135,11 +135,6 @@ body {
   @apply bg-nexus-dark;
 }
 
-html.light::-webkit-scrollbar-track,
-html.angelic::-webkit-scrollbar-track {
-  @apply bg-gray-100;
-}
-
 ::-webkit-scrollbar-thumb {
   @apply bg-nexus-accent rounded-full;
 }
