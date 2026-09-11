@@ -10,14 +10,12 @@ const nextConfig = {
   // For GitHub Pages deployment
   basePath: process.env.NEXT_PUBLIC_BASE_PATH || '',
   assetPrefix: process.env.NEXT_PUBLIC_BASE_PATH || '',
-  output: isVercelBuild ? 'standalone' : (process.env.NEXT_OUTPUT || 'standalone'), // 'standalone' for Vercel, 'export' for GitHub Pages
+  ...(isVercelBuild || !process.env.NEXT_OUTPUT
+    ? {}
+    : { output: process.env.NEXT_OUTPUT }),
   trailingSlash: true,
-  swcMinify: true,
   typescript: {
     ignoreBuildErrors: true,
-  },
-  eslint: {
-    ignoreDuringBuilds: true,
   },
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
