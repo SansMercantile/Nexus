@@ -168,37 +168,6 @@ export default function AboutPage() {
               </div>
             </div>
           </motion.div>
-
-          {/* CBDO & Executive Partner */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="max-w-3xl mx-auto"
-          >
-            <div className="gold-panel rounded-2xl p-12 border-nexus-accent/20 hover:border-nexus-accent/40">
-              <div className="text-center">
-                <img 
-                  src="/Executives/cbdo_executive_partner.jpg" 
-                  alt="Christopher Maddison" 
-                  className="w-24 h-24 rounded-full mx-auto mb-6 object-cover border-2 border-nexus-accent/30"
-                />
-                <h3 className="text-3xl font-bold text-white mb-2">Christopher Maddison</h3>
-                <p className="text-nexus-accent font-semibold mb-4 text-lg">Chief Business Development Officer & Executive Partner</p>
-                <p className="text-sm text-nexus-accent/80 mb-6">LDP, MBA Equivalent.</p>
-                <p className="text-nexus-gray-300 leading-relaxed mb-8">
-                  Christopher is a senior capital strategist and corporate finance professional with over two decades of international experience across emerging and developed markets. His expertise spans structured finance, capital raising, and strategic advisory, with a proven track record of originating and executing complex debt and equity transactions exceeding $125 million USD.
-                </p>
-                <p className="text-nexus-gray-300 leading-relaxed mb-8">
-                  He has built a reputation for connecting institutional capital to high-impact opportunities, structuring bespoke funding solutions, and navigating sophisticated investment environments with a strong focus on governance, risk, and long-term value creation. His experience spans private credit, corporate lending, and principal investment, with a particular focus on renewable energy, infrastructure, and ESG-aligned sectors.
-                </p>
-                <p className="text-nexus-gray-300 leading-relaxed mb-8">
-                  As CBDO and Executive Partner, Christopher leads the group's global capital strategy, investor engagement, and the institutional commercialization of the Sovereign AI Constellation, with a primary focus on the Priv™ (Fintech) and Omega (Healthtech) kernels.
-                </p>
-              </div>
-            </div>
-          </motion.div>
         </motion.div>
 
         {/* Impact */}
