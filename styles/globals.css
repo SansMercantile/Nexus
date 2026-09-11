@@ -131,10 +131,6 @@ body {
   width: 10px;
 }
 
-::-webkit-scrollbar-track {
-  @apply bg-nexus-dark;
-}
-
 ::-webkit-scrollbar-thumb {
   @apply bg-nexus-accent rounded-full;
 }
