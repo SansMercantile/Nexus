@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
+const isVercelBuild = process.env.VERCEL === '1';
+
 const nextConfig = {
   reactStrictMode: true,
   images: {
@@ -8,7 +10,7 @@ const nextConfig = {
   // For GitHub Pages deployment
   basePath: process.env.NEXT_PUBLIC_BASE_PATH || '',
   assetPrefix: process.env.NEXT_PUBLIC_BASE_PATH || '',
-  output: process.env.NEXT_OUTPUT || 'standalone', // 'standalone' for Vercel, 'export' for GitHub Pages
+  output: isVercelBuild ? 'standalone' : (process.env.NEXT_OUTPUT || 'standalone'), // 'standalone' for Vercel, 'export' for GitHub Pages
   trailingSlash: true,
   swcMinify: true,
   typescript: {
