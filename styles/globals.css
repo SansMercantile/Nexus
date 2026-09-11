@@ -209,10 +209,10 @@ p {
   @apply bg-gradient-to-br from-amber-50 via-yellow-50/90 to-amber-100
          border-amber-400/50 backdrop-blur-xl shadow-lg shadow-amber-200/40;
 }
-.light .card *:not(.gradient-text),
-.system .card *:not(.gradient-text),
-.light .gold-panel *:not(.gradient-text),
-.system .gold-panel *:not(.gradient-text) {
+.light .card p, .light .card span, .light .card li,
+.system .card p, .system .card span, .system .card li,
+.light .gold-panel p, .light .gold-panel span, .light .gold-panel li,
+.system .gold-panel p, .system .gold-panel span, .system .gold-panel li {
   color: theme('colors.slate.700') !important;
 }
 .light .card h1, .system .card h1,
@@ -229,8 +229,10 @@ p {
 /* Pricing tier cards ([system]/pricing.tsx) — same treatment as .gold-panel, applied
    via a marker class since their background is chosen conditionally at runtime
    (isPopular vs not) rather than through a single shared class. */
-.light .pricing-panel *:not(.gradient-text),
-.system .pricing-panel *:not(.gradient-text) {
+.light .pricing-panel p, .light .pricing-panel span, .light .pricing-panel li {
+  color: theme('colors.slate.700') !important;
+}
+.system .pricing-panel p, .system .pricing-panel span, .system .pricing-panel li {
   color: theme('colors.slate.700') !important;
 }
 .light .pricing-panel h1, .system .pricing-panel h1,
@@ -294,36 +296,20 @@ p {
   backdrop-filter: blur(16px) !important;
   box-shadow: 0 10px 30px -10px rgba(217, 119, 6, 0.3) !important;
 }
-.light .bg-nexus-dark *:not(.gradient-text),
-.system .bg-nexus-dark *:not(.gradient-text),
-.light [class*="to-nexus-dark"] *:not(.gradient-text),
-.system [class*="to-nexus-dark"] *:not(.gradient-text),
-.light [class*="from-nexus-dark"] *:not(.gradient-text),
-.system [class*="from-nexus-dark"] *:not(.gradient-text),
-.light [class*="bg-[#1a1f3a]"] *:not(.gradient-text),
-.system [class*="bg-[#1a1f3a]"] *:not(.gradient-text),
-.light [class*="to-[#1a1f3a]"] *:not(.gradient-text),
-.system [class*="to-[#1a1f3a]"] *:not(.gradient-text),
-.light [class*="from-[#1a1f3a]"] *:not(.gradient-text),
-.system [class*="from-[#1a1f3a]"] *:not(.gradient-text),
-.light [class*="bg-[#0f1425]"] *:not(.gradient-text),
-.system [class*="bg-[#0f1425]"] *:not(.gradient-text),
-.light [class*="to-[#0f1425]"] *:not(.gradient-text),
-.system [class*="to-[#0f1425]"] *:not(.gradient-text),
-.light [class*="from-[#0f1425]"] *:not(.gradient-text),
-.system [class*="from-[#0f1425]"] *:not(.gradient-text),
-.light [class*="bg-[#0a0e27]"] *:not(.gradient-text),
-.system [class*="bg-[#0a0e27]"] *:not(.gradient-text),
-.light [class*="to-[#0a0e27]"] *:not(.gradient-text),
-.system [class*="to-[#0a0e27]"] *:not(.gradient-text),
-.light [class*="from-[#0a0e27]"] *:not(.gradient-text),
-.system [class*="from-[#0a0e27]"] *:not(.gradient-text),
-.light [class*="bg-[#0b1225]"] *:not(.gradient-text),
-.system [class*="bg-[#0b1225]"] *:not(.gradient-text),
-.light [class*="to-[#0b1225]"] *:not(.gradient-text),
-.system [class*="to-[#0b1225]"] *:not(.gradient-text),
-.light [class*="from-[#0b1225]"] *:not(.gradient-text),
-.system [class*="from-[#0b1225]"] *:not(.gradient-text) {
+.light .bg-nexus-dark p, .light .bg-nexus-dark span, .light .bg-nexus-dark li,
+.system .bg-nexus-dark p, .system .bg-nexus-dark span, .system .bg-nexus-dark li,
+.light [class*="to-nexus-dark"] p, .light [class*="to-nexus-dark"] span, .light [class*="to-nexus-dark"] li,
+.system [class*="to-nexus-dark"] p, .system [class*="to-nexus-dark"] span, .system [class*="to-nexus-dark"] li,
+.light [class*="from-nexus-dark"] p, .light [class*="from-nexus-dark"] span, .light [class*="from-nexus-dark"] li,
+.system [class*="from-nexus-dark"] p, .system [class*="from-nexus-dark"] span, .system [class*="from-nexus-dark"] li,
+.light [class*="#1a1f3a"] p, .light [class*="#1a1f3a"] span, .light [class*="#1a1f3a"] li,
+.system [class*="#1a1f3a"] p, .system [class*="#1a1f3a"] span, .system [class*="#1a1f3a"] li,
+.light [class*="#0f1425"] p, .light [class*="#0f1425"] span, .light [class*="#0f1425"] li,
+.system [class*="#0f1425"] p, .system [class*="#0f1425"] span, .system [class*="#0f1425"] li,
+.light [class*="#0a0e27"] p, .light [class*="#0a0e27"] span, .light [class*="#0a0e27"] li,
+.system [class*="#0a0e27"] p, .system [class*="#0a0e27"] span, .system [class*="#0a0e27"] li,
+.light [class*="#0b1225"] p, .light [class*="#0b1225"] span, .light [class*="#0b1225"] li,
+.system [class*="#0b1225"] p, .system [class*="#0b1225"] span, .system [class*="#0b1225"] li {
   color: theme('colors.slate.700') !important;
 }
 .light .bg-nexus-dark h1, .light .bg-nexus-dark h2, .light .bg-nexus-dark h3, .light .bg-nexus-dark h4,
