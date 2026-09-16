@@ -8,9 +8,12 @@ type DiagResult = {
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  // No default key: without DIAG_KEY configured this endpoint does not exist.
+  // (A 404 instead of 403 avoids confirming the endpoint to scanners.)
+  const expected = process.env.DIAG_KEY;
   const key = req.query.key;
-  if (key !== (process.env.DIAG_KEY || 'sm-diag-2026')) {
-    return res.status(403).json({ message: 'Forbidden. Add ?key=... to access diagnostics.' });
+  if (!expected || key !== expected) {
+    return res.status(404).json({ message: 'Not found.' });
   }
 
   const result: DiagResult = {

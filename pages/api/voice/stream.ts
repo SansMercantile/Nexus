@@ -18,7 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(400).json({ message: 'Missing Twilio Stream' });
   }
 
-  // Initialize the Deepgram STT stream and connect it to the 
-  // AI brain (lib/gemma-client.ts) via the voice bridge.
+  // Initialize the Deepgram STT stream and connect it to the
+  // AI brain (lib/bedrock-client.ts) via the voice bridge.
   res.status(200).json({ message: 'Stream initialized', sid: Twilio_Stream_Sid });
 }

@@ -14,6 +14,8 @@ export default function PortalRegister() {
   const [success, setSuccess] = React.useState('');
   const [loading, setLoading] = React.useState(false);
   const router = useRouter();
+  // Honeypot: bots fill this hidden field, humans never see it.
+  const websiteRef = React.useRef('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,7 +39,7 @@ export default function PortalRegister() {
       const response = await fetch('/api/portal/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify({ name, email, password, website: websiteRef.current }),
       });
 
       const data = await response.json();
@@ -98,6 +100,16 @@ export default function PortalRegister() {
             )}
 
             <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Honeypot field: hidden from humans, traps bots. */}
+              <input
+                type="text"
+                name="website"
+                autoComplete="off"
+                tabIndex={-1}
+                aria-hidden="true"
+                onChange={(e) => { websiteRef.current = e.target.value; }}
+                style={{ position: 'absolute', left: '-9999px', opacity: 0, height: 0 }}
+              />
               <div>
                 <label className="block text-sm font-semibold text-white mb-2">Full Name</label>
                 <input

@@ -26,7 +26,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const db = await getDb();
     const user = await db.collection('portal_users').findOne({ approvalToken: token, pending: true });
 
-    if (!user) {
+    if (
+      !user ||
+      (typeof user.approvalExpiresAt === 'string' && Date.now() > Date.parse(user.approvalExpiresAt))
+    ) {
       return res.redirect(302, getRedirectBase() + '/portal?approveError=1');
     }
 

@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { aiConnection } from '@/src/ai/backend/connection';
-import { generateGemma } from '@/lib/gemma-client';
+import { generateAiText } from '@/lib/bedrock-client';
+import { guardAiRoute } from '@/lib/ai-guard';
 
 /**
  * POST /api/ai/signal
@@ -11,6 +12,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
+  // Internal trading route: portal session required (also rate-limited).
+  if (!(await guardAiRoute(req, res, { mode: 'session', scope: 'ai-signal' }))) return;
+
   const { symbol, timeframe = '1h' } = req.body;
   
   if (!symbol) {
@@ -18,7 +22,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    // Generate AI signal using Gemma
+    // Generate AI signal using AWS Bedrock
     const prompt = `
       You are a professional trading analyst. Analyze ${symbol} on the ${timeframe} timeframe.
       
@@ -34,7 +38,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       Respond in JSON format only.
     `;
 
-    const aiResponse = await generateGemma(prompt);
+    const aiResponse = await generateAiText(prompt);
     
     // Parse AI response
     let signalData;

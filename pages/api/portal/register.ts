@@ -1,15 +1,22 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import crypto from 'crypto';
 import { getDb } from '@/lib/mongodb';
 import { hashPassword, isAllowedAdminEmail } from '@/lib/auth';
 import { sendAdminApprovalRequest } from '@/lib/mailer';
+import { enforceRateLimit } from '@/lib/rate-limit';
+import { verifyTurnstile } from '@/lib/turnstile';
 
 type RegisterBody = {
   email: string;
   password: string;
   name: string;
   role?: string;
-  approved?: boolean;
+  turnstileToken?: string;
+  // Honeypot: legitimate clients leave this empty.
+  website?: string;
 };
+
+export const APPROVAL_TOKEN_TTL_MS = 48 * 60 * 60 * 1000;
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
@@ -17,7 +24,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).json({ success: false, message: 'Method not allowed.' });
   }
 
-  const { email, password, name, role, approved } = req.body as RegisterBody;
+  if (!enforceRateLimit(req, res, 'portal-register', 5, 60 * 60 * 1000)) return;
+
+  const { email, password, name, turnstileToken, website } = req.body as RegisterBody;
+
+  // Honeypot: silently accept bot submissions without creating an account.
+  if (typeof website === 'string' && website.trim().length > 0) {
+    return res.status(201).json({
+      success: true,
+      message: 'Account application submitted. You will receive an email once approved.',
+    });
+  }
+
+  if (!(await verifyTurnstile(turnstileToken))) {
+    return res.status(403).json({ success: false, message: 'Bot verification failed. Please try again.' });
+  }
+
   const normalizedEmail = String(email || '').toLowerCase();
 
   if (!normalizedEmail || !password || !name) {
@@ -51,17 +73,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const passwordHash = hashPassword(password);
     const createdAt = new Date().toISOString();
-    const approvalToken = Math.random().toString(36).substring(2) + Math.random().toString(36).substring(2);
-    const isAutoApproved = approved === true;
+    // NOTE: accounts always start pending. Activation happens exclusively
+    // through the emailed approval link (approve.ts). The client can never
+    // self-approve, and every account is created with the admin role pending
+    // allowlist review.
+    const approvalToken = crypto.randomBytes(32).toString('hex');
 
     const userDoc = {
       email: normalizedEmail,
       name,
       role: 'admin',
       passwordHash,
-      active: isAutoApproved,
-      pending: !isAutoApproved,
-      approvalToken: isAutoApproved ? null : approvalToken,
+      active: false,
+      pending: true,
+      approvalToken,
+      approvalExpiresAt: new Date(Date.now() + APPROVAL_TOKEN_TTL_MS).toISOString(),
       createdAt,
     };
 
@@ -69,20 +95,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     await db.collection('portal_users').insertOne(userDoc);
 
     // ── Email notification ──────────────────────────────────────────────────
-    if (!isAutoApproved) {
-      try {
-        await sendAdminApprovalRequest({ name, email: email.toLowerCase(), approvalToken });
-      } catch (emailErr) {
-        // Email failure is non-fatal — account is already created
-        console.error('Approval email failed (account still created):', emailErr);
-      }
+    try {
+      await sendAdminApprovalRequest({ name, email: email.toLowerCase(), approvalToken });
+    } catch (emailErr) {
+      // Email failure is non-fatal — account is already created
+      console.error('Approval email failed (account still created):', emailErr);
     }
 
     return res.status(201).json({
       success: true,
-      message: isAutoApproved
-        ? 'Account created and approved. You can now sign in.'
-        : 'Account application submitted. You will receive an email once approved.',
+      message: 'Account application submitted. You will receive an email once approved.',
     });
   } catch (error: any) {
     console.error('Portal registration error:', error);

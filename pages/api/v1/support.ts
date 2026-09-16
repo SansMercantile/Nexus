@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { generateGemma } from '@/lib/gemma-client';
+import { generateAiText } from '@/lib/bedrock-client';
+import { guardAiRoute } from '@/lib/ai-guard';
 
 type Message = {
   role: 'system' | 'user' | 'assistant';
@@ -9,12 +10,15 @@ type Message = {
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // Allow both GET and POST for flexibility
   if (req.method !== 'POST' && req.method !== 'GET') {
-    return res.status(405).json({ 
+    return res.status(405).json({
       message: 'Method not allowed',
       allowed: ['GET', 'POST'],
       received: req.method
     });
   }
+
+  // Public support API: strict anonymous quota, generous for portal sessions.
+  if (!(await guardAiRoute(req, res, { mode: 'open', scope: 'v1-support' }))) return;
 
   try {
     // Handle GET requests (for health checks or simple queries)
@@ -33,8 +37,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
 
       // Simple GET request with prompt
-      const gemmaResponse = await generateGemma(prompt);
-      return res.status(200).json({ response: gemmaResponse });
+      const aiResponse = await generateAiText(prompt);
+      return res.status(200).json({ response: aiResponse });
     }
 
     // Handle POST requests (for complex queries with message history)
@@ -49,8 +53,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(400).json({ message: 'Prompt or messages are required' });
     }
 
-    const gemmaResponse = await generateGemma(normalizedPrompt);
-    return res.status(200).json({ response: gemmaResponse });
+    const aiResponse = await generateAiText(normalizedPrompt);
+    return res.status(200).json({ response: aiResponse });
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
     console.error('[Support API] Error:', message);

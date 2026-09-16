@@ -1,12 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { deepgram } from '@/lib/deepgram-client';
-import { generateGemma } from '@/lib/gemma-client';
+import { generateAiText } from '@/lib/bedrock-client';
 import { getSupportContext } from '@/lib/support-context';
 
 /**
  * Production Voice Bridge: Handles Twilio Media Streams.
  * This endpoint manages the real-time audio loop:
- * Twilio (Audio) -> Deepgram (STT) -> Gemma AI (Brain) -> Deepgram (TTS) -> Twilio (Audio)
+ * Twilio (Audio) -> Deepgram (STT) -> Bedrock AI (Brain) -> Deepgram (TTS) -> Twilio (Audio)
  */
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST' && req.method !== 'GET') {
@@ -49,11 +49,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         if (transcript.channel?.alternatives?.[0]?.transcript) {
           const text = transcript.channel.alternatives[0].transcript;
           
-          const { generateGemma } = await import('@/lib/gemma-client');
+          const { generateAiText } = await import('@/lib/bedrock-client');
           const { getSupportContext } = await import('@/lib/support-context');
-          
+
           const context = await getSupportContext();
-          const responseText = await generateGemma(`Context: ${JSON.stringify(context)}\nUser: ${text}`);
+          const responseText = await generateAiText(`Context: ${JSON.stringify(context)}\nUser: ${text}`);
           
           const { deepgram } = await import('@/lib/deepgram-client');
           const audioBuffer = await deepgram.textToSpeech(responseText);

@@ -1,7 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getDb } from '@/lib/mongodb';
-import { generateGemma } from '@/lib/gemma-client';
+import { generateAiText } from '@/lib/bedrock-client';
 import { sendApplicationAssessmentResult } from '@/lib/mailer';
+import { enforceRateLimit } from '@/lib/rate-limit';
 
 function normalizeEmail(email: unknown) {
   return typeof email === 'string' ? email.trim().toLowerCase() : '';
@@ -63,6 +64,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     assessmentResponses?: Record<string, string>;
   };
 
+  // Candidate-facing but unauthenticated: strict quota (possession of the
+  // emailed application token is the authorization factor).
+  if (!enforceRateLimit(req, res, 'applications-assess', 10, 60 * 60 * 1000)) return;
+
   const normalizedToken = typeof token === 'string' ? token.trim() : '';
   const normalizedJobId = typeof jobId === 'string' ? jobId.trim() : '';
   const normalizedEmail = normalizeEmail(email);
@@ -86,7 +91,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     const prompt = buildReviewPrompt(application, assessmentResponses);
-    const aiResult = await generateGemma(prompt);
+    const aiResult = await generateAiText(prompt);
     const rawText = typeof aiResult === 'string' ? aiResult : JSON.stringify(aiResult);
     const { decision, feedback } = parseDecisionResult(rawText);
 

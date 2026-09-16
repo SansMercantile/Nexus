@@ -92,15 +92,17 @@ Copy `.env.local.example` to `.env.local`:
 cp .env.local.example .env.local
 ```
 
-Edit `.env.local` if needed to configure your local Mpeti endpoint:
+Edit `.env.local` to configure AWS Bedrock (the sole AI provider for this repo):
 
 ```bash
-NEXT_PUBLIC_GEMMA_HOST=[https://silo-rocky-extruding.ngrok-free.dev](https://silo-rocky-extruding.ngrok-free.dev)
-NEXT_PUBLIC_GEMMA_MODEL=mpeti
+AWS_ACCESS_KEY_ID=your_aws_key_id
+AWS_SECRET_ACCESS_KEY=your_aws_secret
+AWS_REGION=us-east-1
+BEDROCK_MODEL=amazon.titan-text-express-v1
 LINKEDIN_ACCESS_TOKEN=your_token_here
 ```
 
-> The local model endpoint is the core BYOM integration point for this repo.
+> AWS Bedrock is the core AI integration point for this repo (see `BEDROCK_SETUP.md`).
 
 ### 3. Run Development Server
 
@@ -110,30 +112,27 @@ npm run dev
 
 Visit `http://localhost:3000`
 
-## Local Gemma 4 BYOM Setup
+## AWS Bedrock Setup
 
-This repository is configured to use a local Gemma 4 instance for AI/LLM work.
+This repository uses AWS Bedrock for all AI/LLM work (see `BEDROCK_SETUP.md`).
 
-1. Install Ollama on Windows:
+1. Create an IAM user/role with `bedrock:InvokeModel` permission for your model.
 
-```powershell
-winget install --id Ollama.Ollama -e --silent --accept-package-agreements --accept-source-agreements
-```
-
-2. Run the local model:
+2. Set the environment variables:
 
 ```powershell
-ollama run gemma:2b
+$env:AWS_ACCESS_KEY_ID="your_aws_key_id"
+$env:AWS_SECRET_ACCESS_KEY="your_aws_secret"
+$env:AWS_REGION="us-east-1"
+$env:BEDROCK_MODEL="amazon.titan-text-express-v1"
 ```
 
-This repo uses `mpeti` as the local model alias; the direct Ollama model is `gemma:2b`.
+3. Test the proxy endpoint:
 
-3. In VS Code, install the AI Toolkit / GitHub Copilot extensions and choose the custom local model option.
-
-4. Point the local endpoint to:
-
-```text
-[https://silo-rocky-extruding.ngrok-free.dev](https://silo-rocky-extruding.ngrok-free.dev)
+```powershell
+Invoke-RestMethod -Method Post -Uri http://localhost:3000/api/bedrock `
+  -ContentType 'application/json' `
+  -Body '{"prompt":"Hello Bedrock"}'
 ```
 
 ## Deployment

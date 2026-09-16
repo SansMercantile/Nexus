@@ -60,7 +60,11 @@ Create `.env.local`:
 BLOB_READ_WRITE_TOKEN=your_token_here
 AI_STORAGE_ENABLED=true
 AI_STORAGE_ENCRYPT=true
-AI_MODEL=gemma
+AI_MODEL=bedrock
+AWS_ACCESS_KEY_ID=your_aws_key_id
+AWS_SECRET_ACCESS_KEY=your_aws_secret
+AWS_REGION=us-east-1
+BEDROCK_MODEL=amazon.titan-text-express-v1
 ```
 
 ### 3. Connect to Vercel (If Not Connected)

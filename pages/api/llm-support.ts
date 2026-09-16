@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { generateGemma } from '@/lib/gemma-client';
+import { generateAiText } from '@/lib/bedrock-client';
+import { guardAiRoute } from '@/lib/ai-guard';
 
 type Message = {
   role: 'system' | 'user' | 'assistant';
@@ -22,9 +23,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(400).json({ message: 'Prompt or messages are required' });
   }
 
+  // Public support chat: strict anonymous quota, generous for portal sessions.
+  if (!(await guardAiRoute(req, res, { mode: 'open', scope: 'llm-support' }))) return;
+
   try {
-    const gemmaResponse = await generateGemma(normalizedPrompt);
-    return res.status(200).json({ response: gemmaResponse });
+    const aiResponse = await generateAiText(normalizedPrompt);
+    return res.status(200).json({ response: aiResponse });
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
     console.error('LLM support API error:', message);

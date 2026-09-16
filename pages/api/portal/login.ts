@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getDb } from '@/lib/mongodb';
 import { verifyPassword, createSessionToken, isAllowedAdminEmail } from '@/lib/auth';
+import { enforceRateLimit } from '@/lib/rate-limit';
 
 type LoginBody = {
   email: string;
@@ -12,6 +13,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     res.setHeader('Allow', 'POST');
     return res.status(405).json({ success: false, message: 'Method not allowed.' });
   }
+
+  if (!enforceRateLimit(req, res, 'portal-login', 10, 15 * 60 * 1000)) return;
 
   const { email, password } = req.body as LoginBody;
 

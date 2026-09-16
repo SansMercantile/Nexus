@@ -961,7 +961,7 @@ export const SYSTEMS: SystemData[] = [
       { title: 'Trading Platform', description: 'Real-time market access and execution systems' },
       { title: 'Infrastructure Management', description: 'Auto-scaling and cloud infrastructure optimization' },
       { title: 'CI/CD Automation', description: 'GitHub issue automation and pipeline management' },
-      { title: 'Multi-Cloud Support', description: 'GCP primary with Azure and AWS fallback' },
+      { title: 'Multi-Cloud Support', description: 'AWS primary with Azure fallback' },
     ],
   },
 ];

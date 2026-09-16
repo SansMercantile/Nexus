@@ -80,8 +80,7 @@ export function createSessionToken(payload: Omit<SessionPayload, 'iat' | 'exp'>,
   return data + '.' + encodedSignature;
 }
 
-export function verifySessionToken(token: string): SessionPayload | null {
-  try {
+export function verifySessionToken(token: string): SessionPayload | null {  try {
     const parts = token.split('.');
     if (parts.length !== 3) return null;
     const encodedHeader = parts[0];
@@ -100,6 +99,44 @@ export function verifySessionToken(token: string): SessionPayload | null {
     if (payload.exp && Math.floor(Date.now() / 1000) > payload.exp) return null;
 
     return payload;
+  } catch {
+    return null;
+  }
+}
+
+// --- Shared server-side session helpers (single place for cookie auth) ---
+
+export function getCookieValue(cookieHeader: string | undefined, name: string): string | null {
+  if (!cookieHeader) return null;
+  const cookies = cookieHeader.split(';').map((cookie) => cookie.trim());
+  const match = cookies.find((cookie) => cookie.startsWith(name + '='));
+  if (!match) return null;
+  return match.slice(name.length + 1) || null;
+}
+
+export type PortalSessionUser = { email: string; name?: string; role?: string };
+
+/**
+ * Validates the portal_session cookie against the DB (active + allowlisted).
+ * Returns the session user or null. Use in API routes that require admin auth.
+ */
+export async function getPortalSessionUser(req: {
+  headers: { cookie?: string };
+}): Promise<PortalSessionUser | null> {
+  const token = getCookieValue(req.headers.cookie, 'portal_session');
+  if (!token) return null;
+  const payload = verifySessionToken(token);
+  if (!payload || typeof payload.email !== 'string') return null;
+  if (!isAllowedAdminEmail(payload.email)) return null;
+
+  try {
+    const { getDb } = await import('@/lib/mongodb');
+    const db = await getDb();
+    const user = await db
+      .collection('portal_users')
+      .findOne({ email: payload.email.toLowerCase(), active: true });
+    if (!user || !isAllowedAdminEmail(user.email)) return null;
+    return { email: user.email, name: user.name, role: user.role };
   } catch {
     return null;
   }

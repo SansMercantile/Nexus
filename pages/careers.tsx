@@ -3,7 +3,7 @@ import Layout from '../components/layout/Layout';
 import { AnimatedIcon, type IconType } from '../components/AnimatedIcons';
 import { fadeInUp, staggerContainer } from '../lib/animations';
 import { jobPostings, getOpenJobs, assessmentConfigs } from '../lib/jobs';
-import { useState, type FormEvent } from 'react';
+import { useState, useRef, type FormEvent } from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
 import type { JobPosting, AssessmentType } from '@/lib/jobs';
@@ -101,6 +101,8 @@ const ApplicationFormModal = ({
   });
   const [submitted, setSubmitted] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
+  // Honeypot: bots fill this hidden field, humans never see it.
+  const websiteRef = useRef('');
 
   const job = jobPostings.find(j => j.id === jobId);
 
@@ -122,6 +124,7 @@ const ApplicationFormModal = ({
           linkedin: formData.linkedin,
           socialLinks: sanitizedSocialLinks,
           coverLetter: formData.coverLetter,
+          website: websiteRef.current,
         }),
       });
 
@@ -203,6 +206,16 @@ const ApplicationFormModal = ({
         ) : null}
 
         <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Honeypot field: hidden from humans, traps bots. */}
+          <input
+            type="text"
+            name="website"
+            autoComplete="off"
+            tabIndex={-1}
+            aria-hidden="true"
+            onChange={(e) => { websiteRef.current = e.target.value; }}
+            style={{ position: 'absolute', left: '-9999px', opacity: 0, height: 0 }}
+          />
           <div>
             <label className="block text-white font-semibold mb-2">Full Name *</label>
             <input

@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { deepgram } from '@/lib/deepgram-client';
-import { generateGemma } from '@/lib/gemma-client';
+import { generateAiText } from '@/lib/bedrock-client';
 import { getSupportContext } from '@/lib/support-context';
 
 /**

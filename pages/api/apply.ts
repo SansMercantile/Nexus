@@ -2,6 +2,8 @@ import crypto from 'crypto';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getDb } from '@/lib/mongodb';
 import { sendApplicationConfirmation, sendAdminNewApplicationAlert } from '@/lib/mailer';
+import { enforceRateLimit } from '@/lib/rate-limit';
+import { verifyTurnstile } from '@/lib/turnstile';
 
 type ApplicationRequestBody = {
   jobId: string;
@@ -13,6 +15,9 @@ type ApplicationRequestBody = {
   linkedin: string;
   socialLinks: string[];
   coverLetter?: string;
+  turnstileToken?: string;
+  // Honeypot: legitimate clients leave this empty.
+  website?: string;
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -23,7 +28,34 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
   }
 
-  const { jobId, jobTitle, name, email, phone, resume, linkedin, socialLinks, coverLetter } = req.body as ApplicationRequestBody;
+  // Public form that writes to the DB and sends two emails per call.
+  if (!enforceRateLimit(req, res, 'apply', 5, 60 * 60 * 1000)) return;
+
+  const {
+    jobId,
+    jobTitle,
+    name,
+    email,
+    phone,
+    resume,
+    linkedin,
+    socialLinks,
+    coverLetter,
+    turnstileToken,
+    website,
+  } = req.body as ApplicationRequestBody;
+
+  // Honeypot: silently accept bot submissions without storing anything.
+  if (typeof website === 'string' && website.trim().length > 0) {
+    return res.status(201).json({
+      success: true,
+      message: 'Application submitted successfully. Check your email for next steps.',
+    });
+  }
+
+  if (!(await verifyTurnstile(turnstileToken))) {
+    return res.status(403).json({ success: false, message: 'Bot verification failed. Please try again.' });
+  }
   const normalizedEmail = String(email || '').toLowerCase();
   const normalizedLinkedIn = String(linkedin || '').trim();
   const normalizedSocialLinks = Array.isArray(socialLinks) ? socialLinks.map((link) => String(link || '').trim()).filter(Boolean) : [];

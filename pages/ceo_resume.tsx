@@ -21,7 +21,7 @@ const callAI = async (prompt: string, systemInstruction: string): Promise<string
 
   for (let i = 0; i < maxRetries; i++) {
     try {
-      const response = await fetch('/api/gemma', {
+      const response = await fetch('/api/bedrock', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

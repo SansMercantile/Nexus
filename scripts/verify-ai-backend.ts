@@ -77,9 +77,9 @@ export class AIBackendVerifier {
       },
       {
         name: 'AI_MODEL',
-        var: process.env.AI_MODEL || 'gemma',
+        var: process.env.AI_MODEL || 'bedrock',
         required: false,
-        default: 'gemma',
+        default: 'bedrock',
       },
     ];
 

@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { aiConnection } from '@/src/ai/backend/connection';
-import { generateGemma } from '@/lib/gemma-client';
+import { generateAiText } from '@/lib/bedrock-client';
+import { guardAiRoute } from '@/lib/ai-guard';
 
 /**
  * POST /api/ai/analysis
@@ -11,6 +12,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
+  // Internal trading route: portal session required (also rate-limited).
+  if (!(await guardAiRoute(req, res, { mode: 'session', scope: 'ai-analysis' }))) return;
+
   const { symbol, analysisType = 'comprehensive' } = req.body;
   const userId = req.headers['x-user-id'] || 'anonymous';
   
@@ -19,7 +23,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    // Generate AI analysis using Gemma
+    // Generate AI analysis using AWS Bedrock
     const prompt = `
       You are a senior market analyst. Provide a comprehensive ${analysisType.toUpperCase()} analysis for ${symbol}.
       
@@ -58,7 +62,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
     `;
 
-    const aiResponse = await generateGemma(prompt);
+    const aiResponse = await generateAiText(prompt);
     
     // Parse AI response
     let analysisData;

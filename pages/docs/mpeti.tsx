@@ -51,7 +51,7 @@ export default function MpetiDocs() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/gemma', {
+      const response = await fetch('/api/bedrock', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { generateGemma } from '@/lib/gemma-client';
+import { generateAiText } from '@/lib/bedrock-client';
+import { guardAiRoute } from '@/lib/ai-guard';
 import { getSupportContext } from '@/lib/support-context';
 import { aiConnection } from '@/src/ai/backend/connection';
 
@@ -9,6 +10,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   const { prompt, userId, tenantId } = req.body;
+
+  // Public support chat: strict anonymous quota, generous for portal sessions.
+  if (!(await guardAiRoute(req, res, { mode: 'open', scope: 'ai-chat' }))) return;
 
   try {
 
@@ -31,7 +35,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       - Focus on the value provided by our constellation of systems.
     `;
 
-    const gemmaResponse = await generateGemma(enrichedPrompt);
+    const aiResponse = await generateAiText(enrichedPrompt);
     
     // Store chat history in Vercel Blob if AI backend is configured
     let chatStored = false;
@@ -43,7 +47,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           sessionId,
           [
             { role: 'user' as const, content: prompt },
-            { role: 'assistant' as const, content: gemmaResponse }
+            { role: 'assistant' as const, content: aiResponse }
           ]
         );
         chatStored = true;
@@ -56,7 +60,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
     
     return res.status(200).json({
-      response: gemmaResponse,
+      response: aiResponse,
       context_used: "Public Support Knowledge Base",
       chat_stored: chatStored
     });
