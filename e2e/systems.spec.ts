@@ -25,4 +25,5 @@ test('priv page still lists Priv Core and Priv Pay', async ({ page }) => {
   await page.goto('/priv/');
   await expect(page.getByRole('heading', { name: 'Priv Core' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Priv Pay' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Priv Philanthropy' })).toBeVisible();
 });

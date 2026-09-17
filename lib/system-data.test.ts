@@ -20,7 +20,7 @@ describe('getSystemBySlug', () => {
 
   it('every system has three flagship applications where defined', () => {
     const priv = getSystemById('priv');
-    expect(priv?.applications?.map((a) => a.name)).toEqual(['Priv Core', 'Priv Pay']);
+    expect(priv?.applications?.map((a) => a.name)).toEqual(['Priv Core', 'Priv Pay', 'Priv Philanthropy']);
     expect(getSystemById('Ptah')?.applications?.map((a) => a.name)).toEqual([
       'Ptah Core',
       'Ptah Real Estates',
@@ -59,5 +59,27 @@ describe('getSystemBySlug', () => {
     const realty = getSystemById('Ptah')?.applications?.find((a) => a.name === 'Ptah Real Estates');
     expect(realty?.liveUrl).toBe('https://ptahrealty.sansmercantile.com');
     expect(realty?.platformUrls?.web).toBe('https://ptahrealty.sansmercantile.com');
+  });
+
+  it('flagship and philanthropy web apps link to their live sites', () => {
+    const liveLinks: Array<[systemId: string, appName: string, url: string]> = [
+      ['priv', 'Priv Core', 'https://priv.sansmercantile.com'],
+      ['priv', 'Priv Philanthropy', 'https://privphil.sansmercantile.com'],
+      ['Ptah', 'Ptah Core', 'https://ptahcore.sansmercantile.com'],
+      ['Ptah', 'Ptah Philanthropy', 'https://ptahphil.sansmercantile.com'],
+      ['kev', 'KEV Philanthropy', 'https://kevphil.sansmercantile.com'],
+    ];
+    for (const [systemId, appName, url] of liveLinks) {
+      const app = getSystemById(systemId)?.applications?.find((a) => a.name === appName);
+      expect(app?.liveUrl).toBe(url);
+      expect(app?.platformUrls?.web).toBe(url);
+    }
+  });
+
+  it('KEV Schools stays on the waitlist until its education domain is registered', () => {
+    const schools = getSystemById('kev')?.applications?.find((a) => a.name === 'KEV Schools');
+    expect(schools?.liveUrl).toBeUndefined();
+    expect(schools?.platformUrls?.web).toBeUndefined();
+    expect(schools?.waitlistUrl).toContain('KEV Schools');
   });
 });
