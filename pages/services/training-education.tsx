@@ -323,7 +323,7 @@ export default function TrainingEducation() {
             animate="animate"
             className="text-center bg-gradient-to-r from-nexus-gold/10 to-nexus-accent/10 border border-nexus-gold/20 rounded-2xl p-12"
           >
-            <h2 className="text-3xl font-bold text-white mb-4">Invest in Your Team's Future</h2>
+            <h2 className="text-3xl font-bold text-white mb-4">Invest in Your Team&apos;s Future</h2>
             <p className="text-nexus-gray-300 mb-8 max-w-2xl mx-auto">
               Equip your organization with the AI knowledge and skills needed to drive innovation and competitive advantage.
             </p>

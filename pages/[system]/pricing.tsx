@@ -5,7 +5,7 @@ import { RestrictedSystemNotice } from '@/components/systems/RestrictedSystemNot
 import { SYSTEMS } from '@/lib/constants';
 import { fadeInUp, staggerContainer } from '@/lib/animations';
 
-const PricingTierCard = ({ tier, color, isPopular }: any) => (
+const PricingTierCard = ({ tier, color, isPopular, pricingUrl }: any) => (
   <motion.div
     variants={fadeInUp}
     className={`relative rounded-2xl border transition-all duration-300 overflow-hidden group pricing-panel ${
@@ -147,6 +147,7 @@ export default function SystemPricingPage() {
                 tier={tier}
                 color={systemData.color}
                 isPopular={idx === 1} // Middle tier is popular
+                pricingUrl={pricingUrl}
               />
             ))}
           </div>

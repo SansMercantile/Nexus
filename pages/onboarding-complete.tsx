@@ -109,9 +109,9 @@ export default function OnboardingComplete() {
               Have questions? Our team is here to help.
             </p>
             <div className="flex gap-4 justify-center flex-wrap">
-              <a href="/contact" className="text-nexus-gold hover:text-nexus-gold/80 transition-colors font-semibold">
+              <Link href="/contact" className="text-nexus-gold hover:text-nexus-gold/80 transition-colors font-semibold">
                 Contact Support
-              </a>
+              </Link>
               <span className="text-nexus-gray-600">•</span>
               <a href="mailto:careers@sansmercantile.com" className="text-nexus-gold hover:text-nexus-gold/80 transition-colors font-semibold">
                 Email Careers Team

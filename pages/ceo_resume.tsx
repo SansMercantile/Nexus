@@ -327,7 +327,7 @@ const App = () => {
                 <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-[#ff7a00]/80">Intelligence_Core</h2>
               </div>
               <p className="text-sm leading-relaxed text-white italic font-light tracking-wide relative">
-                <span className="absolute -left-4 top-0 text-[#ff7a00]/20 font-serif text-4xl">"</span>
+                <span className="absolute -left-4 top-0 text-[#ff7a00]/20 font-serif text-4xl">&quot;</span>
                 I architect sovereignty. My work is the synthesis of unyielding logic and creative disruption, aimed at transcending the boundaries between human intent and autonomous intelligence.
               </p>
             </section>

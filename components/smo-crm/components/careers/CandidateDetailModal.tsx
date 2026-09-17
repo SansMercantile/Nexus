@@ -349,7 +349,7 @@ export const CandidateDetailModal: React.FC = () => {
                     Applicant Cover Letter Statement
                   </div>
                   <div className="text-slate-700 text-xs leading-relaxed bg-slate-50 p-3 rounded-lg border border-slate-200/60 font-sans italic">
-                    "{documents.coverLetter}"
+                    &ldquo;{documents.coverLetter}&rdquo;
                   </div>
                 </div>
               )}
@@ -441,7 +441,7 @@ export const CandidateDetailModal: React.FC = () => {
                   <BrainCircuit className="w-8 h-8 mx-auto mb-2 text-slate-300" />
                   <div className="font-semibold text-slate-700">Test Battery Pending</div>
                   <div className="text-[11px] mt-1">
-                    Click "Dispatch AI Test Battery" to trigger the automated role evaluation module for {selectedCandidate.candidateName}.
+                    Click &ldquo;Dispatch AI Test Battery&rdquo; to trigger the automated role evaluation module for {selectedCandidate.candidateName}.
                   </div>
                 </div>
               )}
@@ -564,7 +564,7 @@ export const CandidateDetailModal: React.FC = () => {
 
                       <div className="text-slate-800 text-xs leading-relaxed bg-slate-50 p-3 rounded-lg border border-slate-200/70 font-sans">
                         <div className="text-[10px] font-bold text-slate-400 uppercase mb-1">Live Candidate Transcript:</div>
-                        "{aiVideoInterview.questions[selectedVideoQuestionIndex].candidateTranscript}"
+                        &ldquo;{aiVideoInterview.questions[selectedVideoQuestionIndex].candidateTranscript}&rdquo;
                       </div>
 
                       <div className="text-[11px] text-slate-500 italic">
@@ -629,7 +629,7 @@ export const CandidateDetailModal: React.FC = () => {
                       </div>
 
                       <p className="text-slate-700 text-xs leading-relaxed bg-slate-50 p-2.5 rounded-lg border border-slate-200/60">
-                        "{rev.notes}"
+                        &ldquo;{rev.notes}&rdquo;
                       </p>
                       <div className="text-[10px] text-slate-400">
                         Logged on {new Date(rev.reviewedAt).toLocaleString()}

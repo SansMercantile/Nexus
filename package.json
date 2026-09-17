@@ -8,7 +8,11 @@
     "build": "next build",
     "build-vercel": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
     "verify:ai": "ts-node scripts/verify-ai-backend.ts verify",
     "verify:ai:connect": "ts-node scripts/verify-ai-backend.ts connect",
     "test:ai-backend": "ts-node examples/ai-backend-usage.ts",
@@ -17,13 +21,10 @@
     "ai:docs": "cat docs/ai-backend.md"
   },
   "dependencies": {
-    "@auth0/nextjs-auth0": "^4.22.0",
     "@vercel/analytics": "^2.0.1",
     "@vercel/blob": "^2.6.1",
     "@vercel/speed-insights": "^2.0.0",
     "autoprefixer": "^10.4.17",
-    "axios": "^1.6.2",
-    "date-fns": "^2.30.0",
     "dotenv": "^17.4.2",
     "framer-motion": "^10.16.16",
     "html-to-image": "^1.11.13",
@@ -31,9 +32,7 @@
     "lucide-react": "^0.546.0",
     "mongodb": "^5.9.2",
     "next": "^16.3.0",
-    "next-auth": "^4.24.14",
-    "next-themes": "^0.2.1",
-    "nodemailer": "^7.0.7",
+    "nodemailer": "^10.0.10",
     "postcss": "^8.4.33",
     "posthog-js": "^1.396.3",
     "react": "^18.2.0",
@@ -42,11 +41,14 @@
     "ws": "^8.21.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.63.0",
     "@types/node": "^20.10.6",
+    "@types/nodemailer": "^8.0.2",
     "@types/react": "18.3.31",
     "@types/react-dom": "^18.2.18",
     "eslint": "^8.56.0",
     "eslint-config-next": "^14.1.0",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "vitest": "^4.1.11"
   }
 }

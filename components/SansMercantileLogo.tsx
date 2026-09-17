@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 export function SansMercantileLogo() {
   const brandOrange = '#ff7a00';
@@ -45,7 +46,7 @@ export function SansMercantileLogo() {
       </div>
       
       {/* Invisible anchor for navigation */}
-      <a href="/" className="absolute inset-0 z-0" aria-label="Sans Mercantile Home"></a>
+      <Link href="/" className="absolute inset-0 z-0" aria-label="Sans Mercantile Home"></Link>
     </div>
   );
 }

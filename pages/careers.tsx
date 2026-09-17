@@ -307,7 +307,7 @@ const ApplicationFormModal = ({
 
           <div className="p-4 bg-nexus-gold/5 border border-nexus-gold/20 rounded-lg">
             <p className="text-sm text-nexus-gray-300">
-              <span className="text-nexus-gold font-semibold">Next Step:</span> After submitting this form, you'll be taken to our secure onboarding portal where you&apos;ll complete the required assessments for this position.
+              <span className="text-nexus-gold font-semibold">Next Step:</span> After submitting this form, you&apos;ll be taken to our secure onboarding portal where you&apos;ll complete the required assessments for this position.
             </p>
           </div>
 

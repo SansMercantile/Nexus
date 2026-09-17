@@ -4,6 +4,7 @@
  */
 
 import { VercelBlobStorage, AI_BLOB_DIRECTORIES } from "@/lib/vercel-blob-storage";
+import type { StoredDataTypes } from "@/lib/vercel-blob-storage";
 import type { PutBlobResult } from "@vercel/blob";
 
 // AI Backend Storage Configuration
@@ -87,16 +88,18 @@ export class AIConnection {
     }
 
     try {
-      const data = {
+      const data: StoredDataTypes["ai_signals"] = {
         symbol,
-        confidence: signal.confidence,
         signal_type: signal.signal_type,
-        technical_score: signal.technical_score || 0,
-        fundamental_score: signal.fundamental_score || 0,
-        news_score: signal.news_score || 0,
-        sentiment_score: signal.sentiment_score || 0,
-        risk_score: signal.risk_score || 0,
+        confidence: signal.confidence,
         timestamp: new Date().toISOString(),
+        factors: {
+          technical: signal.technical_score || 0,
+          fundamental: signal.fundamental_score || 0,
+          news: signal.news_score || 0,
+          sentiment: signal.sentiment_score || 0,
+          risk: signal.risk_score || 0,
+        },
       };
 
       const result = await this.storage.uploadAISignal(symbol, data);
@@ -128,19 +131,19 @@ export class AIConnection {
     }
 
     try {
-      const data = {
+      const data: StoredDataTypes["ai_analysis"] = {
         symbol,
-        type: analysis.type,
+        analysis_type: analysis.type,
         content: analysis.content,
-        technical: analysis.technical,
-        fundamental: analysis.fundamental,
-        news: analysis.news,
-        sentiment: analysis.sentiment,
-        risk: analysis.risk,
         timestamp: new Date().toISOString(),
         metadata: {
           version: "1.0",
           model: process.env.AI_MODEL || "unknown",
+          technical: analysis.technical,
+          fundamental: analysis.fundamental,
+          news: analysis.news,
+          sentiment: analysis.sentiment,
+          risk: analysis.risk,
         },
       };
 

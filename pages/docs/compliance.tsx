@@ -11,7 +11,7 @@ export default function ComplianceDocsPage() {
             <p className="text-sm uppercase tracking-[0.4em] text-nexus-gold mb-4">Compliance Guide</p>
             <h1 className="text-5xl font-bold text-white mb-6">Compliance and Governance</h1>
             <p className="text-xl text-nexus-gray-300 max-w-3xl mx-auto">
-              Review Sans Mercantile's approach to secure data handling, audit readiness, and ethical deployment.
+              Review Sans Mercantile&apos;s approach to secure data handling, audit readiness, and ethical deployment.
             </p>
           </motion.div>
           <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }} className="rounded-3xl border border-nexus-gold/20 bg-[#0c132b] p-12 prose prose-invert">

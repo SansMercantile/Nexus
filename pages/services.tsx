@@ -253,7 +253,7 @@ export default function Services() {
           >
             <h2 className="text-3xl font-bold text-white mb-4">Ready to Transform Your Business?</h2>
             <p className="text-nexus-gray-300 mb-8 max-w-2xl mx-auto">
-              Let's discuss how our AI systems and professional services can drive innovation and growth for your organization.
+              Let&apos;s discuss how our AI systems and professional services can drive innovation and growth for your organization.
             </p>
             <div className="flex gap-4 justify-center flex-wrap">
               <Link href="/contact">

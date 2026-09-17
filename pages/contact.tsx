@@ -68,7 +68,7 @@ export default function ContactPage() {
               {submitted ? (
                 <div className="bg-nexus-gold/20 border border-nexus-gold/40 rounded-lg p-6 text-center">
                   <p className="text-nexus-gold font-semibold mb-2">Thank you for your message!</p>
-                  <p className="text-nexus-gray-300">We'll get back to you as soon as possible.</p>
+                  <p className="text-nexus-gray-300">We&apos;ll get back to you as soon as possible.</p>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
@@ -179,7 +179,7 @@ export default function ContactPage() {
               <div className="bg-gradient-to-r from-nexus-gold/10 to-nexus-accent/10 border border-nexus-gold/20 rounded-2xl p-8">
                 <h3 className="text-xl font-bold text-white mb-4">Response Time</h3>
                 <p className="text-nexus-gray-300">
-                  We aim to respond to all inquiries within 24 business hours. For urgent matters, please mark your email as "URGENT" in the subject line.
+                  We aim to respond to all inquiries within 24 business hours. For urgent matters, please mark your email as &ldquo;URGENT&rdquo; in the subject line.
                 </p>
               </div>
             </motion.div>

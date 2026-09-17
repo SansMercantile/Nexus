@@ -8,7 +8,6 @@
 import dotenv from 'dotenv';
 import { AIConnection } from '@/src/ai/backend/connection';
 import { VercelBlobStorage } from '@/lib/vercel-blob-storage';
-import { prompt } from 'readline';
 
 dotenv.config();
 
@@ -434,7 +433,7 @@ export class AIBackendVerifier {
 
 // CLI interface
 if (require.main === module) {
-  async function main() {
+  const main = async () => {
     const verifier = new AIBackendVerifier();
     
     // Get command from args

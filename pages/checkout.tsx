@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/router'
 import Layout from '../components/layout/Layout'
 import { motion } from 'framer-motion'
 import { fadeInUp, staggerContainer } from '../lib/animations'

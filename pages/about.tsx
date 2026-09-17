@@ -163,7 +163,7 @@ export default function AboutPage() {
                   With a background including NASDAQ Guru, Forte Agriculture & Mining, and AI-driven fintech consulting, Mezzoforte has led business scaling, profitability optimization, and transformative initiatives that position Sans Mercantile as a leading innovator in AI-powered financial and institutional architecture.
                 </p>
                 <p className="text-xl text-nexus-gold italic mb-6">
-                  "We don't just build systems—we architect economic futures."
+                  &ldquo;We don&rsquo;t just build systems—we architect economic futures.&rdquo;
                 </p>
               </div>
             </div>

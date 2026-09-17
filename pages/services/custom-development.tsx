@@ -94,7 +94,7 @@ export default function ModularDeployment() {
               variants={fadeInUp}
               className="text-xl text-nexus-gray-300 max-w-3xl mx-auto mb-8"
             >
-              We don't just build apps; we deploy permanent, modular AI utility infrastructure. Our deployment division integrates the Constellation architecture into your core enterprise operations as a scalable, production-ready stack.
+              We don&apos;t just build apps; we deploy permanent, modular AI utility infrastructure. Our deployment division integrates the Constellation architecture into your core enterprise operations as a scalable, production-ready stack.
             </motion.p>
             <motion.div variants={fadeInUp} className="flex gap-4 justify-center flex-wrap">
               <button className="btn btn-primary">Request Deployment Blueprint</button>

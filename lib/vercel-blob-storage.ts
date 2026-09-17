@@ -52,10 +52,13 @@ export const AI_BLOB_DIRECTORIES = {
   // Test and Quality Assurance  
   QA_TEST_RESULTS: "/qa/test-results/",
   BENCHMARK_RESULTS: "/qa/benchmarks/",
+
+  // Backups
+  BACKUP: "/backup/",
 };
 
 // Type definitions for stored data
-type StoredDataTypes = {
+export type StoredDataTypes = {
   ai_signals: {
     symbol: string;
     signal_type: "BUY" | "SELL" | "HOLD";
@@ -113,7 +116,7 @@ type StoredDataTypes = {
   };
   technical_indicators: {
     symbol: string;
-    indicators: Record<string, Array<{ timestamp: string; value: number }>>;
+    indicators: Record<string, Array<{ timestamp: string; value?: number } & Record<string, unknown>>>;
   };
 };
 
@@ -319,7 +322,7 @@ export class VercelBlobStorage {
   /**
    * List all blobs in a directory
    */
-  public async listBlobs(directory: string): Promise<Array<{ url: string; pathname: string; size: number; uploadedAt: string }>> {
+  public async listBlobs(directory: string): Promise<Array<{ url: string; pathname: string; size: number; uploadedAt: Date }>> {
     const { blobs } = await list({
       prefix: directory,
       token: this.token || undefined,
@@ -345,7 +348,7 @@ export class VercelBlobStorage {
   /**
    * Get blob metadata (head request)
    */
-  public async getBlobMetadata(url: string): Promise<{ size: number; contentType: string; uploadedAt: string }> {
+  public async getBlobMetadata(url: string): Promise<{ size: number; contentType: string; uploadedAt: Date }> {
     const metadata = await head(url, {
       token: this.token || undefined,
     });
@@ -372,6 +375,7 @@ export class VercelBlobStorage {
    */
   public async copyBlob(fromUrl: string, toPath: string): Promise<void> {
     await copy(fromUrl, `${AI_BLOB_DIRECTORIES.BACKUP}${toPath}-${Date.now()}.json`, {
+      access: 'private',
       token: this.token || undefined,
     });
   }

@@ -66,7 +66,7 @@ export default function FAQPage() {
             className="text-center mt-12"
           >
             <p className="text-nexus-gray-300 mb-6">
-              Can't find what you're looking for?
+              Can&apos;t find what you&apos;re looking for?
             </p>
             <Link
               href="/contact"

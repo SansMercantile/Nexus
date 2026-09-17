@@ -172,7 +172,7 @@ export default function SupportMaintenance() {
             <motion.div variants={fadeInUp} className="text-center mb-12">
               <h2 className="text-4xl font-bold text-white mb-4">Support Plans</h2>
               <p className="text-nexus-gray-300 max-w-2xl mx-auto">
-                Choose the support level that best fits your organization's needs and requirements.
+                Choose the support level that best fits your organization&apos;s needs and requirements.
               </p>
             </motion.div>
 

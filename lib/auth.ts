@@ -1,12 +1,4 @@
-import { getSession } from '@auth0/nextjs-auth0';
 import crypto from 'crypto';
-
-// Auth0 session check, used for SSO-protected admin routes separate from portal auth below.
-export async function verifyAuth0Session(req: any, res: any) {
-  const session = await getSession(req, res);
-  if (!session || !session.user) return null;
-  return session.user;
-}
 
 // --- Portal email/password auth used by /api/portal/register, login, me ---
 

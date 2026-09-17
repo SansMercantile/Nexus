@@ -263,7 +263,7 @@ export const TeamSentimentWidget: React.FC = () => {
                 <span className="font-mono text-indigo-600">{sentimentAnalysis.recentQuotes[0].channel}</span>
               </div>
               <p className="italic text-slate-600 text-[11px] line-clamp-2">
-                "{sentimentAnalysis.recentQuotes[0].text}"
+                &ldquo;{sentimentAnalysis.recentQuotes[0].text}&rdquo;
               </p>
             </div>
           ) : (

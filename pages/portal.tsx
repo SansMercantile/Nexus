@@ -10,6 +10,7 @@ export default function Portal() {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [error, setError] = React.useState('');
+  const [info, setInfo] = React.useState('');
   const [loading, setLoading] = React.useState(false);
   const router = useRouter();
 
@@ -27,6 +28,17 @@ export default function Portal() {
 
     checkSession();
   }, [router]);
+
+  // Show feedback from approve/deny email-link redirects.
+  React.useEffect(() => {
+    if (router.query.approved === '1') {
+      setInfo('Your account has been approved! You can now sign in.');
+    } else if (router.query.denied === '1') {
+      setInfo('Your account application was not approved. Contact hello@sansmercantile.com for assistance.');
+    } else if (router.query.approveError === '1' || router.query.denyError === '1') {
+      setError('That approval link is invalid or has expired. Contact hello@sansmercantile.com for assistance.');
+    }
+  }, [router.query]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,6 +59,13 @@ export default function Portal() {
       const data = await response.json();
 
       if (!response.ok) {
+        if (response.status === 401) {
+          throw new Error('Invalid credentials. If your account is pending approval, please wait for an email confirmation.');
+        } else if (response.status === 429) {
+          throw new Error('Too many sign-in attempts. Please wait a few minutes and try again.');
+        } else if (response.status === 500) {
+          throw new Error('Server error. The database may not be configured yet. Please contact hello@sansmercantile.com.');
+        }
         throw new Error(data?.message || 'Invalid email or password.');
       }
 
@@ -62,6 +81,7 @@ export default function Portal() {
     <Layout>
       <Head>
         <title>Web Portal - Sans Mercantile</title>
+        <meta name="description" content="Sign in to your Sans Mercantile portal account." />
       </Head>
 
       <div className="min-h-screen flex items-center justify-center py-20 px-6">
@@ -77,6 +97,16 @@ export default function Portal() {
           </div>
 
           <div className="bg-gradient-to-br from-[#1a1f3a] to-nexus-dark border border-nexus-gold/20 rounded-2xl p-8">
+            {info && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mb-6 p-4 rounded-lg bg-emerald-500/20 border border-emerald-500/40 text-emerald-200 text-sm"
+              >
+                {info}
+              </motion.div>
+            )}
+
             {error && (
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
@@ -96,6 +126,7 @@ export default function Portal() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@example.com"
                   required
+                  autoComplete="email"
                   className="w-full px-4 py-3 rounded-lg bg-nexus-dark border border-nexus-gold/20 text-white placeholder-nexus-gray-500 focus:border-nexus-gold focus:outline-none transition-colors"
                 />
               </div>
@@ -108,6 +139,7 @@ export default function Portal() {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
                   required
+                  autoComplete="current-password"
                   className="w-full px-4 py-3 rounded-lg bg-nexus-dark border border-nexus-gold/20 text-white placeholder-nexus-gray-500 focus:border-nexus-gold focus:outline-none transition-colors"
                 />
               </div>
@@ -128,9 +160,9 @@ export default function Portal() {
               Create an account
             </Link>{' '}
             or{' '}
-            <a href="/contact" className="text-nexus-gold hover:text-nexus-gold/80 transition-colors">
+            <Link href="/contact" className="text-nexus-gold hover:text-nexus-gold/80 transition-colors">
               contact our team
-            </a>
+            </Link>
           </p>
         </motion.div>
       </div>
