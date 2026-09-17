@@ -177,9 +177,9 @@ export default function SystemPage() {
           viewport={{ once: true }}
           className="max-w-7xl mx-auto px-6 py-20 border-t border-nexus-accent/20"
         >
-          <h2 className="text-4xl font-bold mb-4 gradient-text">{systemData.name} Fintech Applications</h2>
+          <h2 className="text-4xl font-bold mb-4 gradient-text">{systemData.name} Applications</h2>
           <p className="text-white/70 text-lg mb-12 max-w-3xl">
-            Consumer apps built on {systemData.name}&apos;s intelligence, available directly to you.
+            Apps built on {systemData.name}&apos;s intelligence, available directly to you.
           </p>
 
           <motion.div

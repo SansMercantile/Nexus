@@ -376,6 +376,33 @@ export const SYSTEMS: SystemData[] = [
         features: ['Access to all courses', 'Certifications', 'Community forum', 'Progress tracking'],
         cta: 'Enroll Now'
       },
+    ],
+    applications: [
+      {
+        name: 'KEV Core',
+        description: 'The core KEV learning platform — 185+ subjects with AI-personalized paths, mentorship, and progress analytics. Native desktop and mobile clients are on the way; join the notification list to hear the moment each one ships.',
+        icon: 'Sans- Thoth_KEV_Edtech.png',
+        platforms: ['macos', 'windows', 'linux', 'ios', 'android'],
+        waitlistUrl: '/contact?subject=KEV Core Desktop and Mobile Early Access',
+      },
+      {
+        name: 'KEV Schools',
+        description: 'Full-school deployment of KEV — curriculum management, faculty dashboards, classroom sync, and district-level learning analytics for institutions.',
+        icon: 'Sans- Thoth_KEV_Edtech.png',
+        platforms: ['macos', 'windows', 'ios', 'android'],
+        // TODO: add real store URLs to platformUrls (e.g. { ios: '...', android: '...' })
+        // once KEV Schools is live on each store — until then buttons route to the waitlist.
+        waitlistUrl: '/contact?subject=KEV Schools Early Access',
+      },
+      {
+        name: 'KEV Philanthropy',
+        description: 'Free and subsidized learning access through KEV — sponsored seats, community learning hubs, and scholarship tracking for underserved learners.',
+        icon: 'Sans- Thoth_KEV_Edtech.png',
+        platforms: ['ios', 'android'],
+        // TODO: add real store URLs to platformUrls (e.g. { ios: '...', android: '...' })
+        // once KEV Philanthropy is live on each store — until then buttons route to the waitlist.
+        waitlistUrl: '/contact?subject=KEV Philanthropy Early Access',
+      },
     ]
   },
 
@@ -550,6 +577,33 @@ export const SYSTEMS: SystemData[] = [
         description: 'For site managers and teams',
         features: ['Daily tracking', 'Safety tools', 'Communication', 'Email support'],
         cta: 'Get Started'
+      },
+    ],
+    applications: [
+      {
+        name: 'Ptah Core',
+        description: 'The core Ptah platform for AI-driven construction command — project timelines, safety telemetry, budgets, and quality in one operations view. Native desktop and mobile clients are on the way; join the notification list to hear the moment each one ships.',
+        icon: 'Sans- Ptah_Construction.png',
+        platforms: ['macos', 'windows', 'linux', 'ios', 'android'],
+        waitlistUrl: '/contact?subject=Ptah Core Desktop and Mobile Early Access',
+      },
+      {
+        name: 'Ptah Real Estates',
+        description: 'Property development and portfolio management on Ptah rails — site sourcing, valuation telemetry, development tracking, and handover in one place.',
+        icon: 'Sans- Ptah_Construction.png',
+        platforms: ['ios', 'android'],
+        // TODO: add real store URLs to platformUrls (e.g. { ios: '...', android: '...' })
+        // once Ptah Real Estates is live on each store — until then buttons route to the waitlist.
+        waitlistUrl: '/contact?subject=Ptah Real Estates Early Access',
+      },
+      {
+        name: 'Ptah Philanthropy',
+        description: 'Community builds and social infrastructure delivered through Ptah — transparent project funding, volunteer coordination, and impact tracking for public-good construction.',
+        icon: 'Sans- Ptah_Construction.png',
+        platforms: ['ios', 'android'],
+        // TODO: add real store URLs to platformUrls (e.g. { ios: '...', android: '...' })
+        // once Ptah Philanthropy is live on each store — until then buttons route to the waitlist.
+        waitlistUrl: '/contact?subject=Ptah Philanthropy Early Access',
       },
     ]
   },

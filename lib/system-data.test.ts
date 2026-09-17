@@ -1,0 +1,45 @@
+import { describe, it, expect } from 'vitest';
+import { getSystemBySlug, getSystemById, getAllSystems } from './system-data';
+
+describe('getSystemBySlug', () => {
+  it('resolves lowercase slugs', () => {
+    expect(getSystemBySlug('priv')?.name).toBe('Priv');
+    expect(getSystemBySlug('kev')?.name).toBe('KEV');
+  });
+
+  it('resolves mixed-case ids case-insensitively', () => {
+    expect(getSystemBySlug('ptah')?.name).toBe('Ptah');
+    expect(getSystemBySlug('Ptah')?.name).toBe('Ptah');
+    expect(getSystemBySlug('PTAH')?.name).toBe('Ptah');
+    expect(getSystemBySlug('KEV')?.name).toBe('KEV');
+  });
+
+  it('returns undefined for unknown slugs', () => {
+    expect(getSystemBySlug('no-such-system')).toBeUndefined();
+  });
+
+  it('every system has three flagship applications where defined', () => {
+    const priv = getSystemById('priv');
+    expect(priv?.applications?.map((a) => a.name)).toEqual(['Priv Core', 'Priv Pay']);
+    expect(getSystemById('Ptah')?.applications?.map((a) => a.name)).toEqual([
+      'Ptah Core',
+      'Ptah Real Estates',
+      'Ptah Philanthropy',
+    ]);
+    expect(getSystemById('kev')?.applications?.map((a) => a.name)).toEqual([
+      'KEV Core',
+      'KEV Schools',
+      'KEV Philanthropy',
+    ]);
+  });
+
+  it('every application has a waitlist or live route (no dead buttons)', () => {
+    for (const system of getAllSystems()) {
+      for (const app of system.applications ?? []) {
+        expect(app.platforms.length).toBeGreaterThan(0);
+        const hasLivePlatform = Object.keys(app.platformUrls ?? {}).length > 0;
+        expect(hasLivePlatform || app.waitlistUrl || app.liveUrl).toBeTruthy();
+      }
+    }
+  });
+});

@@ -240,7 +240,10 @@ const SYSTEM_SDG_ALIGNMENTS: Record<string, SystemSdg[]> = {
 export const systemsData: SystemData[] = SYSTEMS;
 
 export function getSystemBySlug(slug: string): SystemData | undefined {
-  return SYSTEMS.find((system) => system.id === slug);
+  // Case-insensitive: system ids mix cases ('Ptah', 'kev') but URLs are
+  // conventionally lowercase, so /ptah must resolve the same as /Ptah.
+  const lowered = slug.toLowerCase();
+  return SYSTEMS.find((system) => system.id.toLowerCase() === lowered);
 }
 
 export function getSystemById(id: string): SystemData | undefined {
