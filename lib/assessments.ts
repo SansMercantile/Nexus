@@ -92,6 +92,28 @@ export function getMissingAnswers(
   return missing;
 }
 
+/**
+ * Retake policy: assessments are single-attempt. Once `assessmentReview`
+ * exists, further finals are rejected unless the hiring administrator has
+ * granted retake allowances (`retakesAllowed`, consumed one per final).
+ */
+export const RETAKE_ADMIN_EMAIL = 'hello@sansmercantile.com';
+
+export const RETAKE_DENIED_MESSAGE =
+  'This assessment has already been submitted. To request a retake, contact hello@sansmercantile.com.';
+
+export function canSubmitFinal(application: {
+  assessmentReview?: unknown;
+  retakesAllowed?: unknown;
+  [key: string]: unknown;
+}): { allowed: boolean; consumesRetake: boolean } {
+  if (!application.assessmentReview) return { allowed: true, consumesRetake: false };
+  if (typeof application.retakesAllowed === 'number' && application.retakesAllowed > 0) {
+    return { allowed: true, consumesRetake: true };
+  }
+  return { allowed: false, consumesRetake: false };
+}
+
 /** Every assessment type must have questions and a config entry. */
 export function validateAssessmentCatalog(): string[] {
   const problems: string[] = [];

@@ -4,6 +4,8 @@ import {
   parseDecisionResult,
   getMissingAnswers,
   validateAssessmentCatalog,
+  canSubmitFinal,
+  RETAKE_ADMIN_EMAIL,
 } from './assessments';
 import { assessmentConfigs, type AssessmentType } from './jobs';
 
@@ -62,12 +64,46 @@ describe('getMissingAnswers', () => {
   });
 });
 
-describe('assessment catalog integrity', () => {
-  it('has no catalog problems', () => {
+describe('assessment catalog integrity', () => {  it('has no catalog problems', () => {
     expect(validateAssessmentCatalog()).toEqual([]);
   });
 
   it('covers exactly the configured assessment types', () => {
     expect(new Set(Object.keys(assessmentQuestions))).toEqual(new Set(Object.keys(assessmentConfigs)));
+  });
+});
+
+describe('retake policy', () => {
+  it('names the hiring administrator', () => {
+    expect(RETAKE_ADMIN_EMAIL).toBe('hello@sansmercantile.com');
+  });
+
+  it('allows a first submission', () => {
+    expect(canSubmitFinal({})).toEqual({ allowed: true, consumesRetake: false });
+  });
+
+  it('denies a repeat submission without an allowance', () => {
+    expect(canSubmitFinal({ assessmentReview: { decision: 'pass' } })).toEqual({
+      allowed: false,
+      consumesRetake: false,
+    });
+    expect(canSubmitFinal({ assessmentReview: { decision: 'pass' }, retakesAllowed: 0 })).toEqual({
+      allowed: false,
+      consumesRetake: false,
+    });
+  });
+
+  it('allows a repeat submission while consuming an allowance', () => {
+    expect(canSubmitFinal({ assessmentReview: { decision: 'reject' }, retakesAllowed: 2 })).toEqual({
+      allowed: true,
+      consumesRetake: true,
+    });
+  });
+
+  it('ignores non-numeric allowances', () => {
+    expect(canSubmitFinal({ assessmentReview: {}, retakesAllowed: 'yes' })).toEqual({
+      allowed: false,
+      consumesRetake: false,
+    });
   });
 });

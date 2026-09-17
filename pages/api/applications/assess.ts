@@ -3,7 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { generateAiText } from '@/lib/bedrock-client';
 import { sendApplicationAssessmentResult } from '@/lib/mailer';
 import { enforceRateLimit } from '@/lib/rate-limit';
-import { parseDecisionResult, getMissingAnswers } from '@/lib/assessments';
+import { parseDecisionResult, getMissingAnswers, canSubmitFinal, RETAKE_DENIED_MESSAGE } from '@/lib/assessments';
 import { getJobById } from '@/lib/jobs';
 import type { AssessmentType } from '@/lib/jobs';
 
@@ -89,6 +89,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(403).json({ success: false, message: 'Application token does not match the provided job or email.' });
     }
 
+    // Single-attempt policy: no retakes without an admin-granted allowance.
+    // Checked here (fast path, saves the AI call) and again atomically at write time.
+    const gate = canSubmitFinal(application);
+    if (!gate.allowed) {
+      return res.status(403).json({ success: false, message: RETAKE_DENIED_MESSAGE });
+    }
+
     const prompt = buildReviewPrompt(application, assessmentResponses);
     const aiResult = await generateAiText(prompt);
     const rawText = typeof aiResult === 'string' ? aiResult : JSON.stringify(aiResult);
@@ -121,13 +128,27 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       },
     };
 
-    await db.collection('job_applications').updateOne(
-      { _id: application._id },
+    // Atomic claim: the write only lands if no review exists yet or a retake
+    // allowance is still available. This closes the double-submit race
+    // (two tabs, retry storms) that the fast-path gate above cannot see.
+    const claim = await db.collection('job_applications').updateOne(
+      {
+        _id: application._id,
+        $or: [{ assessmentReview: { $exists: false } }, { retakesAllowed: { $gt: 0 } }],
+      },
       {
         $set: update,
+        ...(gate.consumesRetake ? { $inc: { retakesAllowed: -1 } } : {}),
         $push: { assessmentAttempts: { $each: [attempt], $slice: -10 } },
       }
     );
+
+    if (claim.modifiedCount === 0) {
+      return res.status(409).json({
+        success: false,
+        message: 'Another submission was just recorded for this application. Contact hello@sansmercantile.com if you need a retake.',
+      });
+    }
 
     try {
       await sendApplicationAssessmentResult({

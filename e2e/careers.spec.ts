@@ -66,3 +66,10 @@ test('application events require token and event', async ({ request }) => {
   const res = await request.post('/api/applications/events/', { data: {} });
   expect(res.status()).toBe(400);
 });
+
+test('retake grants require an admin session', async ({ request }) => {
+  const res = await request.post('/api/applications/allow-retake/', {
+    data: { email: 'candidate@example.com', jobId: 'director-ai-product-strategy', count: 1 },
+  });
+  expect(res.status()).toBe(401);
+});

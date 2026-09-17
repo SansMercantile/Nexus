@@ -30,6 +30,8 @@ export default function Onboarding() {
   const viewToken = router.isReady ? (router.query.token as string) : undefined;
   const [tokenValid, setTokenValid] = useState(false);
   const [tokenError, setTokenError] = useState<string | null>(null);
+  // Set when the application already has a submitted assessment review.
+  const [alreadySubmittedAt, setAlreadySubmittedAt] = useState<string | null>(null);
 
   const isProctoringComplete = cameraReady && micReady && screenShared && proctoringReady;
 
@@ -195,6 +197,11 @@ export default function Onboarding() {
           setTokenValid(false);
           return;
         }
+        if (data.application?.submitted) {
+          setAlreadySubmittedAt(
+            typeof data.application?.reviewedAt === 'string' ? data.application.reviewedAt : ''
+          );
+        }
         setTokenValid(true);
       } catch (error) {
         setTokenError('Unable to validate application token. Please try again or contact support.');
@@ -228,6 +235,29 @@ export default function Onboarding() {
             <div className="text-6xl mb-4">🚫</div>
             <h1 className="text-2xl font-bold text-white mb-4">Access Denied</h1>
             <p className="text-nexus-gray-400 mb-6">{tokenError}</p>
+            <button onClick={() => router.push('/careers')} className="px-6 py-3 rounded-lg bg-nexus-gold text-black font-semibold hover:opacity-90 transition-opacity">
+              Return to Careers
+            </button>
+          </motion.div>
+        </div>
+      </Layout>
+    );
+  }
+
+  if (alreadySubmittedAt !== null) {
+    return (
+      <Layout>
+        <Head><title>Assessment Already Submitted | Sans Mercantile</title></Head>
+        <div className="min-h-screen flex items-center justify-center py-20 px-6">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-md w-full text-center">
+            <div className="text-6xl mb-4">✅</div>
+            <h1 className="text-2xl font-bold text-white mb-4">Assessment Already Submitted</h1>
+            <p className="text-nexus-gray-400 mb-6">
+              {alreadySubmittedAt
+                ? `Your assessment was submitted on ${new Date(alreadySubmittedAt).toLocaleString()}. `
+                : 'Your assessment has already been submitted. '}
+              Retakes are only possible with administrator approval — contact hello@sansmercantile.com to request one.
+            </p>
             <button onClick={() => router.push('/careers')} className="px-6 py-3 rounded-lg bg-nexus-gold text-black font-semibold hover:opacity-90 transition-opacity">
               Return to Careers
             </button>
@@ -338,6 +368,17 @@ export default function Onboarding() {
             assessmentResponses: nextAllResponses,
           }),
         });
+        if (reviewRes.status === 403) {
+          // Already submitted (or token/job mismatch): surface the reason,
+          // do not advance, do not retry blindly.
+          const data = await reviewRes.json().catch(() => null);
+          alert(
+            (data && typeof data.message === 'string' && data.message) ||
+              'This assessment has already been submitted. Contact hello@sansmercantile.com to request a retake.'
+          );
+          setSubmitting(false);
+          return;
+        }
         reviewOk = reviewRes.ok;
         if (!reviewOk) {
           console.error('Assessment review submission failed:', reviewRes.status);

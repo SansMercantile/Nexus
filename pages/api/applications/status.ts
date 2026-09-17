@@ -31,6 +31,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         applicantEmail: application.applicantEmail,
         status: application.status,
         appliedAt: application.appliedAt,
+        submitted: !!application.assessmentReview,
+        reviewedAt:
+          application.assessmentReview && typeof application.assessmentReview.reviewedAt === 'string'
+            ? application.assessmentReview.reviewedAt
+            : null,
+        attempts: Array.isArray(application.assessmentAttempts) ? application.assessmentAttempts.length : 0,
       },
     });
   } catch (error) {
