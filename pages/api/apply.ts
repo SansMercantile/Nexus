@@ -4,6 +4,8 @@ import { getDb } from '@/lib/mongodb';
 import { sendApplicationConfirmation, sendAdminNewApplicationAlert } from '@/lib/mailer';
 import { enforceRateLimit } from '@/lib/rate-limit';
 import { verifyTurnstile } from '@/lib/turnstile';
+import { isValidEmail, isWithinLength } from '@/lib/validation';
+import { getJobById, isJobOpen } from '@/lib/jobs';
 
 type ApplicationRequestBody = {
   jobId: string;
@@ -29,7 +31,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   // Public form that writes to the DB and sends two emails per call.
-  if (!enforceRateLimit(req, res, 'apply', 5, 60 * 60 * 1000)) return;
+  if (!enforceRateLimit(req, res, 'apply', 20, 60 * 60 * 1000)) return;
 
   const {
     jobId,
@@ -67,6 +69,29 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
   }
 
+  if (!isValidEmail(normalizedEmail)) {
+    return res.status(400).json({ success: false, message: 'Please provide a valid email address.' });
+  }
+
+  if (
+    !isWithinLength(name, 120) ||
+    !isWithinLength(phone, 40) ||
+    !isWithinLength(resume, 20000) ||
+    !isWithinLength(normalizedLinkedIn, 500) ||
+    !isWithinLength(coverLetter, 10000) ||
+    !normalizedSocialLinks.every((link) => isWithinLength(link, 500))
+  ) {
+    return res.status(400).json({ success: false, message: 'One or more fields exceed the maximum length.' });
+  }
+
+  const job = getJobById(String(jobId));
+  if (!job) {
+    return res.status(400).json({ success: false, message: 'Unknown position. Please apply from the careers page.' });
+  }
+  if (!isJobOpen(job)) {
+    return res.status(400).json({ success: false, message: 'This position is no longer accepting applications.' });
+  }
+
   const urlPattern = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/;
   const isValidUrl = (value: string) => urlPattern.test(value);
   const resumeIsValid = resume.trim().length > 20 || isValidUrl(resume.trim());
@@ -99,6 +124,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     // ── MongoDB Atlas ───────────────────────────────────────────────────────
     const db = await getDb();
+
+    // One application per email per position. Direct repeat applicants to
+    // the assessment link from their confirmation email instead of forking
+    // duplicate records (and duplicate review work).
+    const duplicate = await db.collection('job_applications').findOne({
+      applicantEmail: normalizedEmail,
+      jobId: String(jobId),
+    });
+    if (duplicate) {
+      return res.status(409).json({
+        success: false,
+        message: 'An application for this position already exists for this email. Check your inbox for the assessment link.',
+      });
+    }
     // Use scoped data to ensure applications are isolated by tenant/user context
     // Note: In a real scenario, we'd extract the current user's context from the session.
     const result = await db.collection('job_applications').insertOne(application);

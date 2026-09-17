@@ -1,11 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getDb } from '@/lib/mongodb';
+import { enforceRateLimit } from '@/lib/rate-limit';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'GET') {
     res.setHeader('Allow', 'GET');
     return res.status(405).json({ success: false, message: 'Method not allowed.' });
   }
+
+  if (!enforceRateLimit(req, res, 'applications-status', 30, 60 * 60 * 1000)) return;
 
   const token = String(req.query.token || '').trim();
   if (!token) {

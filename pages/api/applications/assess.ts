@@ -3,6 +3,9 @@ import { getDb } from '@/lib/mongodb';
 import { generateAiText } from '@/lib/bedrock-client';
 import { sendApplicationAssessmentResult } from '@/lib/mailer';
 import { enforceRateLimit } from '@/lib/rate-limit';
+import { parseDecisionResult, getMissingAnswers } from '@/lib/assessments';
+import { getJobById } from '@/lib/jobs';
+import type { AssessmentType } from '@/lib/jobs';
 
 function normalizeEmail(email: unknown) {
   return typeof email === 'string' ? email.trim().toLowerCase() : '';
@@ -30,25 +33,6 @@ Provide a concise recommendation in the form of a JSON object with keys:
 - feedback: a short paragraph explaining the rationale and any improvement suggestions
 
 Only return valid JSON. Do not add any additional commentary outside the JSON object.`;
-}
-
-function parseDecisionResult(raw: string) {
-  try {
-    const jsonStart = raw.indexOf('{');
-    const jsonEnd = raw.lastIndexOf('}');
-    if (jsonStart !== -1 && jsonEnd !== -1) {
-      const jsonText = raw.slice(jsonStart, jsonEnd + 1);
-      const parsed = JSON.parse(jsonText);
-      return {
-        decision: parsed.decision === 'pass' || parsed.decision === 'reject' || parsed.decision === 'review' ? parsed.decision : 'review',
-        feedback: typeof parsed.feedback === 'string' ? parsed.feedback.trim() : raw.trim(),
-      };
-    }
-  } catch (error) {
-    // ignore parse errors and fall back to raw text
-  }
-
-  return { decision: 'review' as const, feedback: raw.trim() };
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -79,6 +63,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
   }
 
+  const job = getJobById(normalizedJobId);
+  if (!job) {
+    return res.status(400).json({ success: false, message: 'Unknown position for these assessment responses.' });
+  }
+
+  // Server-side coverage gate: the client enforces per-section completion,
+  // but the API must not trust it. Every required question key must be present.
+  const missing = getMissingAnswers(job.assessments as AssessmentType[], assessmentResponses);
+  if (missing.length > 0) {
+    return res.status(400).json({
+      success: false,
+      message: `Incomplete assessment submission. Missing answers for: ${missing.join(', ')}.`,
+    });
+  }
+
   try {
     const db = await getDb();
     const application = await db.collection('job_applications').findOne({ viewToken: normalizedToken });
@@ -95,17 +94,40 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const rawText = typeof aiResult === 'string' ? aiResult : JSON.stringify(aiResult);
     const { decision, feedback } = parseDecisionResult(rawText);
 
+    // Attempt history: retakes stay visible to reviewers instead of silently
+    // overwriting the previous verdict. Latest attempt drives the status.
+    const priorAttempts = Array.isArray(application.assessmentAttempts)
+      ? application.assessmentAttempts.length
+      : application.assessmentReview
+        ? 1
+        : 0;
+    const reviewedAt = new Date().toISOString();
+    const attempt = {
+      decision,
+      feedback,
+      rawResult: rawText,
+      responseCount: Object.keys(assessmentResponses).length,
+      reviewedAt,
+    };
+
     const update = {
       status: decision === 'pass' ? 'passed' : decision === 'reject' ? 'rejected' : 'review',
       assessmentReview: {
         decision,
         feedback,
         rawResult: rawText,
-        reviewedAt: new Date().toISOString(),
+        reviewedAt,
+        attempt: priorAttempts + 1,
       },
     };
 
-    await db.collection('job_applications').updateOne({ _id: application._id }, { $set: update });
+    await db.collection('job_applications').updateOne(
+      { _id: application._id },
+      {
+        $set: update,
+        $push: { assessmentAttempts: { $each: [attempt], $slice: -10 } },
+      }
+    );
 
     try {
       await sendApplicationAssessmentResult({
@@ -119,7 +141,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       console.error('Sending assessment result email failed:', emailError);
     }
 
-    return res.status(200).json({ success: true, decision, feedback });
+    return res.status(200).json({ success: true, decision, feedback, attempt: priorAttempts + 1 });
   } catch (error) {
     console.error('Assessment processing error:', error);
     return res.status(500).json({ success: false, message: 'Unable to review assessment. Please try again later.' });

@@ -261,10 +261,14 @@ export const jobPostings: JobPosting[] = [
 ];
 
 export const getOpenJobs = (): JobPosting[] => {
-  return jobPostings.filter(job => {
-    if (!job.deadline) return true;
-    return new Date(job.deadline) > new Date();
-  });
+  return jobPostings.filter((job) => isJobOpen(job));
+};
+
+/** A job accepts applications when it is not closed and its deadline (if any) has not passed. */
+export const isJobOpen = (job: JobPosting): boolean => {
+  if (job.status === 'closed') return false;
+  if (!job.deadline) return true;
+  return new Date(job.deadline) > new Date();
 };
 
 export const getJobById = (id: string): JobPosting | undefined => {

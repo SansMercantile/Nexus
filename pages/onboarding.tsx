@@ -5,46 +5,9 @@ import { motion } from 'framer-motion';
 import { fadeInUp, staggerContainer } from '@/lib/animations';
 import { useRouter } from 'next/router';
 import { jobPostings, assessmentConfigs, type AssessmentType } from '@/lib/jobs';
+import { assessmentQuestions } from '@/lib/assessments';
 import type { JobPosting } from '@/lib/jobs';
 import posthog from 'posthog-js';
-
-const assessmentQuestions: Record<AssessmentType, string[]> = {
-  'culture-fit': [
-    'Describe a time you had to adapt quickly to a significant change at work. What did you do and what was the outcome?',
-    'What does working in a sovereign AI infrastructure company mean to you, and how does it align with your personal values?',
-    'How do you approach disagreements with teammates or leadership when you strongly believe a different direction is better?',
-  ],
-  communication: [
-    'Describe how you would communicate a complex technical decision to a non-technical executive stakeholder.',
-    'Tell us about a time your written or verbal communication directly influenced a major business outcome.',
-    'How do you ensure alignment across cross-functional teams who have competing priorities?',
-  ],
-  'system-design': [
-    'Design a high-availability job application processing system that can handle 10,000 concurrent submissions per hour. Describe the architecture.',
-    'How would you design a real-time notification system that reliably delivers approval emails even during infrastructure failures?',
-    'Describe the trade-offs you would make when choosing between a microservices and monolithic architecture for an AI platform with 25+ agents.',
-  ],
-  technical: [
-    'Walk us through how you would debug a production API endpoint that intermittently returns 500 errors with no consistent pattern.',
-    'Explain the difference between horizontal and vertical scaling and when you would use each for a ML inference workload.',
-    'What strategies do you use to ensure database performance does not degrade as collections grow from thousands to millions of documents?',
-  ],
-  algorithm: [
-    'Given an unsorted list of job application timestamps, describe an efficient algorithm to find all applications submitted within the same 60-minute window.',
-    'How would you detect and remove duplicate job applications where the same person applied multiple times with slight email variations?',
-    'Design a priority queue for processing onboarding assessments that weighs completion time, role seniority, and application date.',
-  ],
-  creativity: [
-    'Propose a novel way Sans Mercantile could use AI to improve the candidate experience for high-volume recruiting across open positions.',
-    'If you had to redesign the onboarding assessment process from scratch with no constraints, what would it look like?',
-    'Describe a creative solution you implemented to a problem that initially seemed to have no good answer.',
-  ],
-  'systems-thinking': [
-    'How would you map the interdependencies between a multi-platform AI constellation to identify single points of failure?',
-    'Describe a situation where optimising one part of a system unexpectedly degraded another. How did you identify and resolve it?',
-    'How do you approach capacity planning for a system where demand patterns are driven by unpredictable AI model usage?',
-  ],
-};
 
 export default function Onboarding() {
   const router = useRouter();
@@ -69,20 +32,6 @@ export default function Onboarding() {
   const [tokenError, setTokenError] = useState<string | null>(null);
 
   const isProctoringComplete = cameraReady && micReady && screenShared && proctoringReady;
-
-  const captureExamEvent = (event: string, props: Record<string, any> = {}) => {
-    if (!job || !email) return;
-    posthog.capture(event, {
-      jobId: job.id,
-      jobTitle: job.title,
-      email,
-      ...props,
-    });
-  };
-
-  const addCheatAlert = (message: string) => {
-    setCheatAlerts((prev) => [...prev, message]);
-  };
 
   const requestProctoringVerification = async () => {
     if (typeof window === 'undefined' || !navigator.mediaDevices) {
@@ -195,6 +144,29 @@ export default function Onboarding() {
   const currentAssessmentId = assessmentIds[currentAssessmentIndex] as AssessmentType | undefined;
   const currentAssessment = currentAssessmentId ? assessmentConfigs[currentAssessmentId] : null;
   const currentQuestions = currentAssessmentId ? (assessmentQuestions[currentAssessmentId] || []) : [];
+
+  const captureExamEvent = (event: string, props: Record<string, any> = {}) => {
+    if (!job || !email) return;
+    posthog.capture(event, {
+      jobId: job.id,
+      jobTitle: job.title,
+      email,
+      ...props,
+    });
+    // Persist security-relevant exam signals server-side (fire-and-forget).
+    if (viewToken) {
+      fetch('/api/applications/events', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: viewToken, jobId: job.id, email, event, props }),
+      }).catch(() => {});
+    }
+  };
+
+  const addCheatAlert = (message: string) => {
+    setCheatAlerts((prev) => [...prev, message]);
+    captureExamEvent('cheat_alert', { message });
+  };
 
   useEffect(() => {
     if (job && email) {
@@ -354,8 +326,9 @@ export default function Onboarding() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       captureExamEvent('onboarding_completed');
+      let reviewOk = false;
       try {
-        await fetch('/api/applications/assess', {
+        const reviewRes = await fetch('/api/applications/assess', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -365,8 +338,19 @@ export default function Onboarding() {
             assessmentResponses: nextAllResponses,
           }),
         });
+        reviewOk = reviewRes.ok;
+        if (!reviewOk) {
+          console.error('Assessment review submission failed:', reviewRes.status);
+        }
       } catch (err) {
         console.error('Assessment review submission failed:', err);
+      }
+      if (!reviewOk) {
+        alert(
+          'Your answers are saved on this device, but the review could not be submitted. Please stay on this page and try again in a moment.'
+        );
+        setSubmitting(false);
+        return;
       }
       router.push('/onboarding-complete?email=' + encodeURIComponent(email || '') + '&jobId=' + jobId);
     }
