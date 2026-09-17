@@ -42,4 +42,22 @@ describe('getSystemBySlug', () => {
       }
     }
   });
+
+  it('web app is primary for every product except Priv Pay', () => {
+    for (const system of getAllSystems()) {
+      for (const app of system.applications ?? []) {
+        if (app.name === 'Priv Pay') {
+          expect(app.platforms).not.toContain('web');
+        } else {
+          expect(app.platforms).toContain('web');
+        }
+      }
+    }
+  });
+
+  it('Ptah Real Estates links to its live site', () => {
+    const realty = getSystemById('Ptah')?.applications?.find((a) => a.name === 'Ptah Real Estates');
+    expect(realty?.liveUrl).toBe('https://ptahrealty.sansmercantile.com');
+    expect(realty?.platformUrls?.web).toBe('https://ptahrealty.sansmercantile.com');
+  });
 });

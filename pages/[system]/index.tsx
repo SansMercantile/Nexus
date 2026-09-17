@@ -14,6 +14,7 @@ import type { AppPlatform } from '@/lib/constants';
 // Display label for each platform's download button. "notifyLabel" is what shows before
 // a real platformUrl exists (routes to the app's waitlistUrl instead).
 const PLATFORM_META: Record<AppPlatform, { label: string; notifyLabel: string }> = {
+  web: { label: 'Open Web App', notifyLabel: 'Notify Me — Web' },
   ios: { label: 'Download on the App Store', notifyLabel: 'Notify Me — iOS' },
   android: { label: 'Get it on Google Play', notifyLabel: 'Notify Me — Android' },
   macos: { label: 'Download for macOS', notifyLabel: 'Notify Me — macOS' },

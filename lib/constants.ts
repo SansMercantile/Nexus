@@ -12,7 +12,7 @@ export interface PricingTier {
   cta: string;
 }
 
-export type AppPlatform = 'ios' | 'android' | 'macos' | 'windows' | 'linux';
+export type AppPlatform = 'web' | 'ios' | 'android' | 'macos' | 'windows' | 'linux';
 
 export interface SystemApplication {
   name: string;
@@ -104,7 +104,8 @@ export const SYSTEMS: SystemData[] = [
         description: 'The core Priv platform — live now at priv.sansmercantile.com. Native desktop and mobile clients are on the way; join the notification list to hear the moment each one ships.',
         icon: 'Sans- Zajuma_Priv_Fintech.png',
         liveUrl: 'https://priv.sansmercantile.com',
-        platforms: ['macos', 'windows', 'linux', 'ios', 'android'],
+        platforms: ['web', 'macos', 'windows', 'linux', 'ios', 'android'],
+        platformUrls: { web: 'https://priv.sansmercantile.com' },
         waitlistUrl: '/contact?subject=Priv Core Desktop and Mobile Early Access',
       },
       {
@@ -380,27 +381,27 @@ export const SYSTEMS: SystemData[] = [
     applications: [
       {
         name: 'KEV Core',
-        description: 'The core KEV learning platform — 185+ subjects with AI-personalized paths, mentorship, and progress analytics. Native desktop and mobile clients are on the way; join the notification list to hear the moment each one ships.',
+        description: 'The core KEV learning platform — 185+ subjects with AI-personalized paths, mentorship, and progress analytics. The web app is primary; native desktop and mobile clients are on the way — join the notification list to hear the moment each one ships.',
         icon: 'Sans- Thoth_KEV_Edtech.png',
-        platforms: ['macos', 'windows', 'linux', 'ios', 'android'],
+        platforms: ['web', 'macos', 'windows', 'linux', 'ios', 'android'],
         waitlistUrl: '/contact?subject=KEV Core Desktop and Mobile Early Access',
       },
       {
         name: 'KEV Schools',
-        description: 'Full-school deployment of KEV — curriculum management, faculty dashboards, classroom sync, and district-level learning analytics for institutions.',
+        description: 'Full-school deployment of KEV — curriculum management, faculty dashboards, classroom sync, and district-level learning analytics for institutions. Web app first; mobile clients to follow.',
         icon: 'Sans- Thoth_KEV_Edtech.png',
-        platforms: ['macos', 'windows', 'ios', 'android'],
-        // TODO: add real store URLs to platformUrls (e.g. { ios: '...', android: '...' })
-        // once KEV Schools is live on each store — until then buttons route to the waitlist.
+        platforms: ['web', 'macos', 'windows', 'ios', 'android'],
+        // TODO: add the live web app URL to platformUrls (e.g. { web: '...' })
+        // and real store URLs once native clients ship — until then buttons route to the waitlist.
         waitlistUrl: '/contact?subject=KEV Schools Early Access',
       },
       {
         name: 'KEV Philanthropy',
-        description: 'Free and subsidized learning access through KEV — sponsored seats, community learning hubs, and scholarship tracking for underserved learners.',
+        description: 'Free and subsidized learning access through KEV — sponsored seats, community learning hubs, and scholarship tracking for underserved learners. Web app first; mobile clients to follow.',
         icon: 'Sans- Thoth_KEV_Edtech.png',
-        platforms: ['ios', 'android'],
-        // TODO: add real store URLs to platformUrls (e.g. { ios: '...', android: '...' })
-        // once KEV Philanthropy is live on each store — until then buttons route to the waitlist.
+        platforms: ['web', 'ios', 'android'],
+        // TODO: add the live web app URL to platformUrls (e.g. { web: '...' })
+        // and real store URLs once native clients ship — until then buttons route to the waitlist.
         waitlistUrl: '/contact?subject=KEV Philanthropy Early Access',
       },
     ]
@@ -582,27 +583,27 @@ export const SYSTEMS: SystemData[] = [
     applications: [
       {
         name: 'Ptah Core',
-        description: 'The core Ptah platform for AI-driven construction command — project timelines, safety telemetry, budgets, and quality in one operations view. Native desktop and mobile clients are on the way; join the notification list to hear the moment each one ships.',
+        description: 'The core Ptah platform for AI-driven construction command — project timelines, safety telemetry, budgets, and quality in one operations view. The web app is primary; native desktop and mobile clients are on the way — join the notification list to hear the moment each one ships.',
         icon: 'Sans- Ptah_Construction.png',
-        platforms: ['macos', 'windows', 'linux', 'ios', 'android'],
+        platforms: ['web', 'macos', 'windows', 'linux', 'ios', 'android'],
         waitlistUrl: '/contact?subject=Ptah Core Desktop and Mobile Early Access',
       },
       {
         name: 'Ptah Real Estates',
-        description: 'Property development and portfolio management on Ptah rails — site sourcing, valuation telemetry, development tracking, and handover in one place.',
+        description: 'Ptah Real Estates is live now at ptahrealty.sansmercantile.com — property development and portfolio management on Ptah rails: site sourcing, valuation telemetry, development tracking, and handover in one place. Mobile clients are on the way; join the notification list to hear the moment each one ships.',
         icon: 'Sans- Ptah_Construction.png',
-        platforms: ['ios', 'android'],
-        // TODO: add real store URLs to platformUrls (e.g. { ios: '...', android: '...' })
-        // once Ptah Real Estates is live on each store — until then buttons route to the waitlist.
+        liveUrl: 'https://ptahrealty.sansmercantile.com',
+        platforms: ['web', 'ios', 'android'],
+        platformUrls: { web: 'https://ptahrealty.sansmercantile.com' },
         waitlistUrl: '/contact?subject=Ptah Real Estates Early Access',
       },
       {
         name: 'Ptah Philanthropy',
-        description: 'Community builds and social infrastructure delivered through Ptah — transparent project funding, volunteer coordination, and impact tracking for public-good construction.',
+        description: 'Community builds and social infrastructure delivered through Ptah — transparent project funding, volunteer coordination, and impact tracking for public-good construction. Web app first; mobile clients to follow.',
         icon: 'Sans- Ptah_Construction.png',
-        platforms: ['ios', 'android'],
-        // TODO: add real store URLs to platformUrls (e.g. { ios: '...', android: '...' })
-        // once Ptah Philanthropy is live on each store — until then buttons route to the waitlist.
+        platforms: ['web', 'ios', 'android'],
+        // TODO: add the live web app URL to platformUrls (e.g. { web: '...' })
+        // and real store URLs once native clients ship — until then buttons route to the waitlist.
         waitlistUrl: '/contact?subject=Ptah Philanthropy Early Access',
       },
     ]
