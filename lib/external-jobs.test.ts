@@ -6,6 +6,8 @@ import {
   parseIndeedFeed,
   mergeBoard,
   validateMapping,
+  buildIndeedFeed,
+  cdata,
   type ExternalListing,
 } from './external-jobs';
 import { getOpenJobs } from './jobs';
@@ -119,5 +121,55 @@ describe('validateMapping', () => {
     expect(validateMapping('no-such-job').ok).toBe(false);
     const firstJob = getOpenJobs()[0];
     expect(validateMapping(firstJob.id)).toEqual({ ok: true });
+  });
+});
+
+describe('cdata', () => {
+  it('wraps text and neutralizes embedded terminators', () => {
+    expect(cdata('a]]>b')).toBe('<![CDATA[a]]]]><![CDATA[>b]]>');
+    expect(cdata('plain')).toBe('<![CDATA[plain]]>');
+  });
+});
+
+describe('buildIndeedFeed', () => {
+  const sampleJob = {
+    id: 'test-engineer',
+    title: 'Test Engineer',
+    department: 'Engineering',
+    location: 'Remote',
+    type: 'full-time',
+    description: 'Build things.',
+    responsibilities: ['Write code'],
+    qualifications: ['3+ years'],
+    benefits: ['Remote-first'],
+    salary: { min: 100000, max: 140000, currency: 'USD' },
+    posted_at: '2026-01-15',
+    deadline: '2026-12-31',
+  };
+
+  it('emits required Job Sync elements per job', () => {
+    const xml = buildIndeedFeed([sampleJob], {
+      siteUrl: 'https://www.sansmercantile.com',
+      contactEmail: 'careers@sansmercantile.com',
+    });
+    expect(xml).toContain('<?xml version="1.0" encoding="utf-8"?>');
+    expect(xml).toContain('<referencenumber><![CDATA[test-engineer]]></referencenumber>');
+    expect(xml).toContain('<title><![CDATA[Test Engineer]]></title>');
+    expect(xml).toContain('careers@sansmercantile.com');
+    expect(xml).toContain('/careers?apply=test-engineer&source=Indeed');
+    expect(xml).toContain('<remotetype><![CDATA[Fully remote]]></remotetype>');
+    expect(xml).toContain('$100,000 - $140,000 per year');
+    expect(xml).toContain('<expirationdate><![CDATA[2026-12-31]]></expirationdate>');
+  });
+
+  it('omits optional elements when absent', () => {
+    const { salary: _salary, deadline: _deadline, benefits: _benefits, ...minimal } = sampleJob;
+    const xml = buildIndeedFeed([{ ...minimal, location: 'Cape Town' }], {
+      siteUrl: 'https://www.sansmercantile.com/',
+      contactEmail: 'careers@sansmercantile.com',
+    });
+    expect(xml).not.toContain('<remotetype>');
+    expect(xml).not.toContain('<expirationdate>');
+    expect(xml).toContain('<city><![CDATA[Cape Town]]></city>');
   });
 });

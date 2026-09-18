@@ -92,3 +92,14 @@ test('retake grants require an admin session', async ({ request }) => {
   });
   expect(res.status()).toBe(401);
 });
+
+test('indeed feed serves Job Sync XML for open roles', async ({ request }) => {
+  const res = await request.get('/api/jobs/indeed-feed/');
+  expect(res.status()).toBe(200);
+  expect(res.headers()['content-type']).toContain('application/xml');
+  const xml = await res.text();
+  expect(xml).toContain('<source>');
+  expect(xml).toContain('<referencenumber>');
+  expect(xml).toContain('careers@sansmercantile.com');
+  expect(xml).toContain('source=Indeed');
+});

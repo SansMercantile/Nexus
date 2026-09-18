@@ -198,3 +198,104 @@ export function validateMapping(mappedJobId: unknown): { ok: boolean; message?: 
   }
   return { ok: true };
 }
+
+// ---------------------------------------------------------------------------
+// Outbound: publish our open jobs TO Indeed (Job Sync XML feed).
+// Indeed crawls the feed and lists the roles; the <url> element points back
+// to our careers page so every application still flows through our journey
+// (no Indeed Apply siphoning).
+// ---------------------------------------------------------------------------
+
+export interface IndeedFeedOptions {
+  /** Public site origin, e.g. https://www.sansmercantile.com */
+  siteUrl: string;
+  /** Verification contact (Indeed Search Quality uses it to verify the entity). */
+  contactEmail: string;
+  company?: string;
+}
+
+/** Wrap free text in CDATA, splitting any embedded terminator safely. */
+export function cdata(value: string): string {
+  return `<![CDATA[${String(value || '').replace(/\]\]>/g, ']]]]><![CDATA[>')}]]>`;
+}
+
+const INDEED_JOBTYPE: Record<string, string> = {
+  'full-time': 'fulltime',
+  contract: 'contract',
+  internship: 'internship',
+};
+
+function indeedDescription(job: {
+  description: string;
+  responsibilities: string[];
+  qualifications: string[];
+  benefits?: string[];
+}): string {
+  const list = (items: string[]) =>
+    items.map((item) => `<li>${item}</li>`).join('');
+  return (
+    `<p>${job.description}</p>` +
+    `<h2>Responsibilities</h2><ul>${list(job.responsibilities)}</ul>` +
+    `<h2>Qualifications</h2><ul>${list(job.qualifications)}</ul>` +
+    (job.benefits && job.benefits.length > 0
+      ? `<h2>Benefits</h2><ul>${list(job.benefits)}</ul>`
+      : '')
+  );
+}
+
+/**
+ * Build an Indeed Job Sync XML feed for the given (open) jobs.
+ * Follows https://docs.indeed.com/job-sync-xml/xml-feed required elements.
+ */
+export function buildIndeedFeed(
+  jobs: Array<{
+    id: string;
+    title: string;
+    department: string;
+    location: string;
+    type: string;
+    description: string;
+    responsibilities: string[];
+    qualifications: string[];
+    benefits?: string[];
+    salary?: { min: number; max: number; currency: string };
+    posted_at: string;
+    deadline?: string;
+  }>,
+  opts: IndeedFeedOptions
+): string {
+  const siteUrl = opts.siteUrl.replace(/\/$/, '');
+  const company = opts.company || 'Sans Mercantile';
+
+  const entries = jobs
+    .map((job) => {
+      const remote = job.location.trim().toLowerCase() === 'remote';
+      const salary = job.salary
+        ? `$${job.salary.min.toLocaleString('en-US')} - $${job.salary.max.toLocaleString('en-US')} per year`
+        : '';
+      const posted = new Date(job.posted_at).toISOString();
+      const expires = job.deadline ? new Date(job.deadline).toISOString().split('T')[0] : '';
+      return (
+        `  <job>\n` +
+        `    <title>${cdata(job.title)}</title>\n` +
+        `    <date>${cdata(posted)}</date>\n` +
+        `    <referencenumber>${cdata(job.id)}</referencenumber>\n` +
+        `    <requisitionid>${cdata(job.id)}</requisitionid>\n` +
+        `    <url>${cdata(`${siteUrl}/careers?apply=${encodeURIComponent(job.id)}&source=Indeed`)}</url>\n` +
+        `    <company>${cdata(company)}</company>\n` +
+        `    <city>${cdata(remote ? 'Remote' : job.location)}</city>\n` +
+        `    <state>${cdata('')}</state>\n` +
+        `    <country>${cdata('ZA')}</country>\n` +
+        `    <email>${cdata(opts.contactEmail)}</email>\n` +
+        `    <description>${cdata(indeedDescription(job))}</description>\n` +
+        `    <salary>${cdata(salary)}</salary>\n` +
+        `    <jobtype>${cdata(INDEED_JOBTYPE[job.type] || job.type)}</jobtype>\n` +
+        `    <category>${cdata(job.department)}</category>\n` +
+        (expires ? `    <expirationdate>${cdata(expires)}</expirationdate>\n` : '') +
+        (remote ? `    <remotetype>${cdata('Fully remote')}</remotetype>\n` : '')
+      );
+    })
+    .join('');
+
+  return `<?xml version="1.0" encoding="utf-8"?>\n<source>\n${entries}</source>\n`;
+}
