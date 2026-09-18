@@ -67,6 +67,25 @@ test('application events require token and event', async ({ request }) => {
   expect(res.status()).toBe(400);
 });
 
+test('jobs board serves internal openings without a database', async ({ request }) => {
+  const res = await request.get('/api/jobs/board/');
+  expect(res.status()).toBe(200);
+  const body = await res.json();
+  expect(body.success).toBe(true);
+  expect(Array.isArray(body.jobs)).toBe(true);
+  expect(body.jobs.length).toBeGreaterThan(0);
+  expect(body.jobs.every((j: any) => typeof j.jobId === 'string' && j.source === 'internal')).toBe(true);
+});
+
+test('jobs scan and registry require an admin session', async ({ request }) => {
+  const scan = await request.post('/api/jobs/scan/', { data: {} });
+  expect(scan.status()).toBe(401);
+  const list = await request.get('/api/jobs/external/');
+  expect(list.status()).toBe(401);
+  const write = await request.post('/api/jobs/external/', { data: { action: 'dismiss', id: 'x' } });
+  expect(write.status()).toBe(401);
+});
+
 test('retake grants require an admin session', async ({ request }) => {
   const res = await request.post('/api/applications/allow-retake/', {
     data: { email: 'candidate@example.com', jobId: 'director-ai-product-strategy', count: 1 },

@@ -3,7 +3,9 @@ import Layout from '../components/layout/Layout';
 import { AnimatedIcon, type IconType } from '../components/AnimatedIcons';
 import { fadeInUp, staggerContainer } from '../lib/animations';
 import { jobPostings, getOpenJobs, assessmentConfigs } from '../lib/jobs';
-import { useState, useRef, type FormEvent } from 'react';
+import { useState, useRef, useEffect, type FormEvent } from 'react';
+import { useRouter } from 'next/router';
+import type { BoardListing } from '@/lib/external-jobs';
 import Link from 'next/link';
 import Head from 'next/head';
 import type { JobPosting, AssessmentType } from '@/lib/jobs';
@@ -486,6 +488,33 @@ export default function CareersPage() {
   const [showApplicationForm, setShowApplicationForm] = useState(false);
   const [applicationJobId, setApplicationJobId] = useState<string | null>(null);
   const [filterDept, setFilterDept] = useState<string | null>(null);
+  // Externally listed roles (LinkedIn / Indeed) merged from /api/jobs/board.
+  // Apply always opens our own application journey for the mapped job.
+  const [externalJobs, setExternalJobs] = useState<BoardListing[]>([]);
+  const router = useRouter();
+
+  useEffect(() => {
+    fetch('/api/jobs/board/')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        const jobs: BoardListing[] = Array.isArray(data?.jobs) ? data.jobs : [];
+        setExternalJobs(jobs.filter((j) => j.source !== 'internal'));
+      })
+      .catch(() => {});
+  }, []);
+
+  // Deep link: /careers?apply=<jobId> opens our application journey directly,
+  // so LinkedIn/Indeed posts can point candidates here instead of Easy Apply.
+  useEffect(() => {
+    if (!router.isReady) return;
+    const applyId = typeof router.query.apply === 'string' ? router.query.apply : null;
+    if (!applyId) return;
+    const job = jobPostings.find((j) => j.id === applyId && (j.status ?? 'open') === 'open');
+    if (job) {
+      setApplicationJobId(job.id);
+      setShowApplicationForm(true);
+    }
+  }, [router.isReady, router.query.apply]);
 
   const openJobs = filterDept 
     ? jobPostings.filter(j => (j.status ?? 'open') === 'open' && j.department === filterDept)
@@ -577,6 +606,65 @@ export default function CareersPage() {
           </motion.div>
 
         </motion.div>
+
+        {/* Externally Listed Roles — synced from LinkedIn & Indeed. Every
+            Apply button opens our own application journey; we never route
+            candidates to LinkedIn Easy Apply or Indeed Apply. */}
+        {externalJobs.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="max-w-6xl mx-auto px-6 mb-20"
+          >
+            <h2 className="text-4xl font-bold text-white mb-4">Also Listed on LinkedIn &amp; Indeed</h2>
+            <p className="text-nexus-gray-400 mb-8 max-w-3xl">
+              These roles are advertised on external job boards. Applications for every role —
+              wherever you found it — go through our secure careers journey below.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {externalJobs.map((listing) => {
+                const job = jobPostings.find((j) => j.id === listing.jobId);
+                return (
+                  <div
+                    key={`${listing.source}-${listing.jobId}`}
+                    className="border border-nexus-gold/30 rounded-lg p-6 bg-gradient-to-br from-slate-900/90 to-slate-800/90 backdrop-blur-sm hover:border-nexus-gold/60 transition-all duration-300"
+                  >
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="text-xs px-2 py-1 rounded-full bg-nexus-gold/20 text-nexus-gold font-medium capitalize">
+                        {listing.source === 'linkedin' ? 'LinkedIn' : 'Indeed'}
+                      </span>
+                      <span className="text-xs text-nexus-gray-500">{listing.department}</span>
+                    </div>
+                    <h3 className="text-lg font-bold text-white mb-1">{listing.title}</h3>
+                    <p className="text-nexus-gray-400 text-sm mb-4">{listing.location} • {listing.type}</p>
+                    <div className="flex items-center gap-3">
+                      {job && (
+                        <button
+                          onClick={() => handleApplyClick(job)}
+                          className="px-6 py-2 rounded-lg bg-nexus-gold text-black font-semibold hover:opacity-90 transition-opacity text-sm"
+                        >
+                          Apply Here
+                        </button>
+                      )}
+                      {listing.sourceUrl && (
+                        <a
+                          href={listing.sourceUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sm text-nexus-gray-400 hover:text-nexus-gold transition-colors"
+                        >
+                          View original post
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </motion.div>
+        )}
 
         {/* Why Join Us */}
         <motion.div
