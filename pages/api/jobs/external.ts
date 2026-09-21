@@ -76,7 +76,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(400).json({ success: false, message: 'title is required.' });
       }
       if (mappedJobId !== undefined) {
-        const check = validateMapping(mappedJobId);
+        const check = await validateMapping(mappedJobId);
         if (!check.ok) return res.status(400).json({ success: false, message: check.message });
       }
       const sourceId =
@@ -111,7 +111,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(400).json({ success: false, message: 'A valid listing id is required.' });
       }
       if (action === 'approve') {
-        const check = validateMapping(mappedJobId);
+        const check = await validateMapping(mappedJobId);
         if (!check.ok) return res.status(400).json({ success: false, message: check.message });
         const result = await collection.updateOne(
           { _id: objectId },

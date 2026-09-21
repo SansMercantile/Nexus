@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import crypto from 'crypto';
 import { getDb } from '@/lib/mongodb';
-import { hashPassword, isAllowedAdminEmail } from '@/lib/auth';
+import { hashPassword, isAllowedAdminEmail, getAdminRole } from '@/lib/auth';
 import { sendAdminApprovalRequest } from '@/lib/mailer';
 import { enforceRateLimit } from '@/lib/rate-limit';
 import { verifyTurnstile } from '@/lib/turnstile';
@@ -82,7 +82,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const userDoc = {
       email: normalizedEmail,
       name,
-      role: 'admin',
+      role: getAdminRole(normalizedEmail) ?? 'admin',
       passwordHash,
       active: false,
       pending: true,

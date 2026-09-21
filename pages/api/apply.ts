@@ -5,7 +5,8 @@ import { sendApplicationConfirmation, sendAdminNewApplicationAlert } from '@/lib
 import { enforceRateLimit } from '@/lib/rate-limit';
 import { verifyTurnstile } from '@/lib/turnstile';
 import { isValidEmail, isWithinLength } from '@/lib/validation';
-import { getJobById, isJobOpen } from '@/lib/jobs';
+import { findMergedJob } from '@/lib/job-board';
+import { isJobOpen } from '@/lib/jobs';
 
 type ApplicationRequestBody = {
   jobId: string;
@@ -84,7 +85,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(400).json({ success: false, message: 'One or more fields exceed the maximum length.' });
   }
 
-  const job = getJobById(String(jobId));
+  const job = await findMergedJob(String(jobId));
   if (!job) {
     return res.status(400).json({ success: false, message: 'Unknown position. Please apply from the careers page.' });
   }

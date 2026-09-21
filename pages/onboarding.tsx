@@ -22,6 +22,10 @@ export default function Onboarding() {
   const [proctoringReady, setProctoringReady] = useState(false);
   const [proctoringError, setProctoringError] = useState<string | null>(null);
   const [cheatAlerts, setCheatAlerts] = useState<string[]>([]);
+  // Exam clock for server-side anti-cheat: set once at first proctoring
+  // completion, never reset (re-verification after a tab switch must not
+  // shrink the measured duration and cause a false 'too-fast' flag).
+  const [examStartedAt, setExamStartedAt] = useState<string | null>(null);
   const mediaStreamRef = useRef<MediaStream | null>(null);
   const screenStreamRef = useRef<MediaStream | null>(null);
 
@@ -32,6 +36,19 @@ export default function Onboarding() {
   const [tokenError, setTokenError] = useState<string | null>(null);
   // Set when the application already has a submitted assessment review.
   const [alreadySubmittedAt, setAlreadySubmittedAt] = useState<string | null>(null);
+  // Merged open roles (admin posts + static seed); falls back to static.
+  const [allJobs, setAllJobs] = useState<JobPosting[]>(jobPostings);
+
+  useEffect(() => {
+    fetch('/api/jobs/list/')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (Array.isArray(data?.jobs) && data.jobs.length > 0) {
+          setAllJobs(data.jobs);
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   const isProctoringComplete = cameraReady && micReady && screenShared && proctoringReady;
 
@@ -70,6 +87,7 @@ export default function Onboarding() {
     }
 
     setProctoringReady(true);
+    setExamStartedAt((prev) => prev || new Date().toISOString());
     captureExamEvent('exam_proctoring_ready');
   };
 
@@ -141,7 +159,7 @@ export default function Onboarding() {
   // Next.js page. Reading jobId/email before router.isReady is true caused
   // job to always resolve to undefined, which produced the blank/stuck page.
 
-  const job = jobId ? (jobPostings.find(j => j.id === jobId) as JobPosting | undefined) : undefined;
+  const job = jobId ? (allJobs.find(j => j.id === jobId) as JobPosting | undefined) : undefined;
   const assessmentIds = job?.assessments || [];
   const currentAssessmentId = assessmentIds[currentAssessmentIndex] as AssessmentType | undefined;
   const currentAssessment = currentAssessmentId ? assessmentConfigs[currentAssessmentId] : null;
@@ -366,6 +384,12 @@ export default function Onboarding() {
             jobId,
             email,
             assessmentResponses: nextAllResponses,
+            proctoring: {
+              camera: cameraReady,
+              mic: micReady,
+              screen: screenShared,
+              startedAt: examStartedAt,
+            },
           }),
         });
         if (reviewRes.status === 403) {

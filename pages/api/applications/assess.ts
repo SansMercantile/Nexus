@@ -3,8 +3,15 @@ import { getDb } from '@/lib/mongodb';
 import { generateAiText } from '@/lib/bedrock-client';
 import { sendApplicationAssessmentResult } from '@/lib/mailer';
 import { enforceRateLimit } from '@/lib/rate-limit';
-import { parseDecisionResult, getMissingAnswers, canSubmitFinal, RETAKE_DENIED_MESSAGE } from '@/lib/assessments';
-import { getJobById } from '@/lib/jobs';
+import {
+  parseDecisionResult,
+  getMissingAnswers,
+  canSubmitFinal,
+  RETAKE_DENIED_MESSAGE,
+  evaluateIntegrity,
+  countCheatEvents,
+} from '@/lib/assessments';
+import { findMergedJob } from '@/lib/job-board';
 import type { AssessmentType } from '@/lib/jobs';
 
 function normalizeEmail(email: unknown) {
@@ -63,7 +70,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
   }
 
-  const job = getJobById(normalizedJobId);
+  const job = await findMergedJob(normalizedJobId);
   if (!job) {
     return res.status(400).json({ success: false, message: 'Unknown position for these assessment responses.' });
   }
@@ -101,6 +108,38 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const rawText = typeof aiResult === 'string' ? aiResult : JSON.stringify(aiResult);
     const { decision, feedback } = parseDecisionResult(rawText);
 
+    // Anti-cheat enforcement: re-verify everything observable server-side.
+    // Client proctoring can be bypassed, so any integrity flag forces a
+    // human 'review' verdict instead of an AI pass.
+    const rawProctoring = (req.body as Record<string, unknown>).proctoring;
+    const proctoring =
+      rawProctoring !== null && typeof rawProctoring === 'object'
+        ? (rawProctoring as Record<string, unknown>)
+        : null;
+    const cheatEventCount = countCheatEvents(application.assessmentEvents);
+    const integrity = evaluateIntegrity({
+      proctoring,
+      cheatEventCount,
+      answers: assessmentResponses,
+      questionCount: Object.keys(assessmentResponses).length,
+    });
+    const finalDecision = integrity.flags.length > 0 ? 'review' : decision;
+    const finalFeedback =
+      integrity.flags.length > 0
+        ? `${feedback}\n\nIntegrity flags requiring human review: ${integrity.flags.join(', ')}.`
+        : feedback;
+    const integrityRecord = {
+      flags: integrity.flags,
+      cheatEventCount,
+      durationMs: integrity.durationMs,
+      proctoring: {
+        camera: proctoring?.camera === true,
+        mic: proctoring?.mic === true,
+        screen: proctoring?.screen === true,
+        startedAt: typeof proctoring?.startedAt === 'string' ? proctoring.startedAt : null,
+      },
+    };
+
     // Attempt history: retakes stay visible to reviewers instead of silently
     // overwriting the previous verdict. Latest attempt drives the status.
     const priorAttempts = Array.isArray(application.assessmentAttempts)
@@ -110,19 +149,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         : 0;
     const reviewedAt = new Date().toISOString();
     const attempt = {
-      decision,
-      feedback,
+      decision: finalDecision,
+      feedback: finalFeedback,
       rawResult: rawText,
       responseCount: Object.keys(assessmentResponses).length,
+      integrity: integrityRecord,
       reviewedAt,
     };
 
     const update = {
-      status: decision === 'pass' ? 'passed' : decision === 'reject' ? 'rejected' : 'review',
+      status: finalDecision === 'pass' ? 'passed' : finalDecision === 'reject' ? 'rejected' : 'review',
       assessmentReview: {
-        decision,
-        feedback,
+        decision: finalDecision,
+        feedback: finalFeedback,
         rawResult: rawText,
+        integrity: integrityRecord,
         reviewedAt,
         attempt: priorAttempts + 1,
       },
@@ -155,14 +196,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         name: application.applicantName,
         email: application.applicantEmail,
         jobTitle: application.jobTitle,
-        decision,
-        feedback,
+        decision: finalDecision,
+        feedback: finalFeedback,
       });
     } catch (emailError) {
       console.error('Sending assessment result email failed:', emailError);
     }
 
-    return res.status(200).json({ success: true, decision, feedback, attempt: priorAttempts + 1 });
+    return res.status(200).json({
+      success: true,
+      decision: finalDecision,
+      feedback: finalFeedback,
+      integrityFlags: integrityRecord.flags,
+      attempt: priorAttempts + 1,
+    });
   } catch (error) {
     console.error('Assessment processing error:', error);
     return res.status(500).json({ success: false, message: 'Unable to review assessment. Please try again later.' });

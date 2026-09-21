@@ -1,9 +1,27 @@
 import Link from 'next/link';
+import React from 'react';
 import { motion } from 'framer-motion';
 import Layout from '@/components/layout/Layout';
 import { fadeInUp } from '@/lib/animations';
 
+type PressItem = {
+  slug: string;
+  title: string;
+  excerpt: string;
+  publishedAt: string;
+};
+
 export default function MediaPressIndex() {
+  const [releases, setReleases] = React.useState<PressItem[]>([]);
+
+  React.useEffect(() => {
+    fetch('/api/content/list?type=press')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (Array.isArray(data?.posts)) setReleases(data.posts);
+      })
+      .catch(() => {});
+  }, []);
   return (
     <Layout>
       <div className=" pt-32 pb-24">
@@ -35,6 +53,24 @@ export default function MediaPressIndex() {
               Read the Full Release
             </Link>
           </motion.div>
+
+          {releases.length > 0 && (
+            <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
+              {releases.map((release) => (
+                <Link
+                  key={release.slug}
+                  href={`/media/press/${release.slug}`}
+                  className="block rounded-3xl border border-nexus-gold/20 bg-[#0b1125] p-8 hover:border-nexus-gold/40 transition"
+                >
+                  <p className="text-xs text-nexus-gray-500 mb-2">
+                    {release.publishedAt ? new Date(release.publishedAt).toLocaleDateString() : ''}
+                  </p>
+                  <h3 className="text-2xl font-bold text-white mb-3">{release.title}</h3>
+                  <p className="text-nexus-gray-300 leading-relaxed">{release.excerpt}</p>
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </Layout>

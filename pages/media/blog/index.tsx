@@ -62,7 +62,36 @@ const BlogCard = ({ post }: any) => {
 };
 
 export default function MediaBlogPage() {
-  const posts = getAllBlogPosts('published');
+  const staticPosts = React.useMemo(() => getAllBlogPosts('published'), []);
+  // Admin-published posts merged ahead of the static seed.
+  const [managedPosts, setManagedPosts] = React.useState<typeof staticPosts>([]);
+  React.useEffect(() => {
+    fetch('/api/content/list?type=blog')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        const items = Array.isArray(data?.posts) ? data.posts : [];
+        setManagedPosts(
+          items.map((item: any) => ({
+            id: `managed-${item.slug}`,
+            slug: item.slug,
+            title: item.title,
+            subtitle: item.excerpt,
+            author: item.author || 'Sans Mercantile',
+            postedDate: item.publishedAt,
+            category: 'insights',
+            relatedSystems: [],
+            excerpt: item.excerpt,
+            content: '',
+            featuredImage: item.cover || '',
+            keywords: [],
+            readTime: 3,
+            status: 'published',
+          }))
+        );
+      })
+      .catch(() => {});
+  }, []);
+  const posts = React.useMemo(() => [...managedPosts, ...staticPosts], [managedPosts, staticPosts]);
   const [filteredPosts, setFilteredPosts] = React.useState(posts);
   const [selectedCategory, setSelectedCategory] = React.useState<string>('all');
   const featuredPost = filteredPosts[0];
@@ -81,7 +110,7 @@ export default function MediaBlogPage() {
     } else {
       setFilteredPosts(posts.filter((post) => post.category === selectedCategory));
     }
-  }, [selectedCategory]);
+  }, [selectedCategory, posts]);
 
   return (
     <Layout>

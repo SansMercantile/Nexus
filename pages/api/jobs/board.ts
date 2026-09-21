@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { getDb } from '@/lib/mongodb';
 import { enforceRateLimit } from '@/lib/rate-limit';
 import { mergeBoard, type BoardListing } from '@/lib/external-jobs';
-import { getOpenJobs } from '@/lib/jobs';
+import { getMergedOpenJobs } from '@/lib/job-board';
 
 /**
  * GET /api/jobs/board — public merged job board for the careers page.
@@ -36,7 +36,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       .limit(200)
       .toArray();
     const jobs = mergeBoard(
-      getOpenJobs(),
+      await getMergedOpenJobs(),
       external.map((doc) => ({
         source: doc.source,
         sourceId: String(doc.sourceId),
@@ -56,7 +56,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   } catch (error) {
     // Registry unavailable (e.g. no MongoDB configured): internal jobs only.
     console.error('Jobs board registry error, serving internal jobs:', error);
-    const jobs = mergeBoard(getOpenJobs(), []);
+    const jobs = mergeBoard(await getMergedOpenJobs(), []);
     return res.status(200).json({ success: true, jobs, cached: false, registry: 'unavailable' });
   }
 }

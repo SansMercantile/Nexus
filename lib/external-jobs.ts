@@ -1,5 +1,5 @@
-import { getJobById, getOpenJobs } from './jobs';
-import type { JobPosting } from './jobs';
+import { findMergedJob } from './job-board';
+import { isJobOpen, type JobPosting } from './jobs';
 
 /**
  * External job board sync (LinkedIn + Indeed → website careers).
@@ -149,29 +149,28 @@ export function parseIndeedFeed(xml: string): IndeedFeedItem[] {
 
 /**
  * Merge internal open jobs with approved external listings into the public
- * board. An external listing appears only when it maps to a currently open
- * internal job — applications always flow through our own journey.
+ * board. `jobs` must already be the open set (callers pass merged open
+ * jobs). An external listing appears only when it maps to one of them —
+ * applications always flow through our own journey.
  */
 export function mergeBoard(
-  internalJobs: JobPosting[],
+  jobs: JobPosting[],
   external: ExternalListing[]
 ): BoardListing[] {
-  const openIds = new Set(getOpenJobs().map((j) => j.id));
-  const board: BoardListing[] = internalJobs
-    .filter((job) => openIds.has(job.id))
-    .map((job) => ({
-      source: 'internal' as const,
-      jobId: job.id,
-      title: job.title,
-      department: job.department,
-      location: job.location,
-      type: job.type,
-    }));
+  const byId = new Map(jobs.map((j) => [j.id, j]));
+  const board: BoardListing[] = jobs.map((job) => ({
+    source: 'internal' as const,
+    jobId: job.id,
+    title: job.title,
+    department: job.department,
+    location: job.location,
+    type: job.type,
+  }));
 
   for (const listing of external) {
     if (listing.status !== 'approved' || !listing.mappedJobId) continue;
-    const job = getJobById(listing.mappedJobId);
-    if (!job || !openIds.has(job.id)) continue;
+    const job = byId.get(listing.mappedJobId);
+    if (!job) continue;
     board.push({
       source: listing.source,
       jobId: job.id,
@@ -187,13 +186,13 @@ export function mergeBoard(
 }
 
 /** Validate an admin-supplied mapping before an external listing goes live. */
-export function validateMapping(mappedJobId: unknown): { ok: boolean; message?: string } {
+export async function validateMapping(mappedJobId: unknown): Promise<{ ok: boolean; message?: string }> {
   if (typeof mappedJobId !== 'string' || mappedJobId.trim().length === 0) {
     return { ok: false, message: 'mappedJobId is required to approve a listing.' };
   }
-  const job = getJobById(mappedJobId.trim());
+  const job = await findMergedJob(mappedJobId.trim());
   if (!job) return { ok: false, message: 'Unknown internal job for mappedJobId.' };
-  if (!getOpenJobs().some((j) => j.id === job.id)) {
+  if (!isJobOpen(job)) {
     return { ok: false, message: 'Mapped job is not currently open.' };
   }
   return { ok: true };

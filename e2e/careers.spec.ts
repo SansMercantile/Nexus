@@ -66,7 +66,6 @@ test('application events require token and event', async ({ request }) => {
   const res = await request.post('/api/applications/events/', { data: {} });
   expect(res.status()).toBe(400);
 });
-
 test('jobs board serves internal openings without a database', async ({ request }) => {
   const res = await request.get('/api/jobs/board/');
   expect(res.status()).toBe(200);
@@ -75,6 +74,23 @@ test('jobs board serves internal openings without a database', async ({ request 
   expect(Array.isArray(body.jobs)).toBe(true);
   expect(body.jobs.length).toBeGreaterThan(0);
   expect(body.jobs.every((j: any) => typeof j.jobId === 'string' && j.source === 'internal')).toBe(true);
+});
+
+test('jobs list serves merged openings without a database', async ({ request }) => {
+  const res = await request.get('/api/jobs/list/');
+  expect(res.status()).toBe(200);
+  const body = await res.json();
+  expect(body.success).toBe(true);
+  expect(Array.isArray(body.jobs)).toBe(true);
+  expect(body.jobs.length).toBeGreaterThan(0);
+  expect(body.jobs.every((j: any) => typeof j.id === 'string' && typeof j.title === 'string')).toBe(true);
+});
+
+test('jobs manage requires an admin session', async ({ request }) => {
+  const list = await request.get('/api/jobs/manage/');
+  expect(list.status()).toBe(401);
+  const create = await request.post('/api/jobs/manage/', { data: { id: 'x' } });
+  expect(create.status()).toBe(401);
 });
 
 test('jobs scan and registry require an admin session', async ({ request }) => {
@@ -91,6 +107,21 @@ test('retake grants require an admin session', async ({ request }) => {
     data: { email: 'candidate@example.com', jobId: 'director-ai-product-strategy', count: 1 },
   });
   expect(res.status()).toBe(401);
+});
+
+test('content list serves published posts without a database', async ({ request }) => {
+  const res = await request.get('/api/content/list/?type=blog');
+  expect(res.status()).toBe(200);
+  const body = await res.json();
+  expect(body.success).toBe(true);
+  expect(Array.isArray(body.posts)).toBe(true);
+});
+
+test('content manage requires an admin session', async ({ request }) => {
+  const list = await request.get('/api/content/manage/');
+  expect(list.status()).toBe(401);
+  const create = await request.post('/api/content/manage/', { data: { type: 'blog' } });
+  expect(create.status()).toBe(401);
 });
 
 test('indeed feed serves Job Sync XML for open roles', async ({ request }) => {

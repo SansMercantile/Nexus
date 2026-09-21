@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import Layout from '@/components/layout/Layout';
 import { fadeInUp } from '@/lib/animations';
 import { getBlogPost, BlogPost } from '@/lib/blog-data';
+import { getContentPost, toBlogPost } from '@/lib/content';
 
 interface Props {
   post: BlogPost | null;
@@ -183,16 +184,26 @@ export default function MediaBlogPostPage({ post, slug }: Props) {
 // Server-Side Data Fetching
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { slug } = context.params as { slug: string };
-  const post = getBlogPost(slug);
+  // Static seed first (stable URLs), then admin-published posts.
+  const staticPost = getBlogPost(slug);
+  if (staticPost) {
+    return {
+      props: {
+        // Stringify then parse to handle potential Date object serialization issues
+        post: JSON.parse(JSON.stringify(staticPost)),
+        slug
+      }
+    };
+  }
 
-  if (!post) {
+  const managed = await getContentPost('blog', slug);
+  if (!managed) {
     return { props: { post: null, slug } };
   }
 
   return {
     props: {
-      // Stringify then parse to handle potential Date object serialization issues
-      post: JSON.parse(JSON.stringify(post)),
+      post: JSON.parse(JSON.stringify(toBlogPost(managed))),
       slug
     }
   };

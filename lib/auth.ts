@@ -10,13 +10,22 @@ export function hashPassword(plain: string): string {
   return salt + ':' + hash;
 }
 
-const ADMIN_EMAIL_ALLOWLIST = new Set([
-  'mezzoforte@sansmercantile.com',
-  'hello@sansmercantile.com',
-]);
+export type AdminRole = 'hr' | 'administrator' | 'ceo';
+
+const ADMIN_USERS: Record<string, AdminRole> = {
+  'resources@sansmercantile.com': 'hr',
+  'hello@sansmercantile.com': 'administrator',
+  'mezzoforte@sansmercantile.com': 'ceo',
+  'careers@sansmercantile.com': 'hr',
+};
+
+export function getAdminRole(email?: string): AdminRole | null {
+  if (typeof email !== 'string') return null;
+  return ADMIN_USERS[email.toLowerCase()] ?? null;
+}
 
 export function isAllowedAdminEmail(email?: string): boolean {
-  return typeof email === 'string' && ADMIN_EMAIL_ALLOWLIST.has(email.toLowerCase());
+  return getAdminRole(email) !== null;
 }
 
 export function verifyPassword(plain: string, storedHash: string): boolean {

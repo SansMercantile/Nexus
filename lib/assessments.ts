@@ -96,8 +96,7 @@ export function getMissingAnswers(
  * Retake policy: assessments are single-attempt. Once `assessmentReview`
  * exists, further finals are rejected unless the hiring administrator has
  * granted retake allowances (`retakesAllowed`, consumed one per final).
- */
-export const RETAKE_ADMIN_EMAIL = 'hello@sansmercantile.com';
+ */export const RETAKE_ADMIN_EMAIL = 'hello@sansmercantile.com';
 
 export const RETAKE_DENIED_MESSAGE =
   'This assessment has already been submitted. To request a retake, contact hello@sansmercantile.com.';
@@ -112,6 +111,97 @@ export function canSubmitFinal(application: {
     return { allowed: true, consumesRetake: true };
   }
   return { allowed: false, consumesRetake: false };
+}
+
+// ---------------------------------------------------------------------------
+// Exam integrity: server-side anti-cheat enforcement.
+// Client-side proctoring (camera/mic/screen, tab/copy deterrents) can be
+// bypassed, so the API re-verifies everything it can observe: the proctoring
+// attestation, exam duration, persisted violation events, and answer quality.
+// Any flag forces a human 'review' verdict instead of an AI pass.
+// ---------------------------------------------------------------------------
+
+export interface ProctoringAttestation {
+  camera?: unknown;
+  mic?: unknown;
+  screen?: unknown;
+  startedAt?: unknown;
+}
+
+export interface IntegrityInput {
+  proctoring?: ProctoringAttestation | null;
+  /** Epoch ms of submission (server time). Defaults to Date.now(). */
+  submittedAt?: number;
+  /** Count of persisted violation events (cheat_alerts, blocked actions...). */
+  cheatEventCount: number;
+  answers: Record<string, unknown>;
+  /** Total required answers (for the thin-answer ratio). */
+  questionCount: number;
+}
+
+export interface IntegrityResult {
+  flags: string[];
+  durationMs: number | null;
+}
+
+export const MIN_EXAM_DURATION_MS = 5 * 60 * 1000;
+export const MAX_CHEAT_EVENTS = 10;
+export const MIN_ANSWER_CHARS = 20;
+
+export function evaluateIntegrity(input: IntegrityInput): IntegrityResult {
+  const flags: string[] = [];
+  const attestation = input.proctoring;
+  let durationMs: number | null = null;
+
+  if (!attestation || attestation.camera !== true || attestation.mic !== true || attestation.screen !== true) {
+    flags.push('no-proctoring-attestation');
+  }
+
+  if (attestation && typeof attestation.startedAt === 'string') {
+    const started = Date.parse(attestation.startedAt);
+    const submitted = typeof input.submittedAt === 'number' ? input.submittedAt : Date.now();
+    if (Number.isNaN(started) || started > submitted) {
+      flags.push('invalid-timing');
+    } else {
+      durationMs = submitted - started;
+      if (durationMs < MIN_EXAM_DURATION_MS) {
+        flags.push('too-fast');
+      }
+    }
+  } else {
+    flags.push('invalid-timing');
+  }
+
+  if (input.cheatEventCount > MAX_CHEAT_EVENTS) {
+    flags.push('excessive-violations');
+  }
+
+  const keys = Object.keys(input.answers);
+  if (input.questionCount > 0 && keys.length > 0) {
+    const thin = keys.filter((key) => {
+      const value = input.answers[key];
+      return typeof value !== 'string' || value.trim().length < MIN_ANSWER_CHARS;
+    });
+    if (thin.length / keys.length > 1 / 3) {
+      flags.push('thin-answers');
+    }
+  }
+
+  return { flags, durationMs };
+}
+
+/** Violation-type exam events worth counting against a candidate. */
+const CHEAT_EVENT_PATTERN = /cheat|blocked|_lost|_blur/;
+
+export function countCheatEvents(events: unknown): number {
+  if (!Array.isArray(events)) return 0;
+  return events.filter(
+    (entry) =>
+      entry !== null &&
+      typeof entry === 'object' &&
+      typeof (entry as Record<string, unknown>).event === 'string' &&
+      CHEAT_EVENT_PATTERN.test(((entry as Record<string, unknown>).event as string).toLowerCase())
+  ).length;
 }
 
 /** Every assessment type must have questions and a config entry. */

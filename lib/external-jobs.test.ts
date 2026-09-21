@@ -116,11 +116,11 @@ describe('mergeBoard', () => {
 });
 
 describe('validateMapping', () => {
-  it('requires a mapped open job', () => {
-    expect(validateMapping(undefined).ok).toBe(false);
-    expect(validateMapping('no-such-job').ok).toBe(false);
+  it('requires a mapped open job', async () => {
+    expect((await validateMapping(undefined)).ok).toBe(false);
+    expect((await validateMapping('no-such-job')).ok).toBe(false);
     const firstJob = getOpenJobs()[0];
-    expect(validateMapping(firstJob.id)).toEqual({ ok: true });
+    expect(await validateMapping(firstJob.id)).toEqual({ ok: true });
   });
 });
 

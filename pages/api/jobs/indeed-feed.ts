@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { enforceRateLimit } from '@/lib/rate-limit';
 import { buildIndeedFeed } from '@/lib/external-jobs';
-import { getOpenJobs } from '@/lib/jobs';
+import { getMergedOpenJobs } from '@/lib/job-board';
 
 /**
  * GET /api/jobs/indeed-feed — Indeed Job Sync XML feed.
@@ -36,7 +36,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(200).send(cache.xml);
   }
 
-  const xml = buildIndeedFeed(getOpenJobs(), {
+  const xml = buildIndeedFeed(await getMergedOpenJobs(), {
     siteUrl: siteUrl(),
     contactEmail: process.env.INDEED_CONTACT_EMAIL || 'careers@sansmercantile.com',
   });

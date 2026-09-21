@@ -87,9 +87,11 @@ const BenefitCard = ({ icon, title, description, iconType }: any) => (
 
 const ApplicationFormModal = ({
   jobId,
+  jobs,
   onClose,
 }: {
   jobId: string;
+  jobs: JobPosting[];
   onClose: () => void;
 }) => {
   const [formData, setFormData] = useState({
@@ -106,7 +108,7 @@ const ApplicationFormModal = ({
   // Honeypot: bots fill this hidden field, humans never see it.
   const websiteRef = useRef('');
 
-  const job = jobPostings.find(j => j.id === jobId);
+  const job = jobs.find(j => j.id === jobId);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -488,6 +490,9 @@ export default function CareersPage() {
   const [showApplicationForm, setShowApplicationForm] = useState(false);
   const [applicationJobId, setApplicationJobId] = useState<string | null>(null);
   const [filterDept, setFilterDept] = useState<string | null>(null);
+  // Merged open roles (admin posts + static seed) from /api/jobs/list.
+  // Falls back to the static list when the API is unreachable.
+  const [allJobs, setAllJobs] = useState<JobPosting[]>(jobPostings);
   // Externally listed roles (LinkedIn / Indeed) merged from /api/jobs/board.
   // Apply always opens our own application journey for the mapped job.
   const [externalJobs, setExternalJobs] = useState<BoardListing[]>([]);
@@ -503,24 +508,35 @@ export default function CareersPage() {
       .catch(() => {});
   }, []);
 
+  useEffect(() => {
+    fetch('/api/jobs/list/')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (Array.isArray(data?.jobs) && data.jobs.length > 0) {
+          setAllJobs(data.jobs);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
   // Deep link: /careers?apply=<jobId> opens our application journey directly,
   // so LinkedIn/Indeed posts can point candidates here instead of Easy Apply.
   useEffect(() => {
     if (!router.isReady) return;
     const applyId = typeof router.query.apply === 'string' ? router.query.apply : null;
     if (!applyId) return;
-    const job = jobPostings.find((j) => j.id === applyId && (j.status ?? 'open') === 'open');
+    const job = allJobs.find((j) => j.id === applyId && (j.status ?? 'open') === 'open');
     if (job) {
       setApplicationJobId(job.id);
       setShowApplicationForm(true);
     }
-  }, [router.isReady, router.query.apply]);
+  }, [router.isReady, router.query.apply, allJobs]);
 
-  const openJobs = filterDept 
-    ? jobPostings.filter(j => (j.status ?? 'open') === 'open' && j.department === filterDept)
-    : jobPostings.filter(j => (j.status ?? 'open') === 'open');
+  const openJobs = filterDept
+    ? allJobs.filter(j => (j.status ?? 'open') === 'open' && j.department === filterDept)
+    : allJobs.filter(j => (j.status ?? 'open') === 'open');
 
-  const departments = Array.from(new Set(jobPostings.map(j => j.department)));
+  const departments = Array.from(new Set(allJobs.map(j => j.department)));
 
   const handleApplyClick = (job: JobPosting) => {
     setApplicationJobId(job.id);
@@ -625,7 +641,7 @@ export default function CareersPage() {
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {externalJobs.map((listing) => {
-                const job = jobPostings.find((j) => j.id === listing.jobId);
+                const job = allJobs.find((j) => j.id === listing.jobId);
                 return (
                   <div
                     key={`${listing.source}-${listing.jobId}`}
@@ -758,6 +774,7 @@ export default function CareersPage() {
       {showApplicationForm && applicationJobId && (
         <ApplicationFormModal
           jobId={applicationJobId}
+          jobs={allJobs}
           onClose={() => {
             setShowApplicationForm(false);
             setApplicationJobId(null);
