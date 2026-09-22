@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getDb } from '@/lib/mongodb';
-import { verifyPassword, createSessionToken, isAllowedAdminEmail } from '@/lib/auth';
+import { verifyPassword, createSessionToken } from '@/lib/auth';
 import { enforceRateLimit } from '@/lib/rate-limit';
 
 type LoginBody = {
@@ -30,7 +30,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       active: true,
     });
 
-    if (!user || !user.passwordHash || !verifyPassword(password, user.passwordHash) || !isAllowedAdminEmail(user.email)) {
+    // Any active account may sign in (HR-provisioned members included).
+    // Capabilities are gated per-route by role; self-registration stays
+    // allowlisted in register.ts.
+    if (!user || !user.passwordHash || !verifyPassword(password, user.passwordHash)) {
       return res.status(401).json({ success: false, message: 'Invalid credentials.' });
     }
 

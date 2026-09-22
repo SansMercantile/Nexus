@@ -3,6 +3,7 @@ import {
   hashPassword,
   verifyPassword,
   isAllowedAdminEmail,
+  getAdminRole,
   createSessionToken,
   verifySessionToken,
 } from './auth';
@@ -40,6 +41,21 @@ describe('admin email allowlist', () => {
     expect(isAllowedAdminEmail('attacker@example.com')).toBe(false);
     expect(isAllowedAdminEmail('')).toBe(false);
     expect(isAllowedAdminEmail(undefined)).toBe(false);
+  });
+});
+
+describe('admin roles', () => {
+  it('maps the founding team to roles', () => {
+    expect(getAdminRole('resources@sansmercantile.com')).toBe('hr');
+    expect(getAdminRole('hello@sansmercantile.com')).toBe('administrator');
+    expect(getAdminRole('mezzoforte@sansmercantile.com')).toBe('ceo');
+    expect(getAdminRole('careers@sansmercantile.com')).toBe('hr');
+    expect(getAdminRole('MEZZOFORTE@SANSMERCANTILE.COM')).toBe('ceo');
+  });
+
+  it('returns null outside the map', () => {
+    expect(getAdminRole('attacker@example.com')).toBeNull();
+    expect(getAdminRole(undefined)).toBeNull();
   });
 });
 

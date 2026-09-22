@@ -18,7 +18,14 @@ function getClientPromise() {
   }
 
   if (!clientPromise) {
-    const client = new MongoClient(uri);
+    // Fail fast: without these timeouts an unreachable host hangs until the
+    // serverless function itself times out (surfacing as a bare HTML 500
+    // instead of our JSON error). 5s keeps logins interactive.
+    const client = new MongoClient(uri, {
+      serverSelectionTimeoutMS: 5000,
+      connectTimeoutMS: 5000,
+      socketTimeoutMS: 20000,
+    });
     clientPromise = globalThis._mongoClientPromise || client.connect();
 
     if (process.env.NODE_ENV !== 'production') {

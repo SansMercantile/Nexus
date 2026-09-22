@@ -60,6 +60,14 @@ export default function AdminHome({ user, stats }: { user: { name: string; email
               <h3 className="text-xl font-semibold mb-3">Compliance</h3>
               <p className="text-nexus-gray-400">Review audit events and security logs.</p>
             </Link>
+            <Link href="/admin/team" className="block rounded-3xl border border-nexus-gold/20 bg-[#111827]/80 p-8 text-white hover:border-nexus-gold/40 transition">
+              <h3 className="text-xl font-semibold mb-3">Team</h3>
+              <p className="text-nexus-gray-400">Users, roles, departments, and toolsets.</p>
+            </Link>
+            <Link href="/admin/agents" className="block rounded-3xl border border-nexus-gold/20 bg-[#111827]/80 p-8 text-white hover:border-nexus-gold/40 transition">
+              <h3 className="text-xl font-semibold mb-3">Agents</h3>
+              <p className="text-nexus-gray-400">Live multi-agent corporate simulation.</p>
+            </Link>
             <Link href="/admin/content" className="block rounded-3xl border border-nexus-gold/20 bg-[#111827]/80 p-8 text-white hover:border-nexus-gold/40 transition">
               <h3 className="text-xl font-semibold mb-3">Content Studio</h3>
               <p className="text-nexus-gray-400">Publish blogs and press releases.</p>

@@ -10,7 +10,7 @@ export function hashPassword(plain: string): string {
   return salt + ':' + hash;
 }
 
-export type AdminRole = 'hr' | 'administrator' | 'ceo';
+export type AdminRole = 'hr' | 'administrator' | 'ceo' | 'member';
 
 const ADMIN_USERS: Record<string, AdminRole> = {
   'resources@sansmercantile.com': 'hr',
@@ -118,8 +118,9 @@ export function getCookieValue(cookieHeader: string | undefined, name: string): 
 export type PortalSessionUser = { email: string; name?: string; role?: string };
 
 /**
- * Validates the portal_session cookie against the DB (active + allowlisted).
- * Returns the session user or null. Use in API routes that require admin auth.
+ * Validates the portal_session cookie. Any ACTIVE portal user yields a
+ * session (HR-created members included); the founding-team allowlist
+ * (isAllowedAdminEmail) separately gates admin pages and self-registration.
  */
 export async function getPortalSessionUser(req: {
   headers: { cookie?: string };
@@ -128,7 +129,6 @@ export async function getPortalSessionUser(req: {
   if (!token) return null;
   const payload = verifySessionToken(token);
   if (!payload || typeof payload.email !== 'string') return null;
-  if (!isAllowedAdminEmail(payload.email)) return null;
 
   try {
     const { getDb } = await import('@/lib/mongodb');
@@ -136,9 +136,30 @@ export async function getPortalSessionUser(req: {
     const user = await db
       .collection('portal_users')
       .findOne({ email: payload.email.toLowerCase(), active: true });
-    if (!user || !isAllowedAdminEmail(user.email)) return null;
+    if (!user) return null;
     return { email: user.email, name: user.name, role: user.role };
   } catch {
     return null;
   }
+}
+
+/**
+ * Enforces one of the given staff roles (HR workflows). Sends 401/403 and
+ * returns null when the caller lacks access, otherwise the session user.
+ */
+export async function requireStaffRole(
+  req: { headers: { cookie?: string } },
+  res: { status: (code: number) => { json: (body: unknown) => void } },
+  allowed: AdminRole[]
+): Promise<PortalSessionUser | null> {
+  const session = await getPortalSessionUser(req);
+  if (!session) {
+    res.status(401).json({ success: false, message: 'Authentication required.' });
+    return null;
+  }
+  if (!allowed.includes(session.role as AdminRole)) {
+    res.status(403).json({ success: false, message: 'Insufficient permissions for this operation.' });
+    return null;
+  }
+  return session;
 }

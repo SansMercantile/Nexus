@@ -135,6 +135,30 @@ test('content list serves published posts without a database', async ({ request 
   expect(Array.isArray(body.posts)).toBe(true);
 });
 
+test('departments list serves toolsets without a database', async ({ request }) => {
+  const res = await request.get('/api/departments/list/');
+  expect(res.status()).toBe(200);
+  const body = await res.json();
+  expect(body.success).toBe(true);
+  expect(Array.isArray(body.departments)).toBe(true);
+  expect(body.departments.length).toBeGreaterThan(0);
+  expect(
+    body.departments.every(
+      (d: any) => typeof d.id === 'string' && Array.isArray(d.tools) && d.tools.length > 0
+    )
+  ).toBe(true);
+});
+
+test('team management requires HR roles', async ({ request }) => {
+  const usersList = await request.get('/api/users/manage/');
+  expect(usersList.status()).toBe(401);
+  const usersCreate = await request.post('/api/users/manage/', { data: { email: 'x@y.z' } });
+  expect(usersCreate.status()).toBe(401);
+  const deptsList = await request.get('/api/departments/manage/');
+  expect(deptsList.status()).toBe(401);
+  const deptsCreate = await request.post('/api/departments/manage/', { data: { id: 'x' } });
+  expect(deptsCreate.status()).toBe(401);
+});
 test('content manage requires an admin session', async ({ request }) => {
   const list = await request.get('/api/content/manage/');
   expect(list.status()).toBe(401);
