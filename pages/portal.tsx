@@ -156,13 +156,10 @@ export default function Portal() {
 
           <p className="text-center text-nexus-gray-400 text-sm mt-6">
             Need access?{' '}
-            <Link href="/portal/register" className="text-nexus-gold hover:text-nexus-gold/80 transition-colors">
-              Create an account
-            </Link>{' '}
-            or{' '}
             <Link href="/contact" className="text-nexus-gold hover:text-nexus-gold/80 transition-colors">
-              contact our team
-            </Link>
+              Contact our team
+            </Link>{' '}
+            — accounts are created by an administrator.
           </p>
         </motion.div>
       </div>
