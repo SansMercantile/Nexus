@@ -26,6 +26,25 @@ curl -X POST https://www.sansmercantile.com/api/portal/login/ \
   -d '{"email":"nobody@example.com","password":"wrongpassword1"}'
 ```
 
+## Login 401s with correct credentials
+
+Set `DIAG_KEY` in Vercel env, redeploy, then query diagnostics
+(replace the key and email):
+
+```bash
+curl 'https://www.sansmercantile.com/api/diag?key=YOUR_DIAG_KEY&email=hello@sansmercantile.com'
+```
+
+Read the `portal` block:
+- `users: 0` → production is pointing at an empty/different database than
+  the one holding the accounts. Fix `MONGODB_URI` / `MONGODB_DB` and redeploy.
+- `accountExists: false` → that address was never provisioned here.
+- `accountActive: false` → reactivate it via `/admin/team` or Mongo directly.
+- `accountExists: true, accountActive: true` → the address is fine; the
+  password is being mistyped (copy-paste it, don't retype).
+- `jwtConfigured: false` → logins that pass the password check still 500;
+  set `PORTAL_JWT_SECRET` and redeploy.
+
 ## Console noise that is NOT our bug
 
 `worker-content-script-base.js ... Message emit failed: The message port

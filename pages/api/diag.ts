@@ -4,6 +4,13 @@ import { getDb } from '@/lib/mongodb';
 type DiagResult = {
   mongodb: { ok: boolean; detail: string };
   smtp: { ok: boolean; detail: string };
+  portal: {
+    jwtConfigured: boolean;
+    users: number | null;
+    accountQueried: string | null;
+    accountExists: boolean | null;
+    accountActive: boolean | null;
+  };
   env: Record<string, boolean>;
 };
 
@@ -19,6 +26,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const result: DiagResult = {
     mongodb: { ok: false, detail: '' },
     smtp: { ok: false, detail: '' },
+    portal: {
+      jwtConfigured: !!process.env.PORTAL_JWT_SECRET,
+      users: null,
+      accountQueried: null,
+      accountExists: null,
+      accountActive: null,
+    },
     env: {
       MONGODB_URI: !!process.env.MONGODB_URI,
       MONGODB_DB: !!process.env.MONGODB_DB,
@@ -40,6 +54,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       ok: true,
       detail: `Connected to db "${db.databaseName}". Collections: ${collections.map(c => c.name).join(', ') || '(none yet)'}`,
     };
+
+    // Portal account diagnostics. Add &email= to check one account's
+    // existence + active flag (safe: key-gated, no hashes or PII beyond
+    // the queried address itself). Answers "is my login 401 because the
+    // account is missing, inactive, or the password?"
+    result.portal.users = await db.collection('portal_users').countDocuments();
+    const queriedEmail = typeof req.query.email === 'string' ? req.query.email.toLowerCase().trim() : '';
+    if (queriedEmail) {
+      result.portal.accountQueried = queriedEmail;
+      const account = await db.collection('portal_users').findOne(
+        { email: queriedEmail },
+        { projection: { active: 1 } }
+      );
+      result.portal.accountExists = !!account;
+      result.portal.accountActive = account ? account.active !== false : null;
+    }
   } catch (err: any) {
     result.mongodb = { ok: false, detail: err?.message || String(err) };
   }
