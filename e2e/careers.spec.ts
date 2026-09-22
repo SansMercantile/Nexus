@@ -66,6 +66,24 @@ test('application events require token and event', async ({ request }) => {
   const res = await request.post('/api/applications/events/', { data: {} });
   expect(res.status()).toBe(400);
 });
+
+test('exam session endpoints validate input without a database', async ({ request }) => {
+  const beginEmpty = await request.post('/api/applications/begin/', { data: {} });
+  expect(beginEmpty.status()).toBe(400);
+  const beginUnknown = await request.post('/api/applications/begin/', {
+    data: { token: 'deadbeef', jobId: 'director-ai-product-strategy', email: 'c@example.com' },
+  });
+  expect([404, 500]).toContain(beginUnknown.status());
+
+  const progressEmpty = await request.post('/api/applications/progress/', { data: {} });
+  expect(progressEmpty.status()).toBe(400);
+
+  const questionsMissing = await request.get('/api/applications/questions/?token=x');
+  expect(questionsMissing.status()).toBe(400);
+
+  const reviewAnon = await request.get('/api/applications/review/');
+  expect(reviewAnon.status()).toBe(401);
+});
 test('jobs board serves internal openings without a database', async ({ request }) => {
   const res = await request.get('/api/jobs/board/');
   expect(res.status()).toBe(200);

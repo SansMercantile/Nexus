@@ -6,6 +6,7 @@ import {
   validateAssessmentCatalog,
   canSubmitFinal,
   evaluateIntegrity,
+  evaluateProgression,
   countCheatEvents,
   RETAKE_ADMIN_EMAIL,
 } from './assessments';
@@ -187,8 +188,7 @@ describe('evaluateIntegrity', () => {
   });
 });
 
-describe('countCheatEvents', () => {
-  it('counts violation-type events only', () => {
+describe('countCheatEvents', () => {  it('counts violation-type events only', () => {
     expect(
       countCheatEvents([
         { event: 'cheat_alert' },
@@ -206,5 +206,34 @@ describe('countCheatEvents', () => {
   it('handles non-arrays', () => {
     expect(countCheatEvents(undefined)).toBe(0);
     expect(countCheatEvents('cheat_alert')).toBe(0);
+  });
+});
+
+describe('evaluateProgression', () => {
+  const order = ['technical', 'communication'] as const;
+  const ordered = [...order] as ('technical' | 'communication')[];
+
+  it('passes ordered, well-paced sections', () => {
+    const now = 1_000_000;
+    const result = evaluateProgression(ordered, { technical: now, communication: now + 120_000 });
+    expect(result).toEqual({ missing: [], rushed: false });
+  });
+
+  it('reports missing sections', () => {
+    const result = evaluateProgression(ordered, { technical: 1_000_000 });
+    expect(result.missing).toEqual(['communication']);
+    expect(result.rushed).toBe(false);
+  });
+
+  it('flags rushed consecutive sections', () => {
+    const now = 1_000_000;
+    const result = evaluateProgression(ordered, { technical: now, communication: now + 10_000 });
+    expect(result.missing).toEqual([]);
+    expect(result.rushed).toBe(true);
+  });
+
+  it('ignores malformed timestamps', () => {
+    const result = evaluateProgression(ordered, { technical: NaN } as Record<string, number>);
+    expect(result.missing).toContain('technical');
   });
 });

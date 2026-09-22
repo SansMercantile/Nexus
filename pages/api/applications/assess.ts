@@ -9,7 +9,9 @@ import {
   canSubmitFinal,
   RETAKE_DENIED_MESSAGE,
   evaluateIntegrity,
+  evaluateProgression,
   countCheatEvents,
+  MIN_EXAM_DURATION_MS,
 } from '@/lib/assessments';
 import { findMergedJob } from '@/lib/job-board';
 import type { AssessmentType } from '@/lib/jobs';
@@ -110,12 +112,26 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // Anti-cheat enforcement: re-verify everything observable server-side.
     // Client proctoring can be bypassed, so any integrity flag forces a
-    // human 'review' verdict instead of an AI pass.
-    const rawProctoring = (req.body as Record<string, unknown>).proctoring;
+    // human 'review' verdict instead of an AI pass. The exam clock, section
+    // order, and pacing all come from server-recorded state — client
+    // timestamps are treated as untrusted evidence only.
+    const bodyRecord = req.body as Record<string, unknown>;
+    const rawProctoring = bodyRecord.proctoring;
     const proctoring =
       rawProctoring !== null && typeof rawProctoring === 'object'
         ? (rawProctoring as Record<string, unknown>)
         : null;
+    const sessionRecord = (application.examSession || {}) as Record<string, unknown>;
+    if (
+      typeof bodyRecord.nonce !== 'string' ||
+      typeof sessionRecord.nonce !== 'string' ||
+      bodyRecord.nonce !== sessionRecord.nonce
+    ) {
+      return res.status(403).json({
+        success: false,
+        message: 'Exam session is invalid or expired. Re-open the assessment from your confirmation email link.',
+      });
+    }
     const cheatEventCount = countCheatEvents(application.assessmentEvents);
     const integrity = evaluateIntegrity({
       proctoring,
@@ -123,15 +139,40 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       answers: assessmentResponses,
       questionCount: Object.keys(assessmentResponses).length,
     });
-    const finalDecision = integrity.flags.length > 0 ? 'review' : decision;
+    const flags = [...integrity.flags];
+    // Server clock: duration measured from the session opened by
+    // /api/applications/begin — immune to fabricated client timestamps.
+    const serverStartedMs =
+      typeof sessionRecord.startedAt === 'string' ? Date.parse(sessionRecord.startedAt) : NaN;
+    if (Number.isNaN(serverStartedMs)) {
+      flags.push('no-server-session-clock');
+    } else if (Date.now() - serverStartedMs < MIN_EXAM_DURATION_MS) {
+      flags.push('too-fast');
+    }
+    // Ordered progression from server-recorded section completions.
+    const sectionEpochs: Record<string, number> = {};
+    const storedSections = sessionRecord.sections;
+    if (storedSections !== null && typeof storedSections === 'object') {
+      Object.keys(storedSections as Record<string, unknown>).forEach((key) => {
+        const value = (storedSections as Record<string, unknown>)[key];
+        if (typeof value === 'string') {
+          const epoch = Date.parse(value);
+          if (!Number.isNaN(epoch)) sectionEpochs[key] = epoch;
+        }
+      });
+    }
+    const progression = evaluateProgression(job.assessments as AssessmentType[], sectionEpochs);
+    if (progression.missing.length > 0) flags.push('unverified-progression');
+    if (progression.rushed) flags.push('rushed-progression');
+    const finalDecision = flags.length > 0 ? 'review' : decision;
     const finalFeedback =
-      integrity.flags.length > 0
-        ? `${feedback}\n\nIntegrity flags requiring human review: ${integrity.flags.join(', ')}.`
+      flags.length > 0
+        ? `${feedback}\n\nIntegrity flags requiring human review: ${flags.join(', ')}.`
         : feedback;
     const integrityRecord = {
-      flags: integrity.flags,
+      flags,
       cheatEventCount,
-      durationMs: integrity.durationMs,
+      durationMs: Number.isNaN(serverStartedMs) ? integrity.durationMs : Date.now() - serverStartedMs,
       proctoring: {
         camera: proctoring?.camera === true,
         mic: proctoring?.mic === true,
@@ -167,6 +208,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         reviewedAt,
         attempt: priorAttempts + 1,
       },
+      // Single-use nonce: the session cannot finalize twice.
+      'examSession.nonce': null,
+      'examSession.completedAt': reviewedAt,
     };
 
     // Atomic claim: the write only lands if no review exists yet or a retake

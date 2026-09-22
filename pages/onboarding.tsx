@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 import { fadeInUp, staggerContainer } from '@/lib/animations';
 import { useRouter } from 'next/router';
 import { jobPostings, assessmentConfigs, type AssessmentType } from '@/lib/jobs';
-import { assessmentQuestions } from '@/lib/assessments';
 import type { JobPosting } from '@/lib/jobs';
 import posthog from 'posthog-js';
 
@@ -38,7 +37,15 @@ export default function Onboarding() {
   const [alreadySubmittedAt, setAlreadySubmittedAt] = useState<string | null>(null);
   // Merged open roles (admin posts + static seed); falls back to static.
   const [allJobs, setAllJobs] = useState<JobPosting[]>(jobPostings);
-
+  // Server-timed exam session (nonce issued by /api/applications/begin).
+  const [examNonce, setExamNonce] = useState<string | null>(null);
+  // Current section questions, released server-side one section at a time.
+  const [sectionQuestions, setSectionQuestions] = useState<string[]>([]);
+  const [questionsLoading, setQuestionsLoading] = useState(false);
+  const [questionsError, setQuestionsError] = useState<string | null>(null);
+  const [questionsAttempt, setQuestionsAttempt] = useState(0);
+  // Section progress posts that failed to send; retried before final submit.
+  const failedProgressRef = useRef<string[]>([]);
   useEffect(() => {
     fetch('/api/jobs/list/')
       .then((res) => (res.ok ? res.json() : null))
@@ -163,7 +170,64 @@ export default function Onboarding() {
   const assessmentIds = job?.assessments || [];
   const currentAssessmentId = assessmentIds[currentAssessmentIndex] as AssessmentType | undefined;
   const currentAssessment = currentAssessmentId ? assessmentConfigs[currentAssessmentId] : null;
-  const currentQuestions = currentAssessmentId ? (assessmentQuestions[currentAssessmentId] || []) : [];
+  // Section questions are released server-side one section at a time so they
+  // cannot be pre-read or answered out of order.
+  const currentQuestions = sectionQuestions;
+
+  // Open (or resume) the server-timed exam session once proctoring is done.
+  useEffect(() => {
+    if (!router.isReady || !tokenValid || !proctoringReady || !jobId || !email || !viewToken || examNonce) {
+      return;
+    }
+    let cancelled = false;
+    fetch('/api/applications/begin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token: viewToken, jobId, email }),
+    })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (!cancelled && data && typeof data.nonce === 'string') {
+          setExamNonce(data.nonce);
+        }
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [router.isReady, tokenValid, proctoringReady, jobId, email, viewToken, examNonce]);
+
+  // Fetch the current section's questions from the server.
+  useEffect(() => {
+    if (!router.isReady || !tokenValid || !currentAssessmentId || !jobId || !email || !viewToken) {
+      return;
+    }
+    setQuestionsLoading(true);
+    setQuestionsError(null);
+    let cancelled = false;
+    const params = new URLSearchParams({ token: viewToken, jobId, email, assessmentId: currentAssessmentId });
+    fetch(`/api/applications/questions?${params.toString()}`)
+      .then(async (res) => {
+        const data = await res.json().catch(() => null);
+        if (!res.ok) throw new Error((data && data.message) || 'Unable to load questions.');
+        return data;
+      })
+      .then((data) => {
+        if (!cancelled) {
+          setSectionQuestions(Array.isArray(data?.questions) ? data.questions : []);
+          setQuestionsLoading(false);
+        }
+      })
+      .catch((err) => {
+        if (!cancelled) {
+          setQuestionsError(err instanceof Error ? err.message : 'Unable to load questions.');
+          setQuestionsLoading(false);
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [router.isReady, tokenValid, currentAssessmentId, jobId, email, viewToken, questionsAttempt]);
 
   const captureExamEvent = (event: string, props: Record<string, any> = {}) => {
     if (!job || !email) return;
@@ -327,6 +391,10 @@ export default function Onboarding() {
       alert('You must complete the proctoring steps before starting the assessment.');
       return;
     }
+    if (questionsError || currentQuestions.length === 0) {
+      alert('Questions for this section have not loaded yet. Please wait or use Retry, then answer all questions.');
+      return;
+    }
     const unanswered = currentQuestions.filter((_, i) => {
       const val = assessmentResponses[currentAssessmentId + '-q' + i];
       return !val || !val.trim();
@@ -334,6 +402,19 @@ export default function Onboarding() {
     if (unanswered.length > 0) {
       alert('Please answer all ' + currentQuestions.length + ' questions before continuing.');
       return;
+    }
+    // Record server-side section completion (ordering + pacing evidence).
+    // Failures are queued and retried before the final submit.
+    if (currentAssessmentId && viewToken && jobId && email) {
+      fetch('/api/applications/progress', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: viewToken, jobId, email, nonce: examNonce, assessmentId: currentAssessmentId }),
+      }).catch(() => {
+        if (currentAssessmentId && !failedProgressRef.current.includes(currentAssessmentId)) {
+          failedProgressRef.current.push(currentAssessmentId);
+        }
+      });
     }
     setSubmitting(true);
     captureExamEvent('assessment_completed', {
@@ -374,9 +455,54 @@ export default function Onboarding() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       captureExamEvent('onboarding_completed');
-      let reviewOk = false;
-      try {
-        const reviewRes = await fetch('/api/applications/assess', {
+
+      const openSession = async (): Promise<string | null> => {
+        if (examNonce) return examNonce;
+        try {
+          const res = await fetch('/api/applications/begin', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ token: viewToken, jobId, email }),
+          });
+          const data = await res.json().catch(() => null);
+          if (res.ok && data && typeof data.nonce === 'string') {
+            setExamNonce(data.nonce);
+            return data.nonce as string;
+          }
+        } catch {
+          // fall through to the failure path below
+        }
+        return null;
+      };
+
+      // Retry any section progress posts that failed mid-exam.
+      const pendingSections = [...failedProgressRef.current];
+      failedProgressRef.current = [];
+      for (const assessmentId of pendingSections) {
+        try {
+          const progressRes = await fetch('/api/applications/progress', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ token: viewToken, jobId, email, nonce: examNonce, assessmentId }),
+          });
+          if (!progressRes.ok) failedProgressRef.current.push(assessmentId);
+        } catch {
+          failedProgressRef.current.push(assessmentId);
+        }
+      }
+
+      const sessionNonce = await openSession();
+      if (!sessionNonce) {
+        alert(
+          'Could not establish a secure exam session. Please check your connection, then try again. ' +
+            'If this persists, re-open the assessment from your confirmation email.'
+        );
+        setSubmitting(false);
+        return;
+      }
+
+      const submitFinal = async (attNonce: string) =>
+        fetch('/api/applications/assess', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -384,6 +510,7 @@ export default function Onboarding() {
             jobId,
             email,
             assessmentResponses: nextAllResponses,
+            nonce: attNonce,
             proctoring: {
               camera: cameraReady,
               mic: micReady,
@@ -392,16 +519,37 @@ export default function Onboarding() {
             },
           }),
         });
+
+      let reviewOk = false;
+      try {
+        const readDenial = async (res: Response): Promise<string | null> => {
+          const data = await res.json().catch(() => null);
+          return data && typeof data.message === 'string' ? data.message : null;
+        };
+        let reviewRes = await submitFinal(sessionNonce);
         if (reviewRes.status === 403) {
-          // Already submitted (or token/job mismatch): surface the reason,
-          // do not advance, do not retry blindly.
-          const data = await reviewRes.json().catch(() => null);
-          alert(
-            (data && typeof data.message === 'string' && data.message) ||
-              'This assessment has already been submitted. Contact hello@sansmercantile.com to request a retake.'
-          );
-          setSubmitting(false);
-          return;
+          let denial = await readDenial(reviewRes);
+          if (denial && /session/i.test(denial)) {
+            // Session rotated or lost: open a fresh one and retry exactly once.
+            setExamNonce(null);
+            const freshNonce = await openSession();
+            if (freshNonce) {
+              reviewRes = await submitFinal(freshNonce);
+              if (reviewRes.status === 403) {
+                denial = await readDenial(reviewRes);
+              } else {
+                denial = null;
+              }
+            }
+          }
+          if (reviewRes.status === 403) {
+            alert(
+              denial ||
+                'This assessment has already been submitted. Contact hello@sansmercantile.com to request a retake.'
+            );
+            setSubmitting(false);
+            return;
+          }
         }
         reviewOk = reviewRes.ok;
         if (!reviewOk) {
@@ -529,6 +677,21 @@ export default function Onboarding() {
               </div>
 
               <div className="space-y-8">
+                {questionsLoading && (
+                  <p className="text-nexus-gray-400">Loading this section&apos;s questions securely…</p>
+                )}
+                {questionsError && !questionsLoading && (
+                  <div className="rounded-xl border border-red-500/30 bg-[#3f1c28]/80 p-4">
+                    <p className="text-red-200 text-sm mb-3">Could not load questions: {questionsError}</p>
+                    <button
+                      type="button"
+                      onClick={() => setQuestionsAttempt((a) => a + 1)}
+                      className="px-4 py-2 rounded-lg bg-nexus-gold text-black text-sm font-semibold hover:opacity-90"
+                    >
+                      Retry
+                    </button>
+                  </div>
+                )}
                 {currentQuestions.map((question, i) => (
                   <motion.div key={i} variants={fadeInUp} className="border border-nexus-gold/20 rounded-xl p-6 bg-nexus-dark/50">
                     <label className="block text-white font-semibold mb-3">Question {i + 1}</label>

@@ -190,8 +190,7 @@ export function evaluateIntegrity(input: IntegrityInput): IntegrityResult {
   return { flags, durationMs };
 }
 
-/** Violation-type exam events worth counting against a candidate. */
-const CHEAT_EVENT_PATTERN = /cheat|blocked|_lost|_blur/;
+/** Violation-type exam events worth counting against a candidate. */const CHEAT_EVENT_PATTERN = /cheat|blocked|_lost|_blur/;
 
 export function countCheatEvents(events: unknown): number {
   if (!Array.isArray(events)) return 0;
@@ -219,4 +218,47 @@ export function validateAssessmentCatalog(): string[] {
     }
   }
   return problems;
+}
+
+// ---------------------------------------------------------------------------
+// Server-timed exam sessions. Client timestamps are advisory only: the
+// server owns the exam clock (begin), the section order, and question
+// release, so fabricated timelines and skipped sections are observable.
+// ---------------------------------------------------------------------------
+
+/** Minimum wall-clock gap between consecutive section completions. */
+export const MIN_SECTION_GAP_MS = 45 * 1000;
+
+export interface ProgressionResult {
+  /** Required sections with no server-side completion record. */
+  missing: string[];
+  /** True when any consecutive sections were completed suspiciously fast. */
+  rushed: boolean;
+}
+
+/**
+ * Verify ordered section progression from server-recorded completion times
+ * (epoch ms keyed by assessment id). Pure and unit-tested.
+ */
+export function evaluateProgression(
+  jobAssessments: AssessmentType[],
+  completions: Record<string, number>
+): ProgressionResult {
+  const missing = jobAssessments.filter(
+    (id) => typeof completions[id] !== 'number' || Number.isNaN(completions[id])
+  );
+  let rushed = false;
+  let previous: number | null = null;
+  for (const id of jobAssessments) {
+    const at = completions[id];
+    if (typeof at !== 'number' || Number.isNaN(at)) {
+      previous = null;
+      continue;
+    }
+    if (previous !== null && at - previous < MIN_SECTION_GAP_MS) {
+      rushed = true;
+    }
+    previous = at;
+  }
+  return { missing, rushed };
 }
