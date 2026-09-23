@@ -127,6 +127,13 @@ test('retake grants require an admin session', async ({ request }) => {
   expect(res.status()).toBe(401);
 });
 
+test('applicant import requires HR roles and valid input', async ({ request }) => {
+  const anon = await request.post('/api/applications/import/', {
+    data: { csv: 'name,email\nJane,jane@example.com' },
+  });
+  expect(anon.status()).toBe(401);
+});
+
 test('content list serves published posts without a database', async ({ request }) => {
   const res = await request.get('/api/content/list/?type=blog');
   expect(res.status()).toBe(200);

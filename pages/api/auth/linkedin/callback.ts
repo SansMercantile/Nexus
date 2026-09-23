@@ -15,16 +15,24 @@ export default async function handler(
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { code } = req.body;
+  const { code, redirectUri } = req.body;
 
   if (!code) {
     return res.status(400).json({ error: 'Authorization code required' });
   }
 
+  // The exchange redirect URI must byte-match the authorize-time one.
+  // Rebuild it from the caller's origin (http(s) only) to avoid mismatch
+  // between preview/production hosts.
+  const originMatch =
+    typeof redirectUri === 'string' ? redirectUri.match(/^(https?:\/\/[^/]+)/) : null;
+  const safeRedirect = originMatch
+    ? `${originMatch[1]}/auth/linkedin`
+    : `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002'}/auth/linkedin`;
+
   try {
     const clientId = process.env.LINKEDIN_CLIENT_ID;
     const clientSecret = process.env.LINKEDIN_CLIENT_SECRET;
-    const redirectUri = `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002'}/auth/linkedin`;
 
     if (!clientId || !clientSecret) {
       return res.status(500).json({ error: 'LinkedIn client credentials not configured' });
@@ -38,7 +46,7 @@ export default async function handler(
       body: new URLSearchParams({
         grant_type: 'authorization_code',
         code,
-        redirect_uri: redirectUri,
+        redirect_uri: safeRedirect,
         client_id: clientId,
         client_secret: clientSecret,
       }),

@@ -174,6 +174,41 @@ export default function TeamAdmin({ user }: { user: { name: string; email: strin
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  // Bulk applicant import (e.g. LinkedIn exports).
+  const [importCsv, setImportCsv] = React.useState('');
+  const [importing, setImporting] = React.useState(false);
+  const [importResult, setImportResult] = React.useState<{
+    created: number;
+    duplicates: number;
+    errors: number;
+    results: Array<{ row: number; status: string; message: string }>;
+  } | null>(null);
+
+  const handleImport = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    setImportResult(null);
+    if (!importCsv.trim()) {
+      setError('Paste applicant CSV first.');
+      return;
+    }
+    setImporting(true);
+    try {
+      const res = await fetch('/api/applications/import', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ csv: importCsv }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data?.message || 'Import failed.');
+      setImportResult(data);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Import failed.');
+    } finally {
+      setImporting(false);
+    }
+  };
+
   const handleDeleteDepartment = async (id: string) => {
     if (!window.confirm(`Delete department "${id}"? Users must be reassigned first.`)) return;
     try {
@@ -456,6 +491,47 @@ export default function TeamAdmin({ user }: { user: { name: string; email: strin
               </div>
             ))}
           </div>
+
+          {/* Bulk applicant import */}
+          <h2 className="text-3xl font-bold text-white mt-12 mb-4">Applicant Import</h2>
+          <form
+            onSubmit={handleImport}
+            className="mb-6 rounded-2xl border border-nexus-gold/20 bg-[#0b1125] p-6 space-y-4"
+          >
+            <p className="text-sm text-nexus-gray-400">
+              Paste a CSV export (e.g. from LinkedIn) with a header row. Columns: name, email, phone,
+              jobId, jobTitle, postUrl, postDate, location, coverLetter. Each valid row creates an
+              application and sends the assessment invitation email.
+            </p>
+            <textarea
+              value={importCsv}
+              onChange={(e) => setImportCsv(e.target.value)}
+              rows={6}
+              placeholder={'name,email,jobTitle,postUrl,postDate\nJane Doe,jane@example.com,Director of AI Product Strategy,https://linkedin.com/posts/...,2026-09-01'}
+              className="w-full px-4 py-3 rounded-lg bg-white/5 border border-nexus-accent/20 text-white font-mono text-xs"
+            />
+            <button
+              type="submit"
+              disabled={importing}
+              className="px-8 py-3 rounded-xl bg-nexus-gold text-black font-semibold hover:opacity-90 disabled:opacity-50"
+            >
+              {importing ? 'Importing...' : 'Import & Invite'}
+            </button>
+            {importResult && (
+              <div className="text-sm rounded-xl border border-nexus-gold/20 p-4 space-y-1 max-h-64 overflow-y-auto">
+                <p className="text-white font-semibold">
+                  Created {importResult.created} • Duplicates {importResult.duplicates} • Errors {importResult.errors}
+                </p>
+                {importResult.results
+                  .filter((r) => r.status !== 'created')
+                  .map((r, i) => (
+                    <p key={i} className="text-nexus-gray-400">
+                      Row {r.row} [{r.status}]: {r.message}
+                    </p>
+                  ))}
+              </div>
+            )}
+          </form>
         </div>
       </div>
     </Layout>
