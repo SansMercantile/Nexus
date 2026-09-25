@@ -95,6 +95,20 @@ export default function LinkedInAuth() {
             >
               {copied ? 'Copied!' : 'Copy Token'}
             </button>
+            <div className="mt-4 flex gap-3 flex-wrap">
+              <button
+                onClick={() => router.push('/admin/team')}
+                className="px-6 py-2 rounded-lg border border-nexus-gold text-nexus-gold font-semibold hover:bg-nexus-gold/10"
+              >
+                Continue to Team Import →
+              </button>
+              <button
+                onClick={() => router.push('/media')}
+                className="px-6 py-2 rounded-lg border border-nexus-gray-500 text-nexus-gray-300 font-semibold hover:bg-white/10"
+              >
+                Go to Media
+              </button>
+            </div>
           </div>
         )}
       </div>
