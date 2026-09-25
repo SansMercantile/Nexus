@@ -48,8 +48,17 @@ export default function LinkedInAuth() {
           setDiagnostics(`Authorize redirect: ${redirectUri}\nExchange never completed (network/server error).`);
         });
     } else {
-      // Redirect to LinkedIn
-      const clientId = process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID || '866yfwyrx81h2d';
+      // Redirect to LinkedIn. The public client ID MUST match the server-side
+      // LINKEDIN_CLIENT_ID: authorizing as app A and exchanging as app B
+      // always fails with invalid_client. Never fall back to a guess.
+      const clientId = process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID;
+      if (!clientId) {
+        setError(
+          'LinkedIn is not configured on this deployment (missing NEXT_PUBLIC_LINKEDIN_CLIENT_ID). ' +
+            'Set it in Vercel env and redeploy — it bakes in at build time.'
+        );
+        return;
+      }
       const redirectUri = encodeURIComponent(`${window.location.origin}/auth/linkedin`);
       const scope = encodeURIComponent('r_organization_social w_organization_social openid profile email');
       const state = 'linkedin_auth_' + Date.now();
