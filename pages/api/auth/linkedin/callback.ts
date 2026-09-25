@@ -4,6 +4,7 @@ import path from 'path';
 
 type ResponseData = {
   access_token?: string;
+  redirectUri?: string;
   error?: string;
 };
 
@@ -35,7 +36,10 @@ export default async function handler(
     const clientSecret = process.env.LINKEDIN_CLIENT_SECRET;
 
     if (!clientId || !clientSecret) {
-      return res.status(500).json({ error: 'LinkedIn client credentials not configured' });
+      return res.status(500).json({
+        error: 'LinkedIn client credentials not configured',
+        redirectUri: safeRedirect,
+      });
     }
 
     const tokenResponse = await fetch('https://www.linkedin.com/oauth/v2/accessToken', {
@@ -54,24 +58,33 @@ export default async function handler(
 
     if (!tokenResponse.ok) {
       const errorText = await tokenResponse.text();
-      return res.status(tokenResponse.status).json({ error: `Token exchange failed: ${errorText}` });
+      return res.status(tokenResponse.status).json({
+        error: `Token exchange failed: ${errorText}`,
+        redirectUri: safeRedirect,
+      });
     }
 
     const tokenData = await tokenResponse.json();
 
-    // Save token to .env.local
-    const envPath = path.join(process.cwd(), '.env.local');
-    let envContent = fs.readFileSync(envPath, 'utf8');
+    // Best-effort local persistence. Serverless filesystems are read-only,
+    // so a failed write must never fail the exchange — the UI displays the
+    // token for copying into Vercel env instead.
+    try {
+      const envPath = path.join(process.cwd(), '.env.local');
+      let envContent = fs.readFileSync(envPath, 'utf8');
 
-    // Update LINKEDIN_ACCESS_TOKEN
-    const tokenRegex = /LINKEDIN_ACCESS_TOKEN=.*/;
-    if (tokenRegex.test(envContent)) {
-      envContent = envContent.replace(tokenRegex, `LINKEDIN_ACCESS_TOKEN=${tokenData.access_token}`);
-    } else {
-      envContent += `\nLINKEDIN_ACCESS_TOKEN=${tokenData.access_token}`;
+      // Update LINKEDIN_ACCESS_TOKEN
+      const tokenRegex = /LINKEDIN_ACCESS_TOKEN=.*/;
+      if (tokenRegex.test(envContent)) {
+        envContent = envContent.replace(tokenRegex, `LINKEDIN_ACCESS_TOKEN=${tokenData.access_token}`);
+      } else {
+        envContent += `\nLINKEDIN_ACCESS_TOKEN=${tokenData.access_token}`;
+      }
+
+      fs.writeFileSync(envPath, envContent);
+    } catch (persistErr) {
+      console.warn('LinkedIn token local persistence skipped:', (persistErr as Error)?.message);
     }
-
-    fs.writeFileSync(envPath, envContent);
 
     return res.status(200).json({ access_token: tokenData.access_token });
   } catch (error) {

@@ -1,17 +1,23 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 
 export default function LinkedInAuth() {
   const router = useRouter();
   const [token, setToken] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [diagnostics, setDiagnostics] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+  // OAuth codes are single-use: never exchange twice (a re-fired effect
+  // would burn the code and mask a successful first exchange).
+  const exchangedRef = useRef(false);
 
   useEffect(() => {
     const { code, state } = router.query;
     if (!router.isReady) return;
 
     if (code) {
+      if (exchangedRef.current) return;
+      exchangedRef.current = true;
       // Exchange code for token. The redirect URI must be identical to the
       // one used at authorize time, so the frontend sends back the exact
       // origin it used.
@@ -21,15 +27,26 @@ export default function LinkedInAuth() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ code, state, redirectUri }),
       })
-        .then(res => res.json())
-        .then(data => {
-          if (data.access_token) {
+        .then(async (res) => ({ ok: res.ok, status: res.status, data: await res.json().catch(() => null) }))
+        .then(({ ok, status, data }) => {
+          if (ok && data?.access_token) {
             setToken(data.access_token);
           } else {
-            setError('Authentication failed: ' + data.error);
+            setError('Authentication failed: ' + (data?.error || `HTTP ${status}`));
+            setDiagnostics(
+              [
+                `Authorize redirect: ${redirectUri}`,
+                `Exchange redirect sent: ${data?.redirectUri || '(server default — origin mismatch!)'}`,
+                `Exchange status: HTTP ${status}`,
+                `LinkedIn response: ${data?.error || 'none returned'}`,
+              ].join('\n')
+            );
           }
         })
-        .catch(err => setError('Error: ' + err.message));
+        .catch((err) => {
+          setError('Error: ' + err.message);
+          setDiagnostics(`Authorize redirect: ${redirectUri}\nExchange never completed (network/server error).`);
+        });
     } else {
       // Redirect to LinkedIn
       const clientId = process.env.NEXT_PUBLIC_LINKEDIN_CLIENT_ID || '866yfwyrx81h2d';
@@ -46,6 +63,11 @@ export default function LinkedInAuth() {
       <div className="text-center max-w-xl w-full">
         <h1 className="text-2xl text-white mb-4">Authenticating with LinkedIn...</h1>
         {error && <p className="text-red-400 mb-4">{error}</p>}
+        {diagnostics && (
+          <pre className="text-left text-xs text-nexus-gray-400 bg-black/40 border border-nexus-accent/20 rounded-xl p-4 mb-4 whitespace-pre-wrap break-all">
+            {diagnostics}
+          </pre>
+        )}
         {!error && !token && (
           <p className="text-nexus-gray-300">Please wait while we connect to your LinkedIn account.</p>
         )}
