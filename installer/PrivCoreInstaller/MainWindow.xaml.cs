@@ -4,6 +4,7 @@ using System.IO;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace PrivCoreInstaller;
 
@@ -11,7 +12,6 @@ public partial class MainWindow : Window
 {
     private const string SetupEngineResource = "PrivCoreInstaller.Payload.SetupEngine.exe";
     private const string PrivUrl = "https://priv.sansmercantile.com";
-    private int _agreementStage;
     private Process? _installerProcess;
     private string? _enginePath;
     private bool _installationSucceeded;
@@ -19,7 +19,12 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-        AgreementText.Text = ReadTextResource("PrivCoreInstaller.Legal.EULA.txt");
+        AgreementText.Text = ReadTextResource("PrivCoreInstaller.Legal.INSTALLATION_NOTICE.txt");
+    }
+
+    private void Window_Loaded(object sender, RoutedEventArgs e)
+    {
+        Clip = new RectangleGeometry(new Rect(0, 0, ActualWidth, ActualHeight), 16, 16);
     }
 
     private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -50,14 +55,13 @@ public partial class MainWindow : Window
 
     private void InstallButton_Click(object sender, RoutedEventArgs e)
     {
-        _agreementStage = 0;
-        AgreementTitle.Text = "End User License Agreement";
-        AgreementSubtitle.Text = "Review the agreement to continue.";
-        AgreementText.Text = ReadTextResource("PrivCoreInstaller.Legal.EULA.txt");
-        AcceptCheckBox.Content = "I have read and accept this agreement";
+        AgreementTitle.Text = "Before You Install";
+        AgreementSubtitle.Text = "How Priv Core connects to MetaTrader 5.";
+        AgreementText.Text = ReadTextResource("PrivCoreInstaller.Legal.INSTALLATION_NOTICE.txt");
+        AcceptCheckBox.Content = "I have read and understand this notice";
         AcceptCheckBox.IsChecked = false;
-        StartOnLogonCheckBox.Visibility = Visibility.Collapsed;
-        ContinueButton.Content = "Continue";
+        StartOnLogonCheckBox.Visibility = Visibility.Visible;
+        ContinueButton.Content = "Install";
         WelcomePage.Visibility = Visibility.Collapsed;
         AgreementPage.Visibility = Visibility.Visible;
     }
@@ -69,19 +73,6 @@ public partial class MainWindow : Window
 
     private void BackButton_Click(object sender, RoutedEventArgs e)
     {
-        if (_agreementStage == 1)
-        {
-            _agreementStage = 0;
-            AgreementTitle.Text = "End User License Agreement";
-            AgreementSubtitle.Text = "Review the agreement to continue.";
-            AgreementText.Text = ReadTextResource("PrivCoreInstaller.Legal.EULA.txt");
-            AcceptCheckBox.Content = "I have read and accept this agreement";
-            AcceptCheckBox.IsChecked = false;
-            StartOnLogonCheckBox.Visibility = Visibility.Collapsed;
-            ContinueButton.Content = "Continue";
-            return;
-        }
-
         AgreementPage.Visibility = Visibility.Collapsed;
         WelcomePage.Visibility = Visibility.Visible;
     }
@@ -90,19 +81,6 @@ public partial class MainWindow : Window
     {
         if (AcceptCheckBox.IsChecked != true)
         {
-            return;
-        }
-
-        if (_agreementStage == 0)
-        {
-            _agreementStage = 1;
-            AgreementTitle.Text = "Terms and Conditions";
-            AgreementSubtitle.Text = "Review and accept the terms to install Priv Core.";
-            AgreementText.Text = ReadTextResource("PrivCoreInstaller.Legal.TERMS.txt");
-            AcceptCheckBox.Content = "I have read and accept these terms";
-            AcceptCheckBox.IsChecked = false;
-            StartOnLogonCheckBox.Visibility = Visibility.Visible;
-            ContinueButton.Content = "Install";
             return;
         }
 
@@ -129,8 +107,8 @@ public partial class MainWindow : Window
                 Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "Priv", "Core");
             Directory.CreateDirectory(installDirectory);
             File.WriteAllText(
-                Path.Combine(installDirectory, "agreement-acceptance.txt"),
-                $"EULA and Terms accepted by {Environment.UserName} at {DateTimeOffset.Now:O}{Environment.NewLine}");
+                Path.Combine(installDirectory, "installation-notice-acknowledgement.txt"),
+                $"Installation notice acknowledged by {Environment.UserName} at {DateTimeOffset.Now:O}{Environment.NewLine}");
 
             _installationSucceeded = true;
             ProgressStatus.Text = "Priv Core is installed and ready to pair with MetaTrader 5.";
@@ -181,7 +159,7 @@ public partial class MainWindow : Window
             await resource.CopyToAsync(destination);
         }
 
-        ProgressStatus.Text = "Installing Priv Core and configuring the MT5 bridge...";
+        ProgressStatus.Text = "Checking prerequisites and installing Priv Core...";
         var startInfo = new ProcessStartInfo
         {
             FileName = _enginePath,

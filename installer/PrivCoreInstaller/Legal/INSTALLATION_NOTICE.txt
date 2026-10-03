@@ -1,0 +1,30 @@
+PRIV CORE - INSTALLATION AND DATA NOTICE
+========================================
+
+Priv Core connects a MetaTrader 5 terminal on this computer to your Priv
+account. The installer includes the Priv Core bridge runtime and its required
+Python components; you do not need to install Python or Python packages.
+If no MetaTrader 5 terminal is found, setup downloads and verifies the
+Deriv-branded 64-bit terminal before installing Priv Core. An internet
+connection is required for this download. Setup stops if the terminal cannot
+be installed or verified.
+
+The bridge uses outbound HTTPS requests to receive commands and return
+terminal responses. It does not open inbound network ports.
+
+When connected, Priv Core can send MetaTrader 5 account information, open
+positions, orders and command results to Priv. During pairing it also sends
+the computer hostname, operating-system platform and Python version. The MT5
+password is used only by the local MetaTrader 5 terminal connection and is not
+included in requests sent by the bridge to Priv.
+
+Automated order execution is currently restricted to Deriv MT5 accounts.
+The Priv server blocks automated execution for linked non-Deriv MT5 accounts.
+
+You can choose to start Priv Core when you sign in to Windows. After setup,
+sign in to your Deriv account in MetaTrader 5 and pair Priv Core with your
+Priv account. The terminal must be running and logged in for the bridge to
+connect.
+
+Trading involves risk of loss. Review your account, broker settings and
+orders before using automated execution.

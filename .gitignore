@@ -4,6 +4,7 @@ node_modules
 /installer/**/bin/
 /installer/**/obj/
 /installer/**/dist/
+/installer/**/Assets/PrivCore.ico
 /test-results/
 /playwright-report/
 ollama/

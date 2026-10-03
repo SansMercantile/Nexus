@@ -11,13 +11,19 @@ $engineSource = Join-Path $workspaceRoot 'constellation\priv\installer\dist\Priv
 $payloadDirectory = Join-Path $projectDirectory 'Payload'
 $engineDestination = Join-Path $payloadDirectory 'PrivCoreSetupEngine.exe'
 $outputDirectory = Join-Path $projectDirectory 'dist'
-$installerPath = Join-Path $outputDirectory 'PrivCoreSetup.exe'
+$installerPath = Join-Path $outputDirectory 'Priv Core Installer.exe'
+$iconGenerator = Join-Path $projectDirectory 'generate-icon.ps1'
 
 if (-not (Test-Path $engineSource)) {
     throw "Installer engine not found at '$engineSource'. Build constellation/priv/installer first."
 }
 
 New-Item -ItemType Directory -Path $payloadDirectory -Force | Out-Null
+& $iconGenerator
+if (-not (Test-Path (Join-Path $projectDirectory 'Assets\PrivCore.ico'))) {
+    throw 'Installer icon generation failed.'
+}
+
 if (-not (Test-Path $engineDestination) -or $RefreshEngine) {
     Copy-Item -LiteralPath $engineSource -Destination $engineDestination -Force
 } else {
