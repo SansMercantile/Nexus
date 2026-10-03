@@ -3,6 +3,7 @@ node_modules
 .next
 /installer/**/bin/
 /installer/**/obj/
+/installer/**/dist/
 /test-results/
 /playwright-report/
 ollama/

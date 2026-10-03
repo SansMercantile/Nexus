@@ -5,11 +5,18 @@
     <UseWPF>true</UseWPF>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyTitle>Priv Core Setup</AssemblyTitle>
+    <AssemblyCompany>Sans Mercantile</AssemblyCompany>
+    <Product>Priv Core</Product>
+    <Description>Priv Core for Windows</Description>
+    <Version>1.1.0</Version>
     <AssemblyName>PrivCoreSetup</AssemblyName>
     <RootNamespace>PrivCoreInstaller</RootNamespace>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Include="Legal\EULA.txt" LogicalName="PrivCoreInstaller.Legal.EULA.txt" />
     <EmbeddedResource Include="Legal\TERMS.txt" LogicalName="PrivCoreInstaller.Legal.TERMS.txt" />
+    <EmbeddedResource Include="Payload\PrivCoreSetupEngine.exe" LogicalName="PrivCoreInstaller.Payload.SetupEngine.exe" />
   </ItemGroup>
 </Project>

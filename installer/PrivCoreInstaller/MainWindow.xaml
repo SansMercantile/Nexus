@@ -1,10 +1,11 @@
 <Window x:Class="PrivCoreInstaller.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Priv Installer - v1.2"
+        Title="Priv Core Setup"
         Width="820" Height="510"
         WindowStyle="None" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
+        Closing="Window_Closing"
         AllowsTransparency="True" Background="Transparent"
         FontFamily="Segoe UI" TextOptions.TextFormattingMode="Display">
   <Border Background="#09090b" BorderBrush="#39393f" BorderThickness="1" CornerRadius="10">
@@ -15,8 +16,6 @@
       </Grid.RowDefinitions>
 
       <Grid Grid.Row="0" Background="#141417" MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
-        <TextBlock Text="Priv Installer · v1.2" Foreground="#b8b8c0" FontSize="12"
-                   VerticalAlignment="Center" Margin="16,0,0,0" />
         <Button x:Name="CloseButton" Content="×" Width="42" Height="35" Padding="0"
                 HorizontalAlignment="Right" VerticalAlignment="Top"
                 Background="Transparent" BorderThickness="0" Foreground="#f5a3bb"
