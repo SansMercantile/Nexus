@@ -1,0 +1,48 @@
+PRIV CORE - END USER LICENSE AGREEMENT (PLACEHOLDER)
+=====================================================
+
+DESIGN NOTE: The final design, wording and presentation of this agreement
+will be provided by the product owner before public release. This placeholder
+exists so that installation is gated behind an explicit acceptance step from
+day one.
+
+1. LICENSE GRANT. Priv grants you a personal, non-exclusive,
+   non-transferable, revocable licence to install and run Priv Core (the
+   "Software") on one computer for your own trading activity.
+
+2. WHAT THE SOFTWARE DOES. The Software attaches to the MetaTrader 5
+   terminal installed on your computer and forwards trading instructions
+   from your Priv account to that terminal over HTTPS. No inbound ports are
+   opened. Your MetaTrader 5 password stays on your machine and is never
+   transmitted to Priv.
+
+3. INTERNET REQUIRED. The Software must be able to reach Priv over the
+   internet to function; it reconnects and restarts automatically with
+   Windows.
+
+4. ELIGIBLE ACCOUNTS. Automated trading through the Software is supported
+   for Deriv MetaTrader 5 accounts only. Accounts with other MetaTrader 5
+   brokers may be connected for monitoring, but automated trading is blocked
+   and you must contact an administrator.
+
+5. YOUR RESPONSIBILITY. You are responsible for the accounts you connect,
+   for all trading activity executed through them, and for keeping your
+   Priv credentials secure.
+
+6. NO WARRANTY. THE SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
+   KIND, EXPRESS OR IMPLIED, INCLUDING FITNESS FOR A PARTICULAR PURPOSE AND
+   MERCHANTABILITY. TRADING INVOLVES RISK OF LOSS.
+
+7. LIMITATION OF LIABILITY. TO THE MAXIMUM EXTENT PERMITTED BY LAW, PRIV
+   SHALL NOT BE LIABLE FOR INDIRECT, INCIDENTAL OR CONSEQUENTIAL DAMAGES
+   ARISING FROM USE OF THE SOFTWARE.
+
+8. TERMINATION. This licence terminates automatically if you breach it.
+   Upon termination you must stop using and uninstall the Software.
+
+9. DATA. The Software transmits your MT5 login number, server name,
+   account metrics (balance, equity, leverage, trade permission) and trade
+   events. It does not transmit your MT5 password or terminal credentials.
+
+By continuing this installation you acknowledge that you have read and
+accept this agreement and the accompanying Terms & Conditions.

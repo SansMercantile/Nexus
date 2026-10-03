@@ -76,6 +76,13 @@ describe('getSystemBySlug', () => {
     }
   });
 
+  it('Priv Core Windows platform links to the AWS installer', () => {
+    const privCore = getSystemById('priv')?.applications?.find((app) => app.name === 'Priv Core');
+    expect(privCore?.platformUrls?.windows).toBe(
+      'https://sans-mercantile-priv-downloads.s3.us-east-1.amazonaws.com/PrivCoreSetup.exe',
+    );
+  });
+
   it('KEV Schools stays on the waitlist until its education domain is registered', () => {
     const schools = getSystemById('kev')?.applications?.find((a) => a.name === 'KEV Schools');
     expect(schools?.liveUrl).toBeUndefined();

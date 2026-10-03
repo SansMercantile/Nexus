@@ -1,0 +1,157 @@
+<Window x:Class="PrivCoreInstaller.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Priv Installer - v1.2"
+        Width="820" Height="510"
+        WindowStyle="None" ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        AllowsTransparency="True" Background="Transparent"
+        FontFamily="Segoe UI" TextOptions.TextFormattingMode="Display">
+  <Border Background="#09090b" BorderBrush="#39393f" BorderThickness="1" CornerRadius="10">
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="36" />
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+
+      <Grid Grid.Row="0" Background="#141417" MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+        <TextBlock Text="Priv Installer · v1.2" Foreground="#b8b8c0" FontSize="12"
+                   VerticalAlignment="Center" Margin="16,0,0,0" />
+        <Button x:Name="CloseButton" Content="×" Width="42" Height="35" Padding="0"
+                HorizontalAlignment="Right" VerticalAlignment="Top"
+                Background="Transparent" BorderThickness="0" Foreground="#f5a3bb"
+                FontSize="23" FontWeight="Light" Cursor="Hand"
+                Click="CloseButton_Click" ToolTip="Exit installer">
+          <Button.Template>
+            <ControlTemplate TargetType="Button">
+              <Border Background="{TemplateBinding Background}" CornerRadius="0,9,0,0">
+                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+              </Border>
+              <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                  <Setter Property="Background" Value="#bd1748" />
+                  <Setter Property="Foreground" Value="White" />
+                </Trigger>
+              </ControlTemplate.Triggers>
+            </ControlTemplate>
+          </Button.Template>
+        </Button>
+      </Grid>
+
+      <Grid x:Name="WelcomePage" Grid.Row="1" Background="#030304">
+        <Viewbox Width="132" Height="132" HorizontalAlignment="Center" VerticalAlignment="Center">
+          <Canvas Width="100" Height="100">
+            <Path Data="M50 15 L85 50 L50 85 L15 50 Z"
+                  Stroke="{StaticResource PrivMarkGradient}" StrokeThickness="6"
+                  StrokeLineJoin="Round" />
+            <Path Data="M50 28 L72 50 L50 72 L28 50 Z"
+                  Fill="{StaticResource PrivMarkGradient}" Opacity="0.35" />
+            <Ellipse Canvas.Left="42" Canvas.Top="42" Width="16" Height="16" Fill="White" />
+          </Canvas>
+        </Viewbox>
+
+        <Button x:Name="InstallButton" Content="Install" Width="146" Height="46"
+                HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,24,22"
+                Background="#242428" BorderBrush="#505057" BorderThickness="1"
+                Foreground="#f7b6c8" FontSize="16" Cursor="Hand" Click="InstallButton_Click">
+          <Button.Template>
+            <ControlTemplate TargetType="Button">
+              <Border x:Name="ButtonBorder" Background="{TemplateBinding Background}"
+                      BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="7">
+                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+              </Border>
+              <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                  <Setter TargetName="ButtonBorder" Property="Background" Value="#32131f" />
+                  <Setter TargetName="ButtonBorder" Property="BorderBrush" Value="#e11d48" />
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                  <Setter TargetName="ButtonBorder" Property="Background" Value="#4a1427" />
+                </Trigger>
+              </ControlTemplate.Triggers>
+            </ControlTemplate>
+          </Button.Template>
+        </Button>
+      </Grid>
+
+      <Grid x:Name="AgreementPage" Grid.Row="1" Background="#0c0c0f" Visibility="Collapsed">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="*" />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel Margin="32,26,32,16">
+          <TextBlock x:Name="AgreementTitle" Text="License agreement" Foreground="White"
+                     FontSize="23" FontWeight="SemiBold" />
+          <TextBlock x:Name="AgreementSubtitle" Text="Review the agreement to continue."
+                     Foreground="#a7a7b0" FontSize="13" Margin="0,7,0,0" />
+        </StackPanel>
+        <Border Grid.Row="1" Margin="32,0" Background="#111115" BorderBrush="#303037"
+                BorderThickness="1" CornerRadius="6">
+          <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="18">
+            <TextBlock x:Name="AgreementText" Foreground="#d2d2d8" FontSize="13"
+                       LineHeight="20" TextWrapping="Wrap" />
+          </ScrollViewer>
+        </Border>
+        <DockPanel Grid.Row="2" Margin="32,18,32,22" LastChildFill="False">
+          <StackPanel DockPanel.Dock="Left" VerticalAlignment="Center">
+            <CheckBox x:Name="AcceptCheckBox" Content="I have read and accept this agreement"
+                      Foreground="#d8d8df" Checked="AcceptCheckBox_Changed"
+                      Unchecked="AcceptCheckBox_Changed" />
+            <CheckBox x:Name="StartOnLogonCheckBox" Content="Start Priv Core when I sign in"
+                      Foreground="#9999a3" Margin="0,10,0,0" Visibility="Collapsed" IsChecked="True" />
+          </StackPanel>
+          <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+            <Button x:Name="BackButton" Content="Back" Width="88" Height="38" Margin="0,0,10,0"
+                    Background="#18181d" BorderBrush="#3d3d46" Foreground="#dddde3"
+                    Click="BackButton_Click" />
+            <Button x:Name="ContinueButton" Content="Continue" Width="112" Height="38"
+                    Background="#e11d48" BorderBrush="#e11d48" Foreground="White"
+                    IsEnabled="False" Click="ContinueButton_Click" />
+          </StackPanel>
+        </DockPanel>
+      </Grid>
+
+      <Grid x:Name="ProgressPage" Grid.Row="1" Background="#09090b" Visibility="Collapsed">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="0.88*" />
+          <ColumnDefinition Width="1.12*" />
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0" Margin="28,32,22,26" VerticalAlignment="Center">
+          <TextBlock Text="PRIV CORE" Foreground="#f58aa8" FontSize="12" FontWeight="Bold" />
+          <TextBlock Text="Installing your&#10;precision tools" Foreground="White" FontSize="28"
+                     FontWeight="SemiBold" Margin="0,14,0,10" />
+          <TextBlock x:Name="ProgressStatus" Text="Preparing installation…" Foreground="#b6b6c0"
+                     FontSize="14" TextWrapping="Wrap" />
+          <ProgressBar x:Name="InstallProgress" Minimum="0" Maximum="100" Height="5"
+                       Margin="0,22,0,0" Background="#24242b" Foreground="#e11d48" />
+          <TextBlock x:Name="ProgressPercent" Text="0%" Foreground="#f4a6bc"
+                     FontSize="12" Margin="0,8,0,0" />
+        </StackPanel>
+        <Border Grid.Column="1" Margin="0,22,22,22" Background="#0d0e13"
+                BorderBrush="#292a32" BorderThickness="1" CornerRadius="8">
+          <Grid>
+            <Canvas ClipToBounds="True" Opacity="0.85">
+              <Path Stroke="#45d6b2" StrokeThickness="1.4" Data="M20,310 C95,270 122,178 205,214 S312,288 385,164 S480,210 560,50" />
+              <Path Stroke="#ef628d" StrokeThickness="1.4" Data="M18,180 C94,230 138,291 210,246 S324,115 389,198 S473,286 560,154" />
+              <Path Stroke="#7b8dff" StrokeThickness="1" Opacity="0.7" Data="M18,248 C94,210 151,121 222,166 S327,250 399,118 S481,167 560,95" />
+              <Path Stroke="#252833" StrokeThickness="1" Data="M18,330 L560,330 M18,270 L560,270 M18,210 L560,210 M18,150 L560,150 M18,90 L560,90" />
+            </Canvas>
+            <Viewbox Width="74" Height="74" HorizontalAlignment="Center" VerticalAlignment="Center">
+              <Canvas Width="100" Height="100">
+                <Path Data="M50 15 L85 50 L50 85 L15 50 Z" Stroke="{StaticResource PrivMarkGradient}"
+                      StrokeThickness="6" StrokeLineJoin="Round" />
+                <Path Data="M50 28 L72 50 L50 72 L28 50 Z" Fill="{StaticResource PrivMarkGradient}" Opacity="0.35" />
+                <Ellipse Canvas.Left="42" Canvas.Top="42" Width="16" Height="16" Fill="White" />
+              </Canvas>
+            </Viewbox>
+          </Grid>
+        </Border>
+        <Button x:Name="CancelInstallButton" Grid.ColumnSpan="2" Content="Cancel" Width="94" Height="34"
+                HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,34,12"
+                Background="#17171c" BorderBrush="#45454e" Foreground="White"
+                Click="CancelInstallButton_Click" />
+      </Grid>
+    </Grid>
+  </Border>
+</Window>

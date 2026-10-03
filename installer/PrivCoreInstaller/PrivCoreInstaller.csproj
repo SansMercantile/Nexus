@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>PrivCoreSetup</AssemblyName>
+    <RootNamespace>PrivCoreInstaller</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Legal\EULA.txt" LogicalName="PrivCoreInstaller.Legal.EULA.txt" />
+    <EmbeddedResource Include="Legal\TERMS.txt" LogicalName="PrivCoreInstaller.Legal.TERMS.txt" />
+  </ItemGroup>
+</Project>

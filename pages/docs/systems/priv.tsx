@@ -18,6 +18,20 @@ export default function PrivPage() {
             </p>
           </motion.div>
 
+          <section aria-labelledby="application-downloads" className="mb-8">
+            <h2 id="application-downloads" className="text-3xl font-semibold text-white mb-6">Application Downloads</h2>
+            <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.25 }} className="bg-white/5 backdrop-blur-sm rounded-xl p-8 border border-nexus-gold/30">
+              <h3 className="text-2xl font-semibold text-white mb-3">Priv Core for Windows</h3>
+              <p className="text-gray-300 mb-6">Download the 64-bit installer. Administrator permissions are required to install.</p>
+              <a
+                href="https://sans-mercantile-priv-downloads.s3.us-east-1.amazonaws.com/PrivCoreSetup.exe"
+                className="inline-flex items-center justify-center rounded-lg bg-nexus-gold px-6 py-3 font-semibold text-black transition hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-nexus-gold focus:ring-offset-2 focus:ring-offset-black"
+              >
+                Download Priv Core
+              </a>
+            </motion.div>
+          </section>
+
           <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }} className="bg-white/5 backdrop-blur-sm rounded-xl p-8 border border-white/10 mb-8">
             <h2 className="text-3xl font-semibold text-white mb-6">Key Features</h2>
             <ul className="text-gray-300 space-y-2">

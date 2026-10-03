@@ -1,6 +1,8 @@
 node_modules
 .env.local
 .next
+/installer/**/bin/
+/installer/**/obj/
 /test-results/
 /playwright-report/
 ollama/

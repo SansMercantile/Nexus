@@ -105,7 +105,10 @@ export const SYSTEMS: SystemData[] = [
         icon: 'Sans- Zajuma_Priv_Fintech.png',
         liveUrl: 'https://priv.sansmercantile.com',
         platforms: ['web', 'macos', 'windows', 'linux', 'ios', 'android'],
-        platformUrls: { web: 'https://priv.sansmercantile.com' },
+        platformUrls: {
+          web: 'https://priv.sansmercantile.com',
+          windows: 'https://sans-mercantile-priv-downloads.s3.us-east-1.amazonaws.com/PrivCoreSetup.exe',
+        },
         waitlistUrl: '/contact?subject=Priv Core Desktop and Mobile Early Access',
       },
       {
