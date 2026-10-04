@@ -15,7 +15,7 @@ import type { AppPlatform } from '@/lib/constants';
 // a real platformUrl exists (routes to the app's waitlistUrl instead).
 const PLATFORM_META: Record<AppPlatform, { label: string; notifyLabel: string }> = {
   web: { label: 'Open Web App', notifyLabel: 'Notify Me — Web' },
-  ios: { label: 'Open on iPhone/iPad', notifyLabel: 'Notify me' },
+  ios: { label: 'Open on iPhone/iPad', notifyLabel: 'Notify me — iOS' },
   android: { label: 'Download for Android', notifyLabel: 'Notify Me — Android' },
   macos: { label: 'Download for macOS', notifyLabel: 'Notify Me — macOS' },
   windows: { label: 'Download for Windows', notifyLabel: 'Notify Me — Windows' },
@@ -212,7 +212,7 @@ export default function SystemPage() {
                 )}
 
                 <div className="flex gap-3 flex-wrap">
-                  {app.platforms.map((platform) => {
+                  {app.platforms.filter((platform) => platform !== 'web' || !app.liveUrl).map((platform) => {
                     const url = app.platformUrls?.[platform] ?? app.waitlistUrl ?? '#';
                     const isLive = Boolean(app.platformUrls?.[platform]);
                     const meta = PLATFORM_META[platform];
