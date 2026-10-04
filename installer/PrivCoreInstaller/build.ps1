@@ -24,10 +24,44 @@ if (-not (Test-Path (Join-Path $projectDirectory 'Assets\PrivCore.ico'))) {
     throw 'Installer icon generation failed.'
 }
 
+$certificate = $null
+if ($CertificateThumbprint) {
+    $normalizedThumbprint = $CertificateThumbprint -replace '\s', ''
+    $codeSigningOid = '1.3.6.1.5.5.7.3.3'
+    $now = Get-Date
+    $certificate = @(
+        Get-ChildItem Cert:\CurrentUser\My, Cert:\LocalMachine\My |
+            Where-Object {
+                $_.Thumbprint -eq $normalizedThumbprint -and
+                $_.HasPrivateKey -and
+                $_.NotBefore -le $now -and
+                $_.NotAfter -gt $now -and
+                $_.EnhancedKeyUsageList.ObjectId -contains $codeSigningOid
+            }
+    ) | Select-Object -First 1
+
+    if (-not $certificate) {
+        throw 'The requested valid code-signing certificate was not found with a private key in the current-user or local-machine certificate store.'
+    }
+}
+
 if (-not (Test-Path $engineDestination) -or $RefreshEngine) {
     Copy-Item -LiteralPath $engineSource -Destination $engineDestination -Force
 } else {
     Write-Output 'Using the existing local setup-engine payload. Pass -RefreshEngine to replace it.'
+}
+
+if ($certificate) {
+    $engineSignature = Set-AuthenticodeSignature `
+        -FilePath $engineDestination `
+        -Certificate $certificate `
+        -TimestampServer $TimestampServer `
+        -HashAlgorithm SHA256
+    if ($engineSignature.Status -ne 'Valid') {
+        throw "Signing the embedded setup engine failed: $($engineSignature.StatusMessage)"
+    }
+
+    Write-Output "Signed embedded setup engine with: $($certificate.Subject)"
 }
 
 $localDotnet = Join-Path $env:LOCALAPPDATA 'dotnet-sdk-10\dotnet.exe'
@@ -61,21 +95,6 @@ if (-not (Test-Path $installerPath)) {
 }
 
 if ($CertificateThumbprint) {
-    $normalizedThumbprint = $CertificateThumbprint -replace '\s', ''
-    $codeSigningOid = '1.3.6.1.5.5.7.3.3'
-    $certificate = @(
-        Get-ChildItem Cert:\CurrentUser\My, Cert:\LocalMachine\My |
-            Where-Object {
-                $_.Thumbprint -eq $normalizedThumbprint -and
-                $_.HasPrivateKey -and
-                $_.EnhancedKeyUsageList.ObjectId -contains $codeSigningOid
-            }
-    ) | Select-Object -First 1
-
-    if (-not $certificate) {
-        throw 'The requested code-signing certificate was not found with a private key in the current-user or local-machine certificate store.'
-    }
-
     $signature = Set-AuthenticodeSignature `
         -FilePath $installerPath `
         -Certificate $certificate `
@@ -87,7 +106,7 @@ if ($CertificateThumbprint) {
 
     Write-Output "Signed with: $($certificate.Subject)"
 } else {
-    Write-Warning 'This is an unsigned preview build. Do not publish it; Windows SmartScreen will still report an unknown publisher.'
+    Write-Warning 'The embedded setup engine and outer installer are unsigned. Do not publish this build; Windows will report an unknown publisher.'
 }
 
 Get-Item $installerPath | Select-Object FullName, Length, LastWriteTime
