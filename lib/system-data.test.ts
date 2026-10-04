@@ -76,11 +76,15 @@ describe('getSystemBySlug', () => {
     }
   });
 
-  it('Priv Core Windows platform links to the AWS installer', () => {
+  it('Priv Core ships native installers from S3; web + iOS stay on the web app', () => {
     const privCore = getSystemById('priv')?.applications?.find((app) => app.name === 'Priv Core');
-    expect(privCore?.platformUrls?.windows).toBe(
-      'https://sans-mercantile-priv-downloads.s3.us-east-1.amazonaws.com/PrivCoreSetup.exe',
-    );
+    const s3 = 'https://sans-mercantile-priv-downloads.s3.us-east-1.amazonaws.com/releases/1.0.0/';
+    expect(privCore?.platformUrls?.web).toBe('https://priv.sansmercantile.com');
+    expect(privCore?.platformUrls?.ios).toBe('https://priv.sansmercantile.com');
+    expect(privCore?.platformUrls?.windows).toBe(`${s3}PrivCore-Windows.exe`);
+    expect(privCore?.platformUrls?.macos).toBe(`${s3}PrivCore-macOS.dmg`);
+    expect(privCore?.platformUrls?.linux).toBe(`${s3}PrivCore-Linux.AppImage`);
+    expect(privCore?.platformUrls?.android).toBe(`${s3}PrivCore-Android.apk`);
   });
 
   it('KEV Schools stays on the waitlist until its education domain is registered', () => {

@@ -101,13 +101,17 @@ export const SYSTEMS: SystemData[] = [
     applications: [
       {
         name: 'Priv Core',
-        description: 'The core Priv platform — live now at priv.sansmercantile.com. Native desktop and mobile clients are on the way; join the notification list to hear the moment each one ships.',
+        description: 'The Priv Core web app, plus native installers for Windows, macOS, Linux, and Android. Local MetaTrader 5 execution currently runs through the Windows bridge.',
         icon: 'Sans- Zajuma_Priv_Fintech.png',
         liveUrl: 'https://priv.sansmercantile.com',
         platforms: ['web', 'macos', 'windows', 'linux', 'ios', 'android'],
         platformUrls: {
           web: 'https://priv.sansmercantile.com',
-          windows: 'https://sans-mercantile-priv-downloads.s3.us-east-1.amazonaws.com/PrivCoreSetup.exe',
+          macos: 'https://sans-mercantile-priv-downloads.s3.us-east-1.amazonaws.com/releases/1.0.0/PrivCore-macOS.dmg',
+          windows: 'https://sans-mercantile-priv-downloads.s3.us-east-1.amazonaws.com/releases/1.0.0/PrivCore-Windows.exe',
+          linux: 'https://sans-mercantile-priv-downloads.s3.us-east-1.amazonaws.com/releases/1.0.0/PrivCore-Linux.AppImage',
+          ios: 'https://priv.sansmercantile.com',
+          android: 'https://sans-mercantile-priv-downloads.s3.us-east-1.amazonaws.com/releases/1.0.0/PrivCore-Android.apk',
         },
         waitlistUrl: '/contact?subject=Priv Core Desktop and Mobile Early Access',
       },

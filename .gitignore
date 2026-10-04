@@ -14,3 +14,5 @@ ollama/
 dev-server.log
 dev-server.log
 .env.example
+.vercel
+.env*
