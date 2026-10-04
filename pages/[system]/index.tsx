@@ -15,7 +15,7 @@ import type { AppPlatform } from '@/lib/constants';
 // a real platformUrl exists (routes to the app's waitlistUrl instead).
 const PLATFORM_META: Record<AppPlatform, { label: string; notifyLabel: string }> = {
   web: { label: 'Open Web App', notifyLabel: 'Notify Me — Web' },
-  ios: { label: 'Open on iPhone/iPad', notifyLabel: 'Notify Me — iOS' },
+  ios: { label: 'Open on iPhone/iPad', notifyLabel: 'Notify me' },
   android: { label: 'Download for Android', notifyLabel: 'Notify Me — Android' },
   macos: { label: 'Download for macOS', notifyLabel: 'Notify Me — macOS' },
   windows: { label: 'Download for Windows', notifyLabel: 'Notify Me — Windows' },

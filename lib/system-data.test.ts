@@ -76,11 +76,12 @@ describe('getSystemBySlug', () => {
     }
   });
 
-  it('Priv Core ships native installers from S3; web + iOS stay on the web app', () => {
+  it('Priv Core ships native installers from S3; iOS stays on the notify list', () => {
     const privCore = getSystemById('priv')?.applications?.find((app) => app.name === 'Priv Core');
     const s3 = 'https://sans-mercantile-priv-downloads.s3.us-east-1.amazonaws.com/releases/1.0.0/';
     expect(privCore?.platformUrls?.web).toBe('https://priv.sansmercantile.com');
-    expect(privCore?.platformUrls?.ios).toBe('https://priv.sansmercantile.com');
+    expect(privCore?.platformUrls?.ios).toBeUndefined();
+    expect(privCore?.waitlistUrl).toBe('/contact?subject=Priv Core Desktop and Mobile Early Access');
     expect(privCore?.platformUrls?.windows).toBe(`${s3}PrivCore-Windows.exe`);
     expect(privCore?.platformUrls?.macos).toBe(`${s3}PrivCore-macOS.dmg`);
     expect(privCore?.platformUrls?.linux).toBe(`${s3}PrivCore-Linux.AppImage`);

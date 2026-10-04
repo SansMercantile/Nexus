@@ -110,7 +110,6 @@ export const SYSTEMS: SystemData[] = [
           macos: 'https://sans-mercantile-priv-downloads.s3.us-east-1.amazonaws.com/releases/1.0.0/PrivCore-macOS.dmg',
           windows: 'https://sans-mercantile-priv-downloads.s3.us-east-1.amazonaws.com/releases/1.0.0/PrivCore-Windows.exe',
           linux: 'https://sans-mercantile-priv-downloads.s3.us-east-1.amazonaws.com/releases/1.0.0/PrivCore-Linux.AppImage',
-          ios: 'https://priv.sansmercantile.com',
           android: 'https://sans-mercantile-priv-downloads.s3.us-east-1.amazonaws.com/releases/1.0.0/PrivCore-Android.apk',
         },
         waitlistUrl: '/contact?subject=Priv Core Desktop and Mobile Early Access',
