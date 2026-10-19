@@ -2,26 +2,44 @@ import Link from 'next/link';
 import React from 'react';
 import { motion } from 'framer-motion';
 import Layout from '@/components/layout/Layout';
-import { fadeInUp } from '@/lib/animations';
 
 type PressItem = {
   slug: string;
   title: string;
   excerpt: string;
   publishedAt: string;
+  href?: string;
+  external?: boolean;
+  cta?: string;
 };
 
+const STATIC_RELEASES: PressItem[] = [
+  {
+    slug: 'priv-core-launch',
+    title: 'Sans Mercantile launches Priv Core, an autonomous trading desk, in South Africa',
+    excerpt:
+      'Start free, no card required. Strategy backtesting, 24/7 market watch and full custody control in one app.',
+    publishedAt: '2026-10-19',
+    href: '/media/press/priv-core-launch',
+    cta: 'Read the Full Release',
+  },
+];
+
 export default function MediaPressIndex() {
-  const [releases, setReleases] = React.useState<PressItem[]>([]);
+  const [cmsReleases, setCmsReleases] = React.useState<PressItem[]>([]);
 
   React.useEffect(() => {
     fetch('/api/content/list?type=press')
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => {
-        if (Array.isArray(data?.posts)) setReleases(data.posts);
+        if (Array.isArray(data?.posts)) setCmsReleases(data.posts);
       })
       .catch(() => {});
   }, []);
+
+  const staticSlugs = new Set(STATIC_RELEASES.map((release) => release.slug));
+  const releases = [...STATIC_RELEASES, ...cmsReleases.filter((release) => !staticSlugs.has(release.slug))];
+
   return (
     <Layout>
       <div className=" pt-32 pb-24">
@@ -30,7 +48,7 @@ export default function MediaPressIndex() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-center mb-20"
+            className="text-center mb-16"
           >
             <p className="text-sm uppercase tracking-[0.4em] text-nexus-gold mb-4">Press Releases</p>
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">Company announcements and executive news</h1>
@@ -39,38 +57,73 @@ export default function MediaPressIndex() {
             </p>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="rounded-3xl border border-nexus-gold/20 bg-[#0b1125] p-10"
-          >
-            <h2 className="text-3xl font-bold text-white mb-4">Latest Release</h2>
-            <p className="text-nexus-gray-300 leading-relaxed mb-8">
-              March 2026: Sans Mercantile appoints Christopher Maddison as Chief Business Development Officer and Executive Partner.
-            </p>
-            <Link href="/media/press/christopher-maddison-cbdo-appointment" className="inline-flex items-center gap-3 px-8 py-3 rounded-xl bg-nexus-gold text-black font-semibold hover:opacity-90 transition-opacity">
-              Read the Full Release
-            </Link>
-          </motion.div>
-
-          {releases.length > 0 && (
-            <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
-              {releases.map((release) => (
-                <Link
-                  key={release.slug}
-                  href={`/media/press/${release.slug}`}
-                  className="block rounded-3xl border border-nexus-gold/20 bg-[#0b1125] p-8 hover:border-nexus-gold/40 transition"
-                >
-                  <p className="text-xs text-nexus-gray-500 mb-2">
-                    {release.publishedAt ? new Date(release.publishedAt).toLocaleDateString() : ''}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {releases.map((release, index) => {
+              const inner = (
+                <>
+                  <p className="text-xs uppercase tracking-[0.3em] text-nexus-gold mb-3">
+                    {release.publishedAt
+                      ? new Date(release.publishedAt).toLocaleDateString('en-ZA', {
+                          day: 'numeric',
+                          month: 'long',
+                          year: 'numeric',
+                        })
+                      : ''}
+                    {release.external ? ' · External' : ''}
                   </p>
-                  <h3 className="text-2xl font-bold text-white mb-3">{release.title}</h3>
-                  <p className="text-nexus-gray-300 leading-relaxed">{release.excerpt}</p>
-                </Link>
-              ))}
-            </div>
-          )}
+                  <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">{release.title}</h2>
+                  <p className="text-nexus-gray-300 leading-relaxed mb-8">{release.excerpt}</p>
+                  <span className="inline-flex items-center gap-3 px-8 py-3 rounded-xl bg-nexus-gold text-black font-semibold group-hover:opacity-90 transition-opacity">
+                    {release.cta || 'Read the Full Release'}
+                  </span>
+                </>
+              );
+
+              const cardClasses =
+                'group block rounded-3xl border border-nexus-gold/20 bg-[#0b1125] p-10 hover:border-nexus-gold/50 transition-colors h-full';
+
+              return (
+                <motion.div
+                  key={release.slug}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: Math.min(index * 0.08, 0.4) }}
+                >
+                  {release.external ? (
+                    <a
+                      href={release.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={cardClasses}
+                    >
+                      {inner}
+                    </a>
+                  ) : (
+                    <Link href={release.href || `/media/press/${release.slug}`} className={cardClasses}>
+                      {inner}
+                    </Link>
+                  )}
+                </motion.div>
+              );
+            })}
+          </div>
+
+          <div className="mt-12 rounded-3xl border border-nexus-gold/20 bg-[#0b1125] p-10">
+            <p className="text-xs uppercase tracking-[0.3em] text-nexus-gray-500 mb-3">
+              Media contacts
+            </p>
+            <p className="text-nexus-gray-300 leading-relaxed">
+              For interview requests and press materials, contact{' '}
+              <a
+                href="mailto:press@sansmercantile.com"
+                className="text-nexus-gold hover:text-nexus-accent transition-colors"
+              >
+                press@sansmercantile.com
+              </a>
+              .
+            </p>
+          </div>
         </div>
       </div>
     </Layout>

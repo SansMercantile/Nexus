@@ -18,6 +18,7 @@ export async function getServerSideProps({ res }) {
     '/knowledge-base',
     '/media',
     '/media/blog',
+    '/media/press',
     '/press',
     '/legal',
     '/legal/privacy',
@@ -46,41 +47,57 @@ export async function getServerSideProps({ res }) {
     '/docs/security/soc2',
   ];
 
-  // System pages
-  const systemPages = SYSTEMS.map(system => `/systems/${system.slug}`);
+  // System pages — served by pages/[system]/index.tsx, so the real path is /{id},
+  // NOT /systems/{id}. The SystemData type exposes `id` (there is no `slug` field).
+  const systemPages = SYSTEMS.map((system) => `/${system.id}`);
 
-  // System detail pages
-  const systemDetailPages = SYSTEMS.flatMap(system => [
-    `/systems/${system.slug}/about`,
-    `/systems/${system.slug}/features`,
-    `/systems/${system.slug}/pricing`,
+  // System detail pages — pages/[system]/{about,features,pricing}.tsx
+  const systemDetailPages = SYSTEMS.flatMap((system) => [
+    `/${system.id}/about`,
+    `/${system.id}/features`,
+    `/${system.id}/pricing`,
   ]);
 
-  // Doc system pages
-  const docSystemPages = SYSTEMS.map(system => `/docs/systems/${system.slug}`);
+  // Priv product landing pages (each has its own canonical + JSON-LD)
+  const privProductPages = ['/priv/core', '/priv/pay', '/priv/philanthropy'];
+
+  // Press releases
+  const pressPages = ['/media/press/priv-core-launch'];
+
+  // Doc system pages (static files under pages/docs/systems/)
+  const docSystemPages = SYSTEMS.map((system) => `/docs/systems/${system.id}`);
 
   // Blog posts
   const blogPosts = getAllBlogPosts();
-  const blogPages = blogPosts.map(post => `/media/blog/${post.slug}`);
+  const blogPages = blogPosts.map((post) => `/media/blog/${post.slug}`);
 
-  // Combine all URLs
-  const allPages = [
-    ...staticPages,
-    ...systemPages,
-    ...systemDetailPages,
-    ...docSystemPages,
-    ...blogPages,
-  ];
+  // Combine all URLs (deduplicated: system pages may collide with static ones)
+  const allPages = Array.from(
+    new Set([
+      ...staticPages,
+      ...systemPages,
+      ...systemDetailPages,
+      ...privProductPages,
+      ...pressPages,
+      ...docSystemPages,
+      ...blogPages,
+    ])
+  );
 
-  // Generate sitemap XML
+  // Generate sitemap XML. trailingSlash is enabled in next.config.js, so every
+  // canonical URL ends with a slash — emit them that way to avoid redirect hops.
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${allPages
-  .map(page => {
-    const url = `${baseUrl}${page}`;
-    const lastmod = new Date().toISOString().split('T')[0]; // Today's date
-    const priority = page === '' ? '1.0' : page.startsWith('/media/blog/') ? '0.8' : '0.9';
-    const changefreq = page.startsWith('/media/blog/') ? 'monthly' : 'weekly';
+  .map((page) => {
+    const path = page === '' ? '/' : `${page}/`;
+    const url = `${baseUrl}${path}`;
+    const lastmod = new Date().toISOString().split('T')[0];
+    const isPriv = path.startsWith('/priv');
+    const isBlog = path.startsWith('/media/blog/');
+    const isPress = path.startsWith('/media/press/');
+    const priority = path === '/' ? '1.0' : isPriv ? '0.9' : isBlog || isPress ? '0.8' : '0.7';
+    const changefreq = isBlog ? 'monthly' : isPriv || isPress ? 'weekly' : 'monthly';
 
     return `  <url>
     <loc>${url}</loc>

@@ -18,6 +18,12 @@ const nextConfig = {
     return [
       // Legacy fake login page removed; the portal is the single sign-in.
       { source: '/login', destination: '/portal', permanent: false },
+      // Retracted CBDO press release — old links land on the press index.
+      {
+        source: '/media/press/christopher-maddison-cbdo-appointment',
+        destination: '/media/press',
+        permanent: true,
+      },
     ];
   },
   async headers() {

@@ -11,8 +11,9 @@ Disallow: /static/
 
 # Allow crawling of important content
 Allow: /media/blog/
+Allow: /media/press/
 Allow: /docs/
-Allow: /systems/
+Allow: /priv/
 
 # Sitemap
 Sitemap: https://sansmercantile.com/sitemap.xml

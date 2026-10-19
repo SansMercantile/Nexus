@@ -1,18 +1,19 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Layout from '@/components/layout/Layout';
 import { fadeInUp } from '@/lib/animations';
 import { COMPANY_INFO } from '@/lib/constants';
+import { BEDROCK_MODEL } from '@/lib/bedrock-client';
 
 export default function Home() {
   return (
     <Layout>
       <Head>
         <title>Sans Mercantile | AI-Driven Global Trade & Predictive Analytics</title>
-        <meta name="description" content="Sans Mercantile is a constellation of 21 autonomous AI systems redefining global commerce, governance, and institutional architecture. Registered in South Africa (CIPC Reg No: K2025537335)." />
-        <meta name="keywords" content="AI Constellation, Predictive Analytics, Global Trade, Autonomous Systems, Fintech, Healthtech, Institutional Architecture, Sans Mercantile, CIPC K2025537335" />
+        <meta name="description" content="Sans Mercantile is a constellation of 21 autonomous AI systems redefining global commerce, governance, and institutional architecture. Registered in South Africa (CIPC Reg No: K20255335)." />
+        <meta name="keywords" content="AI Constellation, Predictive Analytics, Global Trade, Autonomous Systems, Fintech, Healthtech, Institutional Architecture, Sans Mercantile, CIPC K20255335" />
         <meta property="og:title" content="Sans Mercantile | Reimagine • Rebuild • Transcend" />
         <meta property="og:description" content="A network of autonomous, intelligent systems enabling global commerce, governance, and innovation." />
         <meta property="og:type" content="website" />
@@ -23,6 +24,33 @@ export default function Home() {
         <meta name="twitter:description" content="Redefining global commerce through a constellation of 21 autonomous AI systems." />
       </Head>
 
+      {/* Priv Core Announcement Modal */}
+      <div
+        className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center pointer-events-auto"
+      >
+        <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden">
+          <div className="p-6">
+            <h3 className="text-xl font-bold text-[var(--burgundy)] mb-4">Priv Core is now available</h3>
+            <p className="text-gray-700 mb-6">
+              An autonomous trading desk and AI trading terminal built for traders who want to test strategies and keep full custody of their funds. Start free, no card required.
+            </p>
+            <div className="flex gap-3">
+              <a
+                href="https://priv.sansmercantile.com"
+                className="flex-1 bg-[var(--burgundy)] text-white font-bold py-3 rounded text-center hover:opacity-90 transition-opacity"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Start Now
+              </a>
+              <Link href="/systems" className="flex-1 border border-[var(--burgundy)] text-[var(--burgundy)] font-bold py-3 rounded text-center hover:bg-[var(--burgundy)] hover:text-white transition-all">
+                Learn More
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Hero Section */}
       <motion.section
         initial={{ opacity: 0 }}
@@ -31,6 +59,7 @@ export default function Home() {
         className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
       >
         {/* Background Grid */}
+        <div className="absolute inset-0 grid-background opacity-20" />
         <div className="absolute inset-0 grid-background opacity-20" />
 
         {/* Glow Elements */}

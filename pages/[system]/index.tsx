@@ -9,7 +9,7 @@ import { AnimatedIcon, featureIcons } from '@/components/AnimatedIcons';
 import { getSystemBySlug, getSystemValueDescription, getSystemSdgs } from '@/lib/system-data';
 import { fadeInUp, staggerContainer, itemVariants } from '@/lib/animations';
 import { useRouter } from 'next/router';
-import type { AppPlatform } from '@/lib/constants';
+import { AppPlatform, type SystemData } from '@/lib/constants';
 
 // Display label for each platform's download button. "notifyLabel" is what shows before
 // a real platformUrl exists (routes to the app's waitlistUrl instead).
@@ -18,9 +18,69 @@ const PLATFORM_META: Record<AppPlatform, { label: string; notifyLabel: string }>
   ios: { label: 'Open on iPhone/iPad', notifyLabel: 'Notify me — iOS' },
   android: { label: 'Download for Android', notifyLabel: 'Notify Me — Android' },
   macos: { label: 'Download for macOS', notifyLabel: 'Notify Me — macOS' },
-  windows: { label: 'Download for Windows', notifyLabel: 'Notify Me — Windows' },
-  linux: { label: 'Download for Linux', notifyLabel: 'Notify Me — Linux' },
+  windows: { label: 'Download for Windows', notifyLabel: 'Download for Windows' },
+  linux: { label: 'Download for Linux', notifyLabel: 'Download for Linux' },
 };
+
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://sansmercantile.com';
+
+// Full SEO metadata per system page: keyword-rich title/description for Priv,
+// subtitle-based titles everywhere else, plus OG/Twitter tags and JSON-LD.
+function generateSystemSeo(systemData: SystemData) {
+  const isPriv = systemData.id === 'priv';
+  const title = isPriv
+    ? 'Priv — Wealth Intelligence, Priv Core, Priv Pay & Priv Philanthropy | Sans Mercantile'
+    : `${systemData.name} — ${systemData.subtitle} | Sans Mercantile`;
+  const description = isPriv
+    ? 'Priv by Sans Mercantile: Priv Core autonomous trading desk, Priv Pay split payments and Priv Philanthropy giving. Start free, no card required.'
+    : systemData.description;
+  const url = `${BASE_URL}/${systemData.id}/`;
+  const image = `${BASE_URL}/og-default.jpg`;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url,
+      image,
+      type: 'website' as const,
+    },
+    twitter: {
+      card: 'summary_large_image' as const,
+      title,
+      description,
+      image,
+    },
+    schema: {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      name: title,
+      description,
+      url,
+      isPartOf: {
+        '@type': 'WebSite',
+        name: 'Sans Mercantile',
+        url: `${BASE_URL}/`,
+      },
+      ...(isPriv
+        ? {
+            mainEntity: {
+              '@type': 'Organization',
+              name: 'Sans Mercantile',
+              url: `${BASE_URL}/`,
+              department: {
+                '@type': 'Organization',
+                name: 'Priv — Wealth Intelligence',
+                url,
+              },
+            },
+          }
+        : {}),
+    },
+  };
+}
 
 export default function SystemPage() {
   const router = useRouter();
@@ -46,12 +106,43 @@ export default function SystemPage() {
     return <RestrictedSystemNotice systemData={systemData} />;
   }
 
+  const seo = generateSystemSeo(systemData);
+
   return (
     <Layout>
       <Head>
-        <title>{systemData.name} - Sans Mercantile</title>
-        <meta name="description" content={systemData.description} />
+        <title>{seo.title}</title>
+        <meta name="description" content={seo.description} />
+        <link rel="canonical" href={seo.openGraph.url} />
+
+        {/* Open Graph / Facebook */}
+        <meta property="og:title" content={seo.openGraph.title} />
+        <meta property="og:description" content={seo.openGraph.description} />
+        <meta property="og:type" content={seo.openGraph.type} />
+        <meta property="og:url" content={seo.openGraph.url} />
+        <meta property="og:image" content={seo.openGraph.image} />
+        <meta property="og:site_name" content="Sans Mercantile" />
+
+        {/* Twitter */}
+        <meta name="twitter:card" content={seo.twitter.card} />
+        <meta name="twitter:title" content={seo.twitter.title} />
+        <meta name="twitter:description" content={seo.twitter.description} />
+        <meta name="twitter:image" content={seo.twitter.image} />
+
+        {/* Schema.org JSON-LD */}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(seo.schema) }} />
       </Head>
+
+      {/* Hero Section */}
+      <SystemHero
+        id={systemData.id}
+        name={systemData.name}
+        subtitle={systemData.subtitle}
+        color={systemData.color}
+        face={systemData.face}
+      />
+
+      {/* About Section */}
 
       {/* Hero Section */}
       <SystemHero
