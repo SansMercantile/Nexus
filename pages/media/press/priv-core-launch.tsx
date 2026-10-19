@@ -3,12 +3,36 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Layout from '@/components/layout/Layout';
 
-const PAGE_URL = 'https://sansmercantile.com/media/press/priv-core-launch';
+const PAGE_URL = 'https://sansmercantile.com/media/press/priv-core-launch/';
 const OG_IMAGE = 'https://sansmercantile.com/press/priv-core-iphone-duo.png';
 const PAGE_TITLE =
   'Sans Mercantile launches Priv Core, an autonomous trading desk, in South Africa';
 const PAGE_DESCRIPTION =
   'Start free, no card required. Strategy backtesting, 24/7 market watch and full custody control in one app. Priv Core is available in South Africa from 19 October 2026.';
+
+const PAGE_KEYWORDS =
+  'Priv Core launch, autonomous trading desk South Africa, AI trading terminal, algorithmic trading South Africa, strategy backtesting app, Sans Mercantile press release, AI trading platform Cape Town';
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://sansmercantile.com/' },
+    { '@type': 'ListItem', position: 2, name: 'Media', item: 'https://sansmercantile.com/media/' },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: 'Press Releases',
+      item: 'https://sansmercantile.com/media/press/',
+    },
+    {
+      '@type': 'ListItem',
+      position: 4,
+      name: 'Sans Mercantile launches Priv Core, an autonomous trading desk, in South Africa',
+      item: PAGE_URL,
+    },
+  ],
+};
 
 const newsArticleSchema = {
   '@context': 'https://schema.org',
@@ -53,6 +77,8 @@ export default function PrivCoreLaunchPressRelease() {
       <Head>
         <title>{PAGE_TITLE} | Sans Mercantile Press Release</title>
         <meta name="description" content={PAGE_DESCRIPTION} />
+        <meta name="keywords" content={PAGE_KEYWORDS} />
+        <meta name="news_keywords" content="Priv Core, Sans Mercantile, autonomous trading desk, AI trading terminal, South Africa" />
         <link rel="canonical" href={PAGE_URL} />
 
         <meta property="og:title" content={PAGE_TITLE} />
@@ -61,7 +87,10 @@ export default function PrivCoreLaunchPressRelease() {
         <meta property="og:url" content={PAGE_URL} />
         <meta property="og:image" content={OG_IMAGE} />
         <meta property="og:site_name" content="Sans Mercantile" />
+        <meta property="og:locale" content="en_ZA" />
         <meta property="article:published_time" content="2026-10-19" />
+        <meta property="article:section" content="Press Release" />
+        <meta property="article:tag" content="Priv Core" />
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={PAGE_TITLE} />
@@ -71,6 +100,10 @@ export default function PrivCoreLaunchPressRelease() {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(newsArticleSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
         />
       </Head>
 

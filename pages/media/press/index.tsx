@@ -1,7 +1,13 @@
+import Head from 'next/head';
 import Link from 'next/link';
 import React from 'react';
 import { motion } from 'framer-motion';
 import Layout from '@/components/layout/Layout';
+
+const PAGE_URL = 'https://sansmercantile.com/media/press/';
+const PAGE_TITLE = 'Press Releases | Sans Mercantile News and Announcements';
+const PAGE_DESCRIPTION =
+  'Official press releases from Sans Mercantile, including the launch of Priv Core, an autonomous trading desk and AI trading terminal in South Africa.';
 
 type PressItem = {
   slug: string;
@@ -42,6 +48,23 @@ export default function MediaPressIndex() {
 
   return (
     <Layout>
+      <Head>
+        <title>{PAGE_TITLE}</title>
+        <meta name="description" content={PAGE_DESCRIPTION} />
+        <meta
+          name="keywords"
+          content="Sans Mercantile press releases, Priv Core launch, autonomous trading desk South Africa, AI trading terminal, company announcements"
+        />
+        <link rel="canonical" href={PAGE_URL} />
+        <meta property="og:title" content={PAGE_TITLE} />
+        <meta property="og:description" content={PAGE_DESCRIPTION} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={PAGE_URL} />
+        <meta property="og:site_name" content="Sans Mercantile" />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content={PAGE_TITLE} />
+        <meta name="twitter:description" content={PAGE_DESCRIPTION} />
+      </Head>
       <div className=" pt-32 pb-24">
         <div className="max-w-6xl mx-auto px-6">
           <motion.div
