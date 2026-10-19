@@ -19,7 +19,7 @@ export default function OmegaDocs() {
     <Layout>
       <Head>
         <title>Omega Medical AI - Sans Mercantile</title>
-        <meta name="description" content="Omega Medical AI system documentation - Advanced healthcare intelligence with disease forecasting and life extension technologies" />
+        <meta name="description" content="Omega Medical AI system documentation - Advanced healthcare intelligence with disease forecasting and life extension technologies" key="description" />
       </Head>
 
       <div className=" pt-32 pb-20">

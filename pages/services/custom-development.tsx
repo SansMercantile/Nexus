@@ -72,7 +72,7 @@ export default function ModularDeployment() {
     <Layout>
       <Head>
         <title>Sans Mercantile - Modular Utility Deployment</title>
-        <meta name="description" content="Deploying permanent, modular AI utility infrastructure across an 18-Sector Stack." />
+        <meta name="description" content="Deploying permanent, modular AI utility infrastructure across an 18-Sector Stack." key="description" />
       </Head>
 
       <div className="pt-32 pb-20">

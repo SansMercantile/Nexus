@@ -41,16 +41,16 @@ export default function MediaPressReleasePage({ post, slug }: Props) {
     <Layout>
       <Head>
         <title>{pageTitle}</title>
-        <meta name="description" content={post.excerpt} />
+        <meta name="description" content={post.excerpt} key="description" />
         <link rel="canonical" href={pageUrl} />
-        <meta property="og:type" content="article" />
-        <meta property="og:title" content={pageTitle} />
-        <meta property="og:description" content={post.excerpt} />
-        <meta property="og:url" content={pageUrl} />
-        <meta property="og:site_name" content="Sans Mercantile" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={pageTitle} />
-        <meta name="twitter:description" content={post.excerpt} />
+        <meta property="og:type" content="article" key="og:type" />
+        <meta property="og:title" content={pageTitle} key="og:title" />
+        <meta property="og:description" content={post.excerpt} key="og:description" />
+        <meta property="og:url" content={pageUrl} key="og:url" />
+        <meta property="og:site_name" content="Sans Mercantile" key="og:site_name" />
+        <meta name="twitter:card" content="summary_large_image" key="twitter:card" />
+        <meta name="twitter:title" content={pageTitle} key="twitter:title" />
+        <meta name="twitter:description" content={post.excerpt} key="twitter:description" />
       </Head>
 
       <div className="pt-32 pb-24">

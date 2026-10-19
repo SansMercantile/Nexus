@@ -16,4 +16,4 @@ Allow: /docs/
 Allow: /priv/
 
 # Sitemap
-Sitemap: https://sansmercantile.com/sitemap.xml
+Sitemap: https://www.sansmercantile.com/sitemap.xml

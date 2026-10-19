@@ -104,7 +104,7 @@ export default function TrainingEducation() {
     <Layout>
       <Head>
         <title>Sans Mercantile - Training & Education</title>
-        <meta name="description" content="Comprehensive AI training programs, certifications, and educational resources for organizations and individuals" />
+        <meta name="description" content="Comprehensive AI training programs, certifications, and educational resources for organizations and individuals" key="description" />
       </Head>
 
       <div className="pt-32 pb-20">

@@ -19,7 +19,7 @@ export default function AnubisDocs() {
     <Layout>
       <Head>
         <title>ANUBIS Space Colonization - Sans Mercantile</title>
-        <meta name="description" content="ANUBIS Space Colonization & Interstellar Travel system documentation - Interstellar travel and sustainable space colony systems" />
+        <meta name="description" content="ANUBIS Space Colonization & Interstellar Travel system documentation - Interstellar travel and sustainable space colony systems" key="description" />
       </Head>
 
       <div className=" pt-32 pb-20">

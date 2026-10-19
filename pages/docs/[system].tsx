@@ -23,8 +23,29 @@ export default function SystemDocPage({ system }: SystemPageProps) {
         <title>{system.name} Docs | Sans Mercantile</title>
         <meta
           name="description"
-          content={`${system.name} — ${system.subtitle} for the Sans Mercantile Constellation`}
+          content={`${system.name} — ${system.subtitle} for the Sans Mercantile Constellation`} key="description"
         />
+        <link
+          rel="canonical"
+          href={`https://www.sansmercantile.com/docs/${system.id}/`}
+        />
+        <meta property="og:title" content={`${system.name} Docs | Sans Mercantile`} key="og:title" />
+        <meta
+          property="og:description"
+          content={`${system.name} — ${system.subtitle} for the Sans Mercantile Constellation`}
+          key="og:description"
+        />
+        <meta property="og:type" content="article" key="og:type" />
+        <meta property="og:url" content={`https://www.sansmercantile.com/docs/${system.id}/`} key="og:url" />
+        <meta property="og:image" content="https://www.sansmercantile.com/media/social-cover-hero.png" key="og:image" />
+        <meta name="twitter:card" content="summary_large_image" key="twitter:card" />
+        <meta name="twitter:title" content={`${system.name} Docs | Sans Mercantile`} key="twitter:title" />
+        <meta
+          name="twitter:description"
+          content={`${system.name} — ${system.subtitle} for the Sans Mercantile Constellation`}
+          key="twitter:description"
+        />
+        <meta name="twitter:image" content="https://www.sansmercantile.com/media/social-cover-hero.png" key="twitter:image" />
       </Head>
 
       <div className=" pt-32 pb-20">

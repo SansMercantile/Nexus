@@ -3,8 +3,8 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Layout from '@/components/layout/Layout';
 
-const PAGE_URL = 'https://sansmercantile.com/media/press/priv-core-launch/';
-const OG_IMAGE = 'https://sansmercantile.com/press/priv-core-iphone-duo.png';
+const PAGE_URL = 'https://www.sansmercantile.com/media/press/priv-core-launch/';
+const OG_IMAGE = 'https://www.sansmercantile.com/press/priv-core-iphone-duo.png';
 const PAGE_TITLE =
   'Sans Mercantile launches Priv Core, an autonomous trading desk, in South Africa';
 const PAGE_DESCRIPTION =
@@ -17,13 +17,13 @@ const breadcrumbSchema = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://sansmercantile.com/' },
-    { '@type': 'ListItem', position: 2, name: 'Media', item: 'https://sansmercantile.com/media/' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.sansmercantile.com/' },
+    { '@type': 'ListItem', position: 2, name: 'Media', item: 'https://www.sansmercantile.com/media/' },
     {
       '@type': 'ListItem',
       position: 3,
       name: 'Press Releases',
-      item: 'https://sansmercantile.com/media/press/',
+      item: 'https://www.sansmercantile.com/media/press/',
     },
     {
       '@type': 'ListItem',
@@ -49,14 +49,14 @@ const newsArticleSchema = {
   author: {
     '@type': 'Organization',
     name: 'Sans Mercantile',
-    url: 'https://sansmercantile.com',
+    url: 'https://www.sansmercantile.com',
   },
   publisher: {
     '@type': 'Organization',
     name: 'Sans Mercantile',
     logo: {
       '@type': 'ImageObject',
-      url: 'https://sansmercantile.com/logo.svg',
+      url: 'https://www.sansmercantile.com/logo.svg',
     },
   },
   locationCreated: {
@@ -76,26 +76,26 @@ export default function PrivCoreLaunchPressRelease() {
     <Layout>
       <Head>
         <title>{PAGE_TITLE} | Sans Mercantile Press Release</title>
-        <meta name="description" content={PAGE_DESCRIPTION} />
+        <meta name="description" content={PAGE_DESCRIPTION} key="description" />
         <meta name="keywords" content={PAGE_KEYWORDS} />
         <meta name="news_keywords" content="Priv Core, Sans Mercantile, autonomous trading desk, AI trading terminal, South Africa" />
         <link rel="canonical" href={PAGE_URL} />
 
-        <meta property="og:title" content={PAGE_TITLE} />
-        <meta property="og:description" content={PAGE_DESCRIPTION} />
-        <meta property="og:type" content="article" />
-        <meta property="og:url" content={PAGE_URL} />
-        <meta property="og:image" content={OG_IMAGE} />
-        <meta property="og:site_name" content="Sans Mercantile" />
+        <meta property="og:title" content={PAGE_TITLE} key="og:title" />
+        <meta property="og:description" content={PAGE_DESCRIPTION} key="og:description" />
+        <meta property="og:type" content="article" key="og:type" />
+        <meta property="og:url" content={PAGE_URL} key="og:url" />
+        <meta property="og:image" content={OG_IMAGE} key="og:image" />
+        <meta property="og:site_name" content="Sans Mercantile" key="og:site_name" />
         <meta property="og:locale" content="en_ZA" />
         <meta property="article:published_time" content="2026-10-19" />
         <meta property="article:section" content="Press Release" />
         <meta property="article:tag" content="Priv Core" />
 
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={PAGE_TITLE} />
-        <meta name="twitter:description" content={PAGE_DESCRIPTION} />
-        <meta name="twitter:image" content={OG_IMAGE} />
+        <meta name="twitter:card" content="summary_large_image" key="twitter:card" />
+        <meta name="twitter:title" content={PAGE_TITLE} key="twitter:title" />
+        <meta name="twitter:description" content={PAGE_DESCRIPTION} key="twitter:description" />
+        <meta name="twitter:image" content={OG_IMAGE} key="twitter:image" />
 
         <script
           type="application/ld+json"

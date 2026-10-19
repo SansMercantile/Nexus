@@ -13,7 +13,7 @@ export default function Systems() {
     <Layout>
       <Head>
         <title>Systems | Sans Mercantile</title>
-        <meta name="description" content="Explore our constellation of autonomous intelligent systems" />
+        <meta name="description" content="Explore our constellation of autonomous intelligent systems" key="description" />
       </Head>
 
       <div className=" pt-32 pb-20">

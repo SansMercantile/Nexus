@@ -19,7 +19,7 @@ export default function CaseStudyPage({ study }: CaseStudyPageProps) {
     <Layout>
       <Head>
         <title>{study.title} - Sans Mercantile Case Study</title>
-        <meta name="description" content={study.overview} />
+        <meta name="description" content={study.overview} key="description" />
       </Head>
 
       <div className="pt-32 pb-20">

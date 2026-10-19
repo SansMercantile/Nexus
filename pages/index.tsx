@@ -12,16 +12,17 @@ export default function Home() {
     <Layout>
       <Head>
         <title>Sans Mercantile | AI-Driven Global Trade & Predictive Analytics</title>
-        <meta name="description" content="Sans Mercantile is a constellation of 21 autonomous AI systems redefining global commerce, governance, and institutional architecture. Registered in South Africa (CIPC Reg No: K20255335)." />
+        <meta name="description" content="Sans Mercantile is a constellation of 21 autonomous AI systems redefining global commerce, governance, and institutional architecture. Registered in South Africa (CIPC Reg No: K20255335)." key="description" />
         <meta name="keywords" content="AI Constellation, Predictive Analytics, Global Trade, Autonomous Systems, Fintech, Healthtech, Institutional Architecture, Sans Mercantile, CIPC K20255335" />
-        <meta property="og:title" content="Sans Mercantile | Reimagine • Rebuild • Transcend" />
-        <meta property="og:description" content="A network of autonomous, intelligent systems enabling global commerce, governance, and innovation." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://sansmercantile.com" />
-        <meta property="og:image" content="https://sansmercantile.com/og-default.jpg" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Sans Mercantile | AI-Driven Global Trade" />
-        <meta name="twitter:description" content="Redefining global commerce through a constellation of 21 autonomous AI systems." />
+        <meta property="og:title" content="Sans Mercantile | Reimagine • Rebuild • Transcend" key="og:title" />
+        <meta property="og:description" content="A network of autonomous, intelligent systems enabling global commerce, governance, and innovation." key="og:description" />
+        <meta property="og:type" content="website" key="og:type" />
+        <meta property="og:url" content="https://www.sansmercantile.com" key="og:url" />
+        <meta property="og:image" content="https://www.sansmercantile.com/media/social-cover-hero.png" key="og:image" />
+        <meta name="twitter:card" content="summary_large_image" key="twitter:card" />
+        <meta name="twitter:title" content="Sans Mercantile | AI-Driven Global Trade" key="twitter:title" />
+        <meta name="twitter:description" content="Redefining global commerce through a constellation of 21 autonomous AI systems." key="twitter:description" />
+        <meta name="twitter:image" content="https://www.sansmercantile.com/media/social-cover-hero.png" key="twitter:image" />
       </Head>
 
       {/* Priv Core Announcement Modal */}
@@ -140,10 +141,10 @@ export default function Home() {
         </p>
 
         <div className="flex gap-4 justify-center flex-wrap">
-          <a href="https://sansmercantile.com/portal" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.sansmercantile.com/portal" target="_blank" rel="noopener noreferrer">
             <button className="btn btn-primary">Web Portal</button>
           </a>
-          <a href="https://sansmercantile.com/docs" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.sansmercantile.com/docs" target="_blank" rel="noopener noreferrer">
             <button className="btn btn-secondary">Documentation</button>
           </a>
         </div>

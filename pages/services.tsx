@@ -113,7 +113,7 @@ export default function Services() {
     <Layout>
       <Head>
         <title>Services | Sans Mercantile</title>
-        <meta name="description" content="Comprehensive AI consulting, system integration, and custom development services from Sans Mercantile" />
+        <meta name="description" content="Comprehensive AI consulting, system integration, and custom development services from Sans Mercantile" key="description" />
       </Head>
 
       <div className="pt-32 pb-20">

@@ -15,7 +15,7 @@ export default function CaseStudiesIndex() {
         <title>Case Studies | Sans Mercantile</title>
         <meta
           name="description"
-          content="Explore comprehensive system case studies from Sans Mercantile's AI consulting and autonomous platforms."
+          content="Explore comprehensive system case studies from Sans Mercantile's AI consulting and autonomous platforms." key="description"
         />
       </Head>
 

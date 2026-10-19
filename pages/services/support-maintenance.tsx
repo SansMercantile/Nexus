@@ -127,7 +127,7 @@ export default function SupportMaintenance() {
     <Layout>
       <Head>
         <title>Sans Mercantile - Support & Maintenance</title>
-        <meta name="description" content="Comprehensive support and maintenance services for AI systems and applications" />
+        <meta name="description" content="Comprehensive support and maintenance services for AI systems and applications" key="description" />
       </Head>
 
       <div className="pt-32 pb-20">

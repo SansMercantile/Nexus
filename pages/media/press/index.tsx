@@ -4,7 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import Layout from '@/components/layout/Layout';
 
-const PAGE_URL = 'https://sansmercantile.com/media/press/';
+const PAGE_URL = 'https://www.sansmercantile.com/media/press/';
 const PAGE_TITLE = 'Press Releases | Sans Mercantile News and Announcements';
 const PAGE_DESCRIPTION =
   'Official press releases from Sans Mercantile, including the launch of Priv Core, an autonomous trading desk and AI trading terminal in South Africa.';
@@ -50,20 +50,20 @@ export default function MediaPressIndex() {
     <Layout>
       <Head>
         <title>{PAGE_TITLE}</title>
-        <meta name="description" content={PAGE_DESCRIPTION} />
+        <meta name="description" content={PAGE_DESCRIPTION} key="description" />
         <meta
           name="keywords"
           content="Sans Mercantile press releases, Priv Core launch, autonomous trading desk South Africa, AI trading terminal, company announcements"
         />
         <link rel="canonical" href={PAGE_URL} />
-        <meta property="og:title" content={PAGE_TITLE} />
-        <meta property="og:description" content={PAGE_DESCRIPTION} />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={PAGE_URL} />
-        <meta property="og:site_name" content="Sans Mercantile" />
-        <meta name="twitter:card" content="summary" />
-        <meta name="twitter:title" content={PAGE_TITLE} />
-        <meta name="twitter:description" content={PAGE_DESCRIPTION} />
+        <meta property="og:title" content={PAGE_TITLE} key="og:title" />
+        <meta property="og:description" content={PAGE_DESCRIPTION} key="og:description" />
+        <meta property="og:type" content="website" key="og:type" />
+        <meta property="og:url" content={PAGE_URL} key="og:url" />
+        <meta property="og:site_name" content="Sans Mercantile" key="og:site_name" />
+        <meta name="twitter:card" content="summary" key="twitter:card" />
+        <meta name="twitter:title" content={PAGE_TITLE} key="twitter:title" />
+        <meta name="twitter:description" content={PAGE_DESCRIPTION} key="twitter:description" />
       </Head>
       <div className=" pt-32 pb-24">
         <div className="max-w-6xl mx-auto px-6">

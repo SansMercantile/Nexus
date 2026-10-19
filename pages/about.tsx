@@ -10,11 +10,11 @@ export default function AboutPage() {
     <Layout>
       <Head>
         <title>About | Sans Mercantile</title>
-        <meta name="description" content="Learn about Sans Mercantile, our mission to transform humanity's work through a constellation of 21 specialized AI systems, and our visionary leadership." />
+        <meta name="description" content="Learn about Sans Mercantile, our mission to transform humanity's work through a constellation of 21 specialized AI systems, and our visionary leadership." key="description" />
         <meta name="keywords" content="About Sans Mercantile, AI Mission, Autonomous Systems, Mezzoforte Privilege Khoza, AI Governance" />
-        <meta property="og:title" content="About Sans Mercantile | Built for a Smarter Tomorrow" />
-        <meta property="og:description" content="Discover the vision and leadership behind the 21 System Constellation." />
-        <meta property="og:type" content="website" />
+        <meta property="og:title" content="About Sans Mercantile | Built for a Smarter Tomorrow" key="og:title" />
+        <meta property="og:description" content="Discover the vision and leadership behind the 21 System Constellation." key="og:description" />
+        <meta property="og:type" content="website" key="og:type" />
       </Head>
       <div className="pb-20">
         <div className="max-w-7xl mx-auto px-6 mb-20">

@@ -1,8 +1,9 @@
-import { useRouter } from 'next/router';
+import type { GetStaticPaths, GetStaticProps } from 'next';
 import { motion } from 'framer-motion';
 import Layout from '@/components/layout/Layout';
+import { SystemSeoHead } from '@/components/systems/SystemSeoHead';
 import { RestrictedSystemNotice } from '@/components/systems/RestrictedSystemNotice';
-import { SYSTEMS } from '@/lib/constants';
+import { getSystemBySlug, getAllSystems } from '@/lib/system-data';
 import { fadeInUp, staggerContainer } from '@/lib/animations';
 
 const PricingTierCard = ({ tier, color, isPopular, pricingUrl }: any) => (
@@ -76,11 +77,11 @@ const PricingTierCard = ({ tier, color, isPopular, pricingUrl }: any) => (
   </motion.div>
 );
 
-export default function SystemPricingPage() {
-  const router = useRouter();
-  const { system } = router.query;
+export default function SystemPricingPage({ system }: { system?: string }) {
 
-  const systemData = SYSTEMS.find(s => s.id === system);
+  // Case-insensitive lookup: /ptah and /Ptah must both resolve (matches
+  // pages/[system]/index.tsx and the lowercase sitemap canonicals).
+  const systemData = typeof system === 'string' ? getSystemBySlug(system) : undefined;
   const pricingUrl = systemData?.id === 'priv' 
     ? 'https://priv.sansmercantile.com/demo' 
     : 'https://sales.sansmercantile.com';
@@ -103,6 +104,7 @@ export default function SystemPricingPage() {
 
   return (
     <Layout>
+      <SystemSeoHead systemData={systemData} page="pricing" />
       <div className=" pt-32 pb-20">
         {/* Hero */}
         <div className="max-w-7xl mx-auto px-6 mb-20">
@@ -224,3 +226,19 @@ export default function SystemPricingPage() {
     </Layout>
   );
 }
+
+// SSG: prerendered HTML must contain the real content (empty router.query
+// under automatic static optimization shipped "System not found" shells).
+// Both id casings are generated so legacy /Ptah-style links keep resolving.
+export const getStaticPaths: GetStaticPaths = async () => {
+  const paths = getAllSystems().flatMap((system) =>
+    Array.from(new Set([system.id, system.id.toLowerCase()])).map((id) => ({
+      params: { system: id },
+    }))
+  );
+  return { paths, fallback: false };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => ({
+  props: { system: typeof params?.system === 'string' ? params.system : null },
+});

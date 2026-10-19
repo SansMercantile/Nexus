@@ -19,7 +19,7 @@ export default function KevDocs() {
     <Layout>
       <Head>
         <title>KEV Knowledge & Educational Vectors - Sans Mercantile</title>
-        <meta name="description" content="KEV Knowledge & Educational Vectors system documentation - AI-personalized education with comprehensive curriculum and expert mentorship" />
+        <meta name="description" content="KEV Knowledge & Educational Vectors system documentation - AI-personalized education with comprehensive curriculum and expert mentorship" key="description" />
       </Head>
 
       <div className=" pt-32 pb-20">

@@ -1,16 +1,13 @@
 import React from 'react';
-import Head from 'next/head';
+import type { GetStaticPaths, GetStaticProps } from 'next';
 import { motion } from 'framer-motion';
 import Layout from '@/components/layout/Layout';
+import { SystemSeoHead } from '@/components/systems/SystemSeoHead';
 import { RestrictedSystemNotice } from '@/components/systems/RestrictedSystemNotice';
-import { getSystemBySlug, getSystemSdgs, getSystemValueDescription } from '@/lib/system-data';
+import { getSystemBySlug, getSystemSdgs, getSystemValueDescription, getAllSystems } from '@/lib/system-data';
 import { fadeInUp } from '@/lib/animations';
-import { useRouter } from 'next/router';
 
-export default function SystemAbout() {
-  const router = useRouter();
-  const { system } = router.query;
-
+export default function SystemAbout({ system }: { system?: string }) {
   if (!system || typeof system !== 'string') {
     return null;
   }
@@ -34,9 +31,7 @@ export default function SystemAbout() {
 
   return (
     <Layout>
-      <Head>
-        <title>About {systemData.name} - Sans Mercantile</title>
-      </Head>
+      <SystemSeoHead systemData={systemData} page="about" />
 
       <div className="max-w-4xl mx-auto px-6 py-20 pt-32">
         <motion.div variants={fadeInUp} initial="initial" animate="animate">
@@ -98,3 +93,19 @@ export default function SystemAbout() {
     </Layout>
   );
 }
+
+// SSG: prerendered HTML must contain the real content (empty router.query
+// under automatic static optimization shipped empty shells to crawlers).
+// Both id casings are generated so legacy /Ptah-style links keep resolving.
+export const getStaticPaths: GetStaticPaths = async () => {
+  const paths = getAllSystems().flatMap((system) =>
+    Array.from(new Set([system.id, system.id.toLowerCase()])).map((id) => ({
+      params: { system: id },
+    }))
+  );
+  return { paths, fallback: false };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => ({
+  props: { system: typeof params?.system === 'string' ? params.system : null },
+});

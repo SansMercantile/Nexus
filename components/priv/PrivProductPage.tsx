@@ -140,20 +140,20 @@ export default function PrivProductPage({ product }: { product: ProductKey }) {
     <Layout>
       <Head>
         <title>{seo.title}</title>
-        <meta name="description" content={seo.description} />
+        <meta name="description" content={seo.description} key="description" />
         <link rel="canonical" href={seo.canonical} />
 
-        <meta property="og:title" content={seo.title} />
-        <meta property="og:description" content={seo.description} />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={seo.canonical} />
-        <meta property="og:image" content={seo.ogImage} />
-        <meta property="og:site_name" content="Sans Mercantile" />
+        <meta property="og:title" content={seo.title} key="og:title" />
+        <meta property="og:description" content={seo.description} key="og:description" />
+        <meta property="og:type" content="website" key="og:type" />
+        <meta property="og:url" content={seo.canonical} key="og:url" />
+        <meta property="og:image" content={seo.ogImage} key="og:image" />
+        <meta property="og:site_name" content="Sans Mercantile" key="og:site_name" />
 
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={seo.title} />
-        <meta name="twitter:description" content={seo.description} />
-        <meta name="twitter:image" content={seo.ogImage} />
+        <meta name="twitter:card" content="summary_large_image" key="twitter:card" />
+        <meta name="twitter:title" content={seo.title} key="twitter:title" />
+        <meta name="twitter:description" content={seo.description} key="twitter:description" />
+        <meta name="twitter:image" content={seo.ogImage} key="twitter:image" />
 
         <script
           type="application/ld+json"

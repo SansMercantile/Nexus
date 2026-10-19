@@ -75,18 +75,18 @@ export default function MediaBlogPostPage({ post, slug }: Props) {
       <Head>
         {/* Basic SEO */}
         <title>{pageTitle}</title>
-        <meta name="description" content={pageDescription} />
+        <meta name="description" content={pageDescription} key="description" />
         <link rel="canonical" href={pageUrl} />
 
         {/* Open Graph / Facebook / LinkedIn */}
-        <meta property="og:type" content="article" />
-        <meta property="og:title" content={pageTitle} />
-        <meta property="og:description" content={pageDescription} />
-        <meta property="og:image" content={ogImage} />
-        <meta property="og:url" content={pageUrl} />
-        <meta property="og:site_name" content="Sans Mercantile" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
+        <meta property="og:type" content="article" key="og:type" />
+        <meta property="og:title" content={pageTitle} key="og:title" />
+        <meta property="og:description" content={pageDescription} key="og:description" />
+        <meta property="og:image" content={ogImage} key="og:image" />
+        <meta property="og:url" content={pageUrl} key="og:url" />
+        <meta property="og:site_name" content="Sans Mercantile" key="og:site_name" />
+        <meta property="og:image:width" content="1200" key="og:image:width" />
+        <meta property="og:image:height" content="630" key="og:image:height" />
         
         {/* Article Specific Metadata */}
         <meta property="article:published_time" content={isoDate} />
@@ -97,10 +97,10 @@ export default function MediaBlogPostPage({ post, slug }: Props) {
         ))}
 
         {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={pageTitle} />
-        <meta name="twitter:description" content={pageDescription} />
-        <meta name="twitter:image" content={ogImage} />
+        <meta name="twitter:card" content="summary_large_image" key="twitter:card" />
+        <meta name="twitter:title" content={pageTitle} key="twitter:title" />
+        <meta name="twitter:description" content={pageDescription} key="twitter:description" />
+        <meta name="twitter:image" content={ogImage} key="twitter:image" />
 
         {/* Structured Data (Schema.org) */}
         <script

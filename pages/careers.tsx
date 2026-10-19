@@ -548,7 +548,7 @@ export default function CareersPage() {
     <Layout>
       <Head>
         <title>Careers | Sans Mercantile</title>
-        <meta name="description" content="Join the Sans Mercantile team and help build the future of intelligent commerce and autonomous systems." />
+        <meta name="description" content="Join the Sans Mercantile team and help build the future of intelligent commerce and autonomous systems." key="description" />
       </Head>
       <div className="pb-20">
         {/* Hero */}

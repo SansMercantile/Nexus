@@ -90,7 +90,7 @@ export default function MpetiDocs() {
     <Layout>
       <Head>
         <title>MPETI Autonomous Developer - Sans Mercantile</title>
-        <meta name="description" content="MPETI Autonomous Full Stack AI Developer system documentation - Self-building AI systems for software development and deployment" />
+        <meta name="description" content="MPETI Autonomous Full Stack AI Developer system documentation - Self-building AI systems for software development and deployment" key="description" />
       </Head>
 
       <div className=" pt-32 pb-20">

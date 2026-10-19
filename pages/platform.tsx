@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import Head from 'next/head';
 import Layout from '../components/layout/Layout';
 
@@ -9,7 +9,7 @@ export default function Platform() {
         <title>Infrastructure | Sans Mercantile</title>
         <meta
           name="description"
-          content="Sans Mercantile is a Sovereign AI Infrastructure Utility. We engineer sovereign compute environments, zero-trust cryptographic HSM clusters, and localized AI orchestration for institutional data residency."
+          content="Sans Mercantile is a Sovereign AI Infrastructure Utility. We engineer sovereign compute environments, zero-trust cryptographic HSM clusters, and localized AI orchestration for institutional data residency." key="description"
         />
       </Head>
 

@@ -19,7 +19,7 @@ export default function CrazyJamDocs() {
     <Layout>
       <Head>
         <title>CrazyJam AI Music System - Sans Mercantile</title>
-        <meta name="description" content="CrazyJam AI Music System documentation - Advanced AI-powered music composition and generation with real-time audio synthesis" />
+        <meta name="description" content="CrazyJam AI Music System documentation - Advanced AI-powered music composition and generation with real-time audio synthesis" key="description" />
       </Head>
 
       <div className=" pt-32 pb-20">

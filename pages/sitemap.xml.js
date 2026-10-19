@@ -1,10 +1,14 @@
+import fs from 'fs';
+import path from 'path';
 import { getAllBlogPosts } from '@/lib/blog-data';
 import { SYSTEMS } from '@/lib/constants';
 
 export default function Sitemap() {}
 
 export async function getServerSideProps({ res }) {
-  const baseUrl = 'https://sansmercantile.com';
+  // The apex domain 307-redirects to www — emit canonical www URLs so no
+  // sitemap entry starts with a redirect hop.
+  const baseUrl = 'https://www.sansmercantile.com';
 
   // Static pages
   const staticPages = [
@@ -47,15 +51,16 @@ export async function getServerSideProps({ res }) {
     '/docs/security/soc2',
   ];
 
-  // System pages — served by pages/[system]/index.tsx, so the real path is /{id},
-  // NOT /systems/{id}. The SystemData type exposes `id` (there is no `slug` field).
-  const systemPages = SYSTEMS.map((system) => `/${system.id}`);
+  // System pages — served by pages/[system]/index.tsx. The lookup
+  // (getSystemBySlug) is case-insensitive but URLs are conventionally
+  // lowercase, so emit lowercase ids to match the canonical tags.
+  const systemPages = SYSTEMS.map((system) => `/${system.id.toLowerCase()}`);
 
   // System detail pages — pages/[system]/{about,features,pricing}.tsx
   const systemDetailPages = SYSTEMS.flatMap((system) => [
-    `/${system.id}/about`,
-    `/${system.id}/features`,
-    `/${system.id}/pricing`,
+    `/${system.id.toLowerCase()}/about`,
+    `/${system.id.toLowerCase()}/features`,
+    `/${system.id.toLowerCase()}/pricing`,
   ]);
 
   // Priv product landing pages (each has its own canonical + JSON-LD)
@@ -64,8 +69,14 @@ export async function getServerSideProps({ res }) {
   // Press releases
   const pressPages = ['/media/press/priv-core-launch'];
 
-  // Doc system pages (static files under pages/docs/systems/)
-  const docSystemPages = SYSTEMS.map((system) => `/docs/systems/${system.id}`);
+  // Doc system pages — read the filesystem instead of deriving from ids:
+  // source files are lowercase (ptah.tsx, hathor.tsx) while ids are mixed
+  // case (Ptah, Hathor), and some ids have no file at all. Emitting anything
+  // else would ship 404s to Google.
+  const docSystemPages = fs
+    .readdirSync(path.join(process.cwd(), 'pages', 'docs', 'systems'))
+    .filter((file) => file.endsWith('.tsx'))
+    .map((file) => `/docs/systems/${file.replace(/\.tsx$/, '')}`);
 
   // Blog posts
   const blogPosts = getAllBlogPosts();

@@ -67,7 +67,7 @@ export default function SystemIntegration() {
     <Layout>
       <Head>
         <title>Sans Mercantile - System Integration Services</title>
-        <meta name="description" content="Expert system integration services for seamless AI implementation and infrastructure modernization" />
+        <meta name="description" content="Expert system integration services for seamless AI implementation and infrastructure modernization" key="description" />
       </Head>
 
       <div className="pt-32 pb-20">

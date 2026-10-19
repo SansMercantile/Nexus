@@ -19,7 +19,7 @@ export default function PrimoDocs() {
     <Layout>
       <Head>
         <title>PRIMO Temporal & Multidimensional - Sans Mercantile</title>
-        <meta name="description" content="PRIMO Temporal & Multidimensional Manipulation system documentation - Advanced temporal mechanics and multidimensional access capabilities" />
+        <meta name="description" content="PRIMO Temporal & Multidimensional Manipulation system documentation - Advanced temporal mechanics and multidimensional access capabilities" key="description" />
       </Head>
 
       <div className=" pt-32 pb-20">

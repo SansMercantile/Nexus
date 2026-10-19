@@ -59,8 +59,8 @@ export default function App({ Component, pageProps }: AppProps) {
           <meta property='og:image' content={defaultOgImage} key='og:image' />
           <meta property='og:image:secure_url' content={defaultOgImage} key='og:image:secure_url' />
           <meta property='og:image:type' content='image/png' key='og:image:type' />
-          <meta property='og:image:width' content='1200' key='og:image:width' />
-          <meta property='og:image:height' content='630' key='og:image:height' />
+          <meta property='og:image:width' content='1024' key='og:image:width' />
+          <meta property='og:image:height' content='1024' key='og:image:height' />
           <meta name='twitter:card' content='summary_large_image' key='twitter:card' />
           <meta name='twitter:title' content={defaultTitle} key='twitter:title' />
           <meta name='twitter:description' content={defaultDescription} key='twitter:description' />

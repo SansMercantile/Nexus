@@ -70,7 +70,7 @@ export default function StrategicAssessment() {
     <Layout>
       <Head>
         <title>Sans Mercantile - Strategic Infrastructure Assessment</title>
-        <meta name="description" content="Mapping enterprise topology to the Constellation architecture for modular AI utility deployment." />
+        <meta name="description" content="Mapping enterprise topology to the Constellation architecture for modular AI utility deployment." key="description" />
       </Head>
 
       <div className="pt-32 pb-20">

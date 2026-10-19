@@ -81,7 +81,7 @@ export default function Portal() {
     <Layout>
       <Head>
         <title>Web Portal - Sans Mercantile</title>
-        <meta name="description" content="Sign in to your Sans Mercantile portal account." />
+        <meta name="description" content="Sign in to your Sans Mercantile portal account." key="description" />
       </Head>
 
       <div className="min-h-screen flex items-center justify-center py-20 px-6">

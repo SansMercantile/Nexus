@@ -6,9 +6,9 @@ import Layout from '@/components/layout/Layout';
 import { SystemHero } from '@/components/systems/SystemHero';
 import { RestrictedSystemNotice } from '@/components/systems/RestrictedSystemNotice';
 import { AnimatedIcon, featureIcons } from '@/components/AnimatedIcons';
-import { getSystemBySlug, getSystemValueDescription, getSystemSdgs } from '@/lib/system-data';
+import type { GetStaticPaths, GetStaticProps } from 'next';
+import { getSystemBySlug, getSystemValueDescription, getSystemSdgs, getAllSystems } from '@/lib/system-data';
 import { fadeInUp, staggerContainer, itemVariants } from '@/lib/animations';
-import { useRouter } from 'next/router';
 import { AppPlatform, type SystemData } from '@/lib/constants';
 
 // Display label for each platform's download button. "notifyLabel" is what shows before
@@ -22,7 +22,7 @@ const PLATFORM_META: Record<AppPlatform, { label: string; notifyLabel: string }>
   linux: { label: 'Download for Linux', notifyLabel: 'Download for Linux' },
 };
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://sansmercantile.com';
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.sansmercantile.com';
 
 // Full SEO metadata per system page: keyword-rich title/description for Priv,
 // subtitle-based titles everywhere else, plus OG/Twitter tags and JSON-LD.
@@ -34,8 +34,12 @@ function generateSystemSeo(systemData: SystemData) {
   const description = isPriv
     ? 'Priv by Sans Mercantile: Priv Core autonomous trading desk, Priv Pay split payments and Priv Philanthropy giving. Start free, no card required.'
     : systemData.description;
-  const url = `${BASE_URL}/${systemData.id}/`;
-  const image = `${BASE_URL}/og-default.jpg`;
+  // Canonical URLs are lowercase: /ptah resolves the same as /Ptah (see
+  // getSystemBySlug) and lowercase is the convention the sitemap emits.
+  const url = `${BASE_URL}/${systemData.id.toLowerCase()}/`;
+  // Per-system OG art (public/Faces/*, landscape 1376x748) — verified to
+  // exist for every system in SYSTEMS.
+  const image = `${BASE_URL}/Faces/${encodeURIComponent(systemData.face)}`;
 
   return {
     title,
@@ -82,10 +86,7 @@ function generateSystemSeo(systemData: SystemData) {
   };
 }
 
-export default function SystemPage() {
-  const router = useRouter();
-  const { system } = router.query;
-
+export default function SystemPage({ system }: { system?: string }) {
   if (!system || typeof system !== 'string') {
     return null;
   }
@@ -112,22 +113,22 @@ export default function SystemPage() {
     <Layout>
       <Head>
         <title>{seo.title}</title>
-        <meta name="description" content={seo.description} />
+        <meta name="description" content={seo.description} key="description" />
         <link rel="canonical" href={seo.openGraph.url} />
 
         {/* Open Graph / Facebook */}
-        <meta property="og:title" content={seo.openGraph.title} />
-        <meta property="og:description" content={seo.openGraph.description} />
-        <meta property="og:type" content={seo.openGraph.type} />
-        <meta property="og:url" content={seo.openGraph.url} />
-        <meta property="og:image" content={seo.openGraph.image} />
-        <meta property="og:site_name" content="Sans Mercantile" />
+        <meta property="og:title" content={seo.openGraph.title} key="og:title" />
+        <meta property="og:description" content={seo.openGraph.description} key="og:description" />
+        <meta property="og:type" content={seo.openGraph.type} key="og:type" />
+        <meta property="og:url" content={seo.openGraph.url} key="og:url" />
+        <meta property="og:image" content={seo.openGraph.image} key="og:image" />
+        <meta property="og:site_name" content="Sans Mercantile" key="og:site_name" />
 
         {/* Twitter */}
-        <meta name="twitter:card" content={seo.twitter.card} />
-        <meta name="twitter:title" content={seo.twitter.title} />
-        <meta name="twitter:description" content={seo.twitter.description} />
-        <meta name="twitter:image" content={seo.twitter.image} />
+        <meta name="twitter:card" content={seo.twitter.card} key="twitter:card" />
+        <meta name="twitter:title" content={seo.twitter.title} key="twitter:title" />
+        <meta name="twitter:description" content={seo.twitter.description} key="twitter:description" />
+        <meta name="twitter:image" content={seo.twitter.image} key="twitter:image" />
 
         {/* Schema.org JSON-LD */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(seo.schema) }} />
@@ -366,3 +367,21 @@ export default function SystemPage() {
     </Layout>
   );
 }
+
+// SSG for every system page: prerendered HTML must contain the actual
+// content (router.query is empty under automatic static optimization, which
+// shipped empty/"System not found" shells to crawlers). Both the original id
+// casing and the lowercase canonical form are generated so legacy /Ptah-style
+// links keep resolving while /ptah matches the sitemap.
+export const getStaticPaths: GetStaticPaths = async () => {
+  const paths = getAllSystems().flatMap((system) =>
+    Array.from(new Set([system.id, system.id.toLowerCase()])).map((id) => ({
+      params: { system: id },
+    }))
+  );
+  return { paths, fallback: false };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => ({
+  props: { system: typeof params?.system === 'string' ? params.system : null },
+});
