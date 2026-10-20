@@ -181,10 +181,9 @@ export default function PrivCoreLaunchPressRelease() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="space-y-12 mb-16"
+            className="max-w-3xl space-y-12 mb-16"
           >
-            <div className="rounded-3xl border border-nexus-gold/20 bg-[#0b1125] p-12">
-              <div className="prose prose-invert max-w-none text-nexus-gray-200">
+            <div className="prose prose-invert max-w-none text-nexus-gray-200">
                 <p>
                   <strong className="text-white">
                     Cape Town, South Africa, 19 October 2026
@@ -217,12 +216,11 @@ export default function PrivCoreLaunchPressRelease() {
                     Mezzoforte Privilege Khoza, CEO, Sans Mercantile
                   </footer>
                 </blockquote>
-              </div>
             </div>
 
-            <div className="rounded-3xl border border-nexus-gold/20 bg-[#0b1125] p-12 text-center">
-              <h2 className="text-3xl font-bold text-white mb-4">Availability and pricing</h2>
-              <p className="text-nexus-gray-300 leading-relaxed mb-8 max-w-2xl mx-auto">
+            <section>
+              <h2 className="text-2xl font-bold text-white mb-3">Availability and pricing</h2>
+              <p className="text-nexus-gray-300 leading-relaxed mb-5">
                 Priv Core can be started free at priv.sansmercantile.com, with no card required.
                 Paid plans are also available. Details are at priv.sansmercantile.com.
               </p>
@@ -234,10 +232,10 @@ export default function PrivCoreLaunchPressRelease() {
               >
                 Go to Priv Core
               </a>
-            </div>
+            </section>
 
-            <div className="rounded-3xl border border-nexus-gold/20 bg-[#0b1125] p-12">
-              <h2 className="text-3xl font-bold text-white mb-4">Risk disclosure</h2>
+            <section>
+              <h2 className="text-2xl font-bold text-white mb-3">Risk disclosure</h2>
               <p className="text-nexus-gray-300 leading-relaxed mb-4">
                 <strong className="text-white">Trading involves risk.</strong> Past performance
                 is not indicative of future results. Priv holds no client funds and stores no
@@ -255,46 +253,44 @@ export default function PrivCoreLaunchPressRelease() {
                   priv.sansmercantile.com/risk
                 </a>
               </p>
-            </div>
+            </section>
 
-            <div className="grid gap-10 lg:grid-cols-2">
-              <div className="rounded-3xl border border-nexus-gold/20 bg-[#0c132b] p-10">
-                <h2 className="text-2xl font-bold text-white mb-4">About Priv Core</h2>
-                <p className="text-nexus-gray-300 leading-relaxed">
-                  Priv Core is an autonomous trading desk by Sans Mercantile: strategy
-                  backtesting, market watch and full custody control in one app. Funds never
-                  leave the user&apos;s own broker.
-                </p>
-              </div>
-              <div className="rounded-3xl border border-nexus-gold/20 bg-[#0c132b] p-10">
-                <h2 className="text-2xl font-bold text-white mb-4">About Sans Mercantile</h2>
-                <p className="text-nexus-gray-300 leading-relaxed">
-                  Sans Mercantile is a South African-registered, AI-driven global trade and
-                  fintech company. It builds a constellation of 21 specialised, autonomous
-                  systems designed to support global commerce, governance and innovation, each
-                  able to operate on its own or together with the others. Sans Mercantile is led
-                  by founder and Chief Executive Officer Mezzoforte Privilege Khoza and is
-                  registered with the Companies and Intellectual Property Commission (CIPC)
-                  under registration number K2025537335. For more information, visit{' '}
-                  <a
-                    href="https://www.sansmercantile.com"
-                    className="text-nexus-gold hover:text-nexus-accent transition-colors"
-                  >
-                    sansmercantile.com
-                  </a>
-                  .
-                </p>
-              </div>
-            </div>
+            <section>
+              <h2 className="text-2xl font-bold text-white mb-3">About Priv Core</h2>
+              <p className="text-nexus-gray-300 leading-relaxed">
+                Priv Core is an autonomous trading desk by Sans Mercantile: strategy
+                backtesting, market watch and full custody control in one app. Funds never
+                leave the user&apos;s own broker.
+              </p>
+            </section>
+            <section>
+              <h2 className="text-2xl font-bold text-white mb-3">About Sans Mercantile</h2>
+              <p className="text-nexus-gray-300 leading-relaxed">
+                Sans Mercantile is a South African-registered, AI-driven global trade and
+                fintech company. It builds a constellation of 21 specialised, autonomous
+                systems designed to support global commerce, governance and innovation, each
+                able to operate on its own or together with the others. Sans Mercantile is led
+                by founder and Chief Executive Officer Mezzoforte Privilege Khoza and is
+                registered with the Companies and Intellectual Property Commission (CIPC)
+                under registration number K2025537335. For more information, visit{' '}
+                <a
+                  href="https://www.sansmercantile.com"
+                  className="text-nexus-gold hover:text-nexus-accent transition-colors"
+                >
+                  sansmercantile.com
+                </a>
+                .
+              </p>
+            </section>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="rounded-3xl border border-nexus-gold/20 bg-[#0b1125] p-12 mb-8"
+            className="max-w-3xl mb-8"
           >
-            <h2 className="text-3xl font-bold text-white mb-6">Media contacts</h2>
+            <h2 className="text-2xl font-bold text-white mb-6">Media contacts</h2>
             <div className="grid gap-8 md:grid-cols-2 text-nexus-gray-300">
               <div>
                 <p className="text-white font-semibold mb-2">Sans Mercantile press</p>
@@ -333,9 +329,9 @@ export default function PrivCoreLaunchPressRelease() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.35 }}
-            className="rounded-3xl border border-nexus-gold/20 bg-[#0b1125] p-12 mb-8"
+            className="max-w-3xl mb-8"
           >
-            <h2 className="text-3xl font-bold text-white mb-6">Notes to editors</h2>
+            <h2 className="text-2xl font-bold text-white mb-6">Notes to editors</h2>
             <ul className="space-y-4 text-nexus-gray-300 leading-relaxed">
               {notesToEditors.map((note) => (
                 <li key={note} className="flex gap-4">
@@ -346,9 +342,6 @@ export default function PrivCoreLaunchPressRelease() {
                 </li>
               ))}
             </ul>
-            <p className="text-nexus-gold uppercase tracking-[0.4em] text-sm mt-10 text-center font-semibold">
-              Ends
-            </p>
           </motion.div>
 
           <motion.div
