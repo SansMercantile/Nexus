@@ -139,10 +139,10 @@ export default function MediaPressIndex() {
             <p className="text-nexus-gray-300 leading-relaxed">
               For interview requests and press materials, contact{' '}
               <a
-                href="mailto:hello@swellprcomm.com
+                href="mailto:press@sansmercantile.com"
                 className="text-nexus-gold hover:text-nexus-accent transition-colors"
               >
-                hello@swellprcomm.com
+                press@sansmercantile.com
               </a>
               .
             </p>
