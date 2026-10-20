@@ -68,7 +68,7 @@ const newsArticleSchema = {
 const notesToEditors = [
   'Priv Core is a separate product from Priv Pay.',
   'Images, screenshots and logos are available on request. Screenshots must be unaltered and carry the risk disclosure.',
-  'Interviews: Mezzoforte Privilege Khoza is available on request. Contact Swell to arrange.',
+  'Interviews: Mezzoforte Privilège is available on request. Contact Swell to arrange.',
 ];
 
 export default function PrivCoreLaunchPressRelease() {
@@ -296,10 +296,10 @@ export default function PrivCoreLaunchPressRelease() {
                 <p className="text-white font-semibold mb-2">Sans Mercantile press</p>
                 <p>
                   <a
-                    href="mailto:press@sansmercantile.com"
+                    href="mailto:hello@swellprcomm.com
                     className="text-nexus-gold hover:text-nexus-accent transition-colors"
                   >
-                    press@sansmercantile.com
+                    hello@swellprcomm.com
                   </a>
                 </p>
               </div>

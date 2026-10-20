@@ -51,7 +51,7 @@ Sans Mercantile is a South African-registered, AI-driven global trade and fintec
 
 | Organisation | Contact | Email | Phone |
 |-------------|---------|-------|-------|
-| Sans Mercantile | — | press@sansmercantile.com | — |
+| Sans Mercantile | — | hello@swellprcomm.com| — |
 | Swell PR & Communications | Pascaline Khoza | hello@swellprcomm.com | +27 69 561 7666 |
 
 Interviews with Mezzoforte Privilege Khoza are available on request. Please contact Swell to arrange.
