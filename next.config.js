@@ -24,6 +24,12 @@ const nextConfig = {
         destination: '/media/press',
         permanent: true,
       },
+      // PrivPay has its own site and product domain now.
+      {
+        source: '/priv/pay',
+        destination: 'https://privpay.sansmercantile.com/',
+        permanent: true,
+      },
     ];
   },
   async headers() {

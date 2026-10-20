@@ -66,38 +66,6 @@ const PRODUCTS: Record<ProductKey, ProductConfig> = {
       { value: '7', label: 'Timeframes' },
     ],
   },
-  privPay: {
-    name: 'Priv Pay',
-    eyebrow: 'Priv Product · Split Payments',
-    headline: 'One purchase, many cards — with a backup reserve built in.',
-    intro:
-      'Priv Pay splits a single purchase across multiple linked cards in real time, with an automatic backup reserve if any card declines mid-transaction. Designed so everyday payments clear without a single point of failure.',
-    features: [
-      {
-        title: 'Real-Time Splitting',
-        description: 'Split one purchase across multiple linked cards the moment you pay.',
-      },
-      {
-        title: 'Automatic Backup Reserve',
-        description: 'If a card declines mid-transaction, the reserve covers it without failing the payment.',
-      },
-      {
-        title: 'Built on Priv',
-        description: 'The same Priv financial rails that power Priv Core and Priv Philanthropy.',
-      },
-      {
-        title: 'Mobile First',
-        description: 'Native iOS and Android clients are on the way — join the early access list.',
-      },
-    ],
-    platforms: ['iOS', 'Android'],
-    primaryCta: {
-      label: 'Join Early Access',
-      href: '/contact?subject=Priv%20Pay%20Early%20Access',
-      external: false,
-    },
-    secondaryCta: { label: 'Explore Priv', href: '/priv' },
-  },
   privPhilanthropy: {
     name: 'Priv Philanthropy',
     eyebrow: 'Priv Product · Giving & Impact',

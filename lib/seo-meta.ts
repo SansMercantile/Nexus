@@ -12,10 +12,7 @@ interface ProductSeo {
   schema: Record<string, unknown>;
 }
 
-export const PRIV_PRODUCT_SEO: Record<
-  'privCore' | 'privPay' | 'privPhilanthropy',
-  ProductSeo
-> = {
+export const PRIV_PRODUCT_SEO: Record<'privCore' | 'privPhilanthropy', ProductSeo> = {
   privCore: {
     title: 'Priv Core — Autonomous Trading Desk & AI Trading Terminal | Sans Mercantile',
     description:
@@ -40,35 +37,12 @@ export const PRIV_PRODUCT_SEO: Record<
       },
     },
   },
-  privPay: {
-    title: 'Priv Pay — Split Purchases Across Multiple Cards in Real Time | Sans Mercantile',
-    description:
-      'Priv Pay splits a single purchase across multiple linked cards in real time, with an automatic backup reserve if any card declines mid-transaction. Join the early access list.',
-    canonical: 'https://www.sansmercantile.com/priv/pay/',
-    ogImage: 'https://www.sansmercantile.com/press/priv-core-iphone-duo.png',
-    schema: {
-      '@context': 'https://schema.org',
-      '@type': 'SoftwareApplication',
-      name: 'Priv Pay',
-      applicationCategory: 'FinanceApplication',
-      operatingSystem: ['iOS', 'Android'],
-      url: 'https://www.sansmercantile.com/priv/pay/',
-      description:
-        'Split a single purchase across multiple linked cards in real time with an automatic backup reserve if any card declines mid-transaction.',
-      offers: {
-        '@type': 'Offer',
-        price: '0',
-        priceCurrency: 'USD',
-        availability: 'https://schema.org/PreOrder',
-      },
-    },
-  },
   privPhilanthropy: {
     title: 'Priv Philanthropy — Charitable Giving & Impact Tracking | Sans Mercantile',
     description:
       'Priv Philanthropy is giving and social-impact capital through Priv: transparent donation rails, cause portfolios and impact tracking. Live now — start giving in minutes.',
     canonical: 'https://www.sansmercantile.com/priv/philanthropy/',
-    ogImage: 'https://www.sansmercantile.com/press/priv-core-iphone-duo.png',
+    ogImage: 'https://www.sansmercantile.com/media/social-cover-hero.png',
     schema: {
       '@context': 'https://schema.org',
       '@type': 'SoftwareApplication',

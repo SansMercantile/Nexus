@@ -63,8 +63,9 @@ export async function getServerSideProps({ res }) {
     `/${system.id.toLowerCase()}/pricing`,
   ]);
 
-  // Priv product landing pages (each has its own canonical + JSON-LD)
-  const privProductPages = ['/priv/core', '/priv/pay', '/priv/philanthropy'];
+  // Priv product landing pages (each has its own canonical + JSON-LD).
+  // PrivPay moved to https://privpay.sansmercantile.com (see next.config redirect).
+  const privProductPages = ['/priv/core', '/priv/philanthropy'];
 
   // Press releases
   const pressPages = ['/media/press/priv-core-launch'];
