@@ -8,6 +8,8 @@ import { COMPANY_INFO } from '@/lib/constants';
 import { BEDROCK_MODEL } from '@/lib/bedrock-client';
 
 export default function Home() {
+  const [showPrivCoreModal, setShowPrivCoreModal] = useState(true);
+
   return (
     <Layout>
       <Head>
@@ -26,31 +28,46 @@ export default function Home() {
       </Head>
 
       {/* Priv Core Announcement Modal */}
-      <div
-        className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center pointer-events-auto"
-      >
-        <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden">
-          <div className="p-6">
-            <h3 className="text-xl font-bold text-[var(--burgundy)] mb-4">Priv Core is now available</h3>
-            <p className="text-gray-700 mb-6">
-              An autonomous trading desk and AI trading terminal built for traders who want to test strategies and keep full custody of their funds. Start free, no card required.
-            </p>
-            <div className="flex gap-3">
-              <a
-                href="https://priv.sansmercantile.com"
-                className="flex-1 bg-[var(--burgundy)] text-white font-bold py-3 rounded text-center hover:opacity-90 transition-opacity"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Start Now
-              </a>
-              <Link href="/systems" className="flex-1 border border-[var(--burgundy)] text-[var(--burgundy)] font-bold py-3 rounded text-center hover:bg-[var(--burgundy)] hover:text-white transition-all">
-                Learn More
-              </Link>
+      {showPrivCoreModal && (
+        <div
+          className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center pointer-events-auto"
+        >
+          <div className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden">
+            <img
+              src="/press/priv-core-iphone-duo.png"
+              alt="Priv Core on iPhone and tablet — strategy backtesting and 24/7 market watch at priv.sansmercantile.com"
+              className="w-full h-64 object-cover object-center"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPrivCoreModal(false)}
+              aria-label="Close announcement"
+              className="absolute top-3 right-3 flex h-9 w-9 items-center justify-center rounded-full bg-white/95 text-gray-700 shadow-md hover:bg-white transition-colors"
+            >
+              ✕
+            </button>
+            <div className="p-6">
+              <h3 className="text-xl font-bold text-[var(--burgundy)] mb-4">Priv Core is now available</h3>
+              <p className="text-gray-700 mb-6">
+                An autonomous trading desk and AI trading terminal built for traders who want to test strategies and keep full custody of their funds. Start free, no card required.
+              </p>
+              <div className="flex gap-3">
+                <a
+                  href="https://priv.sansmercantile.com"
+                  className="flex-1 bg-[var(--burgundy)] text-white font-bold py-3 rounded text-center hover:opacity-90 transition-opacity"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Start Now
+                </a>
+                <Link href="/systems" className="flex-1 border border-[var(--burgundy)] text-[var(--burgundy)] font-bold py-3 rounded text-center hover:bg-[var(--burgundy)] hover:text-white transition-all">
+                  Learn More
+                </Link>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Hero Section */}
       <motion.section
