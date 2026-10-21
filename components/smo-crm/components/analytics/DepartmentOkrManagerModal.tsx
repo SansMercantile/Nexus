@@ -63,7 +63,7 @@ export const INITIAL_OKRS: Record<Department, DepartmentOkr> = {
     quarter: 'Q3 2026',
     objective: 'Institutionalize Sovereign Command Operations and Secure Strategic Sovereign Grants',
     targetQuotaUsd: 1000000,
-    ownerName: 'Mezzoforte Privilege',
+    ownerName: 'Mezzoforte Privilè',
     updatedAt: '2026-09-15',
     keyResults: [
       {

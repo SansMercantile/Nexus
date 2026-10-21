@@ -78,7 +78,7 @@ export const ActivityHeatmapWidget: React.FC = () => {
         let baseComm = 0;
         let isSpike = false;
         let spikeReason = '';
-        let topContributors: string[] = ['Mezzoforte Privilege'];
+        let topContributors: string[] = ['Mezzoforte Privilè'];
         let keyEventDescription = 'Standard pipeline coordination';
 
         if (isWeekday) {
@@ -123,7 +123,7 @@ export const ActivityHeatmapWidget: React.FC = () => {
         } else if (selectedDept === 'executive') {
           baseProd = Math.floor(baseProd * 1.2);
           baseComm = Math.floor(baseComm * 1.2);
-          topContributors = ['Mezzoforte Privilege', 'Christopher Maddison'];
+          topContributors = ['Mezzoforte Privilè', 'Christopher Maddison'];
           keyEventDescription = 'Sovereign governance sign-offs & Deal triage';
         }
 
@@ -134,7 +134,7 @@ export const ActivityHeatmapWidget: React.FC = () => {
           baseProd += 10;
           isSpike = true;
           spikeReason = 'CBDO Sovereign Syndicate Alignment (+210% communication spike)';
-          topContributors = ['Christopher Maddison', 'Mezzoforte Privilege', 'Elena Vance'];
+          topContributors = ['Christopher Maddison', 'Mezzoforte Privilè', 'Elena Vance'];
           keyEventDescription = 'Meridian Apex term sheet review & sovereign syndicate call';
         }
 

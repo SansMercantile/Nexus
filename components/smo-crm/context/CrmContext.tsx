@@ -210,7 +210,7 @@ export const CrmProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   };
 
   const canAccessTab = (tab: CrmTab): boolean => {
-    // Admin (Mezzoforte Privilege) has omniscient access to all departments
+    // Admin (Mezzoforte Privilè) has omniscient access to all departments
     if (currentUser.isAdmin || currentUser.department === 'executive') {
       return true;
     }

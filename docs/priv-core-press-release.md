@@ -21,7 +21,7 @@ Priv Core is available on web, Windows, macOS, Linux, Android and iOS, with one 
 
 > "Traders should be able to test an idea before they trust it, and keep control of their own funds. That is what Priv Core is built to do."
 > \
-> — **Mezzoforte Privilege Khoza, CEO, Sans Mercantile**
+> — **Mezzoforte Privilège, CEO, Sans Mercantile**
 
 ## Availability and pricing
 
@@ -45,7 +45,7 @@ Priv Core is an autonomous trading desk by Sans Mercantile: strategy backtesting
 
 ## About Sans Mercantile
 
-Sans Mercantile is a South African-registered, AI-driven global trade and fintech company. It builds a constellation of 21 specialised, autonomous systems designed to support global commerce, governance and innovation, each able to operate on its own or together with the others. Sans Mercantile is led by founder and Chief Executive Officer Mezzoforte Privilege Khoza and is registered with the Companies and Intellectual Property Commission (CIPC) under registration number K2025537335. For more information, visit [sansmercantile.com](https://www.sansmercantile.com).
+Sans Mercantile is a South African-registered, AI-driven global trade and fintech company. It builds a constellation of 21 specialised, autonomous systems designed to support global commerce, governance and innovation, each able to operate on its own or together with the others. Sans Mercantile is led by founder and Chief Executive Officer Mezzoforte Privilège and is registered with the Companies and Intellectual Property Commission (CIPC) under registration number K2025537335. For more information, visit [sansmercantile.com](https://www.sansmercantile.com).
 
 ## Media contacts
 
@@ -54,12 +54,12 @@ Sans Mercantile is a South African-registered, AI-driven global trade and fintec
 | Sans Mercantile | — | press@sansmercantile.com | — |
 | Swell PR & Communications | Pascaline Khoza | hello@swellprcomm.com | +27 69 561 7666 |
 
-Interviews with Mezzoforte Privilege Khoza are available on request. Please contact Swell to arrange.
+Interviews with Mezzoforte Privilège are available on request. Please contact Swell to arrange.
 
 ## Notes to editors
 
 - Priv Core is a separate product from Priv Pay.
 - Images, screenshots and logos are available on request. Screenshots must be unaltered and carry the risk disclosure.
-- Interviews: Mezzoforte Privilege Khoza is available on request. Contact Swell to arrange.
+- Interviews: Mezzoforte Privilège is available on request. Contact Swell to arrange.
 
 **ENDS**

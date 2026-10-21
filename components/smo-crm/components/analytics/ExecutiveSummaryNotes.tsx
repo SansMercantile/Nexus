@@ -26,7 +26,7 @@ const INITIAL_NOTES: ExecutiveSummaryNote[] = [
   {
     id: 'note-exec-1',
     authorId: 'user-mezzoforte',
-    authorName: 'Mezzoforte Privilege',
+    authorName: 'Mezzoforte Privilè',
     authorRole: 'Managing Principal & Sovereign Head',
     authorAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
     department: 'executive',

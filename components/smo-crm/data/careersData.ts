@@ -151,7 +151,7 @@ EDUCATION & CERTIFICATIONS
         'Extensive expertise in Azure Key Vault HSM rotation matching Mohammed Kabir’s security spec.'
       ],
       considerationsAndGaps: [
-        'Notice period is 30 days; recommend expedited founder conversation with Mezzoforte Privilege to secure early start date.'
+        'Notice period is 30 days; recommend expedited founder conversation with Mezzoforte Privilè to secure early start date.'
       ],
       summary: 'Candidate Tariq Al-Mansoor is an exceptional match (96/100) for the Senior Azure Cloud & Rails Architect position. His deep domain knowledge in financial-grade Azure infrastructure, automated Terraform modules, and active-active clustering directly addresses Mohammed Kabir’s immediate infrastructure scaling roadmap.',
       vettedAt: '2026-09-08T14:15:00Z',
@@ -311,7 +311,7 @@ EDUCATION
         {
           id: 'q1',
           question: 'Draft a 150-word embargoed pitch to a Senior Financial Times technology editor for the Sans Mercantile Priv Pay rollout.',
-          candidateAnswer: 'Subject: Embargoed / Exclusive: Sovereign rail Sans Mercantile uncloaks Priv Pay commercial settlement\n\nDear [Editor Name], Ahead of public release on Sep 4, I want to offer the FT an exclusive first look at Sans Mercantile’s sovereign Priv Pay commercial rail. Built on enterprise Azure architecture, Priv Pay is bridging sovereign capital and commercial settlement with zero third-party custodial risk. Managing Principal Mezzoforte Privilege and Head of Infrastructure Mohammed Kabir are available for an exclusive preview this Thursday under embargo. Would you like to review the technical briefing memo?',
+          candidateAnswer: 'Subject: Embargoed / Exclusive: Sovereign rail Sans Mercantile uncloaks Priv Pay commercial settlement\n\nDear [Editor Name], Ahead of public release on Sep 4, I want to offer the FT an exclusive first look at Sans Mercantile’s sovereign Priv Pay commercial rail. Built on enterprise Azure architecture, Priv Pay is bridging sovereign capital and commercial settlement with zero third-party custodial risk. Managing Principal Mezzoforte Privilè and Head of Infrastructure Mohammed Kabir are available for an exclusive preview this Thursday under embargo. Would you like to review the technical briefing memo?',
           maxPoints: 50,
           awardedPoints: 49,
           aiGradingNotes: 'Punchy, executive, respect of journalistic norms, clear value proposition with zero corporate jargon.',

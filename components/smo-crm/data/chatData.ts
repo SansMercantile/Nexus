@@ -73,7 +73,7 @@ export const INITIAL_CHAT_MESSAGES: ChatMessage[] = [
     id: 'msg-1',
     channelId: 'chan-all-hands',
     senderId: 'user-mezzoforte',
-    senderName: 'Mezzoforte Privilege',
+    senderName: 'Mezzoforte Privilè',
     senderRole: 'Managing Principal & Sovereign Command',
     senderAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
     senderDepartment: 'executive',
@@ -118,14 +118,14 @@ export const INITIAL_CHAT_MESSAGES: ChatMessage[] = [
     senderRole: 'Head of Communications',
     senderAvatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
     senderDepartment: 'communications',
-    content: 'From Swell Agency PR: The Brand Kit and Press Wire draft for Priv Pay are ready for final sign-off by @Mezzoforte Privilege. Also, our candidate Elena Vance just completed the AI Video Interview with a 94% articulation score. Reviewing her sample campaign now! 📢✨',
+    content: 'From Swell Agency PR: The Brand Kit and Press Wire draft for Priv Pay are ready for final sign-off by @Mezzoforte Privilè. Also, our candidate Elena Vance just completed the AI Video Interview with a 94% articulation score. Reviewing her sample campaign now! 📢✨',
     timestamp: '2026-09-14T10:15:00Z',
     reactions: [
       { emoji: '❤️', count: 2, users: ['user-mezzoforte', 'user-amara'] },
       { emoji: '💡', count: 2, users: ['user-christopher', 'user-mohammed'] },
     ],
     mentions: [
-      { id: 'user-mezzoforte', name: 'Mezzoforte Privilege', department: 'executive' },
+      { id: 'user-mezzoforte', name: 'Mezzoforte Privilè', department: 'executive' },
     ],
   },
   {
@@ -175,14 +175,14 @@ export const INITIAL_CHAT_MESSAGES: ChatMessage[] = [
     senderRole: 'Head of Talent & People Operations',
     senderAvatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80',
     senderDepartment: 'hr',
-    content: '4 new candidate dossiers ingested from website careers portal today! AI has parsed all resumes, dispatched role-specific tests, and 2 candidates have already completed their AI video interviews. @Mezzoforte Privilege and department leads can inspect preliminary shortlists in the Careers tab! 📋✨',
+    content: '4 new candidate dossiers ingested from website careers portal today! AI has parsed all resumes, dispatched role-specific tests, and 2 candidates have already completed their AI video interviews. @Mezzoforte Privilè and department leads can inspect preliminary shortlists in the Careers tab! 📋✨',
     timestamp: '2026-09-14T15:10:00Z',
     reactions: [
       { emoji: '🎉', count: 3, users: ['user-mezzoforte', 'user-pascaline', 'user-mohammed'] },
       { emoji: '🔥', count: 2, users: ['user-christopher', 'user-amara'] },
     ],
     mentions: [
-      { id: 'user-mezzoforte', name: 'Mezzoforte Privilege', department: 'executive' },
+      { id: 'user-mezzoforte', name: 'Mezzoforte Privilè', department: 'executive' },
     ],
   },
   {
@@ -216,7 +216,7 @@ export const INITIAL_CHAT_MESSAGES: ChatMessage[] = [
       { emoji: '🤝', count: 2, users: ['user-mezzoforte', 'user-christopher'] },
     ],
     mentions: [
-      { id: 'user-mezzoforte', name: 'Mezzoforte Privilege', department: 'executive' },
+      { id: 'user-mezzoforte', name: 'Mezzoforte Privilè', department: 'executive' },
     ],
     voiceMemo: {
       id: 'vm-101',

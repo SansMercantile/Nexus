@@ -52,7 +52,7 @@ export const GatedAccessBanner: React.FC<GatedAccessBannerProps> = ({
             className="w-full py-2 px-3 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold flex items-center justify-center gap-2 transition-colors shadow-xs"
           >
             <UserCheck className="w-4 h-4 text-emerald-400" />
-            Switch to Sovereign Admin (Mezzoforte Privilege)
+            Switch to Sovereign Admin (Mezzoforte Privilè)
           </button>
           
           <button

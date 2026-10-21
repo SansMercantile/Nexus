@@ -68,7 +68,7 @@ const newsArticleSchema = {
 const notesToEditors = [
   'Priv Core is a separate product from Priv Pay.',
   'Images, screenshots and logos are available on request. Screenshots must be unaltered and carry the risk disclosure.',
-  'Interviews: Mezzoforte Privilege Khoza is available on request. Contact Swell to arrange.',
+  'Interviews: Mezzoforte Privilège is available on request. Contact Swell to arrange.',
 ];
 
 export default function PrivCoreLaunchPressRelease() {
@@ -213,7 +213,7 @@ export default function PrivCoreLaunchPressRelease() {
                     control of their own funds. That is what Priv Core is built to do.&rdquo;
                   </p>
                   <footer className="text-nexus-gold text-sm uppercase tracking-wider mt-3">
-                    Mezzoforte Privilege Khoza, CEO, Sans Mercantile
+                    Mezzoforte Privilège, CEO, Sans Mercantile
                   </footer>
                 </blockquote>
             </div>
@@ -270,7 +270,7 @@ export default function PrivCoreLaunchPressRelease() {
                 fintech company. It builds a constellation of 21 specialised, autonomous
                 systems designed to support global commerce, governance and innovation, each
                 able to operate on its own or together with the others. Sans Mercantile is led
-                by founder and Chief Executive Officer Mezzoforte Privilege Khoza and is
+                by founder and Chief Executive Officer Mezzoforte Privilège and is
                 registered with the Companies and Intellectual Property Commission (CIPC)
                 under registration number K2025537335. For more information, visit{' '}
                 <a

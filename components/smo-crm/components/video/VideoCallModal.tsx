@@ -54,7 +54,7 @@ interface ActionItemGenerated {
 
 const SAMPLE_TRANSCRIPTS: Omit<TranscriptItem, 'id'>[] = [
   {
-    speaker: 'Mezzoforte Privilege',
+    speaker: 'Mezzoforte Privilè',
     avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
     time: '00:05',
     text: 'Good morning team. We are convening to finalize our Priv Pay launch checklist and review the Series A term sheet commentary.',

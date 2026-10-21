@@ -4,7 +4,7 @@ export const DEPARTMENTS: Record<Department, DepartmentInfo> = {
   executive: {
     id: 'executive',
     name: 'Sovereign Executive & Admin',
-    leadName: 'Mezzoforte Privilege',
+    leadName: 'Mezzoforte Privilè',
     leadRole: 'Managing Principal & Sovereign Command',
     color: 'emerald',
     badgeBg: 'bg-emerald-50 text-emerald-800 border-emerald-200',
@@ -56,7 +56,7 @@ export const DEPARTMENTS: Record<Department, DepartmentInfo> = {
 export const INITIAL_TEAM_MEMBERS: TeamMember[] = [
   {
     id: 'user-mezzoforte',
-    name: 'Mezzoforte Privilege',
+    name: 'Mezzoforte Privilè',
     email: 'mezzoforte@sansmercantile.com',
     role: 'Managing Principal & Sovereign Command',
     avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',

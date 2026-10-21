@@ -30,14 +30,14 @@ export const INITIAL_DEALS: Deal[] = [
         id: 'note-1',
         authorId: 'user-christopher',
         authorName: 'Christopher Maddison',
-        content: 'Flagged from Inbox: @Mezzoforte Privilege i think you should do this application, its more about you than Sans from what i can see, they require your CV etc.',
+        content: 'Flagged from Inbox: @Mezzoforte Privilè i think you should do this application, its more about you than Sans from what i can see, they require your CV etc.',
         createdAt: '2026-07-30T14:22:00Z',
         type: 'note',
       },
       {
         id: 'note-2',
         authorId: 'user-mezzoforte',
-        authorName: 'Mezzoforte Privilege',
+        authorName: 'Mezzoforte Privilè',
         content: 'Drafted Sovereign Command technical memo and personal track record summary. Application dossier ready for stage 2 evaluation.',
         createdAt: '2026-08-15T11:00:00Z',
         type: 'sync',
@@ -261,7 +261,7 @@ export const INITIAL_DEALS: Deal[] = [
       {
         id: 'note-9',
         authorId: 'user-mezzoforte',
-        authorName: 'Mezzoforte Privilege',
+        authorName: 'Mezzoforte Privilè',
         content: 'Grant contract executed and initial $150k tranche confirmed in commercial custody account. Milestones submitted.',
         createdAt: '2026-08-01T17:00:00Z',
         type: 'stage_change',
@@ -416,7 +416,7 @@ export const INITIAL_INBOX_ITEMS: InboxItem[] = [
     id: 'inbox-2',
     category: 'primary',
     title: 'Lead: Palladium Global Science Award 2026 — $350K Prize',
-    snippet: '@Mezzoforte Privilege i think you should do this application, its more about you than Sans from what i can see, they require your CV etc.',
+    snippet: '@Mezzoforte Privilè i think you should do this application, its more about you than Sans from what i can see, they require your CV etc.',
     senderName: 'Christopher Maddison',
     senderRole: 'CBDO',
     date: 'Jul 30',
@@ -445,7 +445,7 @@ export const INITIAL_INBOX_ITEMS: InboxItem[] = [
     category: 'primary',
     title: 'Weekly sync - 08/13/2026 Notes Generated',
     snippet: 'Meeting notes for Weekly sync - 08/13/2026 have been created and attached to CBDO Dealflow ledger.',
-    senderName: 'Mezzoforte Privilege',
+    senderName: 'Mezzoforte Privilè',
     senderRole: 'Executive Command',
     date: 'Aug 13',
     relatedSpace: 'CBDO workspace',
@@ -588,7 +588,7 @@ export const INITIAL_DOCUMENTS: DocumentItem[] = [
     isStarred: true,
     contentMarkdown: `# Sans Mercantile — Master Investor List
 **Workspace:** CBDO workspace  
-**Maintained by:** Christopher Maddison (CBDO) & Mezzoforte Privilege  
+**Maintained by:** Christopher Maddison (CBDO) & Mezzoforte Privilè  
 **Status:** Active Q3-Q4 2026 Syndicate Outreach
 
 ---
@@ -615,7 +615,7 @@ export const INITIAL_DOCUMENTS: DocumentItem[] = [
 - **Grant Value:** $350,000 Cash Prize
 - **Evaluation Jury Lead:** Dr. Aris Thorne
 - **Deadline:** Mid-October 2026
-- **Strategic Angle:** Highlight Mezzoforte Privilege leadership, architectural resilience of Sans Mercantile Sovereign Command platform.
+- **Strategic Angle:** Highlight Mezzoforte Privilè leadership, architectural resilience of Sans Mercantile Sovereign Command platform.
 
 ---
 
@@ -644,7 +644,7 @@ This rubric standardizes how the CBDO workspace and Sovereign Command evaluate v
 | **Diligence Speed** | 25 pts | Fast-track diligence pipeline, minimal bureaucratic friction (< 45 days). |
 
 ### Composite Tier Classification:
-- **Tier 1 (90 - 100):** Immediate priority execution (Assign to Mezzoforte Privilege / Christopher Maddison).
+- **Tier 1 (90 - 100):** Immediate priority execution (Assign to Mezzoforte Privilè / Christopher Maddison).
 - **Tier 2 (75 - 89):** High probability deal flow (Active pipeline, weekly sync reviews).
 - **Tier 3 (50 - 74):** Standard evaluation queue.
 - **Tier 4 (< 50):** Pass / Defer to newsletter or automated updates.`,
@@ -661,7 +661,7 @@ This rubric standardizes how the CBDO workspace and Sovereign Command evaluate v
     contentMarkdown: `# Investor Memo: Priv Pay Architecture & Market Opportunity
 
 **Author:** Pascaline Khoza & Mohammed Kabir  
-**Executive Sponsor:** Mezzoforte Privilege  
+**Executive Sponsor:** Mezzoforte Privilè  
 **Date:** September 2026  
 
 ---
@@ -687,7 +687,7 @@ Priv Pay is Sans Mercantile's proprietary sovereign settlement protocol designed
 
 Guidelines for coordinating external press releases and executive messaging across Sans Mercantile Sovereign Command:
 1. **Brand Kit Adherence:** Ensure all media advisories use official Sans Mercantile typography, deep obsidian & emerald accents.
-2. **Approval Chain:** All press releases require sign-off from Mezzoforte Privilege and Pascaline Khoza.
+2. **Approval Chain:** All press releases require sign-off from Mezzoforte Privilè and Pascaline Khoza.
 3. **Embargo Protocols:** 48-hour embargo notice for institutional tech outlets.`,
   },
 ];

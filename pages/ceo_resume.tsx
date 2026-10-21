@@ -131,7 +131,7 @@ const App = () => {
   }, []);
 
   const profile = {
-    name: "Mezzoforte Privilege",
+    name: "Mezzoforte Privilè",
     handle: "CEO | SOVEREIGN ARCHITECT",
     contact: {
       email: "mezzoforte@sansmercantile.com",
@@ -148,7 +148,7 @@ const App = () => {
     setIsConsulting(true);
     setAiResponse(null);
 
-    const systemPrompt = `You are the Sovereign Intelligence Node for Mezzoforte Privilege, CEO of Sans Mercantile.
+    const systemPrompt = `You are the Sovereign Intelligence Node for Mezzoforte Privilè, CEO of Sans Mercantile.
     Act as a PRE-SCREENING INTERFACE for potential equity partners.
     MEZZOFORTE'S AUTHENTIC PROFILE:
     - CEO of Sans Mercantile (Fukuoka, Japan).
@@ -220,7 +220,7 @@ const App = () => {
     </div>
   );
 
-  const displayName = String(normalizeText(profile.name) || 'Mezzoforte Privilege');
+  const displayName = String(normalizeText(profile.name) || 'Mezzoforte Privilè');
 
   return (
     <div className={`min-h-screen bg-[#020203] text-gray-300 font-sans selection:bg-[#ff7a00]/30 overflow-x-hidden ${glitch ? 'opacity-95' : ''}`}>
