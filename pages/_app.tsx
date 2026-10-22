@@ -42,6 +42,15 @@ export default function App({ Component, pageProps }: AppProps) {
   const defaultTitle = 'Sans Mercantile - Reimagine \u2022 Rebuild \u2022 Transcend';
   const defaultDescription = 'A network of autonomous, intelligent systems enabling global commerce, governance, and innovation. Registered in South Africa (CIPC Reg No: K2025537335). Explore the nexus of technology and strategy.';
 
+  const canonicalPath = router.asPath.split('?')[0].split('#')[0];
+  const skipCanonical =
+    canonicalPath.startsWith('/404') ||
+    canonicalPath.startsWith('/_error') ||
+    canonicalPath.startsWith('/api/');
+  const canonicalUrl = skipCanonical
+    ? null
+    : siteUrl + (canonicalPath.endsWith('/') ? canonicalPath : canonicalPath + '/');
+
   return (
     <PostHogProvider client={posthog}>
       <ThemeProvider>
@@ -67,6 +76,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <meta name='twitter:image' content={defaultOgImage} key='twitter:image' />
           <link rel='icon' href={siteUrl + '/logo.png'} />
           <link rel='apple-touch-icon' href={siteUrl + '/logo.png'} />
+          {canonicalUrl && <link rel='canonical' href={canonicalUrl} key='canonical' />}
         </Head>
         <Component {...pageProps} />
         <LiveSkyBackground />

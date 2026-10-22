@@ -17,7 +17,7 @@ export default function PtahPage() {
           name="keywords"
           content="Ptah, construction project management software South Africa, AI construction management, construction safety monitoring, budget optimization software, building information management"
         />
-        <link rel="canonical" href={PAGE_URL} />
+        <link rel="canonical" href={PAGE_URL} key="canonical" />
         <meta property="og:title" content={PAGE_TITLE} key="og:title" />
         <meta property="og:description" content={PAGE_DESCRIPTION} key="og:description" />
         <meta property="og:type" content="article" key="og:type" />

@@ -7,6 +7,54 @@ import { fadeInUp } from '@/lib/animations';
 import { COMPANY_INFO } from '@/lib/constants';
 import { BEDROCK_MODEL } from '@/lib/bedrock-client';
 
+const SITE_URL = 'https://www.sansmercantile.com';
+
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': SITE_URL + '/#organization',
+      name: 'Sans Mercantile',
+      alternateName: 'Sans Mercantile™',
+      url: SITE_URL + '/',
+      logo: {
+        '@type': 'ImageObject',
+        url: SITE_URL + '/logo.svg',
+      },
+      description:
+        'Sans Mercantile is a South African-registered, AI-driven global trade and fintech company operating a constellation of 21 specialised, autonomous systems for global commerce, governance and innovation. CIPC Registration No: K2025537335.',
+      founder: {
+        '@type': 'Person',
+        name: 'Mezzoforte Privilège',
+      },
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Cape Town',
+        addressCountry: 'ZA',
+      },
+      sameAs: [
+        'https://www.linkedin.com/company/sans-mercantile',
+        'https://www.facebook.com/sansmercantile',
+        'https://www.instagram.com/sansmercantile',
+        'https://github.com/SansMercantile',
+        'https://www.crunchbase.com/organization/sans-mercantile',
+      ],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': SITE_URL + '/#website',
+      url: SITE_URL + '/',
+      name: 'Sans Mercantile',
+      description:
+        'A network of 21 autonomous AI systems enabling global commerce, governance and innovation.',
+      publisher: {
+        '@id': SITE_URL + '/#organization',
+      },
+    },
+  ],
+};
+
 export default function Home() {
   const [showPrivCoreModal, setShowPrivCoreModal] = useState(true);
 
@@ -25,6 +73,10 @@ export default function Home() {
         <meta name="twitter:title" content="Sans Mercantile | AI-Driven Global Trade" key="twitter:title" />
         <meta name="twitter:description" content="Redefining global commerce through a constellation of 21 autonomous AI systems." key="twitter:description" />
         <meta name="twitter:image" content="https://www.sansmercantile.com/media/social-cover-hero.png" key="twitter:image" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
       </Head>
 
       {/* Priv Core Announcement Modal */}

@@ -79,7 +79,7 @@ export default function PrivCoreLaunchPressRelease() {
         <meta name="description" content={PAGE_DESCRIPTION} key="description" />
         <meta name="keywords" content={PAGE_KEYWORDS} />
         <meta name="news_keywords" content="Priv Core, Sans Mercantile, autonomous trading desk, AI trading terminal, South Africa" />
-        <link rel="canonical" href={PAGE_URL} />
+        <link rel="canonical" href={PAGE_URL} key="canonical" />
 
         <meta property="og:title" content={PAGE_TITLE} key="og:title" />
         <meta property="og:description" content={PAGE_DESCRIPTION} key="og:description" />

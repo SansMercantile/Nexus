@@ -1,0 +1,28 @@
+# Sans Mercantile
+
+> Sans Mercantile is a South African-registered, AI-driven global trade and fintech company operating a constellation of 21 specialised, autonomous AI systems for global commerce, governance and innovation. CIPC Registration No: K2025537335. Founded by Mezzoforte Privilège. Headquarters: Cape Town, South Africa.
+
+Key products:
+
+- [Priv Core](https://priv.sansmercantile.com/): Autonomous trading desk and AI trading terminal — strategy backtesting, 24/7 market watch, full user custody. Free tier available.
+- [Priv Pay](https://privpay.sansmercantile.com/): B2B payment platform with developer APIs, white-label branding and mobile apps.
+- [Priv Philanthropy](https://www.sansmercantile.com/priv/philanthropy/): Structured giving, endowments and community foundation programmes.
+
+Company:
+
+- [About](https://www.sansmercantile.com/about/): Mission, structure and the 21-system constellation.
+- [Platform](https://www.sansmercantile.com/platform/): How the systems interconnect.
+- [Services](https://www.sansmercantile.com/services/): What Sans Mercantile offers institutions and partners.
+- [Careers](https://www.sansmercantile.com/careers/): Open roles.
+- [Contact](https://www.sansmercantile.com/contact/): Contact channels and locations.
+
+Resources:
+
+- [Press & Media](https://www.sansmercantile.com/media/press/): Press releases, media kit and brand assets.
+- [Documentation](https://www.sansmercantile.com/docs/): Product and systems documentation.
+- [Blog](https://www.sansmercantile.com/media/blog/): Articles and updates.
+
+Optional sections:
+
+- [Privacy Policy](https://www.sansmercantile.com/legal/privacy/): How user data is collected and handled.
+- [Terms of Service](https://www.sansmercantile.com/legal/terms/): Terms governing use of the site and products.

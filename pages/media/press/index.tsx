@@ -55,7 +55,7 @@ export default function MediaPressIndex() {
           name="keywords"
           content="Sans Mercantile press releases, Priv Core launch, autonomous trading desk South Africa, AI trading terminal, company announcements"
         />
-        <link rel="canonical" href={PAGE_URL} />
+        <link rel="canonical" href={PAGE_URL} key="canonical" />
         <meta property="og:title" content={PAGE_TITLE} key="og:title" />
         <meta property="og:description" content={PAGE_DESCRIPTION} key="og:description" />
         <meta property="og:type" content="website" key="og:type" />
