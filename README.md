@@ -98,7 +98,7 @@ Edit `.env.local` to configure AWS Bedrock (the sole AI provider for this repo):
 AWS_ACCESS_KEY_ID=your_aws_key_id
 AWS_SECRET_ACCESS_KEY=your_aws_secret
 AWS_REGION=us-east-1
-BEDROCK_MODEL=amazon.titan-text-express-v1
+BEDROCK_MODEL=us.moonshotai.kimi-k3
 LINKEDIN_ACCESS_TOKEN=your_token_here
 ```
 
@@ -124,7 +124,7 @@ This repository uses AWS Bedrock for all AI/LLM work (see `BEDROCK_SETUP.md`).
 $env:AWS_ACCESS_KEY_ID="your_aws_key_id"
 $env:AWS_SECRET_ACCESS_KEY="your_aws_secret"
 $env:AWS_REGION="us-east-1"
-$env:BEDROCK_MODEL="amazon.titan-text-express-v1"
+$env:BEDROCK_MODEL="us.moonshotai.kimi-k3"
 ```
 
 3. Test the proxy endpoint:

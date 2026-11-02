@@ -22,7 +22,7 @@ Set these environment variables (`.env.local` for development):
 $env:AWS_ACCESS_KEY_ID="your_aws_key_id"
 $env:AWS_SECRET_ACCESS_KEY="your_aws_secret"
 $env:AWS_REGION="us-east-1"
-$env:BEDROCK_MODEL="amazon.titan-text-express-v1"
+$env:BEDROCK_MODEL="us.moonshotai.kimi-k3"
 ```
 
 Verify with:

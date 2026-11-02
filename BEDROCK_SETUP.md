@@ -19,7 +19,7 @@ settings for production):
 AWS_ACCESS_KEY_ID=your_aws_key_id
 AWS_SECRET_ACCESS_KEY=your_aws_secret
 AWS_REGION=us-east-1
-BEDROCK_MODEL=amazon.titan-text-express-v1
+BEDROCK_MODEL=us.moonshotai.kimi-k3
 ```
 
 Optional tuning:

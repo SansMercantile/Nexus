@@ -8,7 +8,7 @@ import crypto from 'crypto';
  *
  *   AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY (or AWS_API_KEY / AWS_API_SECRET)
  *   AWS_REGION or BEDROCK_REGION            (e.g. us-east-1)
- *   BEDROCK_MODEL                           (e.g. amazon.titan-text-express-v1)
+ *   BEDROCK_MODEL                           (defaults to the Kimi K3 inference profile)
  *   BEDROCK_ENDPOINT                        (optional override)
  *   BEDROCK_MAX_TOKENS / BEDROCK_TEMPERATURE (optional tuning)
  */
@@ -20,7 +20,7 @@ export interface BedrockGenerateRequest {
   temperature?: number;
 }
 
-export const BEDROCK_MODEL = process.env.BEDROCK_MODEL || 'amazon.titan-text-express-v1';
+export const BEDROCK_MODEL = process.env.BEDROCK_MODEL || 'us.moonshotai.kimi-k3';
 
 const awsAccessKeyId = process.env.AWS_ACCESS_KEY_ID || process.env.AWS_API_KEY;
 const awsSecretAccessKey =
@@ -105,6 +105,18 @@ export function coerceBedrockText(value: unknown): string {
         .join('');
       if (text) return text;
     }
+    const output = obj.output as Record<string, unknown> | undefined;
+    const message = output?.message as Record<string, unknown> | undefined;
+    if (Array.isArray(message?.content)) {
+      const text = message.content
+        .map((block) =>
+          typeof block === 'object' && block !== null && 'text' in block
+            ? String((block as Record<string, unknown>).text || '')
+            : ''
+        )
+        .join('');
+      if (text) return text;
+    }
     if (typeof obj.outputText === 'string') return obj.outputText;
     if (typeof obj.completion === 'string') return obj.completion;
     if (typeof obj.response === 'string') return obj.response;
@@ -129,11 +141,10 @@ async function invokeBedrockModel(prompt: string, maxTokens: number, temperature
   }
 
   const model = BEDROCK_MODEL;
-  const url = `${bedrockEndpoint}/model/${encodeURIComponent(model)}/invoke`;
+  const url = `${bedrockEndpoint}/model/${encodeURIComponent(model)}/converse`;
   const payload = JSON.stringify({
-    inputText: prompt,
-    maxTokensToSample: maxTokens,
-    temperature,
+    messages: [{ role: 'user', content: [{ text: prompt }] }],
+    inferenceConfig: { maxTokens: Math.max(16, maxTokens), temperature },
   });
   const { host, pathname } = new URL(url);
   const amzDate = new Date().toISOString().replace(/[:-]|\.\d{3}/g, '') + 'Z';
