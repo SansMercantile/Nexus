@@ -144,17 +144,6 @@ export default function SystemPage({ system }: { system?: string }) {
       />
 
       {/* About Section */}
-
-      {/* Hero Section */}
-      <SystemHero
-        id={systemData.id}
-        name={systemData.name}
-        subtitle={systemData.subtitle}
-        color={systemData.color}
-        face={systemData.face}
-      />
-
-      {/* About Section */}
       <motion.section
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
