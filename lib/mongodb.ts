@@ -55,7 +55,7 @@ export async function getScopedData(
   const db = await getDb();
   const collection = db.collection(collectionName);
 
-  let scopedFilter = { ...filter };
+  const scopedFilter = { ...filter };
 
   // Admin bypass
   if (context.role === 'admin') {

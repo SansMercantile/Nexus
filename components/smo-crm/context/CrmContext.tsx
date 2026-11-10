@@ -408,7 +408,7 @@ export const CrmProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         if (msg.id !== messageId) return msg;
 
         const existingReactionIndex = msg.reactions.findIndex(r => r.emoji === emoji);
-        let updatedReactions = [...msg.reactions];
+        const updatedReactions = [...msg.reactions];
 
         if (existingReactionIndex > -1) {
           const current = updatedReactions[existingReactionIndex];
