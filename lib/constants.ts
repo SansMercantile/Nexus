@@ -478,6 +478,7 @@ export const SYSTEMS: SystemData[] = [
     vision: 'To enable advanced defense capabilities and strategic military intelligence',
     mission: 'Provide defense AI systems for strategic planning, threat assessment, and operations',
     values: ['Security', 'Strategy', 'Protection', 'Intelligence'],
+    badge: { text: '⚠️Restricted', tone: 'danger' },
     features: [
       { title: 'Threat Intelligence', description: 'Real-time global threat monitoring and analysis' },
       { title: 'Strategic Planning', description: 'AI-powered military strategy optimization' },
@@ -767,6 +768,7 @@ export const SYSTEMS: SystemData[] = [
     vision: 'To maximize clean nuclear energy and establish safe, efficient atomic power systems',
     mission: 'Enable next-generation nuclear power with AI-driven reactor management and optimization',
     values: ['Safety', 'Energy', 'Innovation', 'Sustainability'],
+    badge: { text: '⚠️Restricted', tone: 'danger' },
     features: [
       { title: 'Content Generation', description: 'AI creates original scripts, stories, and creative concepts' },
       { title: 'Audience Intelligence', description: 'Deep analytics on audience preferences and trends' },
@@ -810,6 +812,7 @@ export const SYSTEMS: SystemData[] = [
     vision: 'To enable safe, efficient, and autonomous aviation across commercial and defense sectors',
     mission: 'Enable safe, efficient, and autonomous aviation with predictive maintenance',
     values: ['Safety', 'Efficiency', 'Innovation', 'Reliability'],
+    badge: { text: '⚠️Restricted', tone: 'danger' },
     features: [
       { title: 'Flight Operations', description: 'Route optimization and real-time flight management' },
       { title: 'Autonomous Flight', description: 'Self-piloting capabilities with safety guarantees' },

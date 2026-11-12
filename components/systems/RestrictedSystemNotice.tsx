@@ -6,7 +6,7 @@ import type { SystemData } from '@/lib/constants';
 
 /**
  * Shown instead of a system's real detail page (index/about/features/pricing) when
- * that system is write-restricted (Sobek, Anubis, Mpeti). Blocks direct URL access —
+ * that system is write-restricted (Sobek, Anubis, Mpeti, Kibuka, Montu, Sekhmet). Blocks direct URL access —
  * the systems grid already disables the "Learn More" link for these, but that alone
  * doesn't stop someone typing the URL directly, so each [system] page checks
  * systemData.badge?.tone === 'danger' and renders this instead of the real content.

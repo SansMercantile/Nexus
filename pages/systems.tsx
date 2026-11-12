@@ -118,7 +118,7 @@ export default function Systems() {
                       {system.description}
                     </p>
 
-                    {/* CTA Button — restricted systems (Sobek/Anubis/Mpeti) get a disabled,
+                    {/* CTA Button — restricted systems (Sobek/Anubis/Mpeti/Kibuka/Montu/Sekhmet) get a disabled,
                         non-navigating "Restricted" state instead of a working link. Users
                         can see the face card and description but can't go any further. */}
                     {system.badge?.tone === 'danger' ? (
