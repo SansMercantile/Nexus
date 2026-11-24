@@ -1017,6 +1017,21 @@ export const SYSTEMS: SystemData[] = [
         features: ['Generation tools', 'Templates', 'Basic support', 'Community access'],
         cta: 'Explore Music'
       },
+    ],
+    applications: [
+      {
+        name: 'CrazyJam Studio',
+        description:
+          'The full AI-native music studio — live now at crazyjam.sansmercantile.com. Compose full songs with vocals, generate cover art, AI-directed music videos and instant 15s teasers, then publish to CrazyJam Music and pitch playlists. Install it as an app on any device, or grab the native desktop installer.',
+        icon: 'Sans- crazyjam_music_system.png',
+        liveUrl: 'https://crazyjam.sansmercantile.com',
+        platforms: ['web', 'windows', 'macos', 'linux', 'ios', 'android'],
+        platformUrls: {
+          web: 'https://crazyjam.sansmercantile.com',
+          windows: 'https://sans-mercantile-priv-downloads.s3.us-east-1.amazonaws.com/releases/1.0.0/CrazyJam-Windows.exe',
+        },
+        waitlistUrl: '/contact?subject=CrazyJam Studio Desktop and Mobile Early Access',
+      },
     ]
   },
   {
