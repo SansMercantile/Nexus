@@ -1,0 +1,15 @@
+CrazyJam DAW Extension — Installation Notice
+
+By installing this extension you agree to the following:
+
+1. The CrazyJam Bridge runs locally on your machine and communicates with the
+   CrazyJam cloud backend for AI co-production features.
+
+2. The extension installs FL Studio Piano Roll scripts, a Cubase MIDI Remote
+   driver, and a Pro Tools HUI surface bridge, plus a startup monitor that
+   launches the bridge automatically when your DAW opens.
+
+3. No credentials are stored in the DAW scripts; the bridge holds your
+   CrazyJam token locally.
+
+4. This software is provided "as is" without warranty of any kind.

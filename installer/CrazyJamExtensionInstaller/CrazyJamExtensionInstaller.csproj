@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyTitle>CrazyJam Extension Installer</AssemblyTitle>
+    <AssemblyCompany>Sans Mercantile</AssemblyCompany>
+    <Product>CrazyJam Extension Installer</Product>
+    <Description>CrazyJam DAW Extension Installer for Windows</Description>
+    <Version>1.0.0</Version>
+    <AssemblyName>CrazyJam Extension Installer</AssemblyName>
+    <RootNamespace>CrazyJamExtensionInstaller</RootNamespace>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Assets\CrazyJam.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Legal\INSTALLATION_NOTICE.txt" LogicalName="CrazyJamExtensionInstaller.Legal.INSTALLATION_NOTICE.txt" />
+    <EmbeddedResource Include="Payload\CrazyJamExtensionSetupEngine.exe" LogicalName="CrazyJamExtensionInstaller.Payload.SetupEngine.exe" />
+  </ItemGroup>
+</Project>

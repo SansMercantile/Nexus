@@ -1035,11 +1035,11 @@ export const SYSTEMS: SystemData[] = [
       {
         name: 'Extensions',
         description:
-          'DAW extensions that bring CrazyJam into your existing workflow. The FL Studio extension adds an AI co-producer, drag-and-drop remake (audio/MIDI → humanized MIDI), auto pitch correction, and AI mix/master — right inside FL Studio. More DAW extensions (Cubase, Pro Tools, Ableton) coming soon.',
+          'DAW extensions that bring CrazyJam into your existing workflow. FL Studio: AI co-producer + drag-and-drop remake (audio/MIDI → humanized MIDI) + auto pitch correction + AI mix/master. Cubase: MIDI Remote mixer control + co-producer. Pro Tools: HUI mixer control + co-producer. One installer covers all three.',
         icon: 'Sans- crazyjam_music_system.png',
         platforms: ['windows', 'macos'],
         platformUrls: {
-          windows: 'https://sans-mercantile-priv-downloads.s3.us-east-1.amazonaws.com/releases/1.0.0/CrazyJam-DAW-Extension-FL-Studio.zip',
+          windows: 'https://sans-mercantile-priv-downloads.s3.us-east-1.amazonaws.com/releases/1.0.0/CrazyJam-DAW-Extensions.zip',
         },
         waitlistUrl: '/contact?subject=CrazyJam Extensions Early Access',
       },
