@@ -1039,7 +1039,7 @@ export const SYSTEMS: SystemData[] = [
         icon: 'Sans- crazyjam_music_system.png',
         platforms: ['windows', 'macos'],
         platformUrls: {
-          windows: 'https://sans-mercantile-priv-downloads.s3.us-east-1.amazonaws.com/releases/1.0.0/CrazyJam-DAW-Extensions.zip',
+          windows: 'https://sans-mercantile-priv-downloads.s3.us-east-1.amazonaws.com/releases/1.0.0/CrazyJam-Extensions-Setup.exe',
         },
         waitlistUrl: '/contact?subject=CrazyJam Extensions Early Access',
       },

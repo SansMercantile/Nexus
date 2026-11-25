@@ -13,10 +13,10 @@
     <AssemblyName>CrazyJam Extension Installer</AssemblyName>
     <RootNamespace>CrazyJamExtensionInstaller</RootNamespace>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <ApplicationIcon>Assets\CrazyJam.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Include="Legal\INSTALLATION_NOTICE.txt" LogicalName="CrazyJamExtensionInstaller.Legal.INSTALLATION_NOTICE.txt" />
-    <EmbeddedResource Include="Payload\CrazyJamExtensionSetupEngine.exe" LogicalName="CrazyJamExtensionInstaller.Payload.SetupEngine.exe" />
+    <EmbeddedResource Include="Payload\CrazyJamExtensionSetupEngine.ps1" LogicalName="CrazyJamExtensionInstaller.Payload.CrazyJamExtensionSetupEngine.ps1" />
+    <EmbeddedResource Include="Payload\extensions.zip" LogicalName="CrazyJamExtensionInstaller.Payload.extensions.zip" />
   </ItemGroup>
 </Project>
