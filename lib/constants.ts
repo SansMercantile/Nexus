@@ -1035,7 +1035,7 @@ export const SYSTEMS: SystemData[] = [
       {
         name: 'Extensions',
         description:
-          'DAW extensions that bring CrazyJam into your existing workflow. FL Studio: AI co-producer + drag-and-drop remake (audio/MIDI → humanized MIDI) + auto pitch correction + AI mix/master. Cubase: MIDI Remote mixer control + co-producer. Pro Tools: HUI mixer control + co-producer. One installer covers all three.',
+          'DAW extensions that bring CrazyJam into your existing workflow. FL Studio: AI co-producer + drag-and-drop remake (audio/MIDI → humanized MIDI) + auto pitch correction + AI mix/master. Cubase: MIDI Remote mixer control + co-producer. Pro Tools: HUI mixer control + co-producer. Ableton: Max for Live mixer control + co-producer. One installer covers all four.',
         icon: 'Sans- crazyjam_music_system.png',
         platforms: ['windows', 'macos'],
         platformUrls: {

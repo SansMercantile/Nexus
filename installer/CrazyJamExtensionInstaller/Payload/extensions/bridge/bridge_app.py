@@ -571,6 +571,20 @@ def _note_to_midi(name: str) -> int:
     return 12 * (octave + 1) + names.index(pitch)
 
 
+@app.post("/api/bridge/ableton/apply")
+async def bridge_ableton_apply(req: dict) -> dict[str, Any]:
+    """Return a structured mixer move list for the Ableton Max for Live device.
+    The device applies these to Live's tracks via the Live API."""
+    moves = _default_mix_moves()
+    return {"success": True, "moves": moves}
+
+
+@app.post("/api/bridge/ableton/co-producer")
+async def bridge_ableton_co_producer(req: CoProducerRequest) -> dict[str, Any]:
+    """Generate chords/melody/bass/drums for Ableton (same as Cubase/Pro Tools)."""
+    return await bridge_cubase_co_producer(req)
+
+
 @app.post("/api/bridge/pro-tools/apply")
 async def bridge_pro_tools_apply(req: dict) -> dict[str, Any]:
     """Apply mix/master moves to Pro Tools via the HUI surface."""
