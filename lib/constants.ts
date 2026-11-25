@@ -1032,6 +1032,17 @@ export const SYSTEMS: SystemData[] = [
         },
         waitlistUrl: '/contact?subject=CrazyJam Studio Desktop and Mobile Early Access',
       },
+      {
+        name: 'Extensions',
+        description:
+          'DAW extensions that bring CrazyJam into your existing workflow. The FL Studio extension adds an AI co-producer, drag-and-drop remake (audio/MIDI → humanized MIDI), auto pitch correction, and AI mix/master — right inside FL Studio. More DAW extensions (Cubase, Pro Tools, Ableton) coming soon.',
+        icon: 'Sans- crazyjam_music_system.png',
+        platforms: ['windows', 'macos'],
+        platformUrls: {
+          windows: 'https://sans-mercantile-priv-downloads.s3.us-east-1.amazonaws.com/releases/1.0.0/CrazyJam-DAW-Extension-FL-Studio.zip',
+        },
+        waitlistUrl: '/contact?subject=CrazyJam Extensions Early Access',
+      },
     ]
   },
   {
