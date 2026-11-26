@@ -571,6 +571,37 @@ def _note_to_midi(name: str) -> int:
     return 12 * (octave + 1) + names.index(pitch)
 
 
+@app.post("/api/bridge/studio-one/apply")
+async def bridge_studio_one_apply(req: dict) -> dict[str, Any]:
+    """Return a structured mixer move list for the Studio One control surface."""
+    moves = _default_mix_moves()
+    return {"success": True, "moves": moves}
+
+
+@app.post("/api/bridge/studio-one/co-producer")
+async def bridge_studio_one_co_producer(req: CoProducerRequest) -> dict[str, Any]:
+    """Generate chords/melody/bass/drums for Studio One (same as Cubase/PT/Ableton)."""
+    return await bridge_cubase_co_producer(req)
+
+
+@app.post("/api/bridge/logic-pro/apply")
+async def bridge_logic_pro_apply(req: dict) -> dict[str, Any]:
+    """Return a structured mixer move list for Logic Pro (via HUI/Mackie Control)."""
+    from bridge.pro_tools_bridge import get_pro_tools_bridge
+    bridge = get_pro_tools_bridge()
+    if not bridge._connected:
+        bridge.connect()
+    moves = _default_mix_moves()
+    applied = bridge.apply_mix_moves(moves)
+    return {"success": True, "applied": applied, "moves": moves}
+
+
+@app.post("/api/bridge/logic-pro/co-producer")
+async def bridge_logic_pro_co_producer(req: CoProducerRequest) -> dict[str, Any]:
+    """Generate chords/melody/bass/drums for Logic Pro (same as Cubase/PT/Ableton)."""
+    return await bridge_cubase_co_producer(req)
+
+
 @app.post("/api/bridge/ableton/apply")
 async def bridge_ableton_apply(req: dict) -> dict[str, Any]:
     """Return a structured mixer move list for the Ableton Max for Live device.
